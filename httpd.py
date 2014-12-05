@@ -21,8 +21,25 @@ class rot(web.application):
 		return web.httpserver.runsimple(func, (ip, port))
 
 urls = (
-  '/', 'index'
+  '/', 'index',
+	'/personal', 'personal'
 )
+
+class personal:
+	def GET(self):
+		db = web.database(
+			host = config.db_host,
+			dbn  = 'mysql',
+			user = config.db_user,
+			pw   = config.db_pass,
+			db   = config.db_name
+		)
+		personal = db.select('personal', what='pid,pidp,kuerzel,name,vorname,ptid,email')
+		ret = "";
+		for p in personal:
+			ret += json.dumps(p) + ",\n"
+		ret = "[" + ret[:-2] + "]"
+		return ret
 
 class index:
 	def GET(self):
@@ -33,13 +50,13 @@ class index:
 			pw   = config.db_pass,
 			db   = config.db_name
 		)
-		personal = db.select('personal', what='pid,pidp,kuerzel,name,vorname,ptid,email')
+		#personal = db.select('personal', what='pid,pidp,kuerzel,name,vorname,ptid,email')
 		#ret = "";
 		#for p in personal:
 		#	ret += json.dumps(p) + ",\n"
 		#ret = "[" + ret + "]"
 		render = web.template.render('template')
-		return render.index(personal)
+		return render.index(None)
 		#return "Hello World"
 		
 if __name__ == "__main__":
