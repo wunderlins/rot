@@ -33,11 +33,13 @@ class index:
 			pw   = config.db_pass,
 			db   = config.db_name
 		)
-		personal = db.select('personal')
-		ret = "";
-		for p in personal:
-			ret += json.dumps(p)
-		return "[" + ret + "]"
+		personal = db.select('personal', what='pid,pidp,kuerzel,name,vorname,ptid,email')
+		#ret = "";
+		#for p in personal:
+		#	ret += json.dumps(p) + ",\n"
+		#ret = "[" + ret + "]"
+		render = web.template.render('template')
+		return render.index(personal)
 		#return "Hello World"
 		
 if __name__ == "__main__":
