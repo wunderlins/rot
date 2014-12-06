@@ -46,7 +46,6 @@ class Location(Base):
 	sort    = Column(Integer)
 	deleted = Column(Integer, server_default = "0")
 
-
 class Cluster(Base):
 	__tablename__ = 'rot_cluster'
 	
@@ -117,17 +116,23 @@ class Personal(Base):
 	email       = Column(String(50))
 
 # add relations to existing database tables
-Rotation.person = relationship("Personal", backref=backref('rotation', order_by=id))
+#Rotation.person = relationship("Personal", backref=backref('rotation', order_by=id))
 
 # bind engine to a session
 Session = sessionmaker(bind=engine)
 session = Session()
 
-"""
-# create a record and commit it
-ed_user = User(name='ed', fullname='Ed Jones', password='edspassword')
-session.add(ed_user)
-"""
+
+## add base data
+session.add_all([
+	Location(name="USB", sort=1),
+	Location(name="UKBB", sort=2),
+	Location(name="Liestal", sort=3),
+	Location(name="Olten", sort=4),
+	Location(name="Solothurn", sort=5),
+])
+
+# commit transaction
 session.commit()
 
 """
