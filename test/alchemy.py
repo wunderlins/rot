@@ -72,7 +72,7 @@ class Rotation(Base):
 	
 	cluster = relationship("Cluster", backref=backref('rotation', order_by=id))
 
-class Erfahrung(Base):
+class Einteilung(Base):
 	__tablename__ = 'rot_erfahrung'
 	
 	id          = Column(Integer, Sequence('erfahrung_id_seq'), primary_key=True)
@@ -80,14 +80,18 @@ class Erfahrung(Base):
 	von         = Column(Date)
 	bis         = Column(Date)
 	location_id = Column(Integer, ForeignKey('rot_location.id'))
+	rotation_id = Column(Integer, ForeignKey('rot_rotation.id'))
 	
 	wunsch      = Column(Integer)
 	prio        = Column(Integer)
 	
-	location = relationship("Location", backref=backref('erfahrung', order_by=id))
+	confirmed   = Column(Boolean, server_default="1")
+	
+	rotation    = relationship("Rotation", backref=backref('erfahrung', order_by=id))
+	location    = relationship("Location", backref=backref('erfahrung', order_by=id))
 
 # drop all own tables
-Erfahrung.__table__.drop(engine, checkfirst=True)
+Einteilung.__table__.drop(engine, checkfirst=True)
 Rotation.__table__.drop(engine, checkfirst=True)
 Cluster.__table__.drop(engine, checkfirst=True)
 Location.__table__.drop(engine, checkfirst=True)
