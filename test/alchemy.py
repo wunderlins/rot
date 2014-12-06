@@ -68,9 +68,9 @@ class Rotation(Base):
 	wunsch      = Column(Integer)
 	wunsch_prio = Column(Integer)
 	deleted     = Column(Integer, server_default = "0")
-	user_id     = Column(Integer, ForeignKey('rot_cluster.id'))
+	cluster_id  = Column(Integer, ForeignKey('rot_cluster.id'))
 	
-	user = relationship("Cluster", backref=backref('rot_rotation', order_by=id))
+	cluster = relationship("Cluster", backref=backref('rotation', order_by=id))
 
 class Erfahrung(Base):
 	__tablename__ = 'rot_erfahrung'
@@ -84,13 +84,13 @@ class Erfahrung(Base):
 	wunsch      = Column(Integer)
 	prio        = Column(Integer)
 	
-	location = relationship("Location", backref=backref('rot_location', order_by=id))
+	location = relationship("Location", backref=backref('erfahrung', order_by=id))
 
 # drop all own tables
-Erfahrung.__table__.drop(engine)
-Rotation.__table__.drop(engine)
-Cluster.__table__.drop(engine)
-Location.__table__.drop(engine)
+Erfahrung.__table__.drop(engine, checkfirst=True)
+Rotation.__table__.drop(engine, checkfirst=True)
+Cluster.__table__.drop(engine, checkfirst=True)
+Location.__table__.drop(engine, checkfirst=True)
 
 # create tables from scratch
 Base.metadata.create_all(engine)
@@ -111,6 +111,9 @@ class Personal(Base):
 	bemerkung1  = Column(Text)
 	bemerkung2  = Column(Text)
 	email       = Column(String(50))
+
+# add relations to existing database tables
+Rotation.person = relationship("Personal", backref=backref('rotation', order_by=id))
 
 # bind engine to a session
 Session = sessionmaker(bind=engine)
