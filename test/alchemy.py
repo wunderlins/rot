@@ -81,6 +81,9 @@ class Erfahrung(Base):
 	bis         = Column(Date)
 	location_id = Column(Integer, ForeignKey('rot_location.id'))
 	
+	wunsch      = Column(Integer)
+	prio        = Column(Integer)
+	
 	location = relationship("Location", backref=backref('rot_location', order_by=id))
 
 # drop all own tables
