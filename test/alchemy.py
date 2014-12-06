@@ -72,15 +72,27 @@ class Rotation(Base):
 	
 	user = relationship("Cluster", backref=backref('rot_rotation', order_by=id))
 
+class Erfahrung(Base):
+	__tablename__ = 'rot_erfahrung'
+	
+	id          = Column(Integer, Sequence('erfahrung_id_seq'), primary_key=True)
+	pid         = Column(Integer)
+	von         = Column(Date)
+	bis         = Column(Date)
+	location_id = Column(Integer, ForeignKey('rot_location.id'))
+	
+	location = relationship("Location", backref=backref('rot_location', order_by=id))
+
 # drop all own tables
-Location.__table__.drop(engine)
+Erfahrung.__table__.drop(engine)
 Rotation.__table__.drop(engine)
 Cluster.__table__.drop(engine)
+Location.__table__.drop(engine)
 
 # create tables from scratch
 Base.metadata.create_all(engine)
 
-## define existing tables
+## definition for existing tables
 class Personal(Base):
 	__tablename__ = 'personal'
 	
