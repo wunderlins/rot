@@ -98,6 +98,7 @@ Location.__table__.drop(engine, checkfirst=True)
 # create tables from scratch
 Base.metadata.create_all(engine)
 
+"""
 ## definition for existing tables
 class Personal(Base):
 	__tablename__ = 'personal'
@@ -115,8 +116,61 @@ class Personal(Base):
 	bemerkung2  = Column(Text)
 	email       = Column(String(50))
 
+"""
+
+# reflection of existing tables
+metadata = MetaData(bind=engine)
+class rotationstyp(Base):
+	__table__ = Table('rotationstyp', metadata, autoload=True)
+
+class log(Base):
+	__table__ = Table('log', metadata, autoload=True)
+
+class rotblock(Base):
+	__table__ = Table('rotblock', metadata, autoload=True)
+
+class permission(Base):
+	__table__ = Table('permission', metadata, autoload=True)
+
+class color(Base):
+	__table__ = Table('color', metadata, autoload=True)
+
+class notes(Base):
+	__table__ = Table('notes', metadata, autoload=True)
+
+class module(Base):
+	__table__ = Table('module', metadata, autoload=True)
+
+class personal(Base):
+	__table__ = Table('personal', metadata, autoload=True)
+
+class setting(Base):
+	__table__ = Table('setting', metadata, autoload=True)
+
+class perstyp(Base):
+	__table__ = Table('perstyp', metadata, autoload=True)
+
+class rotationsort(Base):
+	__table__ = Table('rotationsort', metadata, autoload=True)
+
+class action(Base):
+	__table__ = Table('action', metadata, autoload=True)
+
+class rotation(Base):
+	__table__ = Table('rotation', metadata, autoload=True)
+
+class rotation2person(Base):
+	__table__ = Table('rotation2person', metadata, autoload=True)
+
+class user(Base):
+	__table__ = Table('user', metadata, autoload=True)
+
 # add relations to existing database tables
-#Rotation.person = relationship("Personal", backref=backref('rotation', order_by=id))
+#Rotation.person = relationship("personal", backref=backref('rotation', order_by=id))
+Rotation.person = relationship("personal",
+															 foreign_keys="personal.pid",
+															 primaryjoin="and_(personal.pid==Rotation.id)",
+															 backref="rotation")
 
 # bind engine to a session
 Session = sessionmaker(bind=engine)
