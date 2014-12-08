@@ -16,6 +16,8 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship, backref
 
+from sqlalchemy.ext.declarative import AbstractConcreteBase
+
 # connect to database
 dsn = "mysql+mysqldb://"+config.db_user+":"+config.db_pass+"@localhost/"+config.db_name
 #engine = create_engine('sqlite:///:memory:', echo=True)
@@ -37,8 +39,24 @@ class User(Base):
 			self.name, self.fullname, self.password)
 """
 
+"""
+class Serializable(AbstractConcreteBase, Base):
+	#def __init__(self, *args, **kwargs):
+	#	super(Serializable, self).__init__(*args, **kwargs)
+	
+	def as_dict(self):
+		return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+"""
+
+from sqlalchemy.ext.declarative import declared_attr
+class SerializeJson(object):
+	def as_dict(self):
+		return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
+
+
 ## define new tables
-class Location(Base):
+class Location(Base, SerializeJson):
 	__tablename__ = 'rot_location'
 	
 	id      = Column(Integer, Sequence('location_id_seq'), primary_key=True)
@@ -46,7 +64,7 @@ class Location(Base):
 	sort    = Column(Integer)
 	deleted = Column(Integer, server_default = "0")
 
-class Cluster(Base):
+class Cluster(Base, SerializeJson):
 	__tablename__ = 'rot_cluster'
 	
 	id      = Column(Integer, Sequence('cluster_id_seq'), primary_key=True)
@@ -54,7 +72,7 @@ class Cluster(Base):
 	sort    = Column(Integer)
 	deleted = Column(Integer, server_default = "0")
 
-class Rotation(Base):
+class Rotation(Base, SerializeJson):
 	__tablename__ = 'rot_rotation'
 	
 	id          = Column(Integer, Sequence('rotation_id_seq'), primary_key=True)
@@ -71,7 +89,7 @@ class Rotation(Base):
 	
 	cluster = relationship("Cluster", backref=backref('rotation', order_by=id))
 
-class Einteilung(Base):
+class Einteilung(Base, SerializeJson):
 	__tablename__ = 'rot_erfahrung'
 	
 	id          = Column(Integer, Sequence('erfahrung_id_seq'), primary_key=True)
@@ -88,12 +106,6 @@ class Einteilung(Base):
 	
 	rotation    = relationship("Rotation", backref=backref('erfahrung', order_by=id))
 	location    = relationship("Location", backref=backref('erfahrung', order_by=id))
-
-# drop all own tables
-Einteilung.__table__.drop(engine, checkfirst=True)
-Rotation.__table__.drop(engine, checkfirst=True)
-Cluster.__table__.drop(engine, checkfirst=True)
-Location.__table__.drop(engine, checkfirst=True)
 
 # create tables from scratch
 Base.metadata.create_all(engine)
@@ -120,49 +132,49 @@ class Personal(Base):
 
 # reflection of existing tables
 metadata = MetaData(bind=engine)
-class rotationstyp(Base):
+class rotationstyp(Base, SerializeJson):
 	__table__ = Table('rotationstyp', metadata, autoload=True)
 
-class log(Base):
+class log(Base, SerializeJson):
 	__table__ = Table('log', metadata, autoload=True)
 
-class rotblock(Base):
+class rotblock(Base, SerializeJson):
 	__table__ = Table('rotblock', metadata, autoload=True)
 
-class permission(Base):
+class permission(Base, SerializeJson):
 	__table__ = Table('permission', metadata, autoload=True)
 
-class color(Base):
+class color(Base, SerializeJson):
 	__table__ = Table('color', metadata, autoload=True)
 
-class notes(Base):
+class notes(Base, SerializeJson):
 	__table__ = Table('notes', metadata, autoload=True)
 
-class module(Base):
+class module(Base, SerializeJson):
 	__table__ = Table('module', metadata, autoload=True)
 
-class personal(Base):
+class personal(Base, SerializeJson):
 	__table__ = Table('personal', metadata, autoload=True)
 
-class setting(Base):
+class setting(Base, SerializeJson):
 	__table__ = Table('setting', metadata, autoload=True)
 
-class perstyp(Base):
+class perstyp(Base, SerializeJson):
 	__table__ = Table('perstyp', metadata, autoload=True)
 
-class rotationsort(Base):
+class rotationsort(Base, SerializeJson):
 	__table__ = Table('rotationsort', metadata, autoload=True)
 
-class action(Base):
+class action(Base, SerializeJson):
 	__table__ = Table('action', metadata, autoload=True)
 
-class rotation(Base):
+class rotation(Base, SerializeJson):
 	__table__ = Table('rotation', metadata, autoload=True)
 
-class rotation2person(Base):
+class rotation2person(Base, SerializeJson):
 	__table__ = Table('rotation2person', metadata, autoload=True)
 
-class user(Base):
+class user(Base, SerializeJson):
 	__table__ = Table('user', metadata, autoload=True)
 
 # add relations to existing database tables
@@ -176,17 +188,8 @@ Rotation.person = relationship("personal",
 Session = sessionmaker(bind=engine)
 session = Session()
 
-## add base data
-session.add_all([
-	Location(name="USB", sort=1),
-	Location(name="UKBB", sort=2),
-	Location(name="Liestal", sort=3),
-	Location(name="Olten", sort=4),
-	Location(name="Solothurn", sort=5),
-])
-
 # commit transaction
-session.commit()
+#session.commit()
 
 """
 # change attribute
