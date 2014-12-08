@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 
-import os, sys
+import os, sys, re
 sys.path.append(os.path.join('..', 'lib', 'SQLAlchemy', 'lib'))
 sys.path.append(os.path.join('..'))
 
@@ -21,7 +21,32 @@ engine = create_engine(dsn, echo=True)
 # reflect the tables
 Base.prepare(engine, reflect=True)
 
+"""
 for table in Base.classes.values():
-	print """class %s(Base):
+	print " ""class %s(Base):
 	__table__ = Table(%r, Base.metadata, autoload=True)
-""" % (table.__name__, table.__name__)
+" "" % (table.__name__, table.__name__)
+"""
+
+def tp(s):
+	s = s.replace("VARCHAR", "STRING")
+	# replace everything after the first space
+	s = re.sub(" .*", "", s)
+	return s
+
+for e in Base.metadata.tables.values():
+	print "class %s(Base):" % e.name
+	
+	for c in e.columns:
+		t = tp(str(c.type))
+		sys.stdout.write("\t%s = Column(%s" % (c.name, t[0:1] + t[1:].lower()))
+		
+		if c.primary_key:
+			sys.stdout.write(", primary_key=True")
+		
+		if c.server_default:
+			sys.stdout.write(", " + str(c.server_default))
+
+		print ")"
+
+
