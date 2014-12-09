@@ -1,0 +1,6 @@
+# sudo easy_install sqlautocode
+
+need to apply this patch:
+http://code.google.com/p/sqlautocode/issues/attachmentText?id=42&aid=420001000&name=sa-0.8-fixes.diff&token=ABZ6GAdxzzIESfrOFMz9QCKpFMzG_dY8PQ%3A1418152735023
+
+sqlautocode -d mysql+mysqldb://planoaa:planoaa@localhost/planoaa

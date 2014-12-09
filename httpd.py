@@ -55,7 +55,7 @@ class personal:
 			ret += json.dumps(p) + ",\n"
 		ret = "[" + ret[:-2] + "]"
 		"""
-		for p in db.session.query(db.personal).filter_by(aktiv=1):
+		for p in db.session.query(db.Personal).filter_by(aktiv=1):
 			ret += json.dumps(p.as_dict()) + "\n"
 		return ret
 
