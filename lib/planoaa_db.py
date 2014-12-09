@@ -1,0 +1,153 @@
+class user(Base, SerializeJson):
+	uid = Column(Integer(11), primary_key=True)
+	kuerzel = Column(String(10))
+	name = Column(String(50))
+	vorname = Column(String(50))
+	login = Column(String(20))
+	pw = Column(String(20))
+	profil = Column(String(20))
+	aktiv = Column(Tinyint(1))
+	tst = Column(Timestamp)
+
+class rotationstyp(Base, SerializeJson):
+	rtid = Column(Integer(11), primary_key=True)
+	roid = Column(Integer(11))
+	name = Column(String(20))
+	pos = Column(Integer(11))
+	sort = Column(Integer(11))
+
+class log(Base, SerializeJson):
+	lid = Column(Integer(11), primary_key=True)
+	ip = Column(Char(15))
+	tabname = Column(String(50))
+	filename = Column(String(50))
+	recid = Column(Integer(11))
+	recidx = Column(String(20))
+	recstr = Column(Text)
+	tst = Column(Timestamp)
+	comment = Column(Text)
+	uid = Column(String(20))
+
+class rotblock(Base, SerializeJson):
+	rbid = Column(Integer(10), primary_key=True)
+	pid = Column(Integer(10))
+	rvon = Column(Char(6))
+	rbis = Column(Char(6))
+	neueintritt = Column(Tinyint(1))
+	comment = Column(Text)
+
+class permission(Base, SerializeJson):
+	prid = Column(Integer(11), primary_key=True)
+	uid = Column(Integer(11))
+	mid = Column(Integer(11))
+	level = Column(Integer(11))
+
+class color(Base, SerializeJson):
+	cid = Column(Integer(11), primary_key=True)
+	bg = Column(String(10))
+	fg = Column(String(10))
+	comment = Column(String(255))
+
+class notes(Base, SerializeJson):
+	nid = Column(Integer(11), primary_key=True)
+	pid = Column(Integer(11))
+	ym = Column(Char(6))
+	color = Column(Char(10))
+	comment = Column(Text)
+
+class module(Base, SerializeJson):
+	mid = Column(Integer(11), primary_key=True)
+	name = Column(String(30))
+	beschrieb = Column(String(150))
+	action = Column(Integer(11))
+
+class personal(Base, SerializeJson):
+	pid = Column(Integer(11), primary_key=True)
+	pidp = Column(Integer(11))
+	personalid = Column(String(20))
+	aktiv = Column(String(1))
+	kuerzel = Column(String(20))
+	ptid = Column(Integer(11))
+	anrede = Column(String(20))
+	titel = Column(String(20))
+	name = Column(String(40))
+	vorname = Column(String(30))
+	adresse = Column(String(100))
+	plz = Column(String(10))
+	wohnort = Column(String(30))
+	tel_p = Column(String(15))
+	tel_g = Column(String(15))
+	natel = Column(String(15))
+	fax = Column(String(15))
+	gebdatum = Column(Date)
+	bemerkung1 = Column(Text)
+	bemerkung2 = Column(Text)
+	f1 = Column(String(20))
+	f2 = Column(String(20))
+	f3 = Column(String(20))
+	f4 = Column(String(20))
+	f5 = Column(String(20))
+	f6 = Column(String(20))
+	f7 = Column(String(20))
+	f8 = Column(String(20))
+	f9 = Column(String(20))
+	f10 = Column(String(20))
+	f11 = Column(String(20))
+	email = Column(String(50))
+	combi = Column(Integer(10))
+	notarzt = Column(String(1))
+	sgnor = Column(String(1))
+	verfuegbar = Column(String(1))
+
+class perstyp(Base, SerializeJson):
+	ptid = Column(Integer(11), primary_key=True)
+	kurz = Column(String(4))
+	lang = Column(String(20))
+	sort = Column(Integer(10))
+
+class rotationsort(Base, SerializeJson):
+	roid = Column(Integer(11), primary_key=True)
+	kuerzel = Column(String(20))
+	name = Column(String(50))
+	anzpos = Column(Integer(11))
+	sort = Column(Integer(11))
+
+class action(Base, SerializeJson):
+	aid = Column(Integer(11), primary_key=True)
+	mask = Column(Integer(11))
+	name = Column(String(50))
+	def = Column(Tinyint(1))
+
+class rotation(Base, SerializeJson):
+	rid = Column(Integer(11), primary_key=True)
+	rbid = Column(Integer(10))
+	pid = Column(Integer(11))
+	jm = Column(Integer(11))
+	rtyp = Column(String(10))
+	bgrad = Column(Float)
+	bgradj = Column(Tinyint(1))
+	kuerzel = Column(String(10))
+	bemerkung1 = Column(Text)
+	bemerkung2 = Column(Text)
+	rort = Column(Integer(11))
+	rpos = Column(Integer(11))
+	show = Column(String(1))
+	meldung = Column(Integer(1))
+	meldetyp = Column(Integer(10))
+	f1 = Column(String(10))
+	f2 = Column(String(10))
+	cid = Column(Integer(11))
+	ukbb = Column(Tinyint(1))
+
+class rotation2person(Base, SerializeJson):
+	r2pid = Column(Integer(11), primary_key=True)
+	pid = Column(Integer(11))
+	rtid = Column(Integer(11))
+	ym = Column(Char(6))
+	pos = Column(Integer(11))
+
+class setting(Base, SerializeJson):
+	sid = Column(Integer(11), primary_key=True)
+	name = Column(String(50))
+	value = Column(Text)
+	uid = Column(Integer(11))

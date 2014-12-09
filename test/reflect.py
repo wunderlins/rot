@@ -36,6 +36,10 @@ def tp(s):
 	return s
 
 for e in Base.metadata.tables.values():
+	
+	if str(e.name)[0:4] == "rot_":
+		continue
+	
 	print "\nclass %s(%s):" % (e.name, baseclass)
 	
 	for c in e.columns:
