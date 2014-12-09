@@ -28,6 +28,7 @@ for table in Base.classes.values():
 " "" % (table.__name__, table.__name__)
 """
 
+baseclass = "Base, SerializeJson"
 def tp(s):
 	s = s.replace("VARCHAR", "STRING")
 	# replace everything after the first space
@@ -35,7 +36,7 @@ def tp(s):
 	return s
 
 for e in Base.metadata.tables.values():
-	print "class %s(Base):" % e.name
+	print "\nclass %s(%s):" % (e.name, baseclass)
 	
 	for c in e.columns:
 		t = tp(str(c.type))
@@ -44,8 +45,8 @@ for e in Base.metadata.tables.values():
 		if c.primary_key:
 			sys.stdout.write(", primary_key=True")
 		
-		if c.server_default:
-			sys.stdout.write(", " + str(c.server_default))
+		#if c.server_default:
+		#	sys.stdout.write(", " + str(c.server_default))
 
 		print ")"
 
