@@ -63,8 +63,13 @@ class personal:
 			ret += json.dumps(p) + ",\n"
 		ret = "[" + ret[:-2] + "]"
 		"""
-		for p in db.session.query(db.Personal).order_by(asc(db.Personal.name)).filter_by(aktiv=1, pidp='NULL'):
-			ret += str(p.as_json()) + ",\n"
+		for p in db.session.query(db.Personal).\
+			order_by(asc(db.Personal.name)).\
+			with_entities(db.Personal.name, db.Personal.vorname, db.Personal.kuerzel).\
+			filter_by(aktiv=1, pidp='NULL'):
+			ret += json.dumps({"name": p[0], "vorname": p[1], "kuerzel": p[2]}, encoding="8859") + ",\n"
+			#ret += str(p.as_json()) + ",\n"
+			
 		return ret[:-2] + "]"
 
 class index:

@@ -412,13 +412,14 @@ class User(Base, SerializeJson):
 
     #relation definitions
 
-"""
+
 # add relations to existing database tables
 #Rotation.person = relationship("personal", backref=backref('rotation', order_by=id))
+"""
 Rotation.person = relationship("Personal",
 															 foreign_keys="personal.pid",
-															 primaryjoin="and_(Personal.pid==Rotation.id)",
-															 backref="rotation")
+															 primaryjoin="and_(Personal.pid==Rot.id)",
+															 backref="rot")
 """
 
 # bind engine to a session
