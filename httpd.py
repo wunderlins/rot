@@ -65,9 +65,9 @@ class personal:
 		"""
 		for p in db.session.query(db.Personal).\
 			order_by(asc(db.Personal.name)).\
-			with_entities(db.Personal.name, db.Personal.vorname, db.Personal.kuerzel).\
+			with_entities(db.Personal.pid, db.Personal.name, db.Personal.vorname, db.Personal.kuerzel).\
 			filter_by(aktiv=1, pidp=''):
-			ret += json.dumps({"name": p[0], "vorname": p[1], "kuerzel": p[2]}, encoding="8859") + ",\n"
+			ret += json.dumps({"pid": p[0], "name": p[1], "vorname": p[2], "kuerzel": p[3]}, encoding="8859") + ",\n"
 			#ret += str(p.as_json()) + ",\n"
 			
 		return ret[:-2] + "]"

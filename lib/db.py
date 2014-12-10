@@ -75,9 +75,13 @@ class SerializeJson(object):
 	def as_json(self):
 		return json.dumps(self.as_dict(), encoding="8859")
 
+class DefaultAttributes(SerializeJson):
+	created = Column(DateTime, nullable=False, server_default=func.now())
+	modified = Column(DateTime, nullable=False, server_default=func.now(), server_onupdate=func.now())
+
 
 ## define new tables
-class Location(Base, SerializeJson):
+class Location(Base, DefaultAttributes):
 	__tablename__ = 'rot_location'
 	
 	id	    = Column(Integer, Sequence('location_id_seq'), primary_key=True)
@@ -85,7 +89,7 @@ class Location(Base, SerializeJson):
 	sort	  = Column(Integer)
 	deleted = Column(Integer, server_default = "0")
 
-class Cluster(Base, SerializeJson):
+class Cluster(Base, DefaultAttributes):
 	__tablename__ = 'rot_cluster'
 	
 	id	    = Column(Integer, Sequence('cluster_id_seq'), primary_key=True)
@@ -93,7 +97,7 @@ class Cluster(Base, SerializeJson):
 	sort	  = Column(Integer)
 	deleted = Column(Integer, server_default = "0")
 
-class Rot(Base, SerializeJson):
+class Rot(Base, DefaultAttributes):
 	__tablename__ = 'rot_rot'
 	
 	id          = Column(Integer, Sequence('rot_id_seq'), primary_key=True)
@@ -107,17 +111,18 @@ class Rot(Base, SerializeJson):
 	wunsch_prio = Column(Integer)
 	deleted	    = Column(Integer, server_default = "0")
 	cluster_id  = Column(Integer, ForeignKey('rot_cluster.id'))
+	location_id = Column(Integer, ForeignKey('rot_location.id'))
+	location    = relationship("Location", backref=backref('erfahrung', order_by=id))
 	
 	cluster = relationship("Cluster", backref=backref('rot', order_by=id))
 
-class Einteilung(Base, SerializeJson):
+class Einteilung(Base, DefaultAttributes):
 	__tablename__ = 'rot_erfahrung'
 	
 	id          = Column(Integer, Sequence('erfahrung_id_seq'), primary_key=True)
 	pid         = Column(Integer)
 	von	        = Column(Date)
 	bis         = Column(Date)
-	location_id = Column(Integer, ForeignKey('rot_location.id'))
 	rot_id      = Column(Integer, ForeignKey('rot_rot.id'))
 	
 	wunsch      = Column(Integer)
@@ -126,7 +131,6 @@ class Einteilung(Base, SerializeJson):
 	confirmed   = Column(Boolean, server_default="1")
 	
 	rot         = relationship("Rot", backref=backref('erfahrung', order_by=id))
-	location    = relationship("Location", backref=backref('erfahrung', order_by=id))
 
 # create tables from scratch
 Base.metadata.create_all(engine)
