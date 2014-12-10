@@ -124,6 +124,7 @@ class Einteilung(Base, SerializeJson):
 	prio        = Column(Integer)
 	
 	confirmed   = Column(Boolean, server_default="1")
+	pid         = Column(Integer)
 	
 	rot         = relationship("Rot", backref=backref('erfahrung', order_by=id))
 	location    = relationship("Location", backref=backref('erfahrung', order_by=id))
@@ -415,12 +416,11 @@ class User(Base, SerializeJson):
 
 # add relations to existing database tables
 #Rotation.person = relationship("personal", backref=backref('rotation', order_by=id))
-"""
-Rotation.person = relationship("Personal",
-															 foreign_keys="personal.pid",
-															 primaryjoin="and_(Personal.pid==Rot.id)",
-															 backref="rot")
-"""
+Einteilung.person = relationship("Personal",
+															 foreign_keys="Einteilung.pid",
+															 primaryjoin="and_(Personal.pid==Einteilung.pid)",
+															 backref="einteilung")
+
 
 # bind engine to a session
 Session = sessionmaker(bind=engine)
