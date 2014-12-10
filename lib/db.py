@@ -69,15 +69,18 @@ class AlchemyEncoder(json.JSONEncoder):
 """
 
 class SerializeJson(object):
+	encoding = "8859"
 	def as_dict(self):
 		return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 	
 	def as_json(self):
-		return json.dumps(self.as_dict(), encoding="8859")
+		return json.dumps(self.as_dict(), encoding=self.encoding)
 
 class DefaultAttributes(SerializeJson):
-	created = Column(DateTime, nullable=False, server_default=func.now())
-	modified = Column(DateTime, nullable=False, server_default=func.now(), server_onupdate=func.now())
+	encoding = "utf8"
+	# fixme: try to ustilize database features for these timestamps. 
+	created = Column(DateTime, nullable=False, default=func.now())
+	modified = Column(DateTime, nullable=False, default=func.now(), onupdate=func.now())
 
 
 ## define new tables
