@@ -80,17 +80,17 @@ class SerializeJson(object):
 class Location(Base, SerializeJson):
 	__tablename__ = 'rot_location'
 	
-	id      = Column(Integer, Sequence('location_id_seq'), primary_key=True)
-	name    = Column(String(100))
-	sort    = Column(Integer)
+	id	    = Column(Integer, Sequence('location_id_seq'), primary_key=True)
+	name	  = Column(String(100))
+	sort	  = Column(Integer)
 	deleted = Column(Integer, server_default = "0")
 
 class Cluster(Base, SerializeJson):
 	__tablename__ = 'rot_cluster'
 	
-	id      = Column(Integer, Sequence('cluster_id_seq'), primary_key=True)
-	name    = Column(String(100))
-	sort    = Column(Integer)
+	id	    = Column(Integer, Sequence('cluster_id_seq'), primary_key=True)
+	name	  = Column(String(100))
+	sort	  = Column(Integer)
 	deleted = Column(Integer, server_default = "0")
 
 class Rot(Base, SerializeJson):
@@ -105,7 +105,7 @@ class Rot(Base, SerializeJson):
 	dauer_step  = Column(Date)
 	wunsch      = Column(Integer)
 	wunsch_prio = Column(Integer)
-	deleted     = Column(Integer, server_default = "0")
+	deleted	    = Column(Integer, server_default = "0")
 	cluster_id  = Column(Integer, ForeignKey('rot_cluster.id'))
 	
 	cluster = relationship("Cluster", backref=backref('rot', order_by=id))
@@ -115,16 +115,15 @@ class Einteilung(Base, SerializeJson):
 	
 	id          = Column(Integer, Sequence('erfahrung_id_seq'), primary_key=True)
 	pid         = Column(Integer)
-	von         = Column(Date)
+	von	        = Column(Date)
 	bis         = Column(Date)
 	location_id = Column(Integer, ForeignKey('rot_location.id'))
-	rot_id = Column(Integer, ForeignKey('rot_rot.id'))
+	rot_id      = Column(Integer, ForeignKey('rot_rot.id'))
 	
 	wunsch      = Column(Integer)
 	prio        = Column(Integer)
 	
 	confirmed   = Column(Boolean, server_default="1")
-	pid         = Column(Integer)
 	
 	rot         = relationship("Rot", backref=backref('erfahrung', order_by=id))
 	location    = relationship("Location", backref=backref('erfahrung', order_by=id))
@@ -132,286 +131,287 @@ class Einteilung(Base, SerializeJson):
 # create tables from scratch
 Base.metadata.create_all(engine)
 
+## existing tables
 class Action(Base, SerializeJson):
-    __tablename__ = 'action'
+	__tablename__ = 'action'
 
-    __table_args__ = {}
+	__table_args__ = {}
 
-    #column definitions
-    aid = Column('aid', INTEGER(), primary_key=True, nullable=False)
-    def_ = Column('def', Integer(), nullable=False)
-    mask = Column('mask', INTEGER())
-    name = Column('name', VARCHAR(length=50))
+	#column definitions
+	aid = Column('aid', INTEGER(), primary_key=True, nullable=False)
+	def_ = Column('def', Integer(), nullable=False)
+	mask = Column('mask', INTEGER())
+	name = Column('name', VARCHAR(length=50))
 
-    #relation definitions
+	#relation definitions
 
 
 class Color(Base, SerializeJson):
-    __tablename__ = 'color'
+	__tablename__ = 'color'
 
-    __table_args__ = {}
+	__table_args__ = {}
 
-    #column definitions
-    bg = Column('bg', VARCHAR(length=10))
-    cid = Column('cid', INTEGER(), primary_key=True, nullable=False)
-    comment = Column('comment', VARCHAR(length=255))
-    fg = Column('fg', VARCHAR(length=10))
+	#column definitions
+	bg = Column('bg', VARCHAR(length=10))
+	cid = Column('cid', INTEGER(), primary_key=True, nullable=False)
+	comment = Column('comment', VARCHAR(length=255))
+	fg = Column('fg', VARCHAR(length=10))
 
-    #relation definitions
+	#relation definitions
 
 
 class Log(Base, SerializeJson):
-    __tablename__ = 'log'
+	__tablename__ = 'log'
 
-    __table_args__ = {}
+	__table_args__ = {}
 
-    #column definitions
-    comment = Column('comment', TEXT())
-    filename = Column('filename', VARCHAR(length=50))
-    ip = Column('ip', CHAR(length=15))
-    lid = Column('lid', INTEGER(), primary_key=True, nullable=False)
-    recid = Column('recid', INTEGER())
-    recidx = Column('recidx', VARCHAR(length=20))
-    recstr = Column('recstr', TEXT())
-    tabname = Column('tabname', VARCHAR(length=50))
-    tst = Column('tst', TIMESTAMP(), nullable=False)
-    uid = Column('uid', VARCHAR(length=20))
+	#column definitions
+	comment = Column('comment', TEXT())
+	filename = Column('filename', VARCHAR(length=50))
+	ip = Column('ip', CHAR(length=15))
+	lid = Column('lid', INTEGER(), primary_key=True, nullable=False)
+	recid = Column('recid', INTEGER())
+	recidx = Column('recidx', VARCHAR(length=20))
+	recstr = Column('recstr', TEXT())
+	tabname = Column('tabname', VARCHAR(length=50))
+	tst = Column('tst', TIMESTAMP(), nullable=False)
+	uid = Column('uid', VARCHAR(length=20))
 
-    #relation definitions
+	#relation definitions
 
 
 class Module(Base, SerializeJson):
-    __tablename__ = 'module'
+	__tablename__ = 'module'
 
-    __table_args__ = {}
+	__table_args__ = {}
 
-    #column definitions
-    action = Column('action', INTEGER(), nullable=False)
-    beschrieb = Column('beschrieb', VARCHAR(length=150))
-    mid = Column('mid', INTEGER(), primary_key=True, nullable=False)
-    name = Column('name', VARCHAR(length=30))
+	#column definitions
+	action = Column('action', INTEGER(), nullable=False)
+	beschrieb = Column('beschrieb', VARCHAR(length=150))
+	mid = Column('mid', INTEGER(), primary_key=True, nullable=False)
+	name = Column('name', VARCHAR(length=30))
 
-    #relation definitions
+	#relation definitions
 
 
 class Note(Base, SerializeJson):
-    __tablename__ = 'notes'
+	__tablename__ = 'notes'
 
-    __table_args__ = {}
+	__table_args__ = {}
 
-    #column definitions
-    color = Column('color', CHAR(length=10))
-    comment = Column('comment', TEXT())
-    nid = Column('nid', INTEGER(), primary_key=True, nullable=False)
-    pid = Column('pid', INTEGER(), nullable=False)
-    ym = Column('ym', CHAR(length=6))
+	#column definitions
+	color = Column('color', CHAR(length=10))
+	comment = Column('comment', TEXT())
+	nid = Column('nid', INTEGER(), primary_key=True, nullable=False)
+	pid = Column('pid', INTEGER(), nullable=False)
+	ym = Column('ym', CHAR(length=6))
 
-    #relation definitions
+	#relation definitions
 
 
 class Permission(Base, SerializeJson):
-    __tablename__ = 'permission'
+	__tablename__ = 'permission'
 
-    __table_args__ = {}
+	__table_args__ = {}
 
-    #column definitions
-    level = Column('level', INTEGER())
-    mid = Column('mid', INTEGER())
-    prid = Column('prid', INTEGER(), primary_key=True, nullable=False)
-    uid = Column('uid', INTEGER())
+	#column definitions
+	level = Column('level', INTEGER())
+	mid = Column('mid', INTEGER())
+	prid = Column('prid', INTEGER(), primary_key=True, nullable=False)
+	uid = Column('uid', INTEGER())
 
-    #relation definitions
+	#relation definitions
 
 
 class Personal(Base, SerializeJson):
-    __tablename__ = 'personal'
+	__tablename__ = 'personal'
 
-    __table_args__ = {}
+	__table_args__ = {}
 
-    #column definitions
-    pid = Column('pid', INTEGER(), primary_key=True, nullable=False)
-    adresse = Column('adresse', VARCHAR(length=100))
-    aktiv = Column('aktiv', VARCHAR(length=1))
-    anrede = Column('anrede', VARCHAR(length=20))
-    bemerkung1 = Column('bemerkung1', TEXT())
-    bemerkung2 = Column('bemerkung2', TEXT())
-    combi = Column('combi', INTEGER())
-    email = Column('email', VARCHAR(length=50))
-    f1 = Column('f1', VARCHAR(length=20))
-    f10 = Column('f10', VARCHAR(length=20))
-    f11 = Column('f11', VARCHAR(length=20))
-    f2 = Column('f2', VARCHAR(length=20))
-    f3 = Column('f3', VARCHAR(length=20))
-    f4 = Column('f4', VARCHAR(length=20))
-    f5 = Column('f5', VARCHAR(length=20))
-    f6 = Column('f6', VARCHAR(length=20))
-    f7 = Column('f7', VARCHAR(length=20))
-    f8 = Column('f8', VARCHAR(length=20))
-    f9 = Column('f9', VARCHAR(length=20))
-    fax = Column('fax', VARCHAR(length=15))
-    gebdatum = Column('gebdatum', DATE())
-    kuerzel = Column('kuerzel', VARCHAR(length=20))
-    name = Column('name', VARCHAR(length=40), nullable=False)
-    natel = Column('natel', VARCHAR(length=15))
-    notarzt = Column('notarzt', VARCHAR(length=1))
-    personalid = Column('personalid', VARCHAR(length=20))
-    pid = Column('pid', INTEGER(), primary_key=True, nullable=False)
-    pidp = Column('pidp', INTEGER(), nullable=False)
-    plz = Column('plz', VARCHAR(length=10))
-    ptid = Column('ptid', INTEGER(), nullable=False)
-    sgnor = Column('sgnor', VARCHAR(length=1))
-    tel_g = Column('tel_g', VARCHAR(length=15))
-    tel_p = Column('tel_p', VARCHAR(length=15))
-    titel = Column('titel', VARCHAR(length=20))
-    verfuegbar = Column('verfuegbar', VARCHAR(length=1))
-    vorname = Column('vorname', VARCHAR(length=30), nullable=False)
-    wohnort = Column('wohnort', VARCHAR(length=30))
+	#column definitions
+	pid = Column('pid', INTEGER(), primary_key=True, nullable=False)
+	adresse = Column('adresse', VARCHAR(length=100))
+	aktiv = Column('aktiv', VARCHAR(length=1))
+	anrede = Column('anrede', VARCHAR(length=20))
+	bemerkung1 = Column('bemerkung1', TEXT())
+	bemerkung2 = Column('bemerkung2', TEXT())
+	combi = Column('combi', INTEGER())
+	email = Column('email', VARCHAR(length=50))
+	f1 = Column('f1', VARCHAR(length=20))
+	f10 = Column('f10', VARCHAR(length=20))
+	f11 = Column('f11', VARCHAR(length=20))
+	f2 = Column('f2', VARCHAR(length=20))
+	f3 = Column('f3', VARCHAR(length=20))
+	f4 = Column('f4', VARCHAR(length=20))
+	f5 = Column('f5', VARCHAR(length=20))
+	f6 = Column('f6', VARCHAR(length=20))
+	f7 = Column('f7', VARCHAR(length=20))
+	f8 = Column('f8', VARCHAR(length=20))
+	f9 = Column('f9', VARCHAR(length=20))
+	fax = Column('fax', VARCHAR(length=15))
+	gebdatum = Column('gebdatum', DATE())
+	kuerzel = Column('kuerzel', VARCHAR(length=20))
+	name = Column('name', VARCHAR(length=40), nullable=False)
+	natel = Column('natel', VARCHAR(length=15))
+	notarzt = Column('notarzt', VARCHAR(length=1))
+	personalid = Column('personalid', VARCHAR(length=20))
+	pid = Column('pid', INTEGER(), primary_key=True, nullable=False)
+	pidp = Column('pidp', INTEGER(), nullable=False)
+	plz = Column('plz', VARCHAR(length=10))
+	ptid = Column('ptid', INTEGER(), nullable=False)
+	sgnor = Column('sgnor', VARCHAR(length=1))
+	tel_g = Column('tel_g', VARCHAR(length=15))
+	tel_p = Column('tel_p', VARCHAR(length=15))
+	titel = Column('titel', VARCHAR(length=20))
+	verfuegbar = Column('verfuegbar', VARCHAR(length=1))
+	vorname = Column('vorname', VARCHAR(length=30), nullable=False)
+	wohnort = Column('wohnort', VARCHAR(length=30))
 
-    #relation definitions
-    def __repr__(self):
-        return "<Personal(name='%s', vorname='%s', pid='%d')>" % (
-            self.name, self.vorname, self.pid)
-    
-    """
-    def as_dict(self):
-        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
-    """
-    
+	#relation definitions
+	def __repr__(self):
+		return "<Personal(name='%s', vorname='%s', pid='%d')>" % (
+			self.name, self.vorname, self.pid)
+	
+	"""
+	def as_dict(self):
+		return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+	"""
+	
 class Perstyp(Base, SerializeJson):
-    __tablename__ = 'perstyp'
+	__tablename__ = 'perstyp'
 
-    __table_args__ = {}
+	__table_args__ = {}
 
-    #column definitions
-    kurz = Column('kurz', VARCHAR(length=4))
-    lang = Column('lang', VARCHAR(length=20))
-    ptid = Column('ptid', INTEGER(), primary_key=True, nullable=False)
-    sort = Column('sort', INTEGER())
+	#column definitions
+	kurz = Column('kurz', VARCHAR(length=4))
+	lang = Column('lang', VARCHAR(length=20))
+	ptid = Column('ptid', INTEGER(), primary_key=True, nullable=False)
+	sort = Column('sort', INTEGER())
 
-    #relation definitions
+	#relation definitions
 
 
 class Rotation(Base, SerializeJson):
-    __tablename__ = 'rotation'
+	__tablename__ = 'rotation'
 
-    __table_args__ = {}
+	__table_args__ = {}
 
-    #column definitions
-    bemerkung1 = Column('bemerkung1', TEXT())
-    bemerkung2 = Column('bemerkung2', TEXT())
-    bgrad = Column('bgrad', FLOAT())
-    bgradj = Column('bgradj', Integer(), nullable=False)
-    cid = Column('cid', INTEGER())
-    f1 = Column('f1', VARCHAR(length=10))
-    f2 = Column('f2', VARCHAR(length=10))
-    jm = Column('jm', INTEGER())
-    kuerzel = Column('kuerzel', VARCHAR(length=10))
-    meldetyp = Column('meldetyp', INTEGER())
-    meldung = Column('meldung', INTEGER())
-    pid = Column('pid', INTEGER(), nullable=False)
-    rbid = Column('rbid', INTEGER(), nullable=False)
-    rid = Column('rid', INTEGER(), primary_key=True, nullable=False)
-    rort = Column('rort', INTEGER())
-    rpos = Column('rpos', INTEGER(), nullable=False)
-    rtyp = Column('rtyp', VARCHAR(length=10))
-    show = Column('show', VARCHAR(length=1))
-    ukbb = Column('ukbb', Integer())
+	#column definitions
+	bemerkung1 = Column('bemerkung1', TEXT())
+	bemerkung2 = Column('bemerkung2', TEXT())
+	bgrad = Column('bgrad', FLOAT())
+	bgradj = Column('bgradj', Integer(), nullable=False)
+	cid = Column('cid', INTEGER())
+	f1 = Column('f1', VARCHAR(length=10))
+	f2 = Column('f2', VARCHAR(length=10))
+	jm = Column('jm', INTEGER())
+	kuerzel = Column('kuerzel', VARCHAR(length=10))
+	meldetyp = Column('meldetyp', INTEGER())
+	meldung = Column('meldung', INTEGER())
+	pid = Column('pid', INTEGER(), nullable=False)
+	rbid = Column('rbid', INTEGER(), nullable=False)
+	rid = Column('rid', INTEGER(), primary_key=True, nullable=False)
+	rort = Column('rort', INTEGER())
+	rpos = Column('rpos', INTEGER(), nullable=False)
+	rtyp = Column('rtyp', VARCHAR(length=10))
+	show = Column('show', VARCHAR(length=1))
+	ukbb = Column('ukbb', Integer())
 
-    #relation definitions
+	#relation definitions
 
 
 class Rotation2person(Base, SerializeJson):
-    __tablename__ = 'rotation2person'
+	__tablename__ = 'rotation2person'
 
-    __table_args__ = {}
+	__table_args__ = {}
 
-    #column definitions
-    pid = Column('pid', INTEGER(), nullable=False)
-    pos = Column('pos', INTEGER(), nullable=False)
-    r2pid = Column('r2pid', INTEGER(), primary_key=True, nullable=False)
-    rtid = Column('rtid', INTEGER(), nullable=False)
-    ym = Column('ym', CHAR(length=6), nullable=False)
+	#column definitions
+	pid = Column('pid', INTEGER(), nullable=False)
+	pos = Column('pos', INTEGER(), nullable=False)
+	r2pid = Column('r2pid', INTEGER(), primary_key=True, nullable=False)
+	rtid = Column('rtid', INTEGER(), nullable=False)
+	ym = Column('ym', CHAR(length=6), nullable=False)
 
-    #relation definitions
+	#relation definitions
 
 
 class Rotationsort(Base, SerializeJson):
-    __tablename__ = 'rotationsort'
+	__tablename__ = 'rotationsort'
 
-    __table_args__ = {}
+	__table_args__ = {}
 
-    #column definitions
-    anzpos = Column('anzpos', INTEGER())
-    kuerzel = Column('kuerzel', VARCHAR(length=20))
-    name = Column('name', VARCHAR(length=50))
-    roid = Column('roid', INTEGER(), primary_key=True, nullable=False)
-    sort = Column('sort', INTEGER())
+	#column definitions
+	anzpos = Column('anzpos', INTEGER())
+	kuerzel = Column('kuerzel', VARCHAR(length=20))
+	name = Column('name', VARCHAR(length=50))
+	roid = Column('roid', INTEGER(), primary_key=True, nullable=False)
+	sort = Column('sort', INTEGER())
 
-    #relation definitions
+	#relation definitions
 
 
 class Rotationstyp(Base, SerializeJson):
-    __tablename__ = 'rotationstyp'
+	__tablename__ = 'rotationstyp'
 
-    __table_args__ = {}
+	__table_args__ = {}
 
-    #column definitions
-    name = Column('name', VARCHAR(length=20))
-    pos = Column('pos', INTEGER(), nullable=False)
-    roid = Column('roid', INTEGER())
-    rtid = Column('rtid', INTEGER(), primary_key=True, nullable=False)
-    sort = Column('sort', INTEGER())
+	#column definitions
+	name = Column('name', VARCHAR(length=20))
+	pos = Column('pos', INTEGER(), nullable=False)
+	roid = Column('roid', INTEGER())
+	rtid = Column('rtid', INTEGER(), primary_key=True, nullable=False)
+	sort = Column('sort', INTEGER())
 
-    #relation definitions
+	#relation definitions
 
 
 class Rotblock(Base, SerializeJson):
-    __tablename__ = 'rotblock'
+	__tablename__ = 'rotblock'
 
-    __table_args__ = {}
+	__table_args__ = {}
 
-    #column definitions
-    comment = Column('comment', TEXT())
-    neueintritt = Column('neueintritt', Integer(), nullable=False)
-    pid = Column('pid', INTEGER())
-    rbid = Column('rbid', INTEGER(), primary_key=True, nullable=False)
-    rbis = Column('rbis', CHAR(length=6))
-    rvon = Column('rvon', CHAR(length=6))
+	#column definitions
+	comment = Column('comment', TEXT())
+	neueintritt = Column('neueintritt', Integer(), nullable=False)
+	pid = Column('pid', INTEGER())
+	rbid = Column('rbid', INTEGER(), primary_key=True, nullable=False)
+	rbis = Column('rbis', CHAR(length=6))
+	rvon = Column('rvon', CHAR(length=6))
 
-    #relation definitions
+	#relation definitions
 
 
 class Setting(Base, SerializeJson):
-    __tablename__ = 'setting'
+	__tablename__ = 'setting'
 
-    __table_args__ = {}
+	__table_args__ = {}
 
-    #column definitions
-    name = Column('name', VARCHAR(length=50))
-    sid = Column('sid', INTEGER(), primary_key=True, nullable=False)
-    uid = Column('uid', INTEGER())
-    value = Column('value', TEXT())
+	#column definitions
+	name = Column('name', VARCHAR(length=50))
+	sid = Column('sid', INTEGER(), primary_key=True, nullable=False)
+	uid = Column('uid', INTEGER())
+	value = Column('value', TEXT())
 
-    #relation definitions
+	#relation definitions
 
 
 class User(Base, SerializeJson):
-    __tablename__ = 'user'
+	__tablename__ = 'user'
 
-    __table_args__ = {}
+	__table_args__ = {}
 
-    #column definitions
-    aktiv = Column('aktiv', Integer(), nullable=False)
-    kuerzel = Column('kuerzel', VARCHAR(length=10))
-    login = Column('login', VARCHAR(length=20))
-    name = Column('name', VARCHAR(length=50))
-    profil = Column('profil', VARCHAR(length=20))
-    pw = Column('pw', VARCHAR(length=20))
-    tst = Column('tst', TIMESTAMP(), nullable=False)
-    uid = Column('uid', INTEGER(), primary_key=True, nullable=False)
-    vorname = Column('vorname', VARCHAR(length=50))
+	#column definitions
+	aktiv = Column('aktiv', Integer(), nullable=False)
+	kuerzel = Column('kuerzel', VARCHAR(length=10))
+	login = Column('login', VARCHAR(length=20))
+	name = Column('name', VARCHAR(length=50))
+	profil = Column('profil', VARCHAR(length=20))
+	pw = Column('pw', VARCHAR(length=20))
+	tst = Column('tst', TIMESTAMP(), nullable=False)
+	uid = Column('uid', INTEGER(), primary_key=True, nullable=False)
+	vorname = Column('vorname', VARCHAR(length=50))
 
-    #relation definitions
+	#relation definitions
 
 
 # add relations to existing database tables
