@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+# -*- coding: utf-8 -*-
 
 import os, sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'lib', 'SQLAlchemy', 'lib'))
@@ -48,11 +48,32 @@ class Serializable(AbstractConcreteBase, Base):
 		return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 """
 
-from sqlalchemy.ext.declarative import declared_attr
+"""
+from sqlalchemy.ext.declarative import DeclarativeMeta
+class AlchemyEncoder(json.JSONEncoder):
+	def default(self, obj):
+		if isinstance(obj.__class__, DeclarativeMeta):
+			# an SQLAlchemy class
+			fields = {}
+			for field in [x for x in dir(obj) if not x.startswith('_') and x != 'metadata']:
+				data = obj.__getattribute__(field)
+				try:
+					json.dumps(data) # this will fail on non-encodable values, like other classes
+					fields[field] = data
+				except TypeError:
+					fields[field] = None
+			# a json-encodable dict
+			return fields
+				
+		return json.JSONEncoder.default(self, obj)
+"""
+
 class SerializeJson(object):
 	def as_dict(self):
 		return {c.name: getattr(self, c.name) for c in self.__table__.columns}
-
+	
+	def as_json(self):
+		return json.dumps(self.as_dict(), encoding="8859")
 
 
 ## define new tables
@@ -110,6 +131,8 @@ class Einteilung(Base, SerializeJson):
 # create tables from scratch
 Base.metadata.create_all(engine)
 
+from planoaa_db import *
+
 """
 ## definition for existing tables
 class Personal(Base):
@@ -130,6 +153,7 @@ class Personal(Base):
 
 """
 
+"""
 # reflection of existing tables
 metadata = MetaData(bind=engine)
 class rotationstyp(Base, SerializeJson):
@@ -177,12 +201,15 @@ class rotation2person(Base, SerializeJson):
 class user(Base, SerializeJson):
 	__table__ = Table('user', metadata, autoload=True)
 
+"""
+"""
 # add relations to existing database tables
 #Rotation.person = relationship("personal", backref=backref('rotation', order_by=id))
-Rotation.person = relationship("personal",
+Rotation.person = relationship("Personal",
 															 foreign_keys="personal.pid",
-															 primaryjoin="and_(personal.pid==Rotation.id)",
+															 primaryjoin="and_(Personal.pid==Rotation.id)",
 															 backref="rotation")
+"""
 
 # bind engine to a session
 Session = sessionmaker(bind=engine)
@@ -202,5 +229,10 @@ print session.new
 #our_user = session.query(User).filter_by(name='ed').first()
 #our_user
 """
+
+def dump_personal():
+	for p in session.query(Personal).all():
+		print p
+
 
 

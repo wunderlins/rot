@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 """
 Start application server on port 8080
@@ -32,9 +33,15 @@ class test:
 		s = db.session
 		#p = s.query(db.personal).filter_by(aktiv=1)
 		out = ""
-		for r in s.query(db.personal.name, db.personal.vorname).filter_by(aktiv=1):
-			print r;
-			out += r.as_dict() + "\n"
+		for r in s.query(db.Personal).filter_by(aktiv=1):
+			#print r
+			#out += json.dumps(r.as_dict(), encoding="8859")
+			out += str(r.as_json())
+			#out += json.dumps(r, cls=db.AlchemyEncoder)
+			#out += r.name + " "
+			#out += ":".join("{:02x}".format(ord(c)) for c in r.name)
+			out += "\n"
+			#out += r.as_dict() + "\n"
 		return out
 
 class personal:
@@ -49,15 +56,15 @@ class personal:
 		)
 		personal = db.select('personal', what='pid,pidp,kuerzel,name,vorname,ptid,email')
 		"""
-		ret = "";
+		ret = "[";
 		"""
 		for p in personal:
 			ret += json.dumps(p) + ",\n"
 		ret = "[" + ret[:-2] + "]"
 		"""
 		for p in db.session.query(db.Personal).filter_by(aktiv=1):
-			ret += json.dumps(p.as_dict()) + "\n"
-		return ret
+			ret += str(p.as_json()) + ",\n"
+		return ret[:-2] + "]"
 
 class index:
 	def GET(self):
