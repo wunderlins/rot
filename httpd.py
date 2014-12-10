@@ -15,6 +15,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), 'lib', 'web'))
 #sys.path.append(os.path.join('sw', 'lib', 'python2.7', 'site-packages'))
 
 import web, config, json, db
+from sqlalchemy import *
 
 # allow to pass a custom port/ip into the application
 class rot(web.application):
@@ -62,7 +63,7 @@ class personal:
 			ret += json.dumps(p) + ",\n"
 		ret = "[" + ret[:-2] + "]"
 		"""
-		for p in db.session.query(db.Personal).filter_by(aktiv=1):
+		for p in db.session.query(db.Personal).order_by(asc(db.Personal.name)).filter_by(aktiv=1, pidp='NULL'):
 			ret += str(p.as_json()) + ",\n"
 		return ret[:-2] + "]"
 

@@ -6,7 +6,7 @@ $.ajax({
 }).done(function( data ) {
 	if ( console && console.log ) {
 		var js = jQuery.parseJSON(data);
-		console.log(js);
+		//console.log(js);
 				
 		// append nodes
 		/**
