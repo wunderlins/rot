@@ -120,6 +120,24 @@ class Rot(Base, DefaultAttributes):
 	cluster = relationship("Cluster", backref=backref('rot', order_by=id))
 
 class Einteilung(Base, DefaultAttributes):
+	""" 
+		externe erfahrung zwichen ips/ana/anderes untershceiden.
+		
+		1-m relation für Rotation zu einteilung. Innerhalb einer Rotation 
+		können pro monat mehrere personen eingeteilt sein.
+		
+		Forschung kann als Rotation abgebildet werden.
+		
+		Aussenrotationen separat behandeln (Aarau, Olten, Liestal, etc.)
+		
+		Cluster: soll als allgemeine gruppierung der rotationen verwendet werden.
+		
+		Verlauf der Wünsche soll geloggt werden
+		
+		Bei eingabe von Wünschen soll es möglich sein pro rotation einen 
+		kommentar zu hinterlassen.
+		
+	"""
 	__tablename__ = 'rot_erfahrung'
 	
 	id          = Column(Integer, Sequence('erfahrung_id_seq'), primary_key=True)
@@ -129,11 +147,13 @@ class Einteilung(Base, DefaultAttributes):
 	rot_id      = Column(Integer, ForeignKey('rot_rot.id'))
 	
 	wunsch      = Column(Integer)
-	prio        = Column(Integer)
+	prio        = Column(Integer) # 1-5
 	
 	confirmed   = Column(Boolean, server_default="1")
 	
 	rot         = relationship("Rot", backref=backref('erfahrung', order_by=id))
+	# bemerkung
+	# history
 
 # create tables from scratch
 Base.metadata.create_all(engine)
