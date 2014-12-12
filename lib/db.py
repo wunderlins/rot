@@ -81,7 +81,7 @@ class DefaultAttributes(SerializeJson):
 	# fixme: try to ustilize database features for these timestamps. 
 	created = Column(DateTime, nullable=False, default=func.now())
 	modified = Column(DateTime, nullable=False, default=func.now(), onupdate=func.now())
-
+	deleted = Column(Integer, server_default = "0")
 
 ## define new tables
 class Location(Base, DefaultAttributes):
@@ -92,13 +92,12 @@ class Location(Base, DefaultAttributes):
 	sort	  = Column(Integer)
 	deleted = Column(Integer, server_default = "0")
 
-class Cluster(Base, DefaultAttributes):
-	__tablename__ = 'rot_cluster'
+class Group(Base, DefaultAttributes):
+	__tablename__ = 'rot_group'
 	
-	id	    = Column(Integer, Sequence('cluster_id_seq'), primary_key=True)
+	id	    = Column(Integer, Sequence('group_id_seq'), primary_key=True)
 	name	  = Column(String(100))
 	sort	  = Column(Integer)
-	deleted = Column(Integer, server_default = "0")
 
 class Rot(Base, DefaultAttributes):
 	__tablename__ = 'rot_rot'
@@ -108,16 +107,16 @@ class Rot(Base, DefaultAttributes):
 	bemerkung   = Column(String(250))
 	sort        = Column(Integer)
 	dauer_von   = Column(Integer)
-	dauer_bis   = Column(Date)
-	dauer_step  = Column(Date)
-	wunsch      = Column(Integer)
-	wunsch_prio = Column(Integer)
-	deleted	    = Column(Integer, server_default = "0")
-	cluster_id  = Column(Integer, ForeignKey('rot_cluster.id'))
+	dauer_bis   = Column(Integer)
+	dauer_step  = Column(Integer)
+	#wunsch      = Column(Integer)
+	#wunsch_prio = Column(Integer)
+	
+	group_id    = Column(Integer, ForeignKey('rot_group.id'))
 	location_id = Column(Integer, ForeignKey('rot_location.id'))
 	location    = relationship("Location", backref=backref('erfahrung', order_by=id))
 	
-	cluster = relationship("Cluster", backref=backref('rot', order_by=id))
+	group = relationship("Group", backref=backref('rot', order_by=id))
 
 class Einteilung(Base, DefaultAttributes):
 	""" 
@@ -150,6 +149,7 @@ class Einteilung(Base, DefaultAttributes):
 	prio        = Column(Integer) # 1-5
 	
 	confirmed   = Column(Boolean, server_default="1")
+	bgrad       = Column(Integer) # 0-100 %
 	
 	rot         = relationship("Rot", backref=backref('erfahrung', order_by=id))
 	# bemerkung
