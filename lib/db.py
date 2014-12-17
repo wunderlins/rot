@@ -24,6 +24,7 @@ dsn = "mysql+mysqldb://"+config.db_user+":"+config.db_pass+"@localhost/"+config.
 engine = create_engine(dsn, echo=config.db_debug)
 Base = declarative_base()
 
+
 # data definitions
 """
 class User(Base):
@@ -90,8 +91,7 @@ class Location(Base, DefaultAttributes):
 	id	    = Column(Integer, Sequence('location_id_seq'), primary_key=True)
 	name	  = Column(String(100))
 	sort	  = Column(Integer)
-	deleted = Column(Integer, server_default = "0")
-
+	
 class Group(Base, DefaultAttributes):
 	__tablename__ = 'rot_group'
 	
@@ -136,6 +136,7 @@ class Einteilung(Base, DefaultAttributes):
 		Bei eingabe von Wünschen soll es möglich sein pro rotation einen 
 		kommentar zu hinterlassen.
 		
+		
 	"""
 	__tablename__ = 'rot_erfahrung'
 	
@@ -148,12 +149,24 @@ class Einteilung(Base, DefaultAttributes):
 	wunsch      = Column(Integer)
 	prio        = Column(Integer) # 1-5
 	
-	confirmed   = Column(Boolean, server_default="1")
+	#confirmed   = Column(Boolean, server_default="1")
 	bgrad       = Column(Integer) # 0-100 %
 	
 	rot         = relationship("Rot", backref=backref('erfahrung', order_by=id))
 	# bemerkung
 	# history
+
+class Wunsch(Base, DefaultAttributes):
+	__tablename__ = 'rot_wunsch'
+	
+	id          = Column(Integer, Sequence('wunsch_id_seq'), primary_key=True)
+	pid         = Column(Integer)
+	rot_id      = Column(Integer, ForeignKey('rot_rot.id'))
+	
+	prio        = Column(Integer) # 1-5
+	latest      = Column(Integer)
+	
+	#rot         = relationship("Rot", backref=backref('erfahrung', order_by=id))
 
 # create tables from scratch
 Base.metadata.create_all(engine)

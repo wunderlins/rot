@@ -26,7 +26,8 @@ class rot(web.application):
 urls = (
   '/', 'index',
 	'/personal', 'personal',
-	'/test', 'test' # test methods, remove these in production
+	'/test', 'test', # test methods, remove these in production
+	'/wunsch', 'wunsch' # test methods, remove these in production
 )
 
 class test:
@@ -88,6 +89,12 @@ class index:
 		#ret = "[" + ret + "]"
 		render = web.template.render('template')
 		return render.index(None)
+		#return "Hello World"
+
+class wunsch:
+	def GET(self):
+		render = web.template.render('template')
+		return render.wunsch(None)
 		#return "Hello World"
 		
 if __name__ == "__main__":
