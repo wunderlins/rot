@@ -91,22 +91,22 @@ class Location(Base, DefaultAttributes):
 	__tablename__ = 'rot_location'
 	
 	id	    = Column(Integer, Sequence('location_id_seq'), primary_key=True)
-	name	  = Column(Unicode(100, collation='utf8_bin'))
+	name	  = Column(Unicode(100))
 	sort	  = Column(Integer)
 	
 class Group(Base, DefaultAttributes):
 	__tablename__ = 'rot_group'
 	
 	id	    = Column(Integer, Sequence('group_id_seq'), primary_key=True)
-	name	  = Column(Unicode(100, collation='utf8_bin'))
+	name	  = Column(Unicode(100))
 	sort	  = Column(Integer)
 
 class Rot(Base, DefaultAttributes):
 	__tablename__ = 'rot_rot'
 	
 	id          = Column(Integer, Sequence('rot_id_seq'), primary_key=True)
-	name        = Column(Unicode(100, collation='utf8_bin'))
-	bemerkung   = Column(Unicode(250, collation='utf8_bin'))
+	name        = Column(Unicode(100))
+	bemerkung   = Column(Unicode(250))
 	sort        = Column(Integer)
 	dauer_von   = Column(Integer)
 	dauer_bis   = Column(Integer)
