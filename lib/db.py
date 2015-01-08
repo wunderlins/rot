@@ -79,6 +79,8 @@ class SerializeJson(object):
 
 class DefaultAttributes(SerializeJson):
 	encoding = "utf8"
+	__table_args__ = {"mysql_charset": "utf8"}
+	
 	# fixme: try to ustilize database features for these timestamps. 
 	created = Column(DateTime, nullable=False, default=func.now())
 	modified = Column(DateTime, nullable=False, default=func.now(), onupdate=func.now())
@@ -89,22 +91,22 @@ class Location(Base, DefaultAttributes):
 	__tablename__ = 'rot_location'
 	
 	id	    = Column(Integer, Sequence('location_id_seq'), primary_key=True)
-	name	  = Column(String(100))
+	name	  = Column(Unicode(100, collation='utf8_bin'))
 	sort	  = Column(Integer)
 	
 class Group(Base, DefaultAttributes):
 	__tablename__ = 'rot_group'
 	
 	id	    = Column(Integer, Sequence('group_id_seq'), primary_key=True)
-	name	  = Column(String(100))
+	name	  = Column(Unicode(100, collation='utf8_bin'))
 	sort	  = Column(Integer)
 
 class Rot(Base, DefaultAttributes):
 	__tablename__ = 'rot_rot'
 	
 	id          = Column(Integer, Sequence('rot_id_seq'), primary_key=True)
-	name        = Column(String(100))
-	bemerkung   = Column(String(250))
+	name        = Column(Unicode(100, collation='utf8_bin'))
+	bemerkung   = Column(Unicode(250, collation='utf8_bin'))
 	sort        = Column(Integer)
 	dauer_von   = Column(Integer)
 	dauer_bis   = Column(Integer)
@@ -114,9 +116,8 @@ class Rot(Base, DefaultAttributes):
 	
 	group_id    = Column(Integer, ForeignKey('rot_group.id'))
 	location_id = Column(Integer, ForeignKey('rot_location.id'))
-	location    = relationship("Location", backref=backref('erfahrung', order_by=id))
-	
-	group = relationship("Group", backref=backref('rot', order_by=id))
+	location    = relationship("Location", backref=backref('rot', order_by=id))
+	group       = relationship("Group", backref=backref('rot', order_by=id))
 
 class Einteilung(Base, DefaultAttributes):
 	""" 
