@@ -93,8 +93,9 @@ class index:
 
 class wunsch:
 	def GET(self):
+		g = db.session.query(db.Group).order_by(db.Group.sort)
 		render = web.template.render('template')
-		return render.wunsch(None)
+		return render.wunsch(g)
 		#return "Hello World"
 		
 if __name__ == "__main__":

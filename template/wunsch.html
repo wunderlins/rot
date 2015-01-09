@@ -1,4 +1,4 @@
-$def with (personal)
+$def with (group)
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -52,6 +52,107 @@ $def with (personal)
     </nav>
 
     <div class="container">
+    	
+
+
+
+$for g in group:
+	<div class="row">
+		<div class="col-lg-12">
+			<h3>$g.name</h3>
+		</div>
+	</div>
+	
+	
+	
+	
+	
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th class="col-lg-8">Rotation</th>
+				<th class="col-lg-1"></th>
+				<th class="col-lg-1 text-center">Dauer</th>
+				<th class="col-lg-1">Wunsch</th>
+				<th class="col-lg-1">Prio</th>
+			</tr>
+		</thead>
+		<tbody>
+		$for r in g.rot:
+			<tr>
+				<td>
+					$r.name
+				</td>
+				<td>
+					$if r.erstjahr:
+						<span class="badge">1. Jahr</span>
+				</td>
+				<td class="text-center">
+					$r.dauer_von
+					$if r.dauer_von != r.dauer_bis: 
+						- $r.dauer_bis
+				</td>
+				<td>
+					<select>
+						<option></option>
+						<option>Ja</option>
+						<option>Nein</option>
+						<option>Gemacht</option>
+					</select>
+				</td>
+				<td>
+					<select>
+						<option></option>
+						<option>1</option>
+						<option>2</option>
+						<option>3</option>
+						<option>4</option>
+						<option>5</option>
+					</select>
+				</td>
+			</tr>
+			</tbody>
+	</table>	
+	
+	
+	<!--div class="row">
+		$for r in g.rot:
+			<div class="col-lg-6">
+				$r.name
+			</div>
+			<div class="col-lg-1">
+				$if r.erstjahr:
+					<span class="badge">1. Jahr</span>
+			</div>
+			<div class="col-lg-1 text-center">
+			
+				$r.dauer_von
+				$if r.dauer_von != r.dauer_bis: 
+					- $r.dauer_bis
+				
+			</div>
+			<div class="col-lg-1">
+				<input type="checkbox" />
+			</div>
+			<div class="col-lg-1">
+				<input type="checkbox" />
+			</div>
+			<div class="col-lg-1">
+				<input type="checkbox" />
+			</div>
+			<div class="col-lg-1">
+				<select>
+					<option>1</option>
+					<option>2</option>
+					<option>3</option>
+					<option>4</option>
+					<option>5</option>
+				</select>
+			</div>
+	</div-->
+		
+		
+    
 <!--
       <div class="starter-template">
         <h1>Bootstrap starter template</h1>
