@@ -69,8 +69,8 @@ session.add_all([
 
 	make_rot('Herz/Gefäss',                  '', 1, 4,  4, "Herz/Gefäss", "USB"),
 
-	make_rot('Gyn/Geb.', 'ab 2. AA Jahr', 1, 12,  12, "OP-West", "USB"),
-	make_rot('Gyn/Geb.', 'ab 4. AA Jahr', 2, 6,  6, "OP-West", "USB"),
+	make_rot('Gyn/Geb. ab 2. AA Jahr', '', 1, 12,  12, "OP-West", "USB"),
+	make_rot('Gyn/Geb. ab 4. AA Jahr', '', 2, 6,  6, "OP-West", "USB"),
 	make_rot('Neuro',                 '', 3, 4,  4, "OP-West", "USB"),
 	make_rot('Orthopädie/Plast. Chirurgie', '', 4, 3,  3, "OP-West", "USB", 1, 1),
 

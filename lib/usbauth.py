@@ -58,6 +58,7 @@ class aduser(object):
 	DistinguishedName = property(distinguishedName)
 	Error = property(error)
 	Code = property(code)
+	proxyAddresses = []
 	# Alle weiteren Methoden
 
 
@@ -87,6 +88,7 @@ class aduser(object):
 			result_set = []
 			while 1:
 				result_type, result_data = l.result(ldap_result_id, 0)
+				#print result_data
 				if (result_data == []):
 					break
 				else: 
@@ -150,6 +152,13 @@ class aduser(object):
 			if 'mail' in result_set[0][0][1]:
 				self.__Email = result_set[0][0][1]['mail'][0]
 			
+			# hole eine litse aller alias email adressen zu diesem postfach
+			if 'proxyAddresses' in result_set[0][0][1]:
+				for e in result_set[0][0][1]['proxyAddresses']:
+					if e[0:5] == "smtp:" or e[0:5] == "SMTP:":
+						self.proxyAddresses.append(e[5:])
+			
+			
 			return True
 		
 		except ldap.LDAPError, e:
@@ -159,10 +168,11 @@ class aduser(object):
 
 if __name__ == "__main__":
 	k = aduser()
-	k.User= "muana"
-	k.Password= "anaana"
+	k.User= sys.argv[1]
+	k.Password= sys.argv[2]
 	k.checkcn()
 	if k.authenticate():
+		print k.Nachname, k.Vorname, k.Email, k.proxyAddresses
 		sys.exit(0)
 	else:
 		print k.Error
