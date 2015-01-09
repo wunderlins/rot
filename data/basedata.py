@@ -49,37 +49,38 @@ session.add_all([
 	Group(name="Weisse Zone", sort=6),
 	Group(name="Schmerz", sort=7),
 	Group(name="Intensivmedizin", sort=8),
-	Group(name="Kinderanästhesie", sort=8)
+	Group(name="Kinderanästhesie", sort=9)
 ])
 session.commit()
 
-def make_rot(name, bemerk, sort, dauer_von, dauer_bis, group, location, dauer_step=1):
+def make_rot(name, bemerk, sort, dauer_von, dauer_bis, group, location, dauer_step=1, erstjahr=0):
 	return Rot(name=name, bemerkung=bemerk, sort=sort, dauer_von=dauer_von, dauer_bis=dauer_bis, dauer_step=dauer_step, 
 		group=session.query(Group).filter(Group.name==group)[0], 
-		location=session.query(Location).filter(Location.name==location)[0])
+		location=session.query(Location).filter(Location.name==location)[0],
+		erstjahr=erstjahr)
 	
 
 session.add_all([
-	make_rot('Allgemeinchirurgie, Urologie', 'für AA im 1. Weiterbildungsjahr Anästhesie möglich', 1, 3, 12, "Viszeral/Urologie/Lunge", "USB"),
+	make_rot('Allgemeinchirurgie, Urologie', '', 1, 3, 12, "Viszeral/Urologie/Lunge", "USB", 1, 1),
 	make_rot('Thorax-Lunge',                 '', 2, 3,  3, "Viszeral/Urologie/Lunge", "USB"),
 
-	make_rot('Kiefer', 'für AA im 1. Weiterbildungsjahr Anästhesie möglich', 1, 3,  3, "Kiefer/HNO", "USB"),
-	make_rot('HNO', 'für AA im 1. Weiterbildungsjahr Anästhesie möglich', 2, 3,  3, "Kiefer/HNO", "USB"),
+	make_rot('Kiefer', '', 1, 3,  3, "Kiefer/HNO", "USB", 1, 1),
+	make_rot('HNO', '', 2, 3,  3, "Kiefer/HNO", "USB", 1, 1),
 
 	make_rot('Herz/Gefäss',                  '', 1, 4,  4, "Herz/Gefäss", "USB"),
 
 	make_rot('Gyn/Geb.', 'ab 2. AA Jahr', 1, 12,  12, "OP-West", "USB"),
 	make_rot('Gyn/Geb.', 'ab 4. AA Jahr', 2, 6,  6, "OP-West", "USB"),
 	make_rot('Neuro',                 '', 3, 4,  4, "OP-West", "USB"),
-	make_rot('Orthopädie/Plast. Chirurgie', 'für AA im 1. Weiterbildungsjahr Anästhesie möglich', 4, 3,  3, "OP-West", "USB"),
+	make_rot('Orthopädie/Plast. Chirurgie', '', 4, 3,  3, "OP-West", "USB", 1, 1),
 
 	make_rot('Notfallrotation kurz', 'beinhaltet Dienst & Notarzt bei Sanität BS', 1, 3,  3, "Notfallmedizin/Traumatologie", "USB"),
-	make_rot('Traumatologie', 'für AA im 1. Weiterbildungsjahr Anästhesie möglich', 2, 3,  3, "Notfallmedizin/Traumatologie", "USB"),
+	make_rot('Traumatologie', '', 2, 3,  3, "Notfallmedizin/Traumatologie", "USB", 1, 1),
 	make_rot('Notfallmedizin SGNOR', 'wird anerkannt als „3 Monate Notfallstation“ für den FA Notarzt; Verlängerungen mit Zusatzausbildung bei Interesse und Eignung nach Absprache möglich', 3, 4,  4, "Notfallmedizin/Traumatologie", "USB"),
 	make_rot('REGA',                 '', 4, 8,  8, "Notfallmedizin/Traumatologie", "USB"),
 
-	make_rot('Augenspital', 'für AA im 1. Weiterbildungsjahr Anästhesie möglich', 1, 3,  3, "Weisse Zone", "USB"),
-	make_rot('PAS', 'für AA im 1. Weiterbildungsjahr Anästhesie möglich', 2, 1,  3, "Weisse Zone", "USB"),
+	make_rot('Augenspital', '', 1, 3,  3, "Weisse Zone", "USB", 1, 1),
+	make_rot('PAS', '', 2, 1,  3, "Weisse Zone", "USB", 1, 1),
 	
 	make_rot('Chronic Pain',                 '', 1, 6,  12, "Schmerz", "USB", 6),
 	

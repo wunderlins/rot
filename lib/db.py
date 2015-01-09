@@ -111,6 +111,7 @@ class Rot(Base, DefaultAttributes):
 	dauer_von   = Column(Integer)
 	dauer_bis   = Column(Integer)
 	dauer_step  = Column(Integer)
+	erstjahr    = Column(Integer, default=0)
 	#wunsch      = Column(Integer)
 	#wunsch_prio = Column(Integer)
 	
