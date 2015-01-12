@@ -86,6 +86,11 @@ class DefaultAttributes(SerializeJson):
 	modified = Column(DateTime, nullable=False, default=func.now(), onupdate=func.now())
 	deleted = Column(Integer, server_default = "0")
 
+
+	def __repr__(self):
+		return "<%s(id='%d')>" %
+			(self.__tablename__, self.id)
+
 ## define new tables
 class Location(Base, DefaultAttributes):
 	__tablename__ = 'rot_location'

@@ -93,7 +93,7 @@ $for g in group:
 						- $r.dauer_bis
 				</td>
 				<td>
-					<select>
+					<select name="wunsch_$r.id">
 						<option></option>
 						<option>Ja</option>
 						<option>Nein</option>
@@ -101,7 +101,7 @@ $for g in group:
 					</select>
 				</td>
 				<td>
-					<select>
+					<select name="prio_$r.id">
 						<option></option>
 						<option>1</option>
 						<option>2</option>
@@ -112,8 +112,7 @@ $for g in group:
 				</td>
 			</tr>
 			</tbody>
-	</table>	
-	
+	</table>
 	
 	<!--div class="row">
 		$for r in g.rot:
