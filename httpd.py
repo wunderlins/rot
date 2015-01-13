@@ -93,9 +93,11 @@ class index:
 
 class wunsch:
 	def GET(self):
+		u = db.session.query(db.Personal).filter_by(pid='188')[0] # Thierry
+		#print u
 		g = db.session.query(db.Group).order_by(db.Group.sort)
 		render = web.template.render('template')
-		return render.wunsch(g)
+		return render.wunsch(g, u)
 		#return "Hello World"
 		
 if __name__ == "__main__":

@@ -24,7 +24,7 @@ $.ajax({
 			b.appendChild(document.createTextNode(e.kuerzel))
 			n.appendChild(b);
 			n.setAttribute("class", "list-group-item");
-			n.appendChild(document.createTextNode(e.name + " " + e.vorname));
+			n.appendChild(document.createTextNode(e.name + " " + e.vorname + " " + e.pid));
 			//console.log(e.name + " " + e.vorname)
 			p.append(n)
 		}

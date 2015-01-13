@@ -88,7 +88,7 @@ class DefaultAttributes(SerializeJson):
 
 
 	def __repr__(self):
-		return "<%s(id='%d')>" %
+		return "<%s(id='%d')>" %\
 			(self.__tablename__, self.id)
 
 ## define new tables

@@ -1,4 +1,4 @@
-$def with (group)
+$def with (group, user)
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -26,6 +26,11 @@ $def with (group)
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    
+    <style type="text/css">
+    	.row div {padding: 0.1em;}
+    </style>
+    
   </head>
 
   <body>
@@ -54,11 +59,24 @@ $def with (group)
     <div class="container">
     	
 
+<div>
+	<div style="float:right;">
+		History:
+		<select>
+			<option>mm.dd.yyyy</option>
+			<option>mm.dd.yyyy</option>
+			<option>mm.dd.yyyy</option>
+			<option>mm.dd.yyyy</option>
+		</select>
+	</div>
+
+	<h1>$user.vorname $user.name</h1>
+</div>
 
 
 $for g in group:
 	<div class="row">
-		<div class="col-lg-12">
+		<div class="col-md-12">
 			<h3>$g.name</h3>
 		</div>
 	</div>
@@ -67,7 +85,7 @@ $for g in group:
 	
 	
 	
-	<table class="table table-hover">
+	<!--table class="table table-hover">
 		<thead>
 			<tr>
 				<th class="col-lg-8">Rotation</th>
@@ -112,35 +130,44 @@ $for g in group:
 				</td>
 			</tr>
 			</tbody>
-	</table>
+	</table-->
 	
-	<!--div class="row">
-		$for r in g.rot:
-			<div class="col-lg-6">
-				$r.name
-			</div>
-			<div class="col-lg-1">
-				$if r.erstjahr:
-					<span class="badge">1. Jahr</span>
-			</div>
-			<div class="col-lg-1 text-center">
-			
-				$r.dauer_von
-				$if r.dauer_von != r.dauer_bis: 
-					- $r.dauer_bis
+
+	<div class="row">
+			<div class="col-sm-8">
 				
 			</div>
-			<div class="col-lg-1">
-				<input type="checkbox" />
+			<div class="col-sm-1 col-xs-3">
+				Wunsch
 			</div>
-			<div class="col-lg-1">
-				<input type="checkbox" />
+			<div class="col-sm-1 col-xs-3">
+				Prio
 			</div>
-			<div class="col-lg-1">
-				<input type="checkbox" />
+			<div class="col-sm-1 text-center col-xs-3">
+					Dauer
 			</div>
-			<div class="col-lg-1">
-				<select>
+			<div class="col-sm-1 col-xs-3">
+				1. Jahr
+			</div>
+	</div>
+
+
+	<div class="row">
+		$for r in g.rot:
+			<div class="col-sm-8 col-xs-12">
+				<strong>$r.name</strong>
+			</div>
+			<div class="col-sm-1 col-xs-3">
+				<select name="wunsch_$r.id">
+					<option></option>
+					<option>Ja</option>
+					<option>Nein</option>
+					<option>Gemacht</option>
+				</select>
+			</div>
+			<div class="col-sm-1 col-xs-3">
+				<select name="prio_$r.id">
+					<option></option>
 					<option>1</option>
 					<option>2</option>
 					<option>3</option>
@@ -148,7 +175,16 @@ $for g in group:
 					<option>5</option>
 				</select>
 			</div>
-	</div-->
+			<div class="col-sm-1 text-center col-xs-3">
+					$r.dauer_von
+					$if r.dauer_von != r.dauer_bis: 
+						- $r.dauer_bis
+			</div>
+			<div class="col-sm-1 col-xs-3">
+				$if r.erstjahr:
+					<span class="badge">1. Jahr</span>
+			</div>
+	</div>
 		
 		
     
