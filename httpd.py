@@ -15,7 +15,9 @@ sys.path.append(os.path.join(os.path.dirname(__file__), 'lib', 'web'))
 #sys.path.append(os.path.join('sw', 'lib', 'python2.7', 'site-packages'))
 
 import web, config, json, db
-from datetime import datetime, date, time
+#from datetime import datetime, date, timedelta
+import datetime
+import time
 from sqlalchemy import *
 
 # allow to pass a custom port/ip into the application
@@ -97,7 +99,9 @@ class wunsch:
 	def GET(self):
 		history = None
 		try:
-			history = web.input(name="history").history
+			h = web.input(name="history").history
+			h2 = time.strptime(h, "%d.%m.%Y")
+			history = datetime.datetime(h2.tm_year, h2.tm_mon, h2.tm_mday)
 		except: pass
 		print history
 		
@@ -105,11 +109,25 @@ class wunsch:
 		u = db.session.query(db.Personal).filter_by(pid='188')[0] # Thierry
 		
 		# get latest wishes
-		w = db.session.query(db.Wunsch).filter_by(pid='188', latest=1)
-		print u
+		if history == None:
+			w = db.session.query(db.Wunsch).filter_by(pid='188', latest=1)
+		else:
+			endd = history + timedelta(days=1)
+			w = db.session.query(db.Wunsch).filter_by(pid='188').filter(
+				and_(db.Wunsch.created >= date(history.year, history.month, history.day),\
+				db.Wunsch.created < date(endd.year, endd.month, endd.day))
+			)
+		
+		#print u
 		
 		#print u
 		g = db.session.query(db.Group).order_by(db.Group.sort)
+		
+		# modified dates
+		d = db.session.query(db.distinct(db.Wunsch.created)).filter_by(pid=188)
+		dates = []
+		for dt in d:
+			dates.insert(0, dt[0])
 		
 		wunsch = {}
 		for gr in g:
@@ -122,7 +140,7 @@ class wunsch:
 						break
 		
 		render = web.template.render('template')
-		return render.wunsch(g, u, wunsch)
+		return render.wunsch(g, u, wunsch, dates, history)
 		#return "Hello World"
 	
 	def POST(self):

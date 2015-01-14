@@ -1,4 +1,4 @@
-$def with (group, user, wunsch)
+$def with (group, user, wunsch, dates, history)
 
 $def wunsch_select_wunsch(rid, wunsch):
 	<select name="wunsch_$rid">
@@ -103,17 +103,22 @@ $def wunsch_select_prio(rid, wunsch):
     	
 
 	<div style="float:right;">
+		<form method="GET">
+		
 		History:
-		<select>
-			<option>mm.dd.yyyy</option>
-			<option>mm.dd.yyyy</option>
-			<option>mm.dd.yyyy</option>
-			<option>mm.dd.yyyy</option>
+		<select name="history" onchange="this.form.submit()">
+			<option value="">Aktuell</option>
+			$for d in dates:
+				$if history and d.strftime("%d.%m.%Y") == history.strftime("%d.%m.%Y"):
+					<option value="$d.strftime('%d.%m.%Y')" selected="select">$d.strftime("%d.%m.%Y")</option>
+				$else:
+					<option value="$d.strftime('%d.%m.%Y')">$d.strftime("%d.%m.%Y")</option>
 		</select>
+		</form>
 	</div>
 
 	<h1>$user.vorname $user.name</h1>
-
+	
 
 <form method="POST" action="/wunsch_save">
 $for g in group:

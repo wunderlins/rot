@@ -17,6 +17,7 @@ from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship, backref
 
 from sqlalchemy.ext.declarative import AbstractConcreteBase
+from sqlalchemy import distinct
 
 # connect to database
 dsn = "mysql+mysqldb://"+config.db_user+":"+config.db_pass+"@localhost/"+config.db_name

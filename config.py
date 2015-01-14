@@ -4,4 +4,4 @@ db_pass = "planoaa"
 db_name = "planoaa"
 db_host = "localhost"
 
-db_debug=False
+db_debug = True
