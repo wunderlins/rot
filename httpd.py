@@ -112,10 +112,10 @@ class wunsch:
 		if history == None:
 			w = db.session.query(db.Wunsch).filter_by(pid='188', latest=1)
 		else:
-			endd = history + timedelta(days=1)
+			endd = history + datetime.timedelta(days=1)
 			w = db.session.query(db.Wunsch).filter_by(pid='188').filter(
-				and_(db.Wunsch.created >= date(history.year, history.month, history.day),\
-				db.Wunsch.created < date(endd.year, endd.month, endd.day))
+				and_(db.Wunsch.created >= datetime.date(history.year, history.month, history.day),\
+				db.Wunsch.created < datetime.date(endd.year, endd.month, endd.day))
 			)
 		
 		#print u
@@ -193,8 +193,8 @@ class wunsch:
 		db.session.commit()
 		
 		# get rid of records with the current date
-		dt = datetime.now()
-		lw = db.session.query(db.Wunsch).filter(db.Wunsch.created >= date(dt.year, dt.month, dt.day))
+		dt = datetime.datetime.now()
+		lw = db.session.query(db.Wunsch).filter(db.Wunsch.created >= datetime.date(dt.year, dt.month, dt.day))
 		for l in lw:
 			db.session.delete(l)
 		db.session.commit()
