@@ -15,6 +15,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), 'lib', 'web'))
 #sys.path.append(os.path.join('sw', 'lib', 'python2.7', 'site-packages'))
 
 import web, config, json, db
+from datetime import datetime, date, time
 from sqlalchemy import *
 
 # allow to pass a custom port/ip into the application
@@ -27,7 +28,8 @@ urls = (
   '/', 'index',
 	'/personal', 'personal',
 	'/test', 'test', # test methods, remove these in production
-	'/wunsch', 'wunsch' # test methods, remove these in production
+	'/wunsch', 'wunsch', # test methods, remove these in production
+	'/wunsch_save', 'wunsch'
 )
 
 class test:
@@ -93,12 +95,111 @@ class index:
 
 class wunsch:
 	def GET(self):
+		history = None
+		try:
+			history = web.input(name="history").history
+		except: pass
+		print history
+		
+		# get user info
 		u = db.session.query(db.Personal).filter_by(pid='188')[0] # Thierry
+		
+		# get latest wishes
+		w = db.session.query(db.Wunsch).filter_by(pid='188', latest=1)
+		print u
+		
 		#print u
 		g = db.session.query(db.Group).order_by(db.Group.sort)
+		
+		wunsch = {}
+		for gr in g:
+			for r in gr.rot:
+				wunsch[r.id] = {"prio": 3, "wunsch": None}
+				for e in w:
+					if e.rot_id == r.id:
+						#print e
+						wunsch[r.id] = {"prio": e.prio, "wunsch": e.janein}
+						break
+		
 		render = web.template.render('template')
-		return render.wunsch(g, u)
+		return render.wunsch(g, u, wunsch)
 		#return "Hello World"
+	
+	def POST(self):
+		"""
+		Colelct user input of wunsch. Store it as active set for user with "pid". 
+		If there is already a set with the current day, replace it, otherwise 
+		create a new set and make it active.
+		"""
+		
+		#get personalid
+		pid = web.input("pid").pid
+		#print "PID:", pid
+		
+		# create name/value pairs for wunsch and prio		
+		wunsch = {}		
+		for name in web.input():
+			if name == "pid": # skip pid
+				continue
+			
+			value = web.input()[name]
+			if value == "": # skip unset values
+				continue
+			
+			id = None
+			type = ""
+			
+			# check type
+			if name[0:4] == "prio":
+				type = "prio"
+				id = int(name[5:])
+				
+			if name[0:6] == "wunsch":
+				type = "wunsch"
+				id = int(name[7:])
+			
+			#print type, id, value
+			
+			try:
+				wunsch[id][type] = value
+			except:
+				wunsch[id] = {"prio": 3, "wunsch": None}
+				wunsch[id][type] = value
+		
+		#print wunsch
+		
+		# TODO: delete all latest flags
+		lw = db.session.query(db.Wunsch).filter_by(pid=pid, latest=1)
+		for l in lw:
+			l.latest = 0
+		db.session.commit()
+		
+		# get rid of records with the current date
+		dt = datetime.now()
+		lw = db.session.query(db.Wunsch).filter(db.Wunsch.created >= date(dt.year, dt.month, dt.day))
+		for l in lw:
+			db.session.delete(l)
+		db.session.commit()
+		
+		# insert
+		inserts = []
+		for id in wunsch.keys():
+			
+			if wunsch[id]["wunsch"] == None:
+				continue
+			
+			w = db.Wunsch()
+			w.pid=pid
+			w.janein=wunsch[id]["wunsch"]
+			w.rot_id=id
+			w.prio=wunsch[id]["prio"]
+			w.latest = 1
+			
+			inserts.append(w)
+		
+		print inserts
+		db.session.add_all(inserts)
+		db.session.commit()
 		
 if __name__ == "__main__":
 	

@@ -88,7 +88,7 @@ class DefaultAttributes(SerializeJson):
 
 
 	def __repr__(self):
-		return "<%s(id='%d')>" %\
+		return "<%s(id='%s')>" %\
 			(self.__tablename__, self.id)
 
 ## define new tables
@@ -168,6 +168,7 @@ class Wunsch(Base, DefaultAttributes):
 	
 	id          = Column(Integer, Sequence('wunsch_id_seq'), primary_key=True)
 	pid         = Column(Integer)
+	janein      = Column(Integer) # ja = 1, neine = 0, None = unbekann
 	rot_id      = Column(Integer, ForeignKey('rot_rot.id'))
 	
 	prio        = Column(Integer) # 1-5
