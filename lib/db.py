@@ -21,7 +21,7 @@ from sqlalchemy import distinct
 
 # configure logging
 import logging
-logging.basicConfig(filename='var/sql.log')
+logging.basicConfig(filename=config.sql_logfile)
 if config.db_debug:
 	logging.getLogger('sqlalchemy.engine').setLevel(logging.DEBUG)
 else:
