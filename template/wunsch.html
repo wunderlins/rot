@@ -18,27 +18,28 @@ $def wunsch_select_wunsch(rid, wunsch):
 	</select>
 
 $def wunsch_select_prio(rid, wunsch):
-	<select name="prio_$rid">
+	<select name="prio_$rid" class="prio">
+		<option value=""></option>
 	$if wunsch["prio"] == 1:
-		<option value="1" selected="selected">Sehr hoch</option>
+		<option value="1" selected="selected">&#xe133;&#xe133;</option>
 	$else:
-		<option value="1">Sehr hoch</option>
+		<option value="1">&#xe133;&#xe133;</option>
 	$if wunsch["prio"] == 2:
-		<option value="2" selected="selected">Hoch</option>
+		<option value="2" selected="selected"> &#xe133;</option>
 	$else:
-		<option value="2">Hoch</option>
+		<option value="2"> &#xe133;</option>
 	$if wunsch["prio"] == 3:
-		<option value="3" selected="selected">Mittel</option>
+		<option value="3" selected="selected"> &#xe082;</option>
 	$else:
-		<option value="3">Mittel</option>
+		<option value="3"> &#xe082;</option>
 	$if wunsch["prio"] == 4:
-		<option value="4" selected="selected">Tief</option>
+		<option value="4" selected="selected"> &#xe134;</option>
 	$else:
-		<option value="4">Tief</option>
+		<option value="4"> &#xe134;</option>
 	$if wunsch["prio"] == 5:
-		<option value="5" selected="selected">Sehr tief</option>
+		<option value="5" selected="selected">&#xe134;&#xe134;</option>
 	$else:
-		<option value="5">Sehr tief</option>
+		<option value="5">&#xe134;&#xe134;</option>
 	</select>
 
 <!DOCTYPE html>
@@ -71,6 +72,12 @@ $def wunsch_select_prio(rid, wunsch):
     
     <style type="text/css">
     	.row div {padding-bottom: 0.25em;}
+    	.prio {
+    		font-family: 'Glyphicons Halflings' ! important;
+    	}
+    	.prio option {
+    		text-align: center ! important;
+    	}
     </style>
     
   </head>
@@ -172,7 +179,7 @@ $for g in group:
 
 <hr />
 <input type="hidden" name="pid" value="$user.pid">
-<button type="submit" class="btn btn-default">Speichern</button>
+<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-floppy-disk"></span> Speichern</button>
 </form>
 		
     

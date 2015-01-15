@@ -101,7 +101,7 @@ class wunsch:
 			h2 = time.strptime(h, "%d.%m.%Y")
 			history = datetime.datetime(h2.tm_year, h2.tm_mon, h2.tm_mday)
 		except: pass
-		print history
+		#print history
 		
 		# get user info
 		u = db.session.query(db.Personal).filter_by(pid='188')[0] # Thierry
@@ -130,7 +130,7 @@ class wunsch:
 		wunsch = {}
 		for gr in g:
 			for r in gr.rot:
-				wunsch[r.id] = {"prio": 3, "wunsch": None}
+				wunsch[r.id] = {"prio": 0, "wunsch": None}
 				for e in w:
 					if e.rot_id == r.id:
 						#print e
@@ -203,6 +203,9 @@ class wunsch:
 			
 			if wunsch[id]["wunsch"] == None:
 				continue
+			
+			if wunsch[id]["wunsch"] != "1":
+				wunsch[id]["prio"] = 0
 			
 			w = db.Wunsch()
 			w.pid=pid
