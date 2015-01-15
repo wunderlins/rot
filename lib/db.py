@@ -19,6 +19,11 @@ from sqlalchemy.orm import relationship, backref
 from sqlalchemy.ext.declarative import AbstractConcreteBase
 from sqlalchemy import distinct
 
+# configure logging
+import logging
+logging.basicConfig(filename='example.log',level=logging.DEBUG)
+logging.getLogger('sqlalchemy.engine').setLevel(logging.DEBUG)
+
 # connect to database
 dsn = "mysql+mysqldb://"+config.db_user+":"+config.db_pass+"@localhost/"+config.db_name
 #engine = create_engine('sqlite:///:memory:', echo=True)
