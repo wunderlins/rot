@@ -5,8 +5,8 @@ $def with (content)
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="Rotationsplanung">
+    <meta name="author" content="Simon Wunderlin">
     <link rel="icon" href="favicon.ico">
 
     <title>Rotationswunsch</title>
@@ -36,7 +36,8 @@ $def with (content)
     		text-align: center ! important;
     	}
     </style>
-    
+    <script src="static/assets/jquery.min.js"></script>
+    <script src="static/application.js"></script>
   </head>
 
   <body>
@@ -51,13 +52,13 @@ $def with (content)
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Project name</a>
+          <a class="navbar-brand" href="/">ANA Rotationen</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li id="nav_personal"><a href="/personal">Mitarbeiter</a></li>
+            <li id="nav_wunsch"><a href="/wunsch">Wünsche</a></li>
+            <li id="nav_test"><a href="/test">Test Json</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -65,18 +66,38 @@ $def with (content)
 
     <div class="container">
 $:content
-    </div><!-- /.container -->
+		</div><!-- /.container -->
 
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="static/assets/jquery.min.js"></script>
-    <script src="static/bootstrap/js/bootstrap.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="static/assets/ie10-viewport-bug-workaround.js"></script>
-    <!--script src="static/application.js"></script-->
-  </body>
+		<!-- Bootstrap core JavaScript
+		================================================== -->
+		<!-- Placed at the end of the document so the pages load faster -->
+		<script src="static/bootstrap/js/bootstrap.min.js"></script>
+		<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+		<script src="static/assets/ie10-viewport-bug-workaround.js"></script>
+		<script type="application/javascript">
+			path = window.location.pathname;
+			function n(p, c) {if (path == p ) $$("#nav_"+c).addClass("active");}
+			function nav() {
+			$ pos = 0
+			$ last = None
+			$for e in urls:
+				$if pos:
+					$ pos = 0
+				$else:
+					$ pos = 1
+				$if not pos:
+					n("$last", "$e");
+				$else:
+					$ last = e
+			}
+			add_load_handler(nav)
+
+			for (e in _load_handler) {
+				$$(window).load(_load_handler[e]);
+			}
+		</script>
+		</body>
 </html>
 
 

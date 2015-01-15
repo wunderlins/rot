@@ -19,6 +19,12 @@ import time
 from sqlalchemy import *
 import tpl
 
+render = web.template.render('template', base="layout", globals={
+	'wunsch_select_wunsch': tpl.wunsch_select_wunsch,
+	'wunsch_select_prio': tpl.wunsch_select_prio,
+})
+
+
 # allow to pass a custom port/ip into the application
 class rot(web.application):
 	def run(self, port=8080, ip='0.0.0.0', *middleware):
@@ -26,14 +32,30 @@ class rot(web.application):
 		return web.httpserver.runsimple(func, (ip, port))
 
 urls = (
-  '/', 'index',
-	'/personal', 'personal',
+  '/', 'personal',
+  '/personal', 'personal',
+	'/personal_data', 'personal_data',
 	'/test', 'test', # test methods, remove these in production
 	'/wunsch', 'wunsch', # test methods, remove these in production
 	'/wunsch_save', 'wunsch'
 )
 
-class test:
+class response:
+	def header(self, content_type="text/html"):
+		web.header('Content-Type', content_type+'; charset=utf-8', unique=True) 
+		web.header('Cache-Control','no-cache, no-store, must-revalidate')
+		web.header('Pragma','no-cache')
+		web.header('Expires','0')
+	
+	def render(self):
+		global urls
+		return web.template.render('template', base="layout", globals={
+			'wunsch_select_wunsch': tpl.wunsch_select_wunsch,
+			'wunsch_select_prio': tpl.wunsch_select_prio,
+			'urls': urls
+		})
+
+class test(response):
 	def GET(self):
 		s = db.session
 		#p = s.query(db.personal).filter_by(aktiv=1)
@@ -47,9 +69,11 @@ class test:
 			#out += ":".join("{:02x}".format(ord(c)) for c in r.name)
 			out += "\n"
 			#out += r.as_dict() + "\n"
+		
+		self.header(content_type="application/json")
 		return out
 
-class personal:
+class personal_data(response):
 	def GET(self):
 		"""
 		db = web.database(
@@ -67,6 +91,9 @@ class personal:
 			ret += json.dumps(p) + ",\n"
 		ret = "[" + ret[:-2] + "]"
 		"""
+
+		self.header(content_type="application/json")
+		
 		for p in db.session.query(db.Personal).\
 			order_by(asc(db.Personal.name)).\
 			with_entities(db.Personal.pid, db.Personal.name, db.Personal.vorname, db.Personal.kuerzel).\
@@ -76,7 +103,7 @@ class personal:
 			
 		return ret[:-2] + "]"
 
-class index:
+class personal(response):
 	def GET(self):
 		db = web.database(
 			host = config.db_host,
@@ -90,11 +117,12 @@ class index:
 		#for p in personal:
 		#	ret += json.dumps(p) + ",\n"
 		#ret = "[" + ret + "]"
-		render = web.template.render('template')
-		return render.index(None)
+		#render = web.template.render('template')
+		global render
+		return self.render().index(None)
 		#return "Hello World"
 
-class wunsch:
+class wunsch(response):
 	def GET(self):
 		history = None
 		try:
@@ -138,11 +166,15 @@ class wunsch:
 						wunsch[r.id] = {"prio": e.prio, "wunsch": e.janein}
 						break
 		
+		"""
 		render = web.template.render('template', base="layout", globals={
 			'wunsch_select_wunsch': tpl.wunsch_select_wunsch,
 			'wunsch_select_prio': tpl.wunsch_select_prio,
 		})
-		return render.wunsch(g, u, wunsch, dates, history)
+		"""
+		global render
+		#return render.wunsch(g, u, wunsch, dates, history)
+		return self.render().wunsch(g, u, wunsch, dates, history)
 		#return "Hello World"
 	
 	def POST(self):
