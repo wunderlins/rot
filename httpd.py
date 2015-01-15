@@ -138,7 +138,7 @@ class wunsch:
 						wunsch[r.id] = {"prio": e.prio, "wunsch": e.janein}
 						break
 		
-		render = web.template.render('template', globals={
+		render = web.template.render('template', base="layout", globals={
 			'wunsch_select_wunsch': tpl.wunsch_select_wunsch,
 			'wunsch_select_prio': tpl.wunsch_select_prio,
 		})
