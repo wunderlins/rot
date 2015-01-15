@@ -220,7 +220,7 @@ class wunsch:
 			
 			inserts.append(w)
 		
-		print inserts
+		#print inserts
 		db.session.add_all(inserts)
 		db.session.commit()
 
