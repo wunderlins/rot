@@ -21,13 +21,16 @@ from sqlalchemy import distinct
 
 # configure logging
 import logging
-logging.basicConfig(filename='example.log',level=logging.DEBUG)
-logging.getLogger('sqlalchemy.engine').setLevel(logging.DEBUG)
+logging.basicConfig(filename='var/sql.log')
+if config.db_debug:
+	logging.getLogger('sqlalchemy.engine').setLevel(logging.DEBUG)
+else:
+	logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
 
 # connect to database
 dsn = "mysql+mysqldb://"+config.db_user+":"+config.db_pass+"@localhost/"+config.db_name
 #engine = create_engine('sqlite:///:memory:', echo=True)
-engine = create_engine(dsn, echo=config.db_debug)
+engine = create_engine(dsn, echo=False)
 Base = declarative_base()
 
 

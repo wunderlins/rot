@@ -3,3 +3,5 @@ web/*
 bootstrap-*
 SQLAlchemy-*
 SQLAlchemy/*
+wsgilog-0.3
+wsgilog/*

@@ -19,6 +19,7 @@ import web, config, json, db
 import datetime
 import time
 from sqlalchemy import *
+#from weblog import Log
 
 # allow to pass a custom port/ip into the application
 class rot(web.application):
@@ -218,8 +219,25 @@ class wunsch:
 		print inserts
 		db.session.add_all(inserts)
 		db.session.commit()
-		
+
+import sys, logging
+from wsgilog import WsgiLog
+import config
+
+class Log(WsgiLog):
+	def __init__(self, application):
+		WsgiLog.__init__(
+									 self,
+									 application,
+									 logformat = '%(message)s',
+									 tofile = True,
+									 toprint = True,
+									 file = config.web_logfile,
+									 #interval = config.log_interval,
+									 #backups = config.log_backups
+									 )
+
 if __name__ == "__main__":
 	
 	app = rot(urls, globals())
-	app.run(port=config.port)
+	app.run(config.port, "0.0.0.0", Log)

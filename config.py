@@ -5,3 +5,5 @@ db_name = "planoaa"
 db_host = "localhost"
 
 db_debug = True
+
+web_logfile = "var/access.log"
