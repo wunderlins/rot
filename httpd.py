@@ -12,14 +12,11 @@ need root privvileges to bind ports below 1024.
 import os, sys
 sys.path.append(os.path.join(os.path.dirname(__file__), 'lib'))
 sys.path.append(os.path.join(os.path.dirname(__file__), 'lib', 'web'))
-#sys.path.append(os.path.join('sw', 'lib', 'python2.7', 'site-packages'))
 
 import web, config, json, db
-#from datetime import datetime, date, timedelta
 import datetime
 import time
 from sqlalchemy import *
-#from weblog import Log
 
 # allow to pass a custom port/ip into the application
 class rot(web.application):
@@ -232,12 +229,17 @@ class Log(WsgiLog):
 									 logformat = '%(message)s',
 									 tofile = True,
 									 toprint = True,
-									 file = config.web_logfile,
+									 file = config.app_logfile,
 									 #interval = config.log_interval,
 									 #backups = config.log_backups
 									 )
 
 if __name__ == "__main__":
+
+	# redirect webserver logs to file
+	#weblog = open(config.web_logfile, "ab")
+	#sys.stderr = weblog
+	#sys.stdout = weblog
 	
 	app = rot(urls, globals())
 	app.run(config.port, "0.0.0.0", Log)
