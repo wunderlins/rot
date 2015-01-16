@@ -27,20 +27,16 @@ $for g in group:
 	</div>
 	
 	<div class="row">
-			<div class="col-sm-8">
-				
+			<div class="col-sm-8 col-xs-12">
 			</div>
-			<div class="col-sm-1 col-xs-3">
+			<div class="col-sm-1 col-xs-4">
 				Wunsch
 			</div>
-			<div class="col-sm-1 col-xs-3">
+			<div class="col-sm-1 col-xs-4">
 				Prio
 			</div>
-			<div class="col-sm-1 text-center col-xs-3">
+			<div class="col-sm-2 text-center col-xs-4">
 					Dauer
-			</div>
-			<div class="col-sm-1 col-xs-3">
-				1. Jahr
 			</div>
 	</div>
 
@@ -48,23 +44,21 @@ $for g in group:
 	<div class="row">
 		$for r in g.rot:
 			<div class="col-sm-8 col-xs-12">
-				<strong>$r.name</strong>
+				$r.name
+				$if r.erstjahr:
+					<span class="badge">1. Jahr</span>
 			</div>
-			<div class="col-sm-1 col-xs-3">
+			<div class="col-sm-1 col-xs-4">
 				$:wunsch_select_wunsch(r.id, wunsch[r.id])
 			</div>
-			<div class="col-sm-1 col-xs-3">
+			<div class="col-sm-1 col-xs-4">
 				$:wunsch_select_prio(r.id, wunsch[r.id])
 
 			</div>
-			<div class="col-sm-1 text-center col-xs-3">
+			<div class="col-sm-2 text-center col-xs-4">
 					$r.dauer_von
 					$if r.dauer_von != r.dauer_bis: 
 						- $r.dauer_bis
-			</div>
-			<div class="col-sm-1 col-xs-3">
-				$if r.erstjahr:
-					<span class="badge">1. Jahr</span>
 			</div>
 	</div>
 
