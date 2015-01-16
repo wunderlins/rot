@@ -37,7 +37,8 @@ urls = (
 	'/personal_data', 'personal_data',
 	'/test', 'test', # test methods, remove these in production
 	'/wunsch', 'wunsch', # test methods, remove these in production
-	'/wunsch_save', 'wunsch'
+	'/wunsch_save', 'wunsch',
+	'/typeahead', 'typeahead'
 )
 
 class response:
@@ -102,6 +103,21 @@ class personal_data(response):
 			#ret += str(p.as_json()) + ",\n"
 			
 		return ret[:-2] + "]"
+
+class typeahead(response):
+	def GET(self):
+		
+		ret = 'var names = { "options": [';
+		self.header(content_type="application/json")
+		
+		for p in db.session.query(db.Personal).\
+			order_by(asc(db.Personal.name)).\
+			with_entities(db.Personal.pid, db.Personal.name, db.Personal.vorname, db.Personal.kuerzel).\
+			filter_by(aktiv=1, pidp=''):
+			ret += json.dumps({"pid": p[0], "name": p[1], "vorname": p[2], "kuerzel": p[3], "str": str(p[1]) + " " + str(p[2]) + " (" + str(p[3]) + ")"}, encoding=db.Personal.encoding) + ",\n"
+			#ret += str(p.as_json()) + ",\n"
+			
+		return ret[:-2] + "]}"
 
 class personal(response):
 	def GET(self):
