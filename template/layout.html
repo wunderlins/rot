@@ -27,6 +27,9 @@ $def with (content)
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     
+		<!-- CSS to style the file input field as button and adjust the Bootstrap progress bars -->
+		<link rel="stylesheet" href="/static/upload/css/jquery.fileupload.css">
+		
     <style type="text/css">
     	.row div {padding-bottom: 0.25em;}
     	.prio {
@@ -42,6 +45,16 @@ $def with (content)
     		padding: 0.3em;
     		cursor: pointer;
     	}
+    	
+    	#users {display: none;}
+    	
+    	.portrait {
+    		width: 256px;
+    		height: 256px;
+    		border: 1px solid #eee;
+    	}
+    	.imgupload {}
+    	
     </style>
     <script src="static/assets/jquery.min.js"></script>
     <script src="static/application.js"></script>
@@ -95,6 +108,15 @@ $:content
 		<script src="static/bootstrap/js/bootstrap.min.js"></script>
 		<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 		<script src="static/assets/ie10-viewport-bug-workaround.js"></script>
+
+<!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
+<script src="/static/upload/js/vendor/jquery.ui.widget.js"></script>
+<!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
+<script src="/static/upload/js/jquery.iframe-transport.js"></script>
+<!-- The basic File Upload plugin -->
+<script src="/static/upload/js/jquery.fileupload.js"></script>
+
+
 		<script type="application/javascript">
 			path = window.location.pathname;
 			function n(p, c) {if (path == p ) $$("#nav_"+c).addClass("active");}

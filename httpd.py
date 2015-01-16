@@ -38,7 +38,8 @@ urls = (
 	'/test', 'test', # test methods, remove these in production
 	'/wunsch', 'wunsch', # test methods, remove these in production
 	'/wunsch_save', 'wunsch',
-	'/typeahead', 'typeahead'
+	'/typeahead', 'typeahead',
+	'/upload', 'upload',
 )
 
 class response:
@@ -73,6 +74,23 @@ class test(response):
 		
 		self.header(content_type="application/json")
 		return out
+
+class upload(response):
+	def POST(self):
+		
+		personal = db.session.query(db.Personal).filter_by(pid=188)[0]
+		
+		if len(personal.rot_pers) == 0:
+			p = db.Person()
+			p.personal = personal
+		else:
+			p = personal.rot_pers[0]
+		
+		f = web.input(file={})
+		p.foto = f["file"].value
+		
+		db.session.commit()
+		return ""
 
 class personal_data(response):
 	def GET(self):

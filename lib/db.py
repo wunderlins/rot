@@ -185,6 +185,16 @@ class Wunsch(Base, DefaultAttributes):
 	
 	#rot         = relationship("Rot", backref=backref('erfahrung', order_by=id))
 
+
+class Person(Base, DefaultAttributes):
+	__tablename__ = 'rot_pers'
+	
+	id          = Column(Integer, Sequence('pers_id_seq'), primary_key=True)
+	foto        = Column(BLOB)
+	pid         = Column('pid', INTEGER(), nullable=False)
+
+	
+	
 # create tables from scratch
 Base.metadata.create_all(engine)
 
@@ -477,6 +487,14 @@ Einteilung.person = relationship("Personal",
 															 foreign_keys="Einteilung.pid",
 															 primaryjoin="and_(Personal.pid==Einteilung.pid)",
 															 backref="einteilung")
+
+
+#	pid         = Column(Integer, ForeignKey('Personal.pid'))
+Person.personal = relationship("Personal", 
+                               foreign_keys="Person.pid", 
+															 primaryjoin="and_(Personal.pid==Person.pid)",
+                               backref="rot_pers", uselist=False)
+
 
 
 # bind engine to a session

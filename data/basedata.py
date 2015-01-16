@@ -58,7 +58,6 @@ def make_rot(name, bemerk, sort, dauer_von, dauer_bis, group, location, dauer_st
 		group=session.query(Group).filter(Group.name==group)[0], 
 		location=session.query(Location).filter(Location.name==location)[0],
 		erstjahr=erstjahr)
-	
 
 session.add_all([
 	make_rot('Allgemeinchirurgie, Urologie', '', 1, 3, 12, "Viszeral/Urologie/Lunge", "USB", 1, 1),

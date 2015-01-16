@@ -3,3 +3,89 @@ $def with (personal)
 </ul>
 <script type="application/javascript">add_load_handler(load_personal);</script>
 
+
+<h1>Name</h1>
+
+<div class="row">
+	<div class="col-sm-4 col-xs-12">
+		
+		<div class="portrait"></div>
+	
+    <span class="btn btn-success fileinput-button">
+        <i class="glyphicon glyphicon-plus"></i>
+        <span>Select file</span>
+        <!-- The file input field used as target for the file upload widget -->
+        <input id="fileupload" type="file" name="file" accept="image/*;capture=camera"/>
+    </span>
+    <br>
+    <br>
+    <!-- The global progress bar -->
+    <div id="progress" class="progress">
+        <div class="progress-bar progress-bar-success"></div>
+    </div>	
+		
+		
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading">Wünsche</div>
+
+  <!-- Table -->
+  <table class="table">
+    <thead>
+    	<tr>
+    		<th>Prio</th>
+    		<th>Rotation</th>
+    	</tr>
+    </thead>
+    <tbody>
+    	<tr>
+    		<td class="prio">&#xe133;&#xe133;</td>
+    		<td>Augenspital</td>
+    	</tr>
+    	<tr>
+    		<td class="prio">&#xe133;&#xe133;</td>
+    		<td>Pas</td>
+    	</tr>
+    </tbody>
+  </table>
+</div>
+		
+		
+	</div>
+	<div class="col-sm-4 col-xs-12">
+		Row 2
+	</div>
+	<div class="col-sm-4 col-xs-12">
+		Row 3
+	</div>
+</div>
+
+<script>
+function init_upload() {
+	/*jslint unparam: true */
+	/*global window, $$ */
+	$$(function () {
+		  'use strict';
+		  // Change this to the location of your server-side upload handler:
+		  var url = '/upload';
+		  $$('#fileupload').fileupload({
+		      url: url,
+		      dataType: 'json',
+		      done: function (e, data) {
+		          $$.each(data.result.files, function (index, file) {
+		              $$('<p/>').text(file.name).appendTo('#files');
+		          });
+		      },
+		      progressall: function (e, data) {
+		          var progress = parseInt(data.loaded / data.total * 100, 10);
+		          $$('#progress .progress-bar').css(
+		              'width',
+		              progress + '%'
+		          );
+		      }
+		  }).prop('disabled', !$$.support.fileInput)
+		      .parent().addClass($$.support.fileInput ? undefined : 'disabled');
+	});
+}
+add_load_handler(init_upload);
+</script>

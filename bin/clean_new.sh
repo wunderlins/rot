@@ -3,6 +3,7 @@
 # drop new tables
 mysql -h localhost -uplanoaa -pplanoaa planoaa <<EOT
 
+DROP table IF EXISTS rot_pers;
 DROP table IF EXISTS rot_wunsch;
 DROP table IF EXISTS rot_erfahrung;
 DROP table IF EXISTS rot_rot;
