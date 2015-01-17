@@ -57,6 +57,37 @@ class response:
 			'urls': urls
 		})
 
+	def person(self, pid, history):
+		# get latest wishes
+		if history == None:
+			w = db.session.query(db.Wunsch).filter_by(pid='188', latest=1)
+		else:
+			endd = history + datetime.timedelta(days=1)
+			w = db.session.query(db.Wunsch).filter_by(pid='188').filter(
+				and_(db.Wunsch.created >= datetime.date(history.year, history.month, history.day),\
+				db.Wunsch.created < datetime.date(endd.year, endd.month, endd.day))
+			)
+			
+		#print u
+		g = db.session.query(db.Group).order_by(db.Group.sort)
+		
+		# modified dates
+		d = db.session.query(db.distinct(db.Wunsch.created)).filter_by(pid=pid)
+		dates = []
+		for dt in d:
+			dates.insert(0, dt[0])
+		
+		wunsch = {}
+		for gr in g:
+			for r in gr.rot:
+				wunsch[r.id] = {"prio": 0, "wunsch": None}
+				for e in w:
+					if e.rot_id == r.id:
+						#print e
+						wunsch[r.id] = {"prio": e.prio, "wunsch": e.janein}
+						break
+		return (g, wunsch, dates)
+
 class test(response):
 	def GET(self):
 		s = db.session
@@ -169,22 +200,6 @@ class personal(response):
 		
 		print "pid: " + pid
 		
-		"""
-		db = web.database(
-			host = config.db_host,
-			dbn  = 'mysql',
-			user = config.db_user,
-			pw   = config.db_pass,
-			db   = config.db_name
-		)
-		"""
-		#personal = db.select('personal', what='pid,pidp,kuerzel,name,vorname,ptid,email')
-		#ret = "";
-		#for p in personal:
-		#	ret += json.dumps(p) + ",\n"
-		#ret = "[" + ret + "]"
-		#render = web.template.render('template')
-		
 		u = db.session.query(db.Personal).filter_by(pid=pid)[0] # Thierry
 		
 		global render
@@ -204,18 +219,9 @@ class wunsch(response):
 		# get user info
 		u = db.session.query(db.Personal).filter_by(pid='188')[0] # Thierry
 		
-		# get latest wishes
-		if history == None:
-			w = db.session.query(db.Wunsch).filter_by(pid='188', latest=1)
-		else:
-			endd = history + datetime.timedelta(days=1)
-			w = db.session.query(db.Wunsch).filter_by(pid='188').filter(
-				and_(db.Wunsch.created >= datetime.date(history.year, history.month, history.day),\
-				db.Wunsch.created < datetime.date(endd.year, endd.month, endd.day))
-			)
-		
 		#print u
 		
+		"""
 		#print u
 		g = db.session.query(db.Group).order_by(db.Group.sort)
 		
@@ -234,6 +240,7 @@ class wunsch(response):
 						#print e
 						wunsch[r.id] = {"prio": e.prio, "wunsch": e.janein}
 						break
+		"""
 		
 		"""
 		render = web.template.render('template', base="layout", globals={
@@ -241,6 +248,9 @@ class wunsch(response):
 			'wunsch_select_prio': tpl.wunsch_select_prio,
 		})
 		"""
+		
+		(g, wunsch, dates) = self.person(188, history)
+		
 		global render
 		#return render.wunsch(g, u, wunsch, dates, history)
 		return self.render().wunsch(g, u, wunsch, dates, history)
