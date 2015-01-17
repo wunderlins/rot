@@ -33,13 +33,13 @@ class rot(web.application):
 
 urls = (
   '/', 'personal',
-  '/personal', 'personal',
+  '/personal(.*)', 'personal',
 	'/personal_data', 'personal_data',
 	'/test', 'test', # test methods, remove these in production
 	'/wunsch', 'wunsch', # test methods, remove these in production
 	'/wunsch_save', 'wunsch',
 	'/typeahead', 'typeahead',
-	'/upload', 'upload',
+	'/image(.*)', 'image',
 )
 
 class response:
@@ -75,8 +75,27 @@ class test(response):
 		self.header(content_type="application/json")
 		return out
 
-class upload(response):
-	def POST(self):
+class image(response):
+	def GET(self, path):
+		pid = None
+		
+		if path:
+			print "Path: " + path
+			pid = path[1:]
+		print "pid: " + pid
+		
+		no_image = False
+		try:
+			r = db.session.query(db.Person).filter_by(pid=pid)[0]
+			web.header("Content-type", "image/jpeg")
+			return r.foto
+		
+		except:
+			no_image = True
+		
+		
+		
+	def POST(self, pid):
 		
 		personal = db.session.query(db.Personal).filter_by(pid=188)[0]
 		
@@ -138,7 +157,19 @@ class typeahead(response):
 		return ret[:-2] + "]}"
 
 class personal(response):
-	def GET(self):
+	def GET(self, path=None):
+		
+		pid = None
+		
+		if path:
+			print "Path: " + path
+			pid = path[1:]
+		else:
+			return self.render().index(db.Personal())
+		
+		print "pid: " + pid
+		
+		"""
 		db = web.database(
 			host = config.db_host,
 			dbn  = 'mysql',
@@ -146,14 +177,18 @@ class personal(response):
 			pw   = config.db_pass,
 			db   = config.db_name
 		)
+		"""
 		#personal = db.select('personal', what='pid,pidp,kuerzel,name,vorname,ptid,email')
 		#ret = "";
 		#for p in personal:
 		#	ret += json.dumps(p) + ",\n"
 		#ret = "[" + ret + "]"
 		#render = web.template.render('template')
+		
+		u = db.session.query(db.Personal).filter_by(pid=pid)[0] # Thierry
+		
 		global render
-		return self.render().index(None)
+		return self.render().index(u)
 		#return "Hello World"
 
 class wunsch(response):

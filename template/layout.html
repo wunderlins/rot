@@ -7,19 +7,19 @@ $def with (content)
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Rotationsplanung">
     <meta name="author" content="Simon Wunderlin">
-    <link rel="icon" href="favicon.ico">
+    <link rel="icon" href="/favicon.ico">
 
     <title>Rotationswunsch</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="static/assets/template.css" rel="stylesheet">
+    <link href="/static/assets/template.css" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="static/assets/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="static/assets/ie-emulation-modes-warning.js"></script>
+    <script src="/static/assets/ie-emulation-modes-warning.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -49,17 +49,25 @@ $def with (content)
     	#users {display: none;}
     	
     	.portrait {
-    		width: 256px;
-    		height: 256px;
+    		width: 100%;
+    		height: 300px;
     		border: 1px solid #eee;
+    		text-align: center;
+    		display: table;
     	}
+    	
+    	.portrait .inner {
+    		display: table-cell;
+    		vertical-align: bottom;
+    	}
+    	
     	.imgupload {}
     	
     </style>
-    <script src="static/assets/jquery.min.js"></script>
-    <script src="static/application.js"></script>
+    <script src="/static/assets/jquery.min.js"></script>
+    <script src="/static/application.js"></script>
     <script src="/typeahead"></script>
-    <script src="static/typeahead.js/typeahead.bundle.min.js"></script>
+    <script src="/static/typeahead.js/typeahead.bundle.min.js"></script>
   </head>
 
   <body>
@@ -105,9 +113,9 @@ $:content
 		<!-- Bootstrap core JavaScript
 		================================================== -->
 		<!-- Placed at the end of the document so the pages load faster -->
-		<script src="static/bootstrap/js/bootstrap.min.js"></script>
+		<script src="/static/bootstrap/js/bootstrap.min.js"></script>
 		<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-		<script src="static/assets/ie10-viewport-bug-workaround.js"></script>
+		<script src="/static/assets/ie10-viewport-bug-workaround.js"></script>
 
 <!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
 <script src="/static/upload/js/vendor/jquery.ui.widget.js"></script>

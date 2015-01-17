@@ -1,28 +1,35 @@
-$def with (personal)
+$def with (person)
+<!--
 <ul class="list-group" id="users">
 </ul>
 <script type="application/javascript">add_load_handler(load_personal);</script>
+-->
 
+<h1>$person.name $person.vorname</h1>
+<style type="text/css">
+	.portrait {background-image: url(/image/$person.pid)}
+</style>
 
-<h1>Name</h1>
 
 <div class="row">
 	<div class="col-sm-4 col-xs-12">
 		
-		<div class="portrait"></div>
-	
-    <span class="btn btn-success fileinput-button">
-        <i class="glyphicon glyphicon-plus"></i>
-        <span>Select file</span>
-        <!-- The file input field used as target for the file upload widget -->
-        <input id="fileupload" type="file" name="file" accept="image/*;capture=camera"/>
-    </span>
-    <br>
-    <br>
+		<div class="portrait">
+			<div class="inner">
+		  <span class="btn btn-info fileinput-button">
+		      <span class="glyphicon glyphicon-camera" style="font-size: 3em;"></span>
+		      <!-- The file input field used as target for the file upload widget -->
+		      <input id="fileupload" type="file" name="file" accept="image/*;capture=camera"/>
+		  </span>
+		  </div>
+		</div>
+		
     <!-- The global progress bar -->
     <div id="progress" class="progress" style="display: none">
         <div class="progress-bar progress-bar-success"></div>
     </div>	
+		<br />
+		<br />
 		
 		
 <div class="panel panel-default">
@@ -67,7 +74,7 @@ function init_upload() {
 	$$(function () {
 		  'use strict';
 		  // Change this to the location of your server-side upload handler:
-		  var url = '/upload';
+		  var url = '/image';
 		  $$('#fileupload').fileupload({
 		      url: url,
 		      dataType: 'json',

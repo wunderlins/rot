@@ -47,14 +47,9 @@ function init_ta() {
 		source: substringMatcher(names.options)
 	});
 	
-	function selectMa() {
-		var myVal = $('.typeahead').typeahead('val');
-		alert(myVal)
-	}
-	
 	function handleSearch(e, data) {
 		if (data)
-			alert("User pid: " + data.pid)
+			document.location.href = "/personal/" + data.pid
 		
 		/*
 		if (e.type == "keyup" && (e.keyCode == 13 || e.keyCode == 10)) {
