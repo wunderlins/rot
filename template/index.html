@@ -7,7 +7,11 @@ $def with (person)
 
 <h1>$person.name $person.vorname</h1>
 <style type="text/css">
-	.portrait {background-image: url(/image/$person.pid)}
+	.portrait {
+		background-image: url(/image/$person.pid);
+		background-repeat: no-repeat; 
+		background-size: 100% auto;
+	}
 </style>
 
 
