@@ -183,7 +183,7 @@ class Wunsch(Base, DefaultAttributes):
 	prio        = Column(Integer) # 1-5
 	latest      = Column(Integer)
 	
-	#rot         = relationship("Rot", backref=backref('erfahrung', order_by=id))
+	rot         = relationship("Rot", backref=backref('wunsch', order_by=id))
 
 
 class Person(Base, DefaultAttributes):
