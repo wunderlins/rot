@@ -19,6 +19,7 @@ import time
 from sqlalchemy import *
 import tpl
 from webctx import *
+import tempfile
 
 # allow to pass a custom port/ip into the application
 class rot(web.application):
@@ -54,4 +55,24 @@ if __name__ == "__main__":
 	#sys.stdout = weblog
 	
 	app = rot(urls, globals())
+	
+	# session setup, make sure to call it only one if in debug mode
+	if web.config.get('_session') is None:
+		web.config.session_parameters['cookie_name'] = 'rot'
+		web.config.session_parameters['cookie_domain'] = None
+		web.config.session_parameters['timeout'] = config.session_timeout,
+		web.config.session_parameters['ignore_expiry'] = True
+		web.config.session_parameters['ignore_change_ip'] = False
+		web.config.session_parameters['secret_key'] = config.session_salt
+		web.config.session_parameters['expired_message'] = 'Session expired'
+	
+		temp = tempfile.mkdtemp(dir=config.session_dir, prefix='session_')
+		web.sess = web.session.Session(
+			app, 
+			web.session.DiskStore(temp), 
+			initializer = session_default
+		)
+	else:
+		web.sess = web.config._session
+	
 	app.run(config.port, "0.0.0.0", Log)

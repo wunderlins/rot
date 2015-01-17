@@ -1,3 +1,16 @@
+def wunsch_prio(prio):
+	if prio == 1:
+		return '&#xe133;&#xe133;'
+	if prio == 2:
+		return '&#xe133;'
+	if prio == 3:
+		return '&#xe082;'
+	if prio == 4:
+		return '&#xe134;'
+	if prio == 5:
+		return '&#xe134;'
+	return "-"
+
 def wunsch_select_wunsch(rid, wunsch):
 	buffer = ""
 	buffer += '<select name="wunsch_' + str(rid) + '">'

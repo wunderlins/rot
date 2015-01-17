@@ -1,11 +1,11 @@
-$def with (person)
+$def with (person, wunsch)
 <!--
 <ul class="list-group" id="users">
 </ul>
 <script type="application/javascript">add_load_handler(load_personal);</script>
 -->
 
-<h1>$person.name $person.vorname</h1>
+<h1>$person.name $person.vorname ($person.kuerzel)</h1>
 <style type="text/css">
 	.portrait {
 		background-image: url(/image/$person.pid);
@@ -49,14 +49,13 @@ $def with (person)
     	</tr>
     </thead>
     <tbody>
+    $for w in wunsch:
     	<tr>
-    		<td class="prio">&#xe133;&#xe133;</td>
-    		<td>Augenspital</td>
+    		<td class="prio">$:wunsch_prio(w.prio)</td>
+    		<td>$w.rot.name</td>
     	</tr>
-    	<tr>
-    		<td class="prio">&#xe133;&#xe133;</td>
-    		<td>Pas</td>
-    	</tr>
+    	
+    	
     </tbody>
   </table>
 </div>
@@ -64,10 +63,10 @@ $def with (person)
 		
 	</div>
 	<div class="col-sm-4 col-xs-12">
-		Row 2
+		Notes
 	</div>
 	<div class="col-sm-4 col-xs-12">
-		Row 3
+		Vertrag
 	</div>
 </div>
 
