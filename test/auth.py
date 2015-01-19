@@ -32,7 +32,7 @@ if web.config.get('_session') is None:
 	web.config.session_parameters['cookie_name'] = 'rot'
 	web.config.session_parameters['cookie_domain'] = None
 	web.config.session_parameters['timeout'] = 6400,
-	web.config.session_parameters['ignore_expiry'] = True
+	web.config.session_parameters['ignore_expiry'] = False
 	web.config.session_parameters['ignore_change_ip'] = False
 	web.config.session_parameters['secret_key'] = "asd asdasd sdsd"
 	web.config.session_parameters['expired_message'] = 'Session expired'
@@ -56,6 +56,7 @@ class Index:
 		
 		auth = web.ctx.env.get('HTTP_AUTHORIZATION')
 		if auth is not None:
+			session["user"] = None
 			auth = re.sub('^Basic ','',auth)
 			username,password = base64.decodestring(auth).split(':')
 			if (username,password) in allowed:
