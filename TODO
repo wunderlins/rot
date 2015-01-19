@@ -1,0 +1,13 @@
+- check database error handling and rollback, might have to deal with locks
+- implement notes
+  - notes can have categories
+  - notes belong to a pid
+  - notes can have replies
+
+- sorteirung der wünsche unter Rotation kontrollieren
+  - sollen "nicht" wünsche auch gelistet werden?
+  - history funktion (link auf wunsch?)
+  
+- page title
+
+- favicon für ipad, etc.
