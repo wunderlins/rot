@@ -35,8 +35,7 @@ $def with (person, wunsch)
 		<br />
 		<br />
 		
-		$session.pid
-<div class="panel panel-default">
+	<div class="panel panel-default">
   <!-- Default panel contents -->
   <div class="panel-heading">Wünsche</div>
 
@@ -63,7 +62,27 @@ $def with (person, wunsch)
 		
 	</div>
 	<div class="col-sm-4 col-xs-12">
-		Notes
+		<div class="panel panel-default">
+			<div class="panel-heading">Notiz</div>
+			<div class="panel-body">
+				<textarea style="width: 100%"></textarea>
+				
+				<table class="table">
+					<tbody>
+						<tr>
+							<td>Bis</td>
+							<td>
+								<div class="input-append input-group date" id="von">
+									<input class="form-control" type="text" value=""/>
+									<label for="von" class="input-group-addon btn"><span class="glyphicon glyphicon-calendar"></span></label>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				
+			</div>
+		</div>
 	</div>
 	<div class="col-sm-4 col-xs-12">
 		Vertrag

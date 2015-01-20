@@ -66,7 +66,21 @@ function init_ta() {
 		.on('keyup', handleSearch);
 }
 
-var _load_handler = [init_ta]
+function init_datepicker() {
+	options = {
+		pickTime: false,
+		format: "DD.MM.YYYY",
+		defaultDate: new Date()
+	}
+
+	$('.date').datetimepicker(options)
+  $(".date").on("dp.change", function(e) {
+		//submit_dates()
+  });		
+
+}
+
+var _load_handler = [init_ta, init_datepicker]
 function add_load_handler(handler) {
 	_load_handler.push(handler);
 }
