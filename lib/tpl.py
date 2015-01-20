@@ -1,3 +1,28 @@
+def btn_ok(onclick=None):
+	if onclick == None:
+		onclick = ""
+	else:
+		onclick = " onclick='" + onclick + "' "
+	
+	return """
+	<button type="button" class="btn btn-success" aria-label="OK" """ + onclick + """>
+  	<span class="glyphicon glyphicon-ok" aria-hidden="true"></span> <strong>Ok</strong>
+	</button>
+	"""
+
+def btn_cancel(onclick=None):
+	if onclick == None:
+		onclick = ""
+	else:
+		onclick = " onclick='" + onclick + "' "
+	
+	return """
+	<button type="button" class="btn btn-danger" aria-label="Cancel" """ + onclick + """>
+  	<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel
+	</button>
+	"""
+
+
 def wunsch_prio(prio):
 	if prio == 1:
 		return '&#xe133;&#xe133;'

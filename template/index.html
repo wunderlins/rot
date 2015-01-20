@@ -65,23 +65,42 @@ $def with (person, wunsch)
 		<div class="panel panel-default">
 			<div class="panel-heading">Notiz</div>
 			<div class="panel-body">
-				<textarea style="width: 100%"></textarea>
+			
+				<div class="form-group">
+					<textarea class="form-control" rows="1" name="comment" id="comment" onfocus="notes.focus(this)"></textarea>
+				</div>
 				
-				<table class="table">
-					<tbody>
-						<tr>
-							<td>Bis</td>
-							<td>
-								<div class="input-append input-group date" id="von">
-									<input class="form-control" type="text" value=""/>
-									<label for="von" class="input-group-addon btn"><span class="glyphicon glyphicon-calendar"></span></label>
-								</div>
-							</td>
-						</tr>
-					</tbody>
-				</table>
+				<div id="notiz_controls" style="display: none;">
+					<div class="form-group">
+						<label>Typ</label>
+						<div class="btn-group input-group" data-toggle="buttons">
+							<label class="btn btn-default active">
+								<input type="radio" name="type" id="inputWalls" value="notiz" checked>
+								<span class="glyphicon glyphicon-pencil"></span> Notiz
+							</label>
+							<label class="btn btn-default">
+								<input type="radio" name="type" id="inputWalls" value="task">
+								<span class="glyphicon glyphicon-list-alt"></span> Task
+							</label>
+						</div>
+					</div>
 				
-			</div>
+					<div class="form-group">
+						<label>Bis</label>
+						<div class="input-append input-group date" id="von">
+							<input class="form-control" type="text" value=""/>
+							<label for="von" class="input-group-addon btn"><span class="glyphicon glyphicon-calendar"></span></label>
+						</div>
+					</div>
+					
+					<hr />
+					<div class="pull-right">
+						$:btn_ok()
+						$:btn_cancel(onclick='notes.collapse(this)')
+					</div>
+					
+				</div> <!-- end notiz_controls -->
+			</div><!-- end panel-body -->
 		</div>
 	</div>
 	<div class="col-sm-4 col-xs-12">

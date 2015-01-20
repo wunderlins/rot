@@ -66,18 +66,22 @@ function init_ta() {
 		.on('keyup', handleSearch);
 }
 
+
 function init_datepicker() {
 	options = {
 		pickTime: false,
-		format: "DD.MM.YYYY",
-		defaultDate: new Date()
+		format: "DD.MM.YYYY"
+		/* , defaultDate: new Date() */
 	}
-
-	$('.date').datetimepicker(options)
+	
+	$('.date').datetimepicker(options);
+	
+	/*
   $(".date").on("dp.change", function(e) {
 		//submit_dates()
   });		
-
+	*/
+	
 }
 
 var _load_handler = [init_ta, init_datepicker]
@@ -110,3 +114,17 @@ var substringMatcher = function(strs) {
   };
 };
 
+
+var notes = {
+	focus: function(o) {
+		$('#notiz_controls').css("display", "block");
+		o.setAttribute("rows", 5);
+	},
+	
+	collapse: function(o) {
+		//alert("collapse")
+		$('#notiz_controls').css("display", "none");
+		$("#comment").attr("rows", 1);
+		$("#comment").val("");
+	}
+}

@@ -66,6 +66,8 @@ class response:
 			'wunsch_select_wunsch': tpl.wunsch_select_wunsch,
 			'wunsch_select_prio': tpl.wunsch_select_prio,
 			'wunsch_prio': tpl.wunsch_prio,
+			'btn_cancel': tpl.btn_cancel,
+			'btn_ok': tpl.btn_ok,
 			'urls': urls,
 			"session": web.sess
 		})
