@@ -126,5 +126,17 @@ var notes = {
 		$('#notiz_controls').css("display", "none");
 		$("#comment").attr("rows", 1);
 		$("#comment").val("");
+	},
+	
+	submit: function() {
+		// post a jason record, default:
+		record = {
+			pid: window.pid,
+			comment: $('#comment', '#note').val(),
+			type: $('input[name=type]:checked', '#note').val(),
+			due: parseInt($('#due').data("DateTimePicker").getDate().format("X"))
+		}
+		
+		console.log(record)
 	}
 }
