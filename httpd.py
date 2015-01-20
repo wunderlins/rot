@@ -21,13 +21,17 @@ import tpl
 from webctx import *
 import tempfile
 
+session_default = {
+	"selected_pid": 0,
+	"pid": 0,
+	"user": None
+}
+
 # allow to pass a custom port/ip into the application
 class rot(web.application):
 	def run(self, port=8080, ip='0.0.0.0', *middleware):
 		func = self.wsgifunc(*middleware)
 		return web.httpserver.runsimple(func, (ip, port))
-
-
 
 import sys, logging
 from wsgilog import WsgiLog
@@ -74,5 +78,11 @@ if __name__ == "__main__":
 		)
 	else:
 		web.sess = web.config._session
+		try:
+			web.sess["pid"]
+		except:
+			web.sess = session_default
+	#web.sess["pid"] += 1
 	
 	app.run(config.port, "0.0.0.0", Log)
+	

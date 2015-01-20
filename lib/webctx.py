@@ -3,12 +3,8 @@ import datetime
 import time
 from sqlalchemy import *
 import tpl
-
-session_default = {
-	"selected_pid": 0,
-	"pid": 0,
-	"user": None
-}
+import re
+import base64
 
 urls = (
   '/', 'personal',
@@ -21,7 +17,42 @@ urls = (
 	'/image(.*)', 'image',
 )
 
+def basic_auth():
+	allowed = (
+		('admin','pass'),
+	)
+	
+	#print web.sess["user"]
+	
+	auth = web.ctx.env.get('HTTP_AUTHORIZATION')
+	if auth is not None:
+		web.sess["user"] = None
+		auth = re.sub('^Basic ','',auth)
+		username,password = base64.decodestring(auth).split(':')
+		#print username,password
+		if (username,password) in allowed:
+			#print "allowd"
+			web.sess["user"] = username
+			return
+	
+	if web.sess["user"] == None:
+		web.header('WWW-Authenticate','Basic realm="Auth example"')
+		web.ctx.status = '401 Unauthorized'
+		return
+
 class response:
+	
+	def __init__(self):
+		"""
+		Every response object will, when instatiated, do a basic authentication.
+		
+		This is globally applied for now, that means, there is no way to serve pages to anonymous users.
+		
+		Not sure if this is a sane way.
+		
+		"""
+		basic_auth()
+	
 	def header(self, content_type="text/html"):
 		web.header('Content-Type', content_type+'; charset=utf-8', unique=True) 
 		web.header('Cache-Control','no-cache, no-store, must-revalidate')
@@ -93,9 +124,9 @@ class image(response):
 		pid = None
 		
 		if path:
-			print "Path: " + path
+			#print "Path: " + path
 			pid = path[1:]
-		print "pid: " + pid
+		#print "pid: " + pid
 		
 		no_image = False
 		try:
@@ -105,9 +136,7 @@ class image(response):
 		
 		except:
 			no_image = True
-		
-		
-		
+	
 	def POST(self, pid):
 		
 		personal = db.session.query(db.Personal).filter_by(pid=pid)[0]
@@ -175,12 +204,14 @@ class personal(response):
 		pid = None
 		
 		if path:
-			print "Path: " + path
+			#print "Path: " + path
 			pid = path[1:]
 		else:
 			return self.render().index(db.Personal(), {})
 		
-		print "pid: " + pid
+		#print "pid: " + pid
+		#web.sess.pid += 1
+		#print web.sess.pid
 		
 		person = db.session.query(db.Personal).filter_by(pid=pid)[0]
 		wunsch = db.session.query(db.Wunsch)\
