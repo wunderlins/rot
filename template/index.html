@@ -1,4 +1,4 @@
-$def with (person, wunsch)
+$def with (person, wunsch, RotNoteType)
 <!--
 <ul class="list-group" id="users">
 </ul>
@@ -78,21 +78,27 @@ pid = $person.pid
 					<div class="form-group">
 						<label>Typ</label>
 						<div class="btn-group input-group" data-toggle="buttons">
-							<label class="btn btn-default active">
-								<input type="radio" name="type" id="type" value="notiz" checked>
-								<span class="glyphicon glyphicon-pencil"></span> Notiz
+						$for idx, (label, glyph, state) in enumerate(RotNoteType):
+							$if idx == 0:
+								$continue
+							<label class="btn btn-default 
+								$if state:
+									active
+								">
+								<input type="radio" name="type" id="type" value="$idx"
+								$if state:
+									checked
+								>
+								<span class="glyphicon $glyph"></span> $label
 							</label>
-							<label class="btn btn-default">
-								<input type="radio" name="type" id="type" value="task">
-								<span class="glyphicon glyphicon-list-alt"></span> Task
-							</label>
+							
 						</div>
 					</div>
 				
 					<div class="form-group">
 						<label>Bis</label>
 						<div class="input-append input-group date" id="due">
-							<input class="form-control" type="text" value=""/>
+							<input class="form-control" type="text" value="" id="due_input"/>
 							<label for="due" class="input-group-addon btn"><span class="glyphicon glyphicon-calendar"></span></label>
 						</div>
 					</div>

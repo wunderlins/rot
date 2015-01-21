@@ -5,6 +5,7 @@ from sqlalchemy import *
 import tpl
 import re
 import base64
+import sys
 
 urls = (
   '/', 'personal',
@@ -15,6 +16,7 @@ urls = (
 	'/wunsch_save', 'wunsch',
 	'/typeahead', 'typeahead',
 	'/image(.*)', 'image',
+	'/rotnote(.*)', 'rotnote',
 )
 
 def basic_auth():
@@ -102,6 +104,37 @@ class response:
 						wunsch[r.id] = {"prio": e.prio, "wunsch": e.janein}
 						break
 		return (g, wunsch, dates)
+
+class rotnote(response):
+	def GET(self, path):
+		id = None
+		if path:
+			id = path[1:]
+		
+	def POST(self, path):
+		id = None
+		if path:
+			id = path[1:]
+		
+		# unencode the json post body
+		try:
+			p = web.input()
+			d = None
+			if p.due:
+				d = datetime.datetime.fromtimestamp(int(p.due))
+				print d
+				n = db.RotNote(pid=p.pid, comment=p.comment, type=p.type, bis=d)
+			else:
+				n = db.RotNote(pid=p.pid, comment=p.comment, type=p.type, bis="0000-00-00")
+			db.session.add(n)
+			db.session.commit()
+		except:
+			web.header('Content-Type', 'application/json; charset=utf-8', unique=True)
+			return '{"success": false, "error": "'+str(sys.exc_info()[0])+'"}'
+		
+		print p
+		web.header('Content-Type', 'application/json; charset=utf-8', unique=True) 
+		return '{"success": true, "id": '+str(n.id)+'}'
 
 class test(response):
 	def GET(self):
@@ -221,7 +254,7 @@ class personal(response):
 			.order_by(db.Wunsch.prio.asc())
 		
 		global render
-		return self.render().index(person, wunsch)
+		return self.render().index(person, wunsch, db.RotNoteType)
 		#return "Hello World"
 
 class wunsch(response):

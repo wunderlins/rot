@@ -1,35 +1,34 @@
 function load_personal() {
 
 	$.ajax({
-		url: "/personal_data",
+		url: "/personal_data"
+		/* ,
 		beforeSend: function( xhr ) {
 			xhr.overrideMimeType( "text/plain; charset=x-user-defined" );
-		}
+		} */
 	}).done(function( data ) {
-		if ( console && console.log ) {
-			var js = jQuery.parseJSON(data);
-			//console.log(js);
-				
-			// append nodes
-			/**
-			 <li class="list-group-item">
-			 <span class="badge">14</span>
-			 Cras justo odio
-			 </li>
-			**/
-			p = $("#users")
-			for(i=0; i<js.length; i++) {
-				e = js[i]
-				n = document.createElement("li");
-				b = document.createElement("span");
-				b.setAttribute("class", "badge")
-				b.appendChild(document.createTextNode(e.kuerzel))
-				n.appendChild(b);
-				n.setAttribute("class", "list-group-item");
-				n.appendChild(document.createTextNode(e.name + " " + e.vorname + " " + e.pid));
-				//console.log(e.name + " " + e.vorname)
-				p.append(n)
-			}
+		var js = jQuery.parseJSON(data);
+		//console.log(js);
+			
+		// append nodes
+		/**
+		 <li class="list-group-item">
+		 <span class="badge">14</span>
+		 Cras justo odio
+		 </li>
+		**/
+		p = $("#users")
+		for(i=0; i<js.length; i++) {
+			e = js[i]
+			n = document.createElement("li");
+			b = document.createElement("span");
+			b.setAttribute("class", "badge")
+			b.appendChild(document.createTextNode(e.kuerzel))
+			n.appendChild(b);
+			n.setAttribute("class", "list-group-item");
+			n.appendChild(document.createTextNode(e.name + " " + e.vorname + " " + e.pid));
+			//console.log(e.name + " " + e.vorname)
+			p.append(n)
 		}
 	});
 }
@@ -130,13 +129,41 @@ var notes = {
 	
 	submit: function() {
 		// post a jason record, default:
-		record = {
+		dt = null
+		if ($('#due_input', '#note').val())
+			dt = parseInt($('#due').data("DateTimePicker").getDate().format("X"))
+		console.log(dt)
+		payload = {
 			pid: window.pid,
 			comment: $('#comment', '#note').val(),
-			type: $('input[name=type]:checked', '#note').val(),
-			due: parseInt($('#due').data("DateTimePicker").getDate().format("X"))
+			type: parseInt($('input[name=type]:checked', '#note').val()),
+			due: dt
 		}
 		
-		console.log(record)
+		console.log(payload)
+		
+		$.ajax({
+			url: "/rotnote/0",
+			type: "POST",
+			//contentType: "application/json; charset=utf-8",
+			//dataType: "json",
+			//data: escape("payload="+JSON.stringify(payload))
+			data: payload
+			/* ,
+			beforeSend: function( xhr ) {
+				xhr.overrideMimeType( "text/plain; charset=x-user-defined" );
+			} */
+		}).done(function(data) {
+			if (data.success) {
+				$('#comment', '#note').val("")
+				$('#due_input', '#note').val(null)
+			} else {
+				alert("Error: " + data.error + "\n\nData could not be saved.")
+			}
+		})
+		.fail(function(data) {
+			alert("Failed to communicate with Server")
+		})
+		
 	}
 }

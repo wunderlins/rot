@@ -193,7 +193,30 @@ class Person(Base, DefaultAttributes):
 	foto        = Column(BLOB)
 	pid         = Column('pid', INTEGER(), nullable=False)
 
-	
+
+class RotNote(Base, DefaultAttributes):
+	__tablename__ = 'rot_notes'
+
+	__table_args__ = {}
+
+	#column definitions
+	id = Column(Integer, Sequence('rot_notes_id_seq'), primary_key=True)
+	comment = Column('comment', TEXT())
+	#pid = Column('pid', INTEGER(), ForeignKey('personal.pid'))
+	pid = Column('pid', INTEGER())
+	type = Column(Integer)
+	bis = Column(Date, nullable=True)
+	pnid = Column('pnid', INTEGER())
+	done = Column(Integer, default=0)
+
+	#relation definitions
+
+RotNoteType = [
+	(None, None, None),
+	("Notiz", "glyphicon-pencil", 1),
+	("Task", "glyphicon-list-alt", 0),
+]
+
 	
 # create tables from scratch
 Base.metadata.create_all(engine)
@@ -494,6 +517,11 @@ Person.personal = relationship("Personal",
                                foreign_keys="Person.pid", 
 															 primaryjoin="and_(Personal.pid==Person.pid)",
                                backref="rot_pers", uselist=False)
+
+RotNote.personal = relationship("Personal", 
+                               foreign_keys="RotNote.pid", 
+															 primaryjoin="and_(Personal.pid==RotNote.pid)",
+                               backref="rot_notes", uselist=False)
 
 
 
