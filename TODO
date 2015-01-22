@@ -1,3 +1,5 @@
+- FIXME: image upload from phone failed after about 10% uploading
+
 - check database error handling and rollback, might have to deal with locks
 - implement notes
   - notes can have categories

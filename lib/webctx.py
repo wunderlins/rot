@@ -8,7 +8,7 @@ import base64
 import sys
 
 urls = (
-  '/', 'personal',
+  '/', 'index',
   '/personal(.*)', 'personal',
 	'/personal_data', 'personal_data',
 	'/test', 'test', # test methods, remove these in production
@@ -105,6 +105,10 @@ class response:
 						break
 		return (g, wunsch, dates)
 
+class index(response):
+	def GET(self):
+		return self.render().index()
+	
 class rotnote(response):
 	def GET(self, path):
 		id = None
@@ -328,11 +332,7 @@ class personal(response):
 			#print "Path: " + path
 			pid = path[1:]
 		else:
-			return self.render().index(db.Personal(), {})
-		
-		#print "pid: " + pid
-		#web.sess.pid += 1
-		#print web.sess.pid
+			return self.render().personal(db.Personal(), {}, db.RotNoteType, {}, time.strftime("%Y%m%d"))
 		
 		person = db.session.query(db.Personal).filter_by(pid=pid)[0]
 		wunsch = db.session.query(db.Wunsch)\
@@ -344,9 +344,7 @@ class personal(response):
 			.filter_by(pid=pid)\
 			.order_by(db.RotNote.created.desc())
 		
-		
-		global render
-		return self.render().index(person, wunsch, db.RotNoteType, notes, time.strftime("%Y%m%d"))
+		return self.render().personal(person, wunsch, db.RotNoteType, notes, time.strftime("%Y%m%d"))
 		#return "Hello World"
 
 class wunsch(response):
