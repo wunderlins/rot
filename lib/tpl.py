@@ -33,7 +33,7 @@ def wunsch_prio(prio):
 	if prio == 4:
 		return '&#xe134;'
 	if prio == 5:
-		return '&#xe134;'
+		return '&#xe134;&#xe134;'
 	return "-"
 
 def wunsch_select_wunsch(rid, wunsch):

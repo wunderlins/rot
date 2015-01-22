@@ -117,7 +117,7 @@ var substringMatcher = function(strs) {
 var notes = {
 	focus: function(o) {
 		$('#notiz_controls').css("display", "block");
-		o.setAttribute("rows", 5);
+		$("#comment").attr("rows", 5);
 	},
 	
 	collapse: function(o) {
@@ -125,6 +125,7 @@ var notes = {
 		$('#notiz_controls').css("display", "none");
 		$("#comment").attr("rows", 1);
 		$("#comment").val("");
+		$("#note").attr("action", "/rotnote/0")
 	},
 	
 	submit: function() {
@@ -136,14 +137,25 @@ var notes = {
 		payload = {
 			pid: window.pid,
 			comment: $('#comment', '#note').val(),
-			type: parseInt($('input[name=type]:checked', '#note').val()),
-			due: dt
+			type: parseInt($('input[name=type][checked=checked]', '#note').val()),
+			due: dt,
+			action: "insert"
 		}
 		
-		console.log(payload)
+		//console.log(payload)
+		
+		
+		act = $("#note").attr("action")
+		if (act != "/rotnote/0") {
+			payload.action = "update";
+			
+		}
+		
+		//console.log($("#note").attr("action"))
+		//console.log(payload)
 		
 		$.ajax({
-			url: "/rotnote/0",
+			url: act,
 			type: "POST",
 			//contentType: "application/json; charset=utf-8",
 			//dataType: "json",
@@ -157,6 +169,8 @@ var notes = {
 			if (data.success) {
 				$('#comment', '#note').val("")
 				$('#due_input', '#note').val(null)
+				
+				//document.location.href = document.location.href
 			} else {
 				alert("Error: " + data.error + "\n\nData could not be saved.")
 			}
@@ -164,6 +178,55 @@ var notes = {
 		.fail(function(data) {
 			alert("Failed to communicate with Server")
 		})
-		
+	},
+	
+	delete: function(id) {
+		$.ajax({
+			url: "/rotnote/"+id,
+			type: "POST",
+			data: {action: "delete"}
+		}).done(function(data) {
+			if (data.success) {
+				//console.log(data)
+				$("#note_"+data.id).remove();
+			} else {
+				alert("Error: " + data.error + "\n\nData could not be deleted.")
+			}
+		})
+		.fail(function(data) {
+			alert("Failed to communicate with Server")
+		})
+	},
+	
+	get: function(id) {
+		$.ajax({
+			url: "/rotnote/"+id,
+			type: "GET"
+		}).done(function(data) {
+			if (data.success) {
+				console.log(data)
+				notes.focus({})
+				$("#comment").val(data.data.comment)
+				if (data.data.bis)
+					$('#due_input', '#note').val(data.data.bis)
+				else
+					$('#due_input', '#note').val(null)
+				console.log(data.data.bis)
+				
+				$("#note").attr("action", "/rotnote/" + data.data.id)
+				$('input:radio[name=type]').attr('checked', false);
+				$(".typecheck").removeClass("active")
+				id = "#type_btn_"+data.data.type
+				$(id).addClass("active")
+				$('input:radio[name=type]').filter('[value='+data.data.type+']').attr('checked', true);
+				//console.log(data.data.id)
+				//$("#note_"+data.id).remove();
+			} else {
+				alert("Error: " + data.error + "\n\nData could not be deleted.")
+			}
+		})
+		.fail(function(data) {
+			alert("Failed to communicate with Server")
+		})
 	}
 }

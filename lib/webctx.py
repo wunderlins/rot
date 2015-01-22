@@ -110,19 +110,83 @@ class rotnote(response):
 		id = None
 		if path:
 			id = path[1:]
+		else:
+			web.header('Content-Type', 'application/json; charset=utf-8', unique=True)
+			return '{"success": false, "error": "parameter id missing!"}'
+		
+		try:
+			r = db.session.query(db.RotNote).filter_by(id=id)[0]
+		except:
+			web.header('Content-Type', 'application/json; charset=utf-8', unique=True)
+			return '{"success": false, "error": "'+str(sys.exc_info()[0])+'"}'
+		
+		d = None
+		if r.bis:
+			d = r.bis.strftime("%d.%m.%Y")
+		
+		response = {
+			"id": r.id,
+			"comment": r.comment,
+			"bis": d,
+			"done": r.done,
+			"type": r.type
+		}
+		web.header('Content-Type', 'application/json; charset=utf-8', unique=True)
+		return '{"success": true, "data": '+json.dumps(response)+'}'
+		
 		
 	def POST(self, path):
 		id = None
 		if path:
 			id = path[1:]
 		
-		# unencode the json post body
+		p = web.input(action=None)
+		
+		# if we have an id, then we need to update or delete
+		if id and p.action == "delete":
+			print "Delete"
+			try:
+				r = db.session.query(db.RotNote).filter_by(id=id)[0]
+				db.session.delete(r)
+				db.session.commit()
+			except:
+				web.header('Content-Type', 'application/json; charset=utf-8', unique=True)
+				return '{"success": false, "error": "'+str(sys.exc_info()[0])+'"}'
+			
+			web.header('Content-Type', 'application/json; charset=utf-8', unique=True)
+			return '{"success": true, "id": '+str(id)+'}' 
+		
+		if id and p.action == "update":
+			print "Update"
+			try:
+				r = db.session.query(db.RotNote).filter_by(id=id)[0]
+				d = None
+				if p.due:
+					d = datetime.datetime.fromtimestamp(int(p.due))
+					r.bis=d
+				else:
+					r.bis="0000-00-00"
+				r.pid=p.pid
+				r.comment=p.comment
+				r.type=p.type
+				
+				print r.pid
+				print r.comment
+				print r.type
+				print r.bis
+				db.session.commit()
+			except:
+				web.header('Content-Type', 'application/json; charset=utf-8', unique=True)
+				return '{"success": false, "error": "'+str(sys.exc_info()[0])+'"}'
+			web.header('Content-Type', 'application/json; charset=utf-8', unique=True) 
+			return '{"success": true, "id": '+str(id)+'}'
+				
+		# insert acation
 		try:
-			p = web.input()
+			print "Insert"
 			d = None
 			if p.due:
 				d = datetime.datetime.fromtimestamp(int(p.due))
-				print d
 				n = db.RotNote(pid=p.pid, comment=p.comment, type=p.type, bis=d)
 			else:
 				n = db.RotNote(pid=p.pid, comment=p.comment, type=p.type, bis="0000-00-00")
@@ -253,8 +317,14 @@ class personal(response):
 			.filter_by(pid=pid, latest=1)\
 			.order_by(db.Wunsch.prio.asc())
 		
+		# TODO: get rotnote
+		notes = db.session.query(db.RotNote)\
+			.filter_by(pid=pid)\
+			.order_by(db.RotNote.created.desc())
+		
+		
 		global render
-		return self.render().index(person, wunsch, db.RotNoteType)
+		return self.render().index(person, wunsch, db.RotNoteType, notes)
 		#return "Hello World"
 
 class wunsch(response):
