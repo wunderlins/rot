@@ -161,7 +161,7 @@ function init_upload() {
 	$$(function () {
 		  'use strict';
 		  // Change this to the location of your server-side upload handler:
-		  var url = '/image';
+		  var url = '/image/' + pid;
 		  $$('#fileupload').fileupload({
 		      url: url,
 		      dataType: 'json',

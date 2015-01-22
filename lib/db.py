@@ -28,9 +28,9 @@ else:
 	logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
 
 # connect to database
-dsn = "mysql+mysqldb://"+config.db_user+":"+config.db_pass+"@localhost/"+config.db_name
+dsn = "mysql+mysqldb://"+config.db_user+":"+config.db_pass+"@localhost/"+config.db_name + "?charset=utf8"
 #engine = create_engine('sqlite:///:memory:', echo=True)
-engine = create_engine(dsn, echo=False)
+engine = create_engine(dsn, encoding='utf-8', echo=False)
 Base = declarative_base()
 
 

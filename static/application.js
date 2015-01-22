@@ -170,7 +170,7 @@ var notes = {
 				$('#comment', '#note').val("")
 				$('#due_input', '#note').val(null)
 				
-				//document.location.href = document.location.href
+				document.location.href = document.location.href
 			} else {
 				alert("Error: " + data.error + "\n\nData could not be saved.")
 			}

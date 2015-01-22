@@ -236,9 +236,14 @@ class image(response):
 		except:
 			no_image = True
 	
-	def POST(self, pid):
+	def POST(self, path):
+		#print "Path: ", path
+		pid = None
+		if path:
+			pid = path[1:]
 		
 		personal = db.session.query(db.Personal).filter_by(pid=pid)[0]
+		#print personal
 		
 		if len(personal.rot_pers) == 0:
 			p = db.Person()
@@ -292,7 +297,24 @@ class typeahead(response):
 			order_by(asc(db.Personal.name)).\
 			with_entities(db.Personal.pid, db.Personal.name, db.Personal.vorname, db.Personal.kuerzel).\
 			filter_by(aktiv=1, pidp=''):
-			ret += json.dumps({"pid": p[0], "name": p[1], "vorname": p[2], "kuerzel": p[3], "str": str(p[1]) + " " + str(p[2]) + " (" + str(p[3]) + ")"}, encoding=db.Personal.encoding) + ",\n"
+			#ret += json.dumps({"pid": p[0], "name": p[1], "vorname": p[2], "kuerzel": p[3], "str": str(p[1]) + " " + str(p[2]) + " (" + str(p[3]) + ")"}, encoding=db.Personal.encoding) + ",\n"
+			if not p[1]: p[1] = ""
+			if not p[2]: p[2] = ""
+			k = ""
+			try:
+				if not p[3]: 
+					p[3] = ""
+					k = ""
+				else:
+					k = p[3]
+			except:
+				pass
+			ret += json.dumps({"pid": p[0], \
+				"name": p[1], \
+				"vorname": p[2], \
+				"kuerzel": p[3], \
+				"str": p[1] + " " + p[2] + \
+				" (" + k + ")"}, encoding=db.Personal.encoding) + ",\n"
 			#ret += str(p.as_json()) + ",\n"
 			
 		return ret[:-2] + "]}"
