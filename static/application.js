@@ -137,7 +137,7 @@ var notes = {
 		payload = {
 			pid: window.pid,
 			comment: $('#comment', '#note').val(),
-			type: parseInt($('input[name=type][checked=checked]', '#note').val()),
+			type: parseInt($('input[name=type]:checked', '#note').val()),
 			due: dt,
 			action: "insert"
 		}
@@ -181,6 +181,10 @@ var notes = {
 	},
 	
 	delete: function(id) {
+		
+		if (!confirm("Wirklich löschen?"))
+			return true;
+		
 		$.ajax({
 			url: "/rotnote/"+id,
 			type: "POST",
@@ -211,6 +215,10 @@ var notes = {
 					$('#due_input', '#note').val(data.data.bis)
 				else
 					$('#due_input', '#note').val(null)
+				if (data.data.type == 2)
+					$('#duedate').css('display', 'block')
+				else
+					$('#duedate').css('display', 'none')
 				console.log(data.data.bis)
 				
 				$("#note").attr("action", "/rotnote/" + data.data.id)
