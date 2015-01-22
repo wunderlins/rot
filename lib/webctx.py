@@ -346,7 +346,7 @@ class personal(response):
 		
 		
 		global render
-		return self.render().index(person, wunsch, db.RotNoteType, notes)
+		return self.render().index(person, wunsch, db.RotNoteType, notes, time.strftime("%Y%m%d"))
 		#return "Hello World"
 
 class wunsch(response):
