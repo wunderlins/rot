@@ -523,7 +523,7 @@ RotNote.personal = relationship("Personal",
 															 primaryjoin="and_(Personal.pid==RotNote.pid)",
                                backref="rot_notes", uselist=False)
 
-
+Personal.pidp = Column(Integer, ForeignKey('Personal.pid'))
 
 # bind engine to a session
 Session = sessionmaker(bind=engine)

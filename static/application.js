@@ -36,7 +36,7 @@ function load_personal() {
 
 function init_ta() {
 	$('.typeahead').typeahead({
-		hint: true,
+		hint: false,
 		highlight: true,
 		minLength: 1
 	},
@@ -46,10 +46,24 @@ function init_ta() {
 		source: substringMatcher(names.options)
 	});
 	
+	pid = null
+	
 	function handleSearch(e, data) {
+		/*
+		if (e.type == "keyup" && (e.keyCode == 13 || e.keyCode == 10)) {
+			document.location.href = "/personal/" + data.pid
+		}
+		*/
+		
 		if (data)
 			document.location.href = "/personal/" + data.pid
-		
+	}
+	
+	function autocomplete(e, data) {
+		console.log(data)
+	
+		//pid = data.pid
+		//alert(pid)
 		/*
 		if (e.type == "keyup" && (e.keyCode == 13 || e.keyCode == 10)) {
 			selectMa()
@@ -61,7 +75,7 @@ function init_ta() {
 	
 	$('.typeahead')
 		.on('typeahead:selected', handleSearch)
-		//.on('typeahead:autocompleted', handleSearch)
+		//.on('typeahead:autocompleted', autocomplete)
 		.on('keyup', handleSearch);
 }
 
