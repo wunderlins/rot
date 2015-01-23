@@ -18,9 +18,10 @@ from sqlalchemy.ext.declarative import declarative_base
 #from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import sessionmaker
 
-dsn = "mysql+mysqldb://"+config.db_user+":"+config.db_pass+"@localhost/"+config.db_name
+dsn = "mysql+mysqldb://"+config.db_user+":"+config.db_pass+"@localhost/"+config.db_name + "?charset=utf8"
 #engine = create_engine('sqlite:///:memory:', echo=True)
-engine = create_engine(dsn, echo=config.db_debug)
+engine = create_engine(dsn, encoding='utf-8', echo=config.db_debug)
+
 Base = declarative_base()
 
 

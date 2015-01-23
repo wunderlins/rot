@@ -6,7 +6,7 @@ $def with (person, wunsch, RotNoteType, notes, today)
 -->
 
 <script type="application/javascript">
-pid = $person.pid
+app.pid = $person.pid
 </script>
 
 <h1>$person.name $person.vorname ($person.kuerzel)</h1>
@@ -160,7 +160,7 @@ pid = $person.pid
 		
 	</div>
 	<div class="col-sm-4 col-xs-12">
-		Vertrag
+		Verträge
 	</div>
 </div>
 
@@ -171,7 +171,7 @@ function init_upload() {
 	$$(function () {
 		  'use strict';
 		  // Change this to the location of your server-side upload handler:
-		  var url = '/image/' + pid;
+		  var url = '/image/' + app.pid;
 		  $$('#fileupload').fileupload({
 		      url: url,
 		      dataType: 'json',

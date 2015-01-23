@@ -1,3 +1,5 @@
+app = {}
+
 function load_personal() {
 
 	$.ajax({
@@ -149,24 +151,22 @@ var notes = {
 			dt = parseInt($('#due').data("DateTimePicker").getDate().format("X"))
 		console.log(dt)
 		payload = {
-			pid: window.pid,
+			pid: app.pid,
 			comment: $('#comment', '#note').val(),
 			type: parseInt($('input[name=type]:checked', '#note').val()),
 			due: dt,
 			action: "insert"
 		}
 		
-		//console.log(payload)
-		
+		console.log(payload)
 		
 		act = $("#note").attr("action")
 		if (act != "/rotnote/0") {
 			payload.action = "update";
-			
 		}
 		
-		//console.log($("#note").attr("action"))
-		//console.log(payload)
+		console.log($("#note").attr("action"))
+		console.log(payload)
 		
 		$.ajax({
 			url: act,

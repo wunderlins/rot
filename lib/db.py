@@ -345,7 +345,7 @@ class Personal(Base, SerializeJson):
 	natel = Column('natel', VARCHAR(length=15))
 	notarzt = Column('notarzt', VARCHAR(length=1))
 	personalid = Column('personalid', VARCHAR(length=20))
-	pid = Column('pid', INTEGER(), primary_key=True, nullable=False)
+	#pid = Column('pid', INTEGER(), primary_key=True, nullable=False)
 	pidp = Column('pidp', INTEGER(), nullable=False)
 	plz = Column('plz', VARCHAR(length=10))
 	ptid = Column('ptid', INTEGER(), nullable=False)
@@ -356,7 +356,10 @@ class Personal(Base, SerializeJson):
 	verfuegbar = Column('verfuegbar', VARCHAR(length=1))
 	vorname = Column('vorname', VARCHAR(length=30), nullable=False)
 	wohnort = Column('wohnort', VARCHAR(length=30))
-
+	
+	#pidp = Column(Integer, ForeignKey('Personal.pid'))
+	#parent = relationship(lambda: Personal, remote_side=pid, backref='sub_personal')
+	
 	#relation definitions
 	def __repr__(self):
 		return "<Personal(name='%s', vorname='%s', pid='%d')>" % (
@@ -522,8 +525,6 @@ RotNote.personal = relationship("Personal",
                                foreign_keys="RotNote.pid", 
 															 primaryjoin="and_(Personal.pid==RotNote.pid)",
                                backref="rot_notes", uselist=False)
-
-Personal.pidp = Column(Integer, ForeignKey('Personal.pid'))
 
 # bind engine to a session
 Session = sessionmaker(bind=engine)

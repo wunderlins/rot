@@ -142,8 +142,8 @@ class rotnote(response):
 	def POST(self, path):
 		id = None
 		if path:
-			id = path[1:]
-		
+			id = int(path[1:])
+		#print path, id
 		p = web.input(action=None)
 		
 		# if we have an id, then we need to update or delete
@@ -334,16 +334,31 @@ class personal(response):
 		else:
 			return self.render().personal(db.Personal(), {}, db.RotNoteType, {}, time.strftime("%Y%m%d"))
 		
+		# person und wuensch
 		person = db.session.query(db.Personal).filter_by(pid=pid)[0]
+		#person.person_add = db.session.query(db.Personal).filter_by(pidp=pid)
 		wunsch = db.session.query(db.Wunsch)\
 			.filter_by(pid=pid, latest=1)\
 			.order_by(db.Wunsch.prio.asc())
 		
-		# TODO: get rotnote
+		# get rotnote
 		notes = db.session.query(db.RotNote)\
 			.filter_by(pid=pid)\
 			.order_by(db.RotNote.created.desc())
 		
+		# alternative personen und vertraege
+		"""
+		vertraege = []
+		person_parent = db.session.query(db.Personal).filter_by(pidp=pid)
+		vert = db.session.query(db.Rotblock).filter_by(pid=pid)
+		for v in vert:
+			vertraege.apppend(v)
+		
+		for p in person_parent:
+			vert = db.session.query(db.Rotblock).filter_by(pid=p.pid)
+			for v in vert:
+				vertraege.apppend(v)
+		"""
 		return self.render().personal(person, wunsch, db.RotNoteType, notes, time.strftime("%Y%m%d"))
 		#return "Hello World"
 

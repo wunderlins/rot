@@ -22,7 +22,7 @@ $def with (group, user, wunsch, dates, history)
 $for g in group:
 	<div class="row">
 		<div class="col-md-10">
-			<h3>$g.name</h3>
+			<h3>$g.name.encode("utf8")</h3>
 		</div>
 	</div>
 	
@@ -44,7 +44,7 @@ $for g in group:
 	<div class="row">
 		$for r in g.rot:
 			<div class="col-sm-8 col-xs-12">
-				$r.name
+				$r.name.encode("utf8")
 				$if r.erstjahr:
 					<span class="badge">1. Jahr</span>
 			</div>
