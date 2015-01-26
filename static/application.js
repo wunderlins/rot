@@ -1,4 +1,9 @@
-app = {}
+app = {
+	log: function(txt) {
+		console.log(txt)
+	}
+}
+
 
 function load_personal() {
 
@@ -10,7 +15,7 @@ function load_personal() {
 		} */
 	}).done(function( data ) {
 		var js = jQuery.parseJSON(data);
-		//console.log(js);
+		//app.log(js);
 			
 		// append nodes
 		/**
@@ -29,7 +34,7 @@ function load_personal() {
 			n.appendChild(b);
 			n.setAttribute("class", "list-group-item");
 			n.appendChild(document.createTextNode(e.name + " " + e.vorname + " " + e.pid));
-			//console.log(e.name + " " + e.vorname)
+			//app.log(e.name + " " + e.vorname)
 			p.append(n)
 		}
 	});
@@ -62,7 +67,7 @@ function init_ta() {
 	}
 	
 	function autocomplete(e, data) {
-		console.log(data)
+		app.log(data)
 	
 		//pid = data.pid
 		//alert(pid)
@@ -123,7 +128,7 @@ var substringMatcher = function(strs) {
         matches.push({ value: str.str, pid: str.pid });
       }
     });
-    //console.log(matches)
+    //app.log(matches)
  
     cb(matches);
   };
@@ -142,14 +147,14 @@ var notes = {
 	},
 	
 	focus: function(o) {
-		console.log("Focus")
+		app.log("Focus")
 		$("#fake-editor").css("display", "none")
 		$("#real-editor").css("display", "block")
 		//$(".wysihtml5-sandbox").focus();
 		
 		// make sure the editor has the focus
 		$(".wysihtml5-sandbox")[0].contentWindow.document.getElementsByTagName("body")[0].focus()
-		//console.log($(".wysihtml5-sandbox")[0].contentWindow.document)
+		//app.log($(".wysihtml5-sandbox")[0].contentWindow.document)
 		
 		//alert("Focus")
 		//$(".wysihtml5-toolbar").css("display", "block");
@@ -164,7 +169,7 @@ var notes = {
 	},
 	
 	collapse: function(o) {
-		console.log("collapse")
+		app.log("collapse")
 		$("#fake-editor").css("display", "block")
 		$("#real-editor").css("display", "none")
 		
@@ -184,7 +189,7 @@ var notes = {
 		dt = null
 		if ($('#due_input', '#note').val())
 			dt = parseInt($('#due').data("DateTimePicker").getDate().format("X"))
-		console.log(dt)
+		app.log(dt)
 		payload = {
 			pid: app.pid,
 			comment: $('#comment', '#note').val(),
@@ -193,15 +198,15 @@ var notes = {
 			action: "insert"
 		}
 		
-		console.log(payload)
+		app.log(payload)
 		
 		act = $("#note").attr("action")
 		if (act != "/rotnote/0") {
 			payload.action = "update";
 		}
 		
-		console.log($("#note").attr("action"))
-		console.log(payload)
+		app.log($("#note").attr("action"))
+		app.log(payload)
 		
 		$.ajax({
 			url: act,
@@ -240,7 +245,7 @@ var notes = {
 			data: {action: "delete"}
 		}).done(function(data) {
 			if (data.success) {
-				//console.log(data)
+				//app.log(data)
 				$("#note_"+data.id).remove();
 			} else {
 				alert("Error: " + data.error + "\n\nData could not be deleted.")
@@ -257,7 +262,7 @@ var notes = {
 			type: "GET"
 		}).done(function(data) {
 			if (data.success) {
-				console.log(data)
+				app.log(data)
 				notes.focus({})
 				//$("#comment").val(data.data.comment)
 				
@@ -276,7 +281,7 @@ var notes = {
 					$('#duedate').css('display', 'block')
 				else
 					$('#duedate').css('display', 'none')
-				console.log(data.data.bis)
+				app.log(data.data.bis)
 				
 				$("#note").attr("action", "/rotnote/" + data.data.id)
 				$('input:radio[name=type]').attr('checked', false);
@@ -284,7 +289,7 @@ var notes = {
 				id = "#type_btn_"+data.data.type
 				$(id).addClass("active")
 				$('input:radio[name=type]').filter('[value='+data.data.type+']').attr('checked', true);
-				//console.log(data.data.id)
+				//app.log(data.data.id)
 				//$("#note_"+data.id).remove();
 			} else {
 				alert("Error: " + data.error + "\n\nData could not be deleted.")
