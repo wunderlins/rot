@@ -131,16 +131,51 @@ var substringMatcher = function(strs) {
 
 
 var notes = {
+	setValue: function(val) {
+		var wysihtml5Editor = $("#comment").data("wysihtml5").editor;
+		//wysihtml5Editor.composer.commands.exec("bold");
+		wysihtml5Editor.setValue(val)
+	},
+	
+	getEditor: function() {
+		return $("#comment").data("wysihtml5").editor;
+	},
+	
 	focus: function(o) {
-		$('#notiz_controls').css("display", "block");
-		$("#comment").attr("rows", 5);
+		console.log("Focus")
+		$("#fake-editor").css("display", "none")
+		$("#real-editor").css("display", "block")
+		//$(".wysihtml5-sandbox").focus();
+		
+		// make sure the editor has the focus
+		$(".wysihtml5-sandbox")[0].contentWindow.document.getElementsByTagName("body")[0].focus()
+		//console.log($(".wysihtml5-sandbox")[0].contentWindow.document)
+		
+		//alert("Focus")
+		//$(".wysihtml5-toolbar").css("display", "block");
+		//$('#notiz_controls').css("display", "block");
+		//$('#comment').css("height", "7em")
+		//$('iframe').css("height", "7em")
+		//$("#comment").attr("rows", 5);
+		
+		//notes.getEditor().composer.commands.exec("insertHTML", "")
+		
+		return true
 	},
 	
 	collapse: function(o) {
-		//alert("collapse")
+		console.log("collapse")
+		$("#fake-editor").css("display", "block")
+		$("#real-editor").css("display", "none")
+		
+		//$(".wysihtml5-toolbar").css("display", "none");
+		/*
 		$('#notiz_controls').css("display", "none");
 		$("#comment").attr("rows", 1);
-		$("#comment").val("");
+		*/
+		
+		//$("#comment").html("");
+		notes.setValue("");
 		$("#note").attr("action", "/rotnote/0")
 	},
 	
@@ -181,7 +216,7 @@ var notes = {
 			} */
 		}).done(function(data) {
 			if (data.success) {
-				$('#comment', '#note').val("")
+				$('#comment', '#note').html("")
 				$('#due_input', '#note').val(null)
 				
 				document.location.href = document.location.href
@@ -224,7 +259,15 @@ var notes = {
 			if (data.success) {
 				console.log(data)
 				notes.focus({})
-				$("#comment").val(data.data.comment)
+				//$("#comment").val(data.data.comment)
+				
+				/*
+				var wysihtml5Editor = $("#comment").data("wysihtml5").editor;
+				//wysihtml5Editor.composer.commands.exec("bold");
+				wysihtml5Editor.setValue(data.data.comment)
+				*/
+				notes.setValue(data.data.comment);
+				
 				if (data.data.bis)
 					$('#due_input', '#note').val(data.data.bis)
 				else

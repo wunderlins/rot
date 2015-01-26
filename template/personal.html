@@ -58,7 +58,6 @@ app.pid = $person.pid
     		<td>$w.rot.name</td>
     	</tr>
     	
-    	
     </tbody>
   </table>
 </div>
@@ -69,12 +68,19 @@ app.pid = $person.pid
 		<form class="panel panel-default" id="note" action="/rotnote/0">
 			<div class="panel-heading">Notiz</div>
 			<div class="panel-body">
-			
-				<div class="form-group">
-					<textarea class="form-control" rows="1" name="comment" id="comment" onfocus="notes.focus(this)"></textarea>
+				
+				<div id="fake-editor">			
+					<textarea class="form-control" name="comment-fake" id="comment-fake" 
+						onfocus="notes.focus(this)" rows="1"></textarea>
 				</div>
 				
-				<div id="notiz_controls" style="display: none;">
+				<div id="real-editor" style="display: none;">
+				<div class="form-group">
+					<textarea class="form-control" name="comment" id="comment" 
+						onfocus="notes.focus(this)"></textarea>
+				</div>
+				
+				<div id="notiz_controls">
 					<div class="form-group">
 						<label>Typ</label>
 						<div class="btn-group input-group" data-toggle="buttons">
@@ -115,6 +121,7 @@ app.pid = $person.pid
 					</div>
 					
 				</div> <!-- end notiz_controls -->
+				</div>
 			</div><!-- end panel-body -->
 		</form>
 		
@@ -215,7 +222,17 @@ function init_wysiwyg() {
 			"size": "xs" //default: none, other options are xs, sm, lg
 		}
 	});
+
+	//$$(".wysihtml5-toolbar").css("display": "none");
+	
+	add_load_handler(function() {
+		$$("wysihtml5-sandbox").on("focus", notes.focus)
+		$$("wysihtml5-sandbox").on("blur", notes.collapse)
+		//$$(".wysihtml5-toolbar").css("display", "none");
+	})
 }
 
 add_load_handler(init_wysiwyg);
 </script>
+
+
