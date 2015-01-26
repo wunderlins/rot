@@ -19,6 +19,8 @@ from sqlalchemy.orm import relationship, backref
 from sqlalchemy.ext.declarative import AbstractConcreteBase
 from sqlalchemy import distinct
 
+from sqlalchemy.dialects.mysql import LONGBLOB
+
 # configure logging
 import logging
 logging.basicConfig(filename=config.sql_logfile)
@@ -190,7 +192,7 @@ class Person(Base, DefaultAttributes):
 	__tablename__ = 'rot_pers'
 	
 	id          = Column(Integer, Sequence('pers_id_seq'), primary_key=True)
-	foto        = Column(BLOB)
+	foto        = Column(LONGBLOB)
 	pid         = Column('pid', INTEGER(), nullable=False)
 
 

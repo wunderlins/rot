@@ -181,7 +181,8 @@ function init_upload() {
 		  var url = '/image/' + app.pid;
 		  $$('#fileupload').fileupload({
 		      url: url,
-		      dataType: 'json',
+		      //dataType: 'json',
+		      //contentType: "application/json; charset=utf-8",
 		      done: function (e, data) {
 		          $$.each(data.result.files, function (index, file) {
 		              //$$('<p/>').text(file.name).appendTo('#file');
@@ -190,6 +191,7 @@ function init_upload() {
 		          alert("done")
 		      },
 		      progressall: function (e, data) {
+		          console.log(data.total)
 		          $$('#progress').css("display", "block");
 		          //alert("progress")
 		          var progress = parseInt(data.loaded / data.total * 100, 10);
@@ -200,7 +202,8 @@ function init_upload() {
 		      },
 		      fail: function (e, data) {
 	          $$('#progress').css("display", "none");
-		      	alert("Failed, need to send proper response from serevr")
+	          app.log(data)
+		      	alert("Failed, need to send proper response from server")
 		      }
 		  }).prop('disabled', !$$.support.fileInput)
 		      .parent().addClass($$.support.fileInput ? undefined : 'disabled');

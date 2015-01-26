@@ -256,10 +256,26 @@ class image(response):
 			p = personal.rot_pers[0]
 		
 		f = web.input(file={})
+		
 		p.foto = f["file"].value
+		#for e in f["file"]:
+		#	print e
 		
 		db.session.commit()
-		return ""
+		self.header(content_type="application/json")
+		return """
+{"files": [
+  {
+    "name": """ + '"' + f["file"].filename + '"' + """,
+    "size": """ + str(len(f["file"].value)) + """,
+    "url": """ + "'http://localhost/upload/"+ str(p.id) + "'" + """,
+    "thumbnailUrl": """ + "'http://localhost/upload/"+ str(p.id) + "'" + """,
+    "deleteUrl": """ + "'http://localhost/upload/"+ str(p.id) + "'" + """,
+    "deleteType": "POST"
+  }
+  ]
+}
+"""
 
 class personal_data(response):
 	def GET(self):
