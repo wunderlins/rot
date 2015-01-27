@@ -56,11 +56,11 @@ Next, we will loop over where it thinks it found something.
 
 # Detect faces in the image
 faces = faceCascade.detectMultiScale(
-    gray,
-    scaleFactor=1.1,
-    minNeighbors=5,
-    minSize=(30, 30),
-    flags = cv2.cv.CV_HAAR_SCALE_IMAGE
+	gray,
+	scaleFactor=1.1,
+	minNeighbors=5,
+	minSize=(30, 30),
+	flags = cv2.cv.CV_HAAR_SCALE_IMAGE
 )
 
 """
@@ -71,14 +71,22 @@ We use these values to draw a rectangle using the built-in rectangle() function.
 
 print "Found {0} faces!".format(len(faces))
 
+largest = 0
+rect = (0, 0, 0, 0)
 # Draw a rectangle around the faces
 for (x, y, w, h) in faces:
-    cv2.rectangle(image, (x, y), (x+w, y+h), (0, 255, 0), 2)
+	if w+h > largest:
+		largest = w+h
+		rect = (x, y, w, h)
+	print x, y, w, h
+	cv2.rectangle(image, (x, y), (x+w, y+h), (0, 255, 0), 2)
 
+print "Real image: "
+print rect
 
 """
 In the end, we display the image, and wait for the user to press a key.
 """
 
-cv2.imshow("Faces found" ,image)
+cv2.imshow("Faces found", image)
 cv2.waitKey(0)
