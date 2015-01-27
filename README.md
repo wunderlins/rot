@@ -6,4 +6,4 @@ http://getbootstrap.com/getting-started/
 
 dependencies:
 	* python-opencv
-	* python-gd
+	* python-imaging
