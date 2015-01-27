@@ -6,6 +6,7 @@ import tpl
 import re
 import base64
 import sys
+import os
 
 urls = (
   '/', 'index',
@@ -235,7 +236,7 @@ class image(response):
 		try:
 			r = db.session.query(db.Person).filter_by(pid=pid)[0]
 			web.header("Content-type", "image/jpeg")
-			return r.foto
+			return r.foto_thumbnail
 		
 		except:
 			no_image = True
@@ -246,22 +247,51 @@ class image(response):
 		if path:
 			pid = path[1:]
 		
+		#try:
 		personal = db.session.query(db.Personal).filter_by(pid=pid)[0]
 		#print personal
-		
+	
 		if len(personal.rot_pers) == 0:
 			p = db.Person()
 			p.personal = personal
 		else:
 			p = personal.rot_pers[0]
-		
+	
 		f = web.input(file={})
-		
+	
 		p.foto = f["file"].value
+	
+		# write temp file
+		path = "tmp/%s.jpg" % pid
+		path_cropped = "tmp/%s_cropped.jpg" % pid
+		path_thumbnail = "tmp/%s_thumbnail.jpg" % pid
+		fd = open(path,'w')
+		fd.write(f["file"].value) # python will convert \n to os.linesep
+		fd.close()
+	
+		# crop and resize image
+		import img
+		img.portrait(path, width=300, out=path_cropped , thumbnail=path_thumbnail)
+	
+		fd = open(path_cropped,'r')
+		p.foto_cropped = fd.read()
+		fd.close()
+	
+		fd = open(path_thumbnail,'r')
+		p.foto_thumbnail = fd.read()
+		fd.close()
+	
 		#for e in f["file"]:
 		#	print e
-		
+	
 		db.session.commit()
+		#except Exception as e:
+		#	exc_type, exc_obj, exc_tb = sys.exc_info()
+		#	fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+		#	print(exc_type, fname, exc_tb.tb_lineno)
+		#
+		#	db.session.rollback()
+		
 		self.header(content_type="application/json")
 		return """
 {"files": [

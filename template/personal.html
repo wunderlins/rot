@@ -22,7 +22,7 @@ app.pid = $person.pid
 <div class="row">
 	<div class="col-sm-4 col-xs-12">
 		
-		<div class="portrait">
+		<div class="portrait" id="portrait">
 			<div class="inner">
 		  <span class="btn btn-info fileinput-button">
 		      <span class="glyphicon glyphicon-camera" style="font-size: 3em;"></span>
@@ -188,7 +188,9 @@ function init_upload() {
 		              //$$('<p/>').text(file.name).appendTo('#file');
 		          });
 		          $$('#progress').css("display", "none");
-		          alert("done")
+				    	var randomId = new Date().getTime();
+				    	var u = "url(/image/" + app.pid + "?random=" + randomId + ")"
+				    	$$("#portrait").css("background-image", u);
 		      },
 		      progressall: function (e, data) {
 		          console.log(data.total)
@@ -203,7 +205,10 @@ function init_upload() {
 		      fail: function (e, data) {
 	          $$('#progress').css("display", "none");
 	          app.log(data)
-		      	alert("Failed, need to send proper response from server")
+		      	//alert("Failed, need to send proper response from server")
+		      	var randomId = new Date().getTime();
+		      	var u = "url(/image/" + app.pid + "?random=" + randomId + ")"
+		      	$$("#portrait").css("background-image", u);
 		      }
 		  }).prop('disabled', !$$.support.fileInput)
 		      .parent().addClass($$.support.fileInput ? undefined : 'disabled');
