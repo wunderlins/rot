@@ -191,9 +191,11 @@ class Wunsch(Base, DefaultAttributes):
 class Person(Base, DefaultAttributes):
 	__tablename__ = 'rot_pers'
 	
-	id          = Column(Integer, Sequence('pers_id_seq'), primary_key=True)
-	foto        = Column(LONGBLOB)
-	pid         = Column('pid', INTEGER(), nullable=False)
+	id             = Column(Integer, Sequence('pers_id_seq'), primary_key=True)
+	foto           = Column(LONGBLOB)
+	foto_cropped   = Column(LONGBLOB)
+	foto_thumbnail = Column(LONGBLOB)
+	pid            = Column('pid', INTEGER(), nullable=False)
 
 
 class RotNote(Base, DefaultAttributes):
