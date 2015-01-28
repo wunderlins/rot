@@ -95,8 +95,8 @@ def portrait(input_file, margin=None, width=None, out=None, thumbnail=None):
 
 	found = len(faces)
 	print "Found {0} faces!".format(found)
-	if found == 0:
-		sys.exit(0)
+	#if found == 0:
+	#	sys.exit(0)
 
 	largest = 0
 	rect = (0, 0, 0, 0) # left, top, width, height
@@ -126,35 +126,45 @@ def portrait(input_file, margin=None, width=None, out=None, thumbnail=None):
 	"""
 
 	from PIL import Image
-
-	original = Image.open(imagePath)
-	(o_width, o_height) = original.size
-	(left, top, width, height) = rect
-	print "Original size: %d %d" % (o_width, o_height)
-	print "Biggest rect: left: %d, top: %d, width: %d, height: %d" % rect
-
-	# let's add 30% of the rect size as padding
-	center_x = left + width/2
-	center_y = top + height/2
-
-	# need a square canvas
-	if width > height:
-		height = width
-	else:
-		width = height
 	
-	# crop it
-	canvas = (int(center_x-width/2-width*margin), int(center_y-height/2-height*margin), int(center_x+width/2+width*margin), int(center_y+height/2+height*margin))
-	print canvas
-	if canvas[2] > o_width:
-		canvas = (canvas[0], canvas[1], o_width, canvas[3])
-	if canvas[3] > o_height:
-		canvas = (canvas[0], canvas[1], canvas[2], o_height)
-	print canvas
+	# crop image if we have found a face
+	if found > 0:
+		original = Image.open(imagePath)
+		(o_width, o_height) = original.size
+		(left, top, width, height) = rect
+		print "Original size: %d %d" % (o_width, o_height)
+		print "Biggest rect: left: %d, top: %d, width: %d, height: %d" % rect
 
-	#print canvas
-	cropped = original.crop(canvas)
-	cropped.save(out)
+		# let's add 30% of the rect size as padding
+		center_x = left + width/2
+		center_y = top + height/2
+
+		# need a square canvas
+		if width > height:
+			height = width
+		else:
+			width = height
+	
+		# crop it
+		canvas = (int(center_x-width/2-width*margin), int(center_y-height/2-height*margin), int(center_x+width/2+width*margin), int(center_y+height/2+height*margin))
+		print canvas
+		if canvas[2] > o_width:
+			canvas = (canvas[0], canvas[1], o_width, canvas[3])
+		if canvas[3] > o_height:
+			canvas = (canvas[0], canvas[1], canvas[2], o_height)
+		print canvas
+
+		#print canvas
+		cropped = original.crop(canvas)
+		cropped.save(out)
+	else: # no face found, copy original to cropped
+		in_file = open(imagePath)
+		#indata = in_file.read()
+		out_file = open(out, 'w')
+		out_file.write(in_file.read())
+		close(in_file)
+		close(out_file)
+		cropped = Image.open(imagePath)
 
 	# now scale the image down to
 	#print basewidth
