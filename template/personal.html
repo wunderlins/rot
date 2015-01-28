@@ -241,6 +241,13 @@ function init_wysiwyg() {
 }
 
 add_load_handler(init_wysiwyg);
+
+add_load_handler(function() {
+	// make portrait a square, set height dynamically
+	$$("#portrait").css("height", $$("#portrait").width() + "px")
+})
+
+
 </script>
 
 

@@ -30,6 +30,12 @@ session_default = {
 
 def unloadhook():
 	db.connection.close()
+	
+def loadhook():
+	print datetime.datetime.now().strftime("%Y-%m-%d %H.%M.%S") + "\t" +\
+		web.ctx.method + "\t" + \
+		web.ctx.env.get('REQUEST_URI')
+
 
 
 # allow to pass a custom port/ip into the application
@@ -89,6 +95,7 @@ if __name__ == "__main__":
 			web.sess = session_default
 	#web.sess["pid"] += 1
 	#print "starting ..."
+	app.add_processor(web.loadhook(loadhook))
 	app.add_processor(web.unloadhook(unloadhook))
 	app.run(config.port, "0.0.0.0", Log)
 	
