@@ -9,9 +9,9 @@ import os
 thumbnail_width = 300
 thumbnail_temp = "out_thumb.jpg"
 cropped_temp = "out.jpg"
-default_margin = 0.3 # 30%
+default_margin = 0.4 # 30%
 casc_file = os.path.dirname(os.path.realpath(__file__)) + "/haarcascade_frontalface_default.xml"
-
+test = False
 
 def portrait(input_file, margin=None, width=None, out=None, thumbnail=None):
 	if margin == None:
@@ -48,7 +48,8 @@ def portrait(input_file, margin=None, width=None, out=None, thumbnail=None):
 	faceCascade = cv2.CascadeClassifier(cascPath)
 
 	"""
-	Here we read the image and convert it to grayscale. Many operations in OpenCv are done in grayscale.
+	Here we read the image and convert it to grayscale. Many operations in 
+	OpenCv are done in grayscale.
 	"""
 
 	# Read the image
@@ -80,9 +81,9 @@ def portrait(input_file, margin=None, width=None, out=None, thumbnail=None):
 	# Detect faces in the image
 	faces = faceCascade.detectMultiScale(
 		gray,
-		scaleFactor=1.1,
+		scaleFactor=1.2,
 		minNeighbors=5,
-		minSize=(30, 30),
+		minSize=(100, 100),
 		flags = cv2.cv.CV_HAAR_SCALE_IMAGE
 	)
 
@@ -113,9 +114,10 @@ def portrait(input_file, margin=None, width=None, out=None, thumbnail=None):
 	"""
 	In the end, we display the image, and wait for the user to press a key.
 	"""
-
-	#cv2.imshow("Faces found", image)
-	#cv2.waitKey(0)
+	
+	if test:
+		cv2.imshow("Faces found", image)
+		cv2.waitKey(0)
 
 	"""
 	- add margin to the detected rectangle
@@ -168,5 +170,6 @@ def portrait(input_file, margin=None, width=None, out=None, thumbnail=None):
 	#thumbnail.save("out_thumb.jpg")
 
 if __name__ == "__main__":
+	test = True
 	portrait(sys.argv[1])
 	sys.exit()

@@ -280,6 +280,11 @@ class image(response):
 		fd = open(path_thumbnail,'r')
 		p.foto_thumbnail = fd.read()
 		fd.close()
+		
+		# remove all temporary files
+		os.remove(path)
+		os.remove(path_cropped)
+		os.remove(path_thumbnail)
 	
 		#for e in f["file"]:
 		#	print e
