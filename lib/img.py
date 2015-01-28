@@ -128,6 +128,8 @@ def portrait(input_file, margin=None, width=None, out=None, thumbnail=None):
 	from PIL import Image
 	
 	# crop image if we have found a face
+	cropped = None
+	canvas = None
 	if found > 0:
 		original = Image.open(imagePath)
 		(o_width, o_height) = original.size
@@ -158,16 +160,23 @@ def portrait(input_file, margin=None, width=None, out=None, thumbnail=None):
 		cropped = original.crop(canvas)
 		cropped.save(out)
 	else: # no face found, copy original to cropped
+		print "Using Original image, no faces found"
 		in_file = open(imagePath)
-		#indata = in_file.read()
 		out_file = open(out, 'w')
-		out_file.write(in_file.read())
-		close(in_file)
-		close(out_file)
+		try:
+			content = in_file.read()
+			out_file.write(content)
+		finally:
+			in_file.close()
+			out_file.close()
+		print "copy"
 		cropped = Image.open(imagePath)
-
+		(o_width, o_height) = cropped.size
+		canvas = (0, 0, o_height, o_width)
+	
 	# now scale the image down to
 	#print basewidth
+	print "Resizing ..."
 	wpercent = (basewidth/float(cropped.size[0]))
 	hsize = int((float(cropped.size[1])*float(wpercent)))
 

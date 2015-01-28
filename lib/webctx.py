@@ -282,10 +282,11 @@ class image(response):
 		fd.close()
 		
 		# remove all temporary files
+		"""
 		os.remove(path)
 		os.remove(path_cropped)
 		os.remove(path_thumbnail)
-	
+		"""
 		#for e in f["file"]:
 		#	print e
 	
