@@ -36,8 +36,6 @@ def loadhook():
 		web.ctx.method + "\t" + \
 		web.ctx.env.get('REQUEST_URI')
 
-
-
 # allow to pass a custom port/ip into the application
 class rot(web.application):
 	def run(self, port=8080, ip='0.0.0.0', *middleware):

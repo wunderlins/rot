@@ -13,11 +13,12 @@ urls = (
   '/personal(.*)', 'personal',
 	'/personal_data', 'personal_data',
 	'/test', 'test', # test methods, remove these in production
-	'/wunsch', 'wunsch', # test methods, remove these in production
-	'/wunsch_save', 'wunsch',
+	'/wunsch(.*)', 'wunsch', # test methods, remove these in production
+	'/wunsch_save(.*)', 'wunsch',
 	'/typeahead', 'typeahead',
 	'/image(.*)', 'image',
 	'/rotnote(.*)', 'rotnote',
+	'/erfahrung(.*)', 'erfahrung',
 )
 
 def basic_auth():
@@ -69,6 +70,7 @@ class response:
 			'wunsch_select_wunsch': tpl.wunsch_select_wunsch,
 			'wunsch_select_prio': tpl.wunsch_select_prio,
 			'wunsch_prio': tpl.wunsch_prio,
+			"monat_select": tpl.monat_select,
 			'btn_cancel': tpl.btn_cancel,
 			'btn_ok': tpl.btn_ok,
 			'urls': urls,
@@ -110,6 +112,16 @@ class index(response):
 	def GET(self):
 		return self.render().index()
 	
+class erfahrung(response):
+	def GET(self, path):
+		id = None
+		if path:
+			id = path[1:]
+		else:
+			return "Missing pid"
+		
+		return self.render().erfahrung()
+
 class rotnote(response):
 	def GET(self, path):
 		id = None
@@ -383,6 +395,7 @@ class personal(response):
 		if path:
 			#print "Path: " + path
 			pid = path[1:]
+			web.sess["pid"] = pid
 		else:
 			return self.render().personal(db.Personal(), {}, db.RotNoteType, {}, time.strftime("%Y%m%d"))
 		
@@ -415,9 +428,15 @@ class personal(response):
 		#return "Hello World"
 
 class wunsch(response):
-	def GET(self):
+	def GET(self, path):
 		
-		pid = 188 # thierry, change with session pid
+		pid = None
+		if path:
+			#print "Path: " + path
+			pid = path[1:]
+			web.sess["pid"] = pid
+		else:
+			return "No pid"
 		
 		history = None
 		try:
@@ -460,9 +479,8 @@ class wunsch(response):
 		})
 		"""
 		
-		(g, wunsch, dates) = self.person(188, history)
+		(g, wunsch, dates) = self.person(pid, history)
 		
-		global render
 		#return render.wunsch(g, u, wunsch, dates, history)
 		return self.render().wunsch(g, u, wunsch, dates, history)
 		#return "Hello World"

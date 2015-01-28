@@ -139,6 +139,18 @@ class Rot(Base, DefaultAttributes):
 	location    = relationship("Location", backref=backref('rot', order_by=id))
 	group       = relationship("Group", backref=backref('rot', order_by=id))
 
+
+class Erfahrung(Base, DefaultAttributes):
+	__tablename__ = 'rot_erfahrung'
+	
+	id	    = Column(Integer, Sequence('erfahrung_id_seq'), primary_key=True)
+	von_mj  = Column(Integer)
+	bis_mj  = Column(Integer)
+	monate  = Column(Integer)
+	ort     = Column(Unicode(100))
+	was     = Column(Unicode(100))
+	pid     = Column(Integer)
+
 class Einteilung(Base, DefaultAttributes):
 	""" 
 		externe erfahrung zwichen ips/ana/anderes untershceiden.
@@ -159,9 +171,9 @@ class Einteilung(Base, DefaultAttributes):
 		
 		
 	"""
-	__tablename__ = 'rot_erfahrung'
+	__tablename__ = 'rot_einteilung'
 	
-	id          = Column(Integer, Sequence('erfahrung_id_seq'), primary_key=True)
+	id          = Column(Integer, Sequence('einteilung_id_seq'), primary_key=True)
 	pid         = Column(Integer)
 	von	        = Column(Date)
 	bis         = Column(Date)
@@ -173,7 +185,7 @@ class Einteilung(Base, DefaultAttributes):
 	#confirmed   = Column(Boolean, server_default="1")
 	bgrad       = Column(Integer) # 0-100 %
 	
-	rot         = relationship("Rot", backref=backref('erfahrung', order_by=id))
+	rot         = relationship("Rot", backref=backref('einteilung', order_by=id))
 	# bemerkung
 	# history
 
@@ -532,6 +544,11 @@ RotNote.personal = relationship("Personal",
                                foreign_keys="RotNote.pid", 
 															 primaryjoin="and_(Personal.pid==RotNote.pid)",
                                backref="rot_notes", uselist=False)
+
+Erfahrung.personal = relationship("Personal", 
+                               foreign_keys="Erfahrung.pid", 
+															 primaryjoin="and_(Personal.pid==Erfahrung.pid)",
+                               backref="rot_erfahrung", uselist=False)
 
 # bind engine to a session
 Session = sessionmaker(bind=engine)

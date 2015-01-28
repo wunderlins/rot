@@ -5,11 +5,6 @@ $def with (person, wunsch, RotNoteType, notes, today)
 <script type="application/javascript">add_load_handler(load_personal);</script>
 -->
 
-<script type="application/javascript">
-app.pid = $person.pid
-</script>
-
-<h1>$person.name $person.vorname ($person.kuerzel)</h1>
 <style type="text/css">
 	.portrait {
 		background-image: url(/image/$person.pid);
@@ -18,6 +13,14 @@ app.pid = $person.pid
 	}
 </style>
 
+
+<script type="application/javascript">
+app.pid = $person.pid
+</script>
+
+<h1>
+<span class="glyphicon glyphicon-user"></span>
+$person.name $person.vorname ($person.kuerzel)</h1>
 
 <div class="row">
 	<div class="col-sm-4 col-xs-12">
@@ -34,7 +37,7 @@ app.pid = $person.pid
 		
     <!-- The global progress bar -->
     <div id="progress" class="progress" style="display: none">
-        <div class="progress-bar progress-bar-success"></div>
+    	<div class="progress-bar progress-bar-success"></div>
     </div>	
 		<br />
 		<br />

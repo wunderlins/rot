@@ -22,7 +22,74 @@ def btn_cancel(onclick=None):
 	</button>
 	"""
 
-
+def monat_select(monat, name):
+	buffer = ""
+	buffer += '<select name="wunsch_' + str(name) + '" class="form-control">'
+	buffer += '<option value=""></option>'
+	
+	buffer += '<option value="1" '
+	if monat == 1:
+		buffer += 'selected="selected"'
+	buffer += '>Jan</option>'
+	
+	buffer += '<option value="2" '
+	if monat == 2:
+		buffer += 'selected="selected"'
+	buffer += '>Feb</option>'
+	
+	buffer += '<option value="3" '
+	if monat == 3:
+		buffer += 'selected="selected"'
+	buffer += '>Mar</option>'
+	
+	buffer += '<option value="4" '
+	if monat == 4:
+		buffer += 'selected="selected"'
+	buffer += '>Apr</option>'
+	
+	buffer += '<option value="5" '
+	if monat == 5:
+		buffer += 'selected="selected"'
+	buffer += '>Mai</option>'
+	
+	buffer += '<option value="6" '
+	if monat == 6:
+		buffer += 'selected="selected"'
+	buffer += '>Jun</option>'
+	
+	buffer += '<option value="7" '
+	if monat == 7:
+		buffer += 'selected="selected"'
+	buffer += '>Jul</option>'
+	
+	buffer += '<option value="8" '
+	if monat == 8:
+		buffer += 'selected="selected"'
+	buffer += '>Aug</option>'
+	
+	buffer += '<option value="9" '
+	if monat == 9:
+		buffer += 'selected="selected"'
+	buffer += '>Sep</option>'
+	
+	buffer += '<option value="10" '
+	if monat == 10:
+		buffer += 'selected="selected"'
+	buffer += '>Okt</option>'
+	
+	buffer += '<option value="11" '
+	if monat == 11:
+		buffer += 'selected="selected"'
+	buffer += '>Nov</option>'
+	
+	buffer += '<option value="12" '
+	if monat == 12:
+		buffer += 'selected="selected"'
+	buffer += '>Dez</option>'
+	buffer += '</select>'
+	return buffer
+	
+	
 def wunsch_prio(prio):
 	if prio == 1:
 		return '&#xe133;&#xe133;'
@@ -38,7 +105,7 @@ def wunsch_prio(prio):
 
 def wunsch_select_wunsch(rid, wunsch):
 	buffer = ""
-	buffer += '<select name="wunsch_' + str(rid) + '">'
+	buffer += '<select name="wunsch_' + str(rid) + '" class="form-control">'
 	buffer += '<option value=""></option>'
 	if wunsch["wunsch"] == 1:
 		buffer += '<option value="1" selected="selected">Ja</option>'
@@ -57,7 +124,7 @@ def wunsch_select_wunsch(rid, wunsch):
 
 def wunsch_select_prio(rid, wunsch):
 	buffer = ""
-	buffer += '<select name="prio_' + str(rid) + '" class="prio">'
+	buffer += '<select name="prio_' + str(rid) + '" class="prio form-control">'
 	buffer += '<option value=""></option>'
 	if wunsch["prio"] == 1:
 		buffer += '<option value="1" selected="selected">&#xe133;&#xe133;</option>'

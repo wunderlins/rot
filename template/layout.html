@@ -36,6 +36,7 @@ $def with (content)
     	.row div {padding-bottom: 0.25em;}
     	.prio {
     		font-family: 'Glyphicons Halflings' ! important;
+    		width: 6em ! important;
     	}
     	.prio option {
     		text-align: center ! important;
@@ -162,8 +163,15 @@ $def with (content)
       </div>
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
-          <li id="nav_personal"><a href="/personal">Mitarbeiter</a></li>
-          <li id="nav_wunsch"><a href="/wunsch">Wünsche</a></li>
+          <li id="nav_personal"><a href="/personal/$session.pid">
+          	<span class="glyphicon glyphicon-user"></span>
+          	Mitarbeiter</a></li>
+          <li id="nav_wunsch"><a href="/wunsch/$session.pid">
+          	<span class="glyphicon glyphicon-tasks"></span>
+          	Wünsche</a></li>
+          <li id="nav_erfahrung"><a href="/erfahrung/$session.pid">
+          	<span class="glyphicon glyphicon-book"></span>
+          	Erfahrung</a></li>
           <li id="nav_test"><a href="/test">Test Json</a></li>
         </ul>
       </div>
