@@ -27,6 +27,11 @@ session_default = {
 	"user": None
 }
 
+
+def unloadhook():
+	db.connection.close()
+
+
 # allow to pass a custom port/ip into the application
 class rot(web.application):
 	def run(self, port=8080, ip='0.0.0.0', *middleware):
@@ -83,6 +88,7 @@ if __name__ == "__main__":
 		except:
 			web.sess = session_default
 	#web.sess["pid"] += 1
-	
+	#print "starting ..."
+	app.add_processor(web.unloadhook(unloadhook))
 	app.run(config.port, "0.0.0.0", Log)
 	
