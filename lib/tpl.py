@@ -24,7 +24,7 @@ def btn_cancel(onclick=None):
 
 def monat_select(monat, name):
 	buffer = ""
-	buffer += '<select name="wunsch_' + str(name) + '" class="form-control">'
+	buffer += '<select id="' + str(name) + '" name="' + str(name) + '" class="form-control">'
 	buffer += '<option value=""></option>'
 	
 	buffer += '<option value="1" '
