@@ -34,7 +34,7 @@ Base = declarative_base()
 # connect to database
 dsn = "mysql+mysqldb://"+config.db_user+":"+config.db_pass+"@localhost/"+config.db_name + "?charset=utf8"
 #engine = create_engine('sqlite:///:memory:', echo=True)
-engine = create_engine(dsn, encoding='utf-8', echo=False, pool_recycle=3600)
+engine = create_engine(dsn, encoding='utf-8', echo=False, pool_recycle=300, pool_size=5)
 
 connection = engine.connect()
 
