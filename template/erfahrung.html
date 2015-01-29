@@ -30,7 +30,7 @@ function clone_row(ix) {
 
 function validate(el, state) {
 	var e = $$("#" + el)
-	console.log(el + " " + e.val())
+	//console.log(el + " " + e.val())
 	if (!e.val()) {
 		e.parent().addClass("has-error")
 		errors = true;
@@ -38,7 +38,7 @@ function validate(el, state) {
 		e.parent().removeClass("has-error")
 		if (e.attr("placeholder") == "Jahr") {
 			// must be greater than 1950
-			if (parseInt(e.val()) > 1950) {
+			if (parseInt(e.val()) > 1900) {
 				e.parent().removeClass("has-error")
 			}	else {
 				e.parent().addClass("has-error")
@@ -92,7 +92,7 @@ Anästhesie Erfahrung</h1>
 <div class="alert alert-danger" role="alert" id="error">
 	<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
   <span class="sr-only">Error:</span>
-	Bitte füllen Sie die rot markierten Felder aus.
+	Bitte füllen Sie die rot markierten Felder korrekt aus.
 </div>
 
 <form class="form-inline row" id="erfahrungform">
@@ -107,12 +107,12 @@ Anästhesie Erfahrung</h1>
 		<div class="col-sm-7 col-xs-12">
 			<div class="form-group">
 				<label>Beginn: </label>
-				<input type="text" value="" name="von_j_" id="von_j_" size="4" class="form-control" placeholder="Jahr"/>
+				<input type="number" value="" name="von_j_" id="von_j_" size="4" class="form-control" placeholder="Jahr" min="1950" max="2100" step="1"/>
 			</div>
 
 			<div class="form-group">
 				<label>Dauer: </label>
-				<input type="text" value="" name="dauer_" id="dauer_" size="4" class="form-control" placeholder="Monate"/>
+				<input type="number" value="" name="dauer_" id="dauer_" size="2" class="form-control" placeholder="Monate" min="1" max="100"  step="1"/>
 			</div>
 		</div>
 	</div>
