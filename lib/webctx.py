@@ -120,7 +120,7 @@ class erfahrung(response):
 		else:
 			return "Missing pid"
 		
-		return self.render().erfahrung()
+		return self.render().erfahrung(id)
 
 class rotnote(response):
 	def GET(self, path):
