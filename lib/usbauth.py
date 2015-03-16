@@ -1,7 +1,7 @@
 #!/usr/bin/env python
-# coding: utf8
+# -*- coding: utf8 -*-
 
-import ldap, sys
+import ldap, sys, json
 
 class aduser(object): 
 	def __init__(self):
@@ -15,7 +15,15 @@ class aduser(object):
 		self.__Cn = ""
 		self.__DistinguishedName = ""
 		self.__Error = ""
-
+	
+	def __repr__(self):
+		return '{"user": "' + self.__User + \
+		       '", "code": ' + str(self.__Code) + \
+		       ', "vorname": "' + self.__Vorname + \
+		       '", "nachname": "' + self.__Nachname + \
+		       '", "email": ' + json.dumps(self.__Email) + \
+		       '}'
+	
 	def __del__(self): 
 	# Dies ist der Destruktor
 		pass
@@ -69,8 +77,8 @@ class aduser(object):
 		try:
 			l = ldap.open("ms.uhbs.ch")
 			l.protocol_version = ldap.VERSION3
-			username = "cn=mttools medizintechnik,ou=Generic,ou=Users,ou=MTInf,ou=USB,dc=ms,dc=uhbs,dc=ch"
-			password = "medtechscan"
+			username = "CN=MUANA,OU=GenericMove,OU=Users,OU=USB,DC=ms,DC=uhbs,DC=ch"
+			password = "anaana"
 			l.simple_bind_s(username, password)
 		
 		except ldap.LDAPError, e:
@@ -78,10 +86,10 @@ class aduser(object):
 			self.__Code = 1
 			return False
 		
-		baseDN = "ou=Users,ou=USB,dc=ms,dc=uhbs,dc=ch"
+		baseDN = "ou=USB,dc=ms,dc=uhbs,dc=ch"
 		searchScope = ldap.SCOPE_SUBTREE
 		retrieveAttributes = None 
-		searchFilter = "mailNickname=" + self.__User
+		searchFilter = "sAMAccountName=" + self.__User
 
 		try:
 			ldap_result_id = l.search(baseDN, searchScope, searchFilter, retrieveAttributes)
@@ -143,20 +151,32 @@ class aduser(object):
 					if result_type == ldap.RES_SEARCH_ENTRY:
 						result_set.append(result_data)	
 			
-			if 'givenName' in result_set[0][0][1]:
-				self.__Vorname = result_set[0][0][1]['givenName'][0]
+			try:
+				if 'givenName' in result_set[0][0][1]:
+					self.__Vorname = result_set[0][0][1]['givenName'][0]
+			except:
+				pass
 			
-			if 'sn' in result_set[0][0][1]:
-				self.__Nachname = result_set[0][0][1]['sn'][0]
+			try:
+				if 'sn' in result_set[0][0][1]:
+					self.__Nachname = result_set[0][0][1]['sn'][0]
+			except:
+				pass
 			
-			if 'mail' in result_set[0][0][1]:
-				self.__Email = result_set[0][0][1]['mail'][0]
+			try:
+				if 'mail' in result_set[0][0][1]:
+					self.__Email = result_set[0][0][1]['mail'][0]
+			except:
+				pass
 			
 			# hole eine litse aller alias email adressen zu diesem postfach
-			if 'proxyAddresses' in result_set[0][0][1]:
-				for e in result_set[0][0][1]['proxyAddresses']:
-					if e[0:5] == "smtp:" or e[0:5] == "SMTP:":
-						self.proxyAddresses.append(e[5:])
+			try:
+				if 'proxyAddresses' in result_set[0][0][1]:
+					for e in result_set[0][0][1]['proxyAddresses']:
+						if e[0:5] == "smtp:" or e[0:5] == "SMTP:":
+							self.proxyAddresses.append(e[5:])
+			except:
+				pass
 			
 			
 			return True
@@ -172,10 +192,10 @@ if __name__ == "__main__":
 	k.Password= sys.argv[2]
 	k.checkcn()
 	if k.authenticate():
-		print k.Nachname, k.Vorname, k.Email, k.proxyAddresses
+		print k
 		sys.exit(0)
 	else:
-		print k.Error
+		print "Error ", k.Error
 		sys.exit(1)
 	
 
