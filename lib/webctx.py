@@ -18,7 +18,7 @@ urls = (
 	'/typeahead', 'typeahead',
 	'/image(.*)', 'image',
 	'/rotnote(.*)', 'rotnote',
-	'/erfahrung(.*)', 'erfahrung',
+	'/erfahrung(.*)', 'erfahrung'
 )
 
 def basic_auth():
@@ -80,19 +80,33 @@ class response:
 	def person(self, pid, history):
 		# get latest wishes
 		if history == None:
-			w = db.session.query(db.Wunsch).filter_by(pid=pid, latest=1)
+			try:
+				w = db.session.query(db.Wunsch).filter_by(pid=pid, latest=1)
+			except:
+				db.session.rollback()
 		else:
 			endd = history + datetime.timedelta(days=1)
-			w = db.session.query(db.Wunsch).filter_by(pid=pid).filter(
-				and_(db.Wunsch.created >= datetime.date(history.year, history.month, history.day),\
-				db.Wunsch.created < datetime.date(endd.year, endd.month, endd.day))
-			)
+
+			try:
+				w = db.session.query(db.Wunsch).filter_by(pid=pid).filter(
+					and_(db.Wunsch.created >= datetime.date(history.year, history.month, history.day),\
+					db.Wunsch.created < datetime.date(endd.year, endd.month, endd.day))
+				)
+			except:
+				db.session.rollback()
 			
 		#print u
-		g = db.session.query(db.Group).order_by(db.Group.sort)
+		try:
+			g = db.session.query(db.Group).order_by(db.Group.sort)
+		except:
+			db.session.rollback()
 		
 		# modified dates
-		d = db.session.query(db.distinct(db.Wunsch.created)).filter_by(pid=pid)
+		try:
+			d = db.session.query(db.distinct(db.Wunsch.created)).filter_by(pid=pid)
+		except:
+			db.session.rollback()
+		
 		dates = []
 		for dt in d:
 			dates.insert(0, dt[0])
@@ -134,6 +148,7 @@ class rotnote(response):
 		try:
 			r = db.session.query(db.RotNote).filter_by(id=id)[0]
 		except:
+			db.session.rollback()
 			web.header('Content-Type', 'application/json; charset=utf-8', unique=True)
 			return '{"success": false, "error": "'+str(sys.exc_info()[0])+'"}'
 		
@@ -167,6 +182,7 @@ class rotnote(response):
 				db.session.delete(r)
 				db.session.commit()
 			except:
+				db.session.rollback()
 				web.header('Content-Type', 'application/json; charset=utf-8', unique=True)
 				return '{"success": false, "error": "'+str(sys.exc_info()[0])+'"}'
 			
@@ -193,6 +209,7 @@ class rotnote(response):
 				print r.bis
 				db.session.commit()
 			except:
+				db.session.rollback()
 				web.header('Content-Type', 'application/json; charset=utf-8', unique=True)
 				return '{"success": false, "error": "'+str(sys.exc_info()[0])+'"}'
 			web.header('Content-Type', 'application/json; charset=utf-8', unique=True) 
@@ -251,6 +268,7 @@ class image(response):
 			return r.foto_thumbnail
 		
 		except:
+			db.session.rollback()
 			no_image = True
 	
 	def POST(self, path):
@@ -259,9 +277,12 @@ class image(response):
 		if path:
 			pid = path[1:]
 		
-		#try:
-		personal = db.session.query(db.Personal).filter_by(pid=pid)[0]
-		#print personal
+		try:
+			personal = db.session.query(db.Personal).filter_by(pid=pid)[0]
+		except:
+			db.session.rollback()
+			# FIXME: handle DB Error
+			#print personal
 	
 		if len(personal.rot_pers) == 0:
 			p = db.Person()
@@ -346,12 +367,16 @@ class personal_data(response):
 
 		self.header(content_type="application/json")
 		
-		for p in db.session.query(db.Personal).\
-			order_by(asc(db.Personal.name)).\
-			with_entities(db.Personal.pid, db.Personal.name, db.Personal.vorname, db.Personal.kuerzel).\
-			filter_by(aktiv=1, pidp=''):
-			ret += json.dumps({"pid": p[0], "name": p[1], "vorname": p[2], "kuerzel": p[3]}, encoding=db.Personal.encoding) + ",\n"
-			#ret += str(p.as_json()) + ",\n"
+		try:
+			for p in db.session.query(db.Personal).\
+				order_by(asc(db.Personal.name)).\
+				with_entities(db.Personal.pid, db.Personal.name, db.Personal.vorname, db.Personal.kuerzel).\
+				filter_by(aktiv=1, pidp=''):
+				ret += json.dumps({"pid": p[0], "name": p[1], "vorname": p[2], "kuerzel": p[3]}, encoding=db.Personal.encoding) + ",\n"
+				#ret += str(p.as_json()) + ",\n"
+		except:
+			db.session.rollback()
+			# FIXME: handle DB Error
 			
 		return ret[:-2] + "]"
 
@@ -361,29 +386,33 @@ class typeahead(response):
 		ret = 'var names = { "options": [';
 		self.header(content_type="application/json")
 		
-		for p in db.session.query(db.Personal).\
-			order_by(asc(db.Personal.name)).\
-			with_entities(db.Personal.pid, db.Personal.name, db.Personal.vorname, db.Personal.kuerzel).\
-			filter_by(aktiv=1, pidp=''):
-			#ret += json.dumps({"pid": p[0], "name": p[1], "vorname": p[2], "kuerzel": p[3], "str": str(p[1]) + " " + str(p[2]) + " (" + str(p[3]) + ")"}, encoding=db.Personal.encoding) + ",\n"
-			if not p[1]: p[1] = ""
-			if not p[2]: p[2] = ""
-			k = ""
-			try:
-				if not p[3]: 
-					p[3] = ""
-					k = ""
-				else:
-					k = p[3]
-			except:
-				pass
-			ret += json.dumps({"pid": p[0], \
-				"name": p[1], \
-				"vorname": p[2], \
-				"kuerzel": p[3], \
-				"str": p[1] + " " + p[2] + \
-				" (" + k + ")"}, encoding=db.Personal.encoding) + ",\n"
-			#ret += str(p.as_json()) + ",\n"
+		try:
+			for p in db.session.query(db.Personal).\
+				order_by(asc(db.Personal.name)).\
+				with_entities(db.Personal.pid, db.Personal.name, db.Personal.vorname, db.Personal.kuerzel).\
+				filter_by(aktiv=1, pidp=''):
+				#ret += json.dumps({"pid": p[0], "name": p[1], "vorname": p[2], "kuerzel": p[3], "str": str(p[1]) + " " + str(p[2]) + " (" + str(p[3]) + ")"}, encoding=db.Personal.encoding) + ",\n"
+				if not p[1]: p[1] = ""
+				if not p[2]: p[2] = ""
+				k = ""
+				try:
+					if not p[3]: 
+						p[3] = ""
+						k = ""
+					else:
+						k = p[3]
+				except:
+					pass
+				ret += json.dumps({"pid": p[0], \
+					"name": p[1], \
+					"vorname": p[2], \
+					"kuerzel": p[3], \
+					"str": p[1] + " " + p[2] + \
+					" (" + k + ")"}, encoding=db.Personal.encoding) + ",\n"
+				#ret += str(p.as_json()) + ",\n"
+		except:
+			db.session.rollback()
+			# FIXME: handle DB Error
 			
 		return ret[:-2] + "]}"
 
@@ -400,16 +429,30 @@ class personal(response):
 			return self.render().personal(db.Personal(), {}, db.RotNoteType, {}, time.strftime("%Y%m%d"))
 		
 		# person und wuensch
-		person = db.session.query(db.Personal).filter_by(pid=pid)[0]
+		try:
+			person = db.session.query(db.Personal).filter_by(pid=pid)[0]
+		except:
+			db.session.rollback()
+			# FIXME: handle DB Error
+			#print personal
+
 		#person.person_add = db.session.query(db.Personal).filter_by(pidp=pid)
-		wunsch = db.session.query(db.Wunsch)\
-			.filter_by(pid=pid, latest=1)\
-			.order_by(db.Wunsch.prio.asc())
+		try:
+			wunsch = db.session.query(db.Wunsch)\
+				.filter_by(pid=pid, latest=1)\
+				.order_by(db.Wunsch.prio.asc())
+		except:
+			db.session.rollback()
+			# FIXME: handle DB Error
 		
 		# get rotnote
-		notes = db.session.query(db.RotNote)\
-			.filter_by(pid=pid)\
-			.order_by(db.RotNote.created.desc())
+		try:
+			notes = db.session.query(db.RotNote)\
+				.filter_by(pid=pid)\
+				.order_by(db.RotNote.created.desc())
+		except:
+			db.session.rollback()
+			# FIXME: handle DB Error
 		
 		# alternative personen und vertraege
 		"""
@@ -447,7 +490,10 @@ class wunsch(response):
 		#print history
 		
 		# get user info
-		u = db.session.query(db.Personal).filter_by(pid=pid)[0]
+		try:
+			u = db.session.query(db.Personal).filter_by(pid=pid)[0]
+		except:
+			db.session.rollback()
 		
 		#print u
 		
@@ -529,14 +575,23 @@ class wunsch(response):
 		#print wunsch
 		
 		# TODO: delete all latest flags
-		lw = db.session.query(db.Wunsch).filter_by(pid=pid, latest=1)
+		try:
+			lw = db.session.query(db.Wunsch).filter_by(pid=pid, latest=1)
+		except:
+			db.session.rollback()
+			# FIXME: handle DB Error
+
 		for l in lw:
 			l.latest = 0
 		db.session.commit()
 		
 		# get rid of records with the current date
 		dt = datetime.datetime.now()
-		lw = db.session.query(db.Wunsch).filter(db.Wunsch.created >= datetime.date(dt.year, dt.month, dt.day))
+		try:
+			lw = db.session.query(db.Wunsch).filter(db.Wunsch.created >= datetime.date(dt.year, dt.month, dt.day))
+		except:
+			db.session.rollback()
+			# FIXME: handle DB Error
 		for l in lw:
 			db.session.delete(l)
 		db.session.commit()

@@ -34,9 +34,13 @@ Base = declarative_base()
 # connect to database
 dsn = "mysql+mysqldb://"+config.db_user+":"+config.db_pass+"@localhost/"+config.db_name + "?charset=utf8"
 #engine = create_engine('sqlite:///:memory:', echo=True)
-engine = create_engine(dsn, encoding='utf-8', echo=False, pool_recycle=300, pool_size=5)
+engine = create_engine(dsn, encoding='utf-8', echo=False, pool_recycle=300, pool_size=5, pool_timeout=5)
 
-connection = engine.connect()
+try:
+	connection = engine.connect()
+except Exception, e:
+	print e
+	sys.exit(1)
 
 
 # data definitions
@@ -573,5 +577,9 @@ def dump_personal():
 	for p in session.query(Personal).all():
 		print p
 
-
+def query(*args):
+	try:
+		session.query(*args)
+	except Exception, e:
+		return e
 
