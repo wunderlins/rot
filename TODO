@@ -1,10 +1,10 @@
 - FIXME: image upload from phone failed after about 10% uploading
 
-- check database error handling and rollback, might have to deal with locks
+- DONE check database error handling and rollback, might have to deal with locks
 - implement notes
   - notes can have categories
   - notes belong to a pid
-  - notes can have replies
+  - notes can have replies (MAYBE)
 
 - sorteirung der wünsche unter Rotation kontrollieren
   - sollen "nicht" wünsche auch gelistet werden?

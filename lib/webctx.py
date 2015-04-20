@@ -531,7 +531,7 @@ class wunsch(response):
 		return self.render().wunsch(g, u, wunsch, dates, history)
 		#return "Hello World"
 	
-	def POST(self):
+	def POST(self, pid):
 		"""
 		Colelct user input of wunsch. Store it as active set for user with "pid". 
 		If there is already a set with the current day, replace it, otherwise 
