@@ -4,10 +4,10 @@ $def with (content)
   <head>
   	$if ctx.path != "/":
 			$ c = 0
-			$ buffer = ""
-			$for i in range(0, ctx.path.count("/")):
-				$ buffer = buffer + "../"
-			<base href="$buffer">
+			$ relpath = ""
+			$for i in range(1, ctx.path.count("/")):
+				$ relpath = relpath + "../"
+			<base href="$relpath">
 		
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,7 +20,7 @@ $def with (content)
 
     <!-- Bootstrap core CSS -->
     <link href="static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-		<link href="static/bootstrap/css/bootstrap-datetimepicker.min.css" rel="stylesheet"/>
+		<link href="static/bootstrap-datetimepicker-master/build/css/bootstrap-datetimepicker.min.css" rel="stylesheet"/>
 
     <!-- Custom styles for this template -->
     <link href="static/assets/template.css" rel="stylesheet">
@@ -109,7 +109,7 @@ $def with (content)
     <script src="static/application.js"></script>
     <script src="typeahead"></script>
     <script src="static/typeahead.js/typeahead.bundle.min.js"></script>
-		<script src="static/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
+		<script src="static/bootstrap-datetimepicker-master/build/js/bootstrap-datetimepicker.min.js"></script>
 		<!--script src="static/assets/bootstrap-wysihtml5-0.0.2.min.js"></script-->
 		<script src="static/wysiwyg/bootstrap3-wysihtml5.all.js"></script>
   </head>
@@ -163,8 +163,8 @@ $def with (content)
          <span class="icon-bar"></span>
          <span class="icon-bar"></span>
          </button>
-         <a class="navbar-brand hidden-xs" href="/"><span class="glyphicon glyphicon-retweet"></span></a>
-         <a class="navbar-brand visible-xs" href="/"><span class="glyphicon glyphicon-retweet"></span></a>
+         <a class="navbar-brand hidden-xs" href="./"><span class="glyphicon glyphicon-retweet"></span></a>
+         <a class="navbar-brand visible-xs" href="./"><span class="glyphicon glyphicon-retweet"></span></a>
          <form class="navbar-form pull-left" role="search">
             <div class="input-group">
                <!--input type="text" class="form-control" placeholder="Search"-->

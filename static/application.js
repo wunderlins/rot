@@ -63,7 +63,7 @@ function init_ta() {
 		*/
 		
 		if (data)
-			document.location.href = "/personal/" + data.pid
+			document.location.href = "personal/" + data.pid
 	}
 	
 	function autocomplete(e, data) {
@@ -181,7 +181,7 @@ var notes = {
 		
 		//$("#comment").html("");
 		notes.setValue("");
-		$("#note").attr("action", "/rotnote/0")
+		$("#note").attr("action", "rotnote/0")
 	},
 	
 	submit: function() {
@@ -201,7 +201,7 @@ var notes = {
 		app.log(payload)
 		
 		act = $("#note").attr("action")
-		if (act != "/rotnote/0") {
+		if (act != "rotnote/0") {
 			payload.action = "update";
 		}
 		
@@ -258,7 +258,7 @@ var notes = {
 	
 	get: function(id) {
 		$.ajax({
-			url: "/rotnote/"+id,
+			url: "rotnote/"+id,
 			type: "GET"
 		}).done(function(data) {
 			if (data.success) {
@@ -283,7 +283,7 @@ var notes = {
 					$('#duedate').css('display', 'none')
 				app.log(data.data.bis)
 				
-				$("#note").attr("action", "/rotnote/" + data.data.id)
+				$("#note").attr("action", "rotnote/" + data.data.id)
 				$('input:radio[name=type]').attr('checked', false);
 				$(".typecheck").removeClass("active")
 				id = "#type_btn_"+data.data.type
