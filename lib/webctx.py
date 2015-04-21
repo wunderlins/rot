@@ -323,7 +323,8 @@ class image(response):
 		"""
 		#for e in f["file"]:
 		#	print e
-	
+		
+		# FIXME: handle errors
 		db.session.commit()
 		#except Exception as e:
 		#	exc_type, exc_obj, exc_tb = sys.exc_info()
