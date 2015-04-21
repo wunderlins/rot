@@ -7,7 +7,7 @@ $def with (person, wunsch, RotNoteType, notes, today)
 
 <style type="text/css">
 	.portrait {
-		background-image: url(/image/$person.pid);
+		background-image: url(image/$person.pid);
 		background-repeat: no-repeat; 
 		background-size: 100% auto;
 	}
@@ -192,7 +192,7 @@ function init_upload() {
 		          });
 		          $$('#progress').css("display", "none");
 				    	var randomId = new Date().getTime();
-				    	var u = "url(/image/" + app.pid + "?random=" + randomId + ")"
+				    	var u = "url(image/" + app.pid + "?random=" + randomId + ")"
 				    	$$("#portrait").css("background-image", u);
 		      },
 		      progressall: function (e, data) {
@@ -210,7 +210,7 @@ function init_upload() {
 	          app.log(data)
 		      	//alert("Failed, need to send proper response from server")
 		      	var randomId = new Date().getTime();
-		      	var u = "url(/image/" + app.pid + "?random=" + randomId + ")"
+		      	var u = "url(image/" + app.pid + "?random=" + randomId + ")"
 		      	$$("#portrait").css("background-image", u);
 		      }
 		  }).prop('disabled', !$$.support.fileInput)
