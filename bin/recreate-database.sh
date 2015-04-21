@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
 
+. etc/dbconfig.sh
+
 # import existing data from file
-mysql -h localhost -uplanoaa -pplanoaa planoaa < data/planoaa.sql
+mysql -h $host -u$user -p$pass $db < data/planoaa.sql
