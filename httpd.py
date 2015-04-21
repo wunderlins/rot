@@ -55,9 +55,9 @@ class Log(WsgiLog):
 			tofile = True,
 			toprint = True,
 			file = config.app_logfile,
-			#when = "D",
-			#interval = 1,
-			#backups = 1000
+			when = "D",
+			interval = 1,
+			backups = 1000
 		)
 
 if __name__ == "__main__":

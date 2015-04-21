@@ -74,7 +74,8 @@ class response:
 			'btn_cancel': tpl.btn_cancel,
 			'btn_ok': tpl.btn_ok,
 			'urls': urls,
-			"session": web.sess
+			"session": web.sess,
+			"ctx": web.ctx
 		})
 
 	def person(self, pid, history):
@@ -124,7 +125,7 @@ class response:
 
 class index(response):
 	def GET(self):
-		return self.render().index()
+		return self.render().index(web.ctx)
 	
 class erfahrung(response):
 	def GET(self, path):

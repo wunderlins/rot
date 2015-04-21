@@ -2,25 +2,32 @@ $def with (content)
 <!DOCTYPE html>
 <html lang="en">
   <head>
+  	$if ctx.path != "/":
+			$ c = 0
+			$ buffer = ""
+			$for i in range(0, ctx.path.count("/")):
+				$ buffer = buffer + "../"
+			<base href="$buffer">
+		
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Rotationsplanung">
     <meta name="author" content="Simon Wunderlin">
-    <link rel="icon" href="/favicon.ico">
+    <link rel="icon" href="favicon.ico">
 
     <title>Rotationswunsch</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-		<link href="/static/bootstrap/css/bootstrap-datetimepicker.min.css" rel="stylesheet"/>
+    <link href="static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<link href="static/bootstrap/css/bootstrap-datetimepicker.min.css" rel="stylesheet"/>
 
     <!-- Custom styles for this template -->
-    <link href="/static/assets/template.css" rel="stylesheet">
+    <link href="static/assets/template.css" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="static/assets/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="/static/assets/ie-emulation-modes-warning.js"></script>
+    <script src="static/assets/ie-emulation-modes-warning.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -29,8 +36,8 @@ $def with (content)
     <![endif]-->
     
 		<!-- CSS to style the file input field as button and adjust the Bootstrap progress bars -->
-		<link rel="stylesheet" href="/static/upload/css/jquery.fileupload.css">
-		<link rel="stylesheet" href="/static/wysiwyg/bootstrap3-wysihtml5.css">
+		<link rel="stylesheet" href="static/upload/css/jquery.fileupload.css">
+		<link rel="stylesheet" href="static/wysiwyg/bootstrap3-wysihtml5.css">
 		
     <style type="text/css">
     	.row div {padding-bottom: 0.25em;}
@@ -97,19 +104,24 @@ $def with (content)
 			h1 span.glyphicon {font-size: 75%;}
 
     </style>
-		<script src="/static/assets/moment.js"></script>
-    <script src="/static/assets/jquery.min.js"></script>
-    <script src="/static/application.js"></script>
-    <script src="/typeahead"></script>
-    <script src="/static/typeahead.js/typeahead.bundle.min.js"></script>
-		<script src="/static/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
-		<!--script src="/static/assets/bootstrap-wysihtml5-0.0.2.min.js"></script-->
-		<script src="/static/wysiwyg/bootstrap3-wysihtml5.all.js"></script>
+		<script src="static/assets/moment.js"></script>
+    <script src="static/assets/jquery.min.js"></script>
+    <script src="static/application.js"></script>
+    <script src="typeahead"></script>
+    <script src="static/typeahead.js/typeahead.bundle.min.js"></script>
+		<script src="static/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
+		<!--script src="static/assets/bootstrap-wysihtml5-0.0.2.min.js"></script-->
+		<script src="static/wysiwyg/bootstrap3-wysihtml5.all.js"></script>
   </head>
 
   <body>
-		
-		
+  <!--
+	homedomain: $ctx.homedomain<br/>
+	home: $ctx.home<br/>
+	homepath: $ctx.homepath<br/>
+	path: $ctx.path $ctx.path.count("/") <br/>
+	-->
+	
     <!--nav class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="container">
         
@@ -165,13 +177,13 @@ $def with (content)
       </div>
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
-          <li id="nav_personal"><a href="/personal/$session.pid">
+          <li id="nav_personal"><a href="personal/$session.pid">
           	<span class="glyphicon glyphicon-user"></span>
           	Mitarbeiter</a></li>
-          <li id="nav_wunsch"><a href="/wunsch/$session.pid">
+          <li id="nav_wunsch"><a href="wunsch/$session.pid">
           	<span class="glyphicon glyphicon-tasks"></span>
           	Wünsche</a></li>
-          <li id="nav_erfahrung"><a href="/erfahrung/$session.pid">
+          <li id="nav_erfahrung"><a href="erfahrung/$session.pid">
           	<span class="glyphicon glyphicon-book"></span>
           	Erfahrung</a></li>
           <li id="nav_test"><a href="/test">Test Json</a></li>
@@ -190,16 +202,16 @@ $:content
 		<!-- Bootstrap core JavaScript
 		================================================== -->
 		<!-- Placed at the end of the document so the pages load faster -->
-		<script src="/static/bootstrap/js/bootstrap.min.js"></script>
+		<script src="static/bootstrap/js/bootstrap.min.js"></script>
 		<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-		<script src="/static/assets/ie10-viewport-bug-workaround.js"></script>
+		<script src="static/assets/ie10-viewport-bug-workaround.js"></script>
 
 		<!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
-		<script src="/static/upload/js/vendor/jquery.ui.widget.js"></script>
+		<script src="static/upload/js/vendor/jquery.ui.widget.js"></script>
 		<!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
-		<script src="/static/upload/js/jquery.iframe-transport.js"></script>
+		<script src="static/upload/js/jquery.iframe-transport.js"></script>
 		<!-- The basic File Upload plugin -->
-		<script src="/static/upload/js/jquery.fileupload.js"></script>
+		<script src="static/upload/js/jquery.fileupload.js"></script>
 
 		<script type="application/javascript">
 			path = window.location.pathname;

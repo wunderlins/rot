@@ -68,7 +68,7 @@ $person.name $person.vorname ($person.kuerzel)</h1>
 		
 	</div>
 	<div class="col-sm-4 col-xs-12">
-		<form class="panel panel-default" id="note" action="/rotnote/0">
+		<form class="panel panel-default" id="note" action="rotnote/0">
 			<div class="panel-heading">Notiz</div>
 			<div class="panel-body">
 				
@@ -181,7 +181,7 @@ function init_upload() {
 	$$(function () {
 		  'use strict';
 		  // Change this to the location of your server-side upload handler:
-		  var url = '/image/' + app.pid;
+		  var url = 'image/' + app.pid;
 		  $$('#fileupload').fileupload({
 		      url: url,
 		      //dataType: 'json',
