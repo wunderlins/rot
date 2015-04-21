@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
+. etc/dbconfig.sh
+
 # drop new tables
-mysql -h localhost -uplanoaa -pplanoaa planoaa <<EOT
+mysql -h $host -u$user -p$pass $db <<EOT
 
 DROP table IF EXISTS rot_pers;
 DROP table IF EXISTS rot_notes;
