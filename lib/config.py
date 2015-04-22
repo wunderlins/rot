@@ -4,6 +4,7 @@ import os, sys
 import importlib
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'etc'))
 
+
 cfg_file = os.getenv("cfg_file")[:-3]
 if cfg_file == None:
 	print "Please set the environment variable 'cfg_file'"

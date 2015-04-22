@@ -12,4 +12,4 @@ fi
 . etc/$cfg_file
 
 echo "Using cfg: $cfg_file"
-nohup ./httpd.py > $web_logfile &
+nohup ./httpd.py >> $web_logfile &
