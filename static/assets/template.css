@@ -5,3 +5,66 @@ body {
   padding: 40px 15px;
   text-align: center;
 }
+
+.row div {padding-bottom: 0.25em;}
+.prio {
+	font-family: 'Glyphicons Halflings' ! important;
+	width: 6em ! important;
+}
+.prio option {
+	text-align: center ! important;
+}
+
+.tt-dropdown-menu {
+	background-color: white;
+	border: 1px solid #aaa;
+	padding: 0.3em;
+	cursor: pointer;
+}
+
+#users {display: none;}
+
+.portrait {
+	width: 100%;
+	/* height: 300px; */ /* this is now set onload by javascript to make it suqare */
+	border: 1px solid #eee;
+	text-align: left;
+	display: table;
+}
+
+.portrait .inner {
+	display: table-cell;
+	vertical-align: top;
+	padding: 0.5em;
+}
+
+.panel-heading {height: 3em;}
+
+#duedate {display: none;}
+
+.imgupload {}
+
+
+@media(max-width:767px) {
+		.navbar .navbar-form {
+			  width: 185px;
+			  padding-left:0;
+			  padding-right:0;
+		}
+}
+@media(min-width:768px) {
+		.navbar .navbar-form {
+			  width: 250px;
+		}
+}
+.navbar .navbar-form {
+		padding-top: 0;
+		padding-bottom: 0;
+		margin-right: 0;
+		margin-left: 0;
+		border: 0;
+		-webkit-box-shadow: none;
+		box-shadow: none;
+}
+
+h1 span.glyphicon {font-size: 75%;}

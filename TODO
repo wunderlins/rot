@@ -1,3 +1,5 @@
+- HIGH prio: add phone number(s?), email(s?) to profile
+
 - FIXME: image upload from phone failed after about 10% uploading
 
 - DONE check database error handling and rollback, might have to deal with locks
