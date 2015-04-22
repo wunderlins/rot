@@ -93,6 +93,7 @@ if __name__ == "__main__":
 			web.sess = session_default
 	#web.sess["pid"] += 1
 	#print "starting ..."
+	web.config.debug = config.web_debug
 	app.add_processor(web.loadhook(loadhook))
 	app.add_processor(web.unloadhook(unloadhook))
 	app.run(config.port, "0.0.0.0", Log)
