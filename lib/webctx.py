@@ -180,15 +180,24 @@ class rotnote(response):
 		#print path, id
 		p = web.input(action=None)
 		tags = []
-		if p.tags:
-			tags = p.tags.split(",")
-		print "tags " + str(tags)
+		# no tags on delete action
+		try:
+			if p.tags:
+				tags = p.tags.split(",")
+			print "tags " + str(tags)
+		except: 
+			pass
 		
 		# if we have an id, then we need to update or delete
 		if id and p.action == "delete":
 			print "Delete"
 			try:
 				r = db.session.query(db.RotNote).filter_by(id=id)[0]
+				# remove existing tags
+				for t in r.tags:
+					r.tags.remove(t)
+				db.session.commit()
+				
 				db.session.delete(r)
 				db.session.commit()
 				
