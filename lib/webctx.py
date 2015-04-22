@@ -191,6 +191,8 @@ class rotnote(response):
 				r = db.session.query(db.RotNote).filter_by(id=id)[0]
 				db.session.delete(r)
 				db.session.commit()
+				
+				# FIXME: remove tags
 			except:
 				db.session.rollback()
 				web.header('Content-Type', 'application/json; charset=utf-8', unique=True)
@@ -270,6 +272,18 @@ class rotnote(response):
 			else:
 				n = db.RotNote(pid=p.pid, comment=p.comment, type=p.type, bis="0000-00-00")
 			db.session.add(n)
+			db.session.commit()
+			
+			# add new tags to note
+			for t in tags:
+				obj = db.session.query(db.NoteTag).filter_by(name=t)
+				if obj.count() != 0: # existing
+					obj = obj[0]
+				else: # new
+					obj = db.NoteTag(name=t)
+					db.session.add(obj)
+				
+				n.tags.append(obj)
 			db.session.commit()
 		except:
 			web.header('Content-Type', 'application/json; charset=utf-8', unique=True)
