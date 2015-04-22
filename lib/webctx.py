@@ -179,6 +179,10 @@ class rotnote(response):
 			id = int(path[1:])
 		#print path, id
 		p = web.input(action=None)
+		tags = []
+		if p.tags:
+			tags = p.tags.split(",")
+		print "tags " + str(tags)
 		
 		# if we have an id, then we need to update or delete
 		if id and p.action == "delete":
@@ -208,12 +212,47 @@ class rotnote(response):
 				r.pid=p.pid
 				r.comment=p.comment
 				r.type=p.type
-				
-				print r.pid
-				print r.comment
-				print r.type
-				print r.bis
 				db.session.commit()
+				
+				"""
+>>> t = r.tags[0]
+>>> t
+<rot_notetag(id='1')>
+>>> r.tags.remove(t)
+>>> db.session.commit()
+
+>>> t = db.session.query(db.NoteTag).filter_by(name="USB")[0]
+>>> t
+<rot_notetag(id='1')>
+>>> r.tags.append(t)
+>>> r.tags
+[<rot_notetag(id='1')>]
+>>> db.session.commit()
+				"""
+				
+				# remove existing tags
+				for t in r.tags:
+					r.tags.remove(t)
+				db.session.commit()
+				
+				# add new tags to note
+				for t in tags:
+					obj = db.session.query(db.NoteTag).filter_by(name=t)
+					if obj.count() != 0: # existing
+						obj = obj[0]
+					else: # new
+						obj = db.NoteTag(name=t)
+						db.session.add(obj)
+					
+					r.tags.append(obj)
+				db.session.commit()
+				
+				print "pid     " + str(r.pid)
+				print "comment " + str(r.comment)
+				print "type    " + str(r.type)
+				print "bis     " + str(r.bis)
+				print "tags    " + str(tags)
+				
 			except:
 				db.session.rollback()
 				web.header('Content-Type', 'application/json; charset=utf-8', unique=True)

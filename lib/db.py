@@ -216,7 +216,6 @@ class Person(Base, DefaultAttributes):
 	foto_thumbnail = Column(LONGBLOB)
 	pid            = Column('pid', INTEGER(), nullable=False)
 
-
 rotnote2notetags = Table('rot_note2tags', Base.metadata,
     Column('rotnote_id', Integer, ForeignKey('rot_notes.id')),
     Column('nodetag_id', Integer, ForeignKey('rot_notetag.id'))

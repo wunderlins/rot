@@ -187,15 +187,20 @@ var notes = {
 		if ($('#due_input', '#note').val())
 			dt = parseInt($('#due').data("DateTimePicker").getDate().format("X"))
 		app.log(dt)
+		t = parseInt($('input[name=type]:checked', '#note').val())
+		if (isNaN(t))
+			t = 0;
+		tags = $("#notetag").tagit("assignedTags")
 		payload = {
 			pid: app.pid,
 			comment: $('#comment', '#note').val(),
-			type: parseInt($('input[name=type]:checked', '#note').val()),
+			type: t,
 			due: dt,
-			action: "insert"
+			action: "insert",
+			tags: tags.join(",")
 		}
 		
-		app.log(payload)
+		app.log(payload);
 		
 		act = $("#note").attr("action")
 		if (act != "rotnote/0") {
