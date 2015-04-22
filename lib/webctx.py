@@ -157,12 +157,17 @@ class rotnote(response):
 		if r.bis:
 			d = r.bis.strftime("%d.%m.%Y")
 		
+		tags = []
+		for t in r.tags:
+			tags.append(t.name)
+		
 		response = {
 			"id": r.id,
 			"comment": r.comment,
 			"bis": d,
 			"done": r.done,
-			"type": r.type
+			"type": r.type,
+			"tags": tags
 		}
 		web.header('Content-Type', 'application/json; charset=utf-8', unique=True)
 		return '{"success": true, "data": '+json.dumps(response)+'}'
@@ -456,6 +461,14 @@ class personal(response):
 			db.session.rollback()
 			# FIXME: handle DB Error
 		
+		# get all tags
+		try:
+			tags = db.session.query(db.NoteTag)\
+				.order_by(db.NoteTag.name.desc())
+		except:
+			db.session.rollback()
+			# FIXME: handle DB Error
+		
 		# alternative personen und vertraege
 		"""
 		vertraege = []
@@ -469,7 +482,7 @@ class personal(response):
 			for v in vert:
 				vertraege.apppend(v)
 		"""
-		return self.render().personal(person, wunsch, db.RotNoteType, notes, time.strftime("%Y%m%d"))
+		return self.render().personal(person, wunsch, db.RotNoteType, notes, time.strftime("%Y%m%d"), tags)
 		#return "Hello World"
 
 class wunsch(response):

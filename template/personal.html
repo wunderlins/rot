@@ -1,4 +1,4 @@
-$def with (person, wunsch, RotNoteType, notes, today)
+$def with (person, wunsch, RotNoteType, notes, today, tags)
 <!--
 <ul class="list-group" id="users">
 </ul>
@@ -116,6 +116,16 @@ $person.name $person.vorname ($person.kuerzel)</h1>
 							<label for="due" class="input-group-addon btn"><span class="glyphicon glyphicon-calendar"></span></label>
 						</div>
 					</div>
+
+					<label>Tags</label>
+					<ul id="notetag">
+						<li>1</li>
+						<li>2</li>
+						<li>3</li>
+						<li>4</li>
+						<li>5</li>
+					</ul>
+
 					
 					<hr />
 					<div class="pull-right">
@@ -175,6 +185,17 @@ $person.name $person.vorname ($person.kuerzel)</h1>
 </div>
 
 <script>
+function init_tags() {
+	$$("#notetag").tagit({
+		fieldName: "tags",
+		availableTags: [
+		$for e in tags:
+			"$e.name",
+		""]
+	});
+}
+add_load_handler(init_tags);
+
 function init_upload() {
 	/*jslint unparam: true */
 	/*global window, $$ */

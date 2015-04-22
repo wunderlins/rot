@@ -1,6 +1,9 @@
 app = {
 	log: function(txt) {
 		console.log(txt)
+	},
+	byid: function(id) {
+		return document.getElementById(id)
 	}
 }
 
@@ -18,12 +21,6 @@ function load_personal() {
 		//app.log(js);
 			
 		// append nodes
-		/**
-		 <li class="list-group-item">
-		 <span class="badge">14</span>
-		 Cras justo odio
-		 </li>
-		**/
 		p = $("#users")
 		for(i=0; i<js.length; i++) {
 			e = js[i]
@@ -240,7 +237,7 @@ var notes = {
 			return true;
 		
 		$.ajax({
-			url: "/rotnote/"+id,
+			url: "rotnote/"+id,
 			type: "POST",
 			data: {action: "delete"}
 		}).done(function(data) {
@@ -291,6 +288,13 @@ var notes = {
 				$('input:radio[name=type]').filter('[value='+data.data.type+']').attr('checked', true);
 				//app.log(data.data.id)
 				//$("#note_"+data.id).remove();
+				
+				// setup tags
+				//$("#notetag").empty()
+				$("#notetag").tagit("removeAll");
+				for(e in data.data.tags)
+					$("#notetag").tagit("createTag", data.data.tags[e]);
+				
 			} else {
 				alert("Error: " + data.error + "\n\nData could not be deleted.")
 			}
