@@ -10,8 +10,8 @@ need root privvileges to bind ports below 1024.
 """
 
 import os, sys
-sys.path.append(os.path.join(os.path.dirname(__file__), 'lib'))
-sys.path.append(os.path.join(os.path.dirname(__file__), 'lib', 'web'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'lib'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'lib', 'web'))
 
 import web, config, json, db
 import datetime
