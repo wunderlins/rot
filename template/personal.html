@@ -162,12 +162,22 @@ $person.name $person.vorname ($person.kuerzel)</h1>
 				<div class="panel-body">
 					$:n.comment.replace('\n', '<br/>')
 					
-					<div>
-						
-						$if n.bis:
-							<span class="glyphicon glyphicon-calendar"> Bis: $n.bis.strftime('%d.%m.%Y')
+					$if n.bis or len(n.tags) > 0:
+						<hr style="margin-top: 5px; margin-bottom: 5px;"/>
 
-					</div>
+					$if n.bis:
+						<div style="padding-top: 0.3em;">
+							$if n.bis:
+								<span class="glyphicon glyphicon-calendar"></span> Bis: $n.bis.strftime('%d.%m.%Y')
+						</div>
+					
+					
+					$if len(n.tags) > 0:
+						<div>
+							<span class="glyphicon glyphicon-tags">
+							$for t in n.tags:
+								$t.name
+						</div>
 				</div>
 				
 			</div>
