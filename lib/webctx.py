@@ -338,6 +338,18 @@ class image(response):
 		except:
 			db.session.rollback()
 			no_image = True
+		
+		# display std avatar
+		fp = open('static/avatar.svg', 'r')
+		buffer = fp.read()
+		fp.close()
+		
+		# send headers
+		web.header("Content-length", len(buffer))
+		web.header("Content-type", "image/svg+xml")
+		
+		return buffer
+		
 	
 	def POST(self, path):
 		#print "Path: ", path
