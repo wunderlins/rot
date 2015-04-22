@@ -217,6 +217,11 @@ class Person(Base, DefaultAttributes):
 	pid            = Column('pid', INTEGER(), nullable=False)
 
 
+rotnote2notetags = Table('rot_note2tags', Base.metadata,
+    Column('rotnote_id', Integer, ForeignKey('rot_notes.id')),
+    Column('nodetag_id', Integer, ForeignKey('rot_notetag.id'))
+)
+
 class RotNote(Base, DefaultAttributes):
 	__tablename__ = 'rot_notes'
 
@@ -233,6 +238,17 @@ class RotNote(Base, DefaultAttributes):
 	done = Column(Integer, default=0)
 
 	#relation definitions
+	tags = relationship("NoteTag", secondary=rotnote2notetags)
+
+
+class NoteTag(Base, DefaultAttributes):
+	__tablename__ = 'rot_notetag'
+
+	__table_args__ = {}
+
+	#column definitions
+	id      = Column(Integer, Sequence('rot_notetag_id_seq'), primary_key=True)
+	name	  = Column(Unicode(100))
 
 RotNoteType = [
 	(None, None, None),
