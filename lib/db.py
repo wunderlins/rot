@@ -237,7 +237,8 @@ class RotNote(Base, DefaultAttributes):
 	done = Column(Integer, default=0)
 
 	#relation definitions
-	tags = relationship("NoteTag", secondary=rotnote2notetags)
+	tags = relationship("NoteTag", secondary=rotnote2notetags,
+	                    backref="rotnotes")
 
 
 class NoteTag(Base, DefaultAttributes):

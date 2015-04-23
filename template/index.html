@@ -1,2 +1,50 @@
-$def with (ctx)
+$def with (ctx, tags, RotNoteType)
 
+
+<!--
+TODO:
+ - display oldest first
+ 
+ - left column: tasks that are older than today
+   * sort oldest on top
+ - right column: today >= + 1 month
+   * sort by tag
+-->
+
+
+<div class="row">
+	$for t in tags:
+		<div class="col-sm-4 col-xs-12">
+		
+		<div class="panel panel-default">
+			<!-- Default panel contents -->
+			<div class="panel-heading">$t.name</div>
+				<div class="panel-body">
+					$for n in t.rotnotes:
+						$ glyph = RotNoteType[n.type][1]
+						<div>
+							<span class="glyphicon $glyph"></span>
+							<!--$n.personal.name $n.personal.vorname (-->
+							<span>$n.personal.name $n.personal.vorname ($n.personal.kuerzel)</span>
+							$if n.bis:
+								$n.bis.strftime("%d.%m.%Y")
+							
+							<div style="float: left; height: 4em; margin-right: 0.5em;">
+								<img style="width: 50px;" src="image/$n.pid" alt="Portrait">
+							</div>
+							<br/>	
+								
+							$strip_tags(n.comment[:100])
+							
+							$if len(n.tags):
+								<span class="glyphicon glyphicon-tags">
+								$for t in n.tags:
+									$t.name
+							<div style="clear: both;"></div>
+							<br />
+						</div>
+						
+				</div>
+			</div>
+		</div>
+</div>

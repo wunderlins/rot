@@ -21,6 +21,24 @@ urls = (
 	'/erfahrung(.*)', 'erfahrung'
 )
 
+from HTMLParser import HTMLParser
+
+class MLStripper(HTMLParser):
+	def __init__(self):
+		self.reset()
+		self.fed = []
+	
+	def handle_data(self, d):
+		self.fed.append(d)
+	
+	def get_data(self):
+		return ''.join(self.fed)
+
+def strip_tags(html):
+	s = MLStripper()
+	s.feed(html)
+	return s.get_data()
+
 def basic_auth():
 	allowed = (
 		('admin','pass'),
@@ -32,9 +50,9 @@ def basic_auth():
 	if auth is not None:
 		web.sess["user"] = None
 		auth = re.sub('^Basic ','',auth)
-		username,password = base64.decodestring(auth).split(':')
+		username, password = base64.decodestring(auth).split(':')
 		#print username,password
-		if (username,password) in allowed:
+		if (username, password) in allowed:
 			#print "allowd"
 			web.sess["user"] = username
 			return
@@ -75,7 +93,8 @@ class response:
 			'btn_ok': tpl.btn_ok,
 			'urls': urls,
 			"session": web.sess,
-			"ctx": web.ctx
+			"ctx": web.ctx,
+			"strip_tags": strip_tags
 		})
 
 	def person(self, pid, history):
@@ -125,7 +144,8 @@ class response:
 
 class index(response):
 	def GET(self):
-		return self.render().index(web.ctx)
+		tags = db.session.query(db.NoteTag).all()
+		return self.render().index(web.ctx, tags, db.RotNoteType)
 	
 class erfahrung(response):
 	def GET(self, path):
@@ -329,27 +349,46 @@ class image(response):
 			pid = path[1:]
 		#print "pid: " + pid
 		
-		no_image = False
+		no_image = True
+		path = ""
 		try:
-			r = db.session.query(db.Person).filter_by(pid=pid)[0]
-			web.header("Content-type", "image/jpeg")
-			return r.foto_thumbnail
+			tnpath = "static/thumbnails/"+pid+"_thumbnail.jpg"
+			if not os.path.exists(tnpath):
+				no_image = True
+				r = db.session.query(db.Person).filter_by(pid=pid)[0]
+				if r.foto_thumbnail != None:
+					fp = open(tnpath, "w")
+					fp.write(r.foto_thumbnail)
+					fp.close()
+					no_image = False
+				else:
+ 					no_image = True
+ 			else:
+				no_image = False
+ 			
+ 			if no_image == False:
+				#web.header("Content-type", "image/jpeg")
+				#fp = open(tnpath, "r")
+				#img = fp.read()
+				#fp.close()
+				path = "../../static/thumbnails/" + pid + "_thumbnail.jpg"
 		
 		except:
 			db.session.rollback()
 			no_image = True
 		
 		# display std avatar
-		fp = open('static/avatar.svg', 'r')
-		buffer = fp.read()
-		fp.close()
+		#fp = open('static/avatar.svg', 'r')
+		#buffer = fp.read()
+		#fp.close()
 		
 		# send headers
-		web.header("Content-length", len(buffer))
-		web.header("Content-type", "image/svg+xml")
-		
-		return buffer
-		
+		#web.header("Content-length", len(buffer))
+		#web.header("Content-type", "image/svg+xml")
+		if path == "":
+			path = '../../static/avatar.svg'
+		print path
+		raise web.seeother(path)
 	
 	def POST(self, path):
 		#print "Path: ", path

@@ -42,31 +42,30 @@ $person.name $person.vorname ($person.kuerzel)</h1>
 		<br />
 		<br />
 		
-	<div class="panel panel-default">
-  <!-- Default panel contents -->
-  <div class="panel-heading">Wünsche</div>
+		<div class="panel panel-default">
+			<!-- Default panel contents -->
+			<div class="panel-heading">Wünsche</div>
 
-  <!-- Table -->
-  <table class="table">
-    <thead>
-    	<tr>
-    		<th>Prio</th>
-    		<th>Rotation</th>
-    	</tr>
-    </thead>
-    <tbody>
-    $for w in wunsch:
-    	<tr>
-    		<td class="prio">$:wunsch_prio(w.prio)</td>
-    		<td>$w.rot.name</td>
-    	</tr>
-    	
-    </tbody>
-  </table>
-</div>
-		
-		
+			<!-- Table -->
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Prio</th>
+						<th>Rotation</th>
+					</tr>
+				</thead>
+				<tbody>
+				$for w in wunsch:
+					<tr>
+						<td class="prio">$:wunsch_prio(w.prio)</td>
+						<td>$w.rot.name</td>
+					</tr>
+					
+				</tbody>
+			</table>
+		</div>
 	</div>
+	
 	<div class="col-sm-4 col-xs-12">
 		<form class="panel panel-default" id="note" action="rotnote/0">
 			<div class="panel-heading">Notiz</div>

@@ -23,7 +23,7 @@ import tempfile
 
 session_default = {
 	"selected_pid": 0,
-	"pid": 0,
+	"pid": None,
 	"user": None
 }
 
