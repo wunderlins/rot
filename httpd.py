@@ -67,6 +67,7 @@ if __name__ == "__main__":
 	#sys.stderr = weblog
 	#sys.stdout = weblog
 	
+	curdir = os.path.dirname(__file__)
 	web.config.debug = config.web_debug
 	app = rot(urls, globals())
 	
@@ -80,7 +81,7 @@ if __name__ == "__main__":
 		web.config.session_parameters['secret_key'] = config.session_salt
 		web.config.session_parameters['expired_message'] = 'Session expired'
 	
-		temp = tempfile.mkdtemp(dir=config.session_dir, prefix='session_')
+		temp = tempfile.mkdtemp(dir=curdir+"/"+config.session_dir, prefix='session_')
 		web.sess = web.session.Session(
 			app, 
 			web.session.DiskStore(temp), 
