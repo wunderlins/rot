@@ -1,6 +1,8 @@
 # NOTE: make syntax bash compatible!
 #       no spaces between name = value, like this: name=value
 
+server="apache"
+
 port=1975
 db_user="planoaa"
 db_pass="planoaa"

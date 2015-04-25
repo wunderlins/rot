@@ -10,6 +10,7 @@ need root privvileges to bind ports below 1024.
 """
 
 import os, sys
+os.chdir(os.path.dirname(__file__))
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'lib'))
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'lib', 'web'))
 
@@ -60,6 +61,53 @@ class Log(WsgiLog):
 			backups = 1000
 		)
 
+def application(environ, start_response):
+
+	# redirect webserver logs to file
+	#weblog = open(config.web_logfile, "ab")
+	#sys.stderr = weblog
+	#sys.stdout = weblog
+	
+	print "Starting rot application"
+	
+	curdir = os.path.dirname(__file__)
+	web.config.debug = config.web_debug
+	
+	app = web.application(urls, globals())
+	
+	print "setting up session"
+	# session setup, make sure to call it only one if in debug mode
+	if web.config.get('_session') is None:
+		web.config.session_parameters['cookie_name'] = 'rot'
+		web.config.session_parameters['cookie_domain'] = None
+		web.config.session_parameters['timeout'] = config.session_timeout,
+		web.config.session_parameters['ignore_expiry'] = True
+		web.config.session_parameters['ignore_change_ip'] = False
+		web.config.session_parameters['secret_key'] = config.session_salt
+		web.config.session_parameters['expired_message'] = 'Session expired'
+	
+		temp = tempfile.mkdtemp(dir=curdir+"/"+config.session_dir, prefix='session_')
+		web.sess = web.session.Session(
+			app, 
+			web.session.DiskStore(temp), 
+			initializer = session_default
+		)
+	else:
+		web.sess = web.config._session
+		try:
+			web.sess["pid"]
+		except:
+			web.sess = session_default
+	#web.sess["pid"] += 1
+	#print "starting ..."
+	
+	print "loading hooks"
+	app.add_processor(web.loadhook(loadhook))
+	app.add_processor(web.unloadhook(unloadhook))
+	
+	print "Dispatching"
+	app.wsgifunc()
+
 if __name__ == "__main__":
 
 	# redirect webserver logs to file
@@ -69,6 +117,7 @@ if __name__ == "__main__":
 	
 	curdir = os.path.dirname(__file__)
 	web.config.debug = config.web_debug
+	
 	app = rot(urls, globals())
 	
 	# session setup, make sure to call it only one if in debug mode
@@ -98,5 +147,6 @@ if __name__ == "__main__":
 	
 	app.add_processor(web.loadhook(loadhook))
 	app.add_processor(web.unloadhook(unloadhook))
-	app.run(config.port, "0.0.0.0", Log)
 	
+	app.run(config.port, "0.0.0.0", Log)
+

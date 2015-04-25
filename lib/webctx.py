@@ -144,6 +144,7 @@ class response:
 
 class index(response):
 	def GET(self):
+		print "index class"
 		tags = db.session.query(db.NoteTag).all()
 		return self.render().index(web.ctx, tags, db.RotNoteType)
 	
