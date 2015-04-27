@@ -47,6 +47,7 @@ function restart() {
 }
 
 function status() {
+	variables
 	./bin/status.sh
 }
 
@@ -85,5 +86,3 @@ EOT
 
 variables
 }
-
-variables
