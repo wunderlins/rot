@@ -2,11 +2,11 @@ basedir="`cd $(dirname $0)/..;pwd`"
 
 export APACHE_RUN_USER=$USER
 export APACHE_RUN_GROUP=$USER
-export APACHE_PID_FILE=$basedir/var/apache2/apache.pid
-export APACHE_RUN_DIR=$basedir/var/apache2/
-export APACHE_LOCK_DIR=$basedir/var/apache2/
+export APACHE_PID_FILE=$basedir/apache.pid
+export APACHE_RUN_DIR=$basedir/var/
+export APACHE_LOCK_DIR=$basedir/var/
 # Only /var/log/apache2 is handled by /etc/logrotate.d/apache2.
-export APACHE_LOG_DIR=$basedir/var/apache2/
+export APACHE_LOG_DIR=$basedir/var/
 
 ## The locale used by some modules like mod_dav
 export LANG=C
