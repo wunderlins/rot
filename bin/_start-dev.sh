@@ -3,4 +3,5 @@
 basedir="`cd $(dirname $0)/..;pwd`"; cd "$basedir"
 . lib/setenv.sh
 
-nohup ./httpd.py >> $web_logfile &
+nohup ./httpd.py >> $web_logfile 2>&1 </dev/null &
+

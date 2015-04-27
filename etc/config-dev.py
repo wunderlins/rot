@@ -1,7 +1,7 @@
 # NOTE: make syntax bash compatible!
 #       no spaces between name = value, like this: name=value
 
-server="dev" # uwsgi|dev|apache (apache is not workign yet)
+server="uwsgi" # uwsgi|dev|apache (apache is not workign yet)
 
 port=1975
 

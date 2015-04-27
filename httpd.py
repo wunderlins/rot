@@ -59,6 +59,32 @@ class Log(WsgiLog):
 			interval = 1,
 			backups = 1000
 		)
+
+def init_session():
+	if web.config.get('_session') is None:
+		web.config.session_parameters['cookie_name'] = 'rot'
+		web.config.session_parameters['cookie_domain'] = None
+		web.config.session_parameters['timeout'] = config.session_timeout,
+		web.config.session_parameters['ignore_expiry'] = True
+		web.config.session_parameters['ignore_change_ip'] = False
+		web.config.session_parameters['secret_key'] = config.session_salt
+		web.config.session_parameters['expired_message'] = 'Session expired'
+		
+		temp = tempfile.mkdtemp(dir=config.session_dir, prefix='session_')
+		set_session(web.session.Session(
+			app, 
+			web.session.DiskStore(temp), 
+			initializer = session_default
+		))
+		
+	else:
+		set_session(web.config._session)
+		try:
+			web.sess["pid"]
+		except:
+			set_session(session_default)
+
+
 """
 def application(environ, start_response):
 
@@ -123,39 +149,7 @@ if __name__ == "__main__":
 	web.config.debug = config.web_debug
 	
 	app = rot(urls, globals())
-	
-	# session setup, make sure to call it only one if in debug mode
-	if web.config.get('_session') is None:
-		web.config.session_parameters['cookie_name'] = 'rot'
-		web.config.session_parameters['cookie_domain'] = None
-		web.config.session_parameters['timeout'] = config.session_timeout,
-		web.config.session_parameters['ignore_expiry'] = True
-		web.config.session_parameters['ignore_change_ip'] = False
-		web.config.session_parameters['secret_key'] = config.session_salt
-		web.config.session_parameters['expired_message'] = 'Session expired'
-	
-		temp = tempfile.mkdtemp(dir=config.session_dir, prefix='session_')
-		"""
-		web.sess = web.session.Session(
-			app, 
-			web.session.DiskStore(temp), 
-			initializer = session_default
-		)
-		"""
-		set_session(web.session.Session(
-			app, 
-			web.session.DiskStore(temp), 
-			initializer = session_default
-		))
-	else:
-		#web.sess = web.config._session
-		set_session(web.config._session)
-		try:
-			web.sess["pid"]
-		except:
-			set_session(session_default)
-	#web.sess["pid"] += 1
-	#print "starting ..."
+	init_session()
 	
 	app.add_processor(web.loadhook(loadhook))
 	app.add_processor(web.unloadhook(unloadhook))
@@ -164,28 +158,7 @@ if __name__ == "__main__":
 else:
 	
 	app = web.application(urls, globals())
-	if web.config.get('_session') is None:
-		web.config.session_parameters['cookie_name'] = 'rot'
-		web.config.session_parameters['cookie_domain'] = None
-		web.config.session_parameters['timeout'] = config.session_timeout,
-		web.config.session_parameters['ignore_expiry'] = True
-		web.config.session_parameters['ignore_change_ip'] = False
-		web.config.session_parameters['secret_key'] = config.session_salt
-		web.config.session_parameters['expired_message'] = 'Session expired'
-		
-		temp = tempfile.mkdtemp(dir=config.session_dir, prefix='session_')
-		set_session(web.session.Session(
-			app, 
-			web.session.DiskStore(temp), 
-			initializer = session_default
-		))
-		
-	else:
-		set_session(web.config._session)
-		try:
-			web.sess["pid"]
-		except:
-			set_session(session_default)
+	init_session()
 	
 	#web.sess = session_default
 	print get_session()
