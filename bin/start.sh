@@ -3,4 +3,4 @@
 basedir="`cd $(dirname $0)/..;pwd`"; cd "$basedir"
 . lib/setenv.sh
 
-./bin/start-$server.sh
+./bin/_start-$server.sh
