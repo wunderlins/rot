@@ -1,4 +1,5 @@
 - HIGH prio: add phone number(s?), email(s?) to profile
+- FIXME: add try catch to all commits in webctx
 
 - FIXME: image upload from phone failed after about 10% uploading
 

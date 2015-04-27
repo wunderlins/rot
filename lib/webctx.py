@@ -438,8 +438,8 @@ class image(response):
 		"""
 		os.remove(path)
 		os.remove(path_cropped)
-		os.remove(path_thumbnail)
 		"""
+		os.rename(path_thumbnail, "../../static/thumbnails/" + pid + "_thumbnail.jpg")
 		#for e in f["file"]:
 		#	print e
 		
