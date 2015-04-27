@@ -5,9 +5,9 @@ import importlib
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'etc'))
 
 
-#cfg_file = os.getenv("cfg_file")[:-3]
-print os.getcwd()
-cfg_file = "config-dev"
+cfg_file = os.getenv("cfg_file")[:-3]
+#print os.getcwd()
+#cfg_file = "config-dev"
 if cfg_file == None:
 	print "Please set the environment variable 'cfg_file'"
 	sys.exit(1)
@@ -16,7 +16,7 @@ if cfg_file == None:
 #__import__(cfg_file)
 _cfg = importlib.import_module("%s" % cfg_file, '*')
 
-print _cfg
+#print _cfg
 for x in dir(_cfg):
 	if str(x)[0:2] == "__":
 		continue
