@@ -23,6 +23,15 @@ urls = (
 
 from HTMLParser import HTMLParser
 
+session = {}
+def set_session(s):
+	global session
+	session = s
+
+def get_session():
+	global session
+	return session
+
 class MLStripper(HTMLParser):
 	def __init__(self):
 		self.reset()
@@ -44,20 +53,21 @@ def basic_auth():
 		('admin','pass'),
 	)
 	
-	#print web.sess["user"]
+	#print session["user"]
 	
 	auth = web.ctx.env.get('HTTP_AUTHORIZATION')
 	if auth is not None:
-		web.sess["user"] = None
+		session["user"] = None
 		auth = re.sub('^Basic ','',auth)
 		username, password = base64.decodestring(auth).split(':')
 		#print username,password
 		if (username, password) in allowed:
 			#print "allowd"
-			web.sess["user"] = username
+			session["user"] = username
+			session["pid"] = -1
 			return
 	
-	if web.sess["user"] == None:
+	if session["user"] == None:
 		web.header('WWW-Authenticate','Basic realm="Auth example"')
 		web.ctx.status = '401 Unauthorized'
 		return
@@ -83,7 +93,7 @@ class response:
 	
 	def render(self):
 		global urls
-		
+		print session
 		return web.template.render('template', base="layout", globals={
 			'wunsch_select_wunsch': tpl.wunsch_select_wunsch,
 			'wunsch_select_prio': tpl.wunsch_select_prio,
@@ -92,7 +102,7 @@ class response:
 			'btn_cancel': tpl.btn_cancel,
 			'btn_ok': tpl.btn_ok,
 			'urls': urls,
-			"session": web.sess,
+			"session": session,
 			"ctx": web.ctx,
 			"strip_tags": strip_tags
 		})
@@ -545,7 +555,7 @@ class personal(response):
 		if path:
 			#print "Path: " + path
 			pid = path[1:]
-			web.sess["pid"] = pid
+			session["pid"] = pid
 		else:
 			return self.render().personal(db.Personal(), {}, db.RotNoteType, {}, time.strftime("%Y%m%d"))
 		
@@ -606,7 +616,7 @@ class wunsch(response):
 		if path:
 			#print "Path: " + path
 			pid = path[1:]
-			web.sess["pid"] = pid
+			session["pid"] = pid
 		else:
 			return "No pid"
 		
