@@ -122,6 +122,7 @@ $def with (content)
       </div>
       
       <div class="navbar-collapse collapse">
+      $if session.pid:
         <ul class="nav navbar-nav">
           <!--li id="nav_personal"><a href="personal/$$session.pid"-->
           <li id="nav_personal"><a href="personal/$session.pid">

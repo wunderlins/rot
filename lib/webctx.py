@@ -23,7 +23,12 @@ urls = (
 
 from HTMLParser import HTMLParser
 
-session = {}
+session_default = {
+	"selected_pid": 0,
+	"pid": None,
+	"user": None
+}
+
 def set_session(s):
 	global session
 	session = s
@@ -53,7 +58,7 @@ def basic_auth():
 		('admin','pass'),
 	)
 	
-	#print session["user"]
+	session = get_session()
 	
 	auth = web.ctx.env.get('HTTP_AUTHORIZATION')
 	if auth is not None:

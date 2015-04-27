@@ -83,7 +83,9 @@ def init_session():
 			web.sess["pid"]
 		except:
 			set_session(session_default)
-
+	
+	print get_session()
+	
 if __name__ == "__main__":
 	
 	curdir = os.path.dirname(__file__)
