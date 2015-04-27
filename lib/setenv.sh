@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 
-script=`basename $0`
+if [[ -n $0 && "$0" != "-bash" ]]; then
+	script=`basename $0`
+else
+	script=""
+fi
 
 alias gd='git diff | colordiff | less -R'
 
@@ -12,7 +16,8 @@ fi
 
 . etc/$cfg_file
 
-export PS1=$server' \W% '
+PS1="\[\033[36m\]$server\[\033[0m\] \[\033[34m\]\W\[\033[0m\]\[\033[37m\]%\[\033[0m\] "
+
 
 function variables() {
 	echo "Using cfg              : $cfg_file"
@@ -45,6 +50,10 @@ function status() {
 	./bin/status.sh
 }
 
+function reload() {
+	. ./lib/setenv.sh
+}
+
 alias bash_help="bash -c 'help'"
 
 function help() {
@@ -63,6 +72,9 @@ restart
 status
 	check if running.
 	Returns 0 if not running, else 1
+
+reload
+	reload configuration
 
 NOTE: The bash's builtin' help is now available as 'bash_help'.
 
