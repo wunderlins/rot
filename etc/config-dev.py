@@ -1,9 +1,10 @@
 # NOTE: make syntax bash compatible!
 #       no spaces between name = value, like this: name=value
 
-server="apache" # apache|dev
+server="dev" # uwsgi|dev|apache (apache is not workign yet)
 
 port=1975
+
 db_user="planoaa"
 db_pass="planoaa"
 db_name="planoaa"

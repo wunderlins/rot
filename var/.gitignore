@@ -1,3 +1,4 @@
 *.log
 session_*
 application.log*
+*.pid

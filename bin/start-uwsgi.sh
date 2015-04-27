@@ -1,16 +1,11 @@
 #!/usr/bin/env bash
 
-basedir="`cd $(dirname $0)/..;pwd`"
-cd "$basedir"
+basedir="`cd $(dirname $0)/..;pwd`"; cd "$basedir"
+. lib/setenv.sh
 
-if [[ `hostname` == "sranawebln01" ]]; then
-	export cfg_file="config-sranawebln01.py"
-else
-	export cfg_file="config-dev.py"
-fi
-
-. etc/$cfg_file
-
-echo "Using cfg: $cfg_file"
-
-uwsgi --plugin python,http --http :9090 --wsgi-file httpd.py
+uwsgi --plugin python,http \
+      --http :$port \
+      --wsgi-file httpd.py \
+      --static-map /static=static/ \
+      --pidfile var/uwsgi.pid \
+      --logto $web_logfile
