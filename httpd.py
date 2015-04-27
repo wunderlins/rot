@@ -84,65 +84,7 @@ def init_session():
 		except:
 			set_session(session_default)
 
-
-"""
-def application(environ, start_response):
-
-	# redirect webserver logs to file
-	#weblog = open(config.web_logfile, "ab")
-	#sys.stderr = weblog
-	#sys.stdout = weblog
-	
-	print "Starting rot application"
-	
-	#curdir = os.path.dirname(__file__)
-	curdir = os.getcwd()
-	web.config.debug = config.web_debug
-	
-	app = web.application(urls, globals())
-	
-	" ""
-	print "setting up session"
-	# session setup, make sure to call it only one if in debug mode
-	if web.config.get('_session') is None:
-		web.config.session_parameters['cookie_name'] = 'rot'
-		web.config.session_parameters['cookie_domain'] = None
-		web.config.session_parameters['timeout'] = config.session_timeout,
-		web.config.session_parameters['ignore_expiry'] = True
-		web.config.session_parameters['ignore_change_ip'] = False
-		web.config.session_parameters['secret_key'] = config.session_salt
-		web.config.session_parameters['expired_message'] = 'Session expired'
-	
-		temp = tempfile.mkdtemp(dir=curdir+"/"+config.session_dir, prefix='session_')
-		web.sess = web.session.Session(
-			app, 
-			web.session.DiskStore(temp), 
-			initializer = session_default
-		)
-	else:
-		web.sess = web.config._session
-		try:
-			web.sess["pid"]
-		except:
-			web.sess = session_default
-	#web.sess["pid"] += 1
-	#print "starting ..."
-	
-	print "loading hooks"
-	app.add_processor(web.loadhook(loadhook))
-	app.add_processor(web.unloadhook(unloadhook))
-	"" "
-	
-	web.sess = session_default
-	print "Dispatching"
-	app.wsgifunc(Log)
-"""
 if __name__ == "__main__":
-
-	# redirect webserver logs to file
-	#weblog = open(config.web_logfile, "ab")
-	#sys.stderr = weblog
-	#sys.stdout = weblog
 	
 	curdir = os.path.dirname(__file__)
 	curdir=""
@@ -160,6 +102,8 @@ else:
 	app = web.application(urls, globals())
 	init_session()
 	
-	#web.sess = session_default
-	print get_session()
+	app.add_processor(web.loadhook(loadhook))
+	app.add_processor(web.unloadhook(unloadhook))
+	
 	application = app.wsgifunc()
+
