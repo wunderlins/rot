@@ -8,6 +8,7 @@ uwsgi --plugin python,http \
       --wsgi-file httpd.py \
       --static-map /static=static/ \
       --pidfile var/uwsgi.pid \
-      --daemonize $web_logfile
+      --daemonize $web_logfile \
+      --workers 5
 #      --logto $web_logfile \
 #      --daemonize2 var/uwsgi.log
