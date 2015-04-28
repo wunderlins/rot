@@ -61,15 +61,16 @@ def basic_auth():
 	session = get_session()
 	
 	auth = web.ctx.env.get('HTTP_AUTHORIZATION')
-	if auth is not None:
+	if auth is not None and session["user"] == None:
 		session["user"] = None
 		auth = re.sub('^Basic ','',auth)
 		username, password = base64.decodestring(auth).split(':')
 		#print username,password
 		if (username, password) in allowed:
-			#print "allowd"
+			print "allowd"
 			session["user"] = username
-			session["pid"] = -1
+			session["pid"] = 0
+			session["selected_pid"] = 0
 			return
 	
 	if session["user"] == None:
@@ -560,7 +561,7 @@ class personal(response):
 		if path:
 			#print "Path: " + path
 			pid = path[1:]
-			session["pid"] = pid
+			session["selected_pid"] = pid
 		else:
 			return self.render().personal(db.Personal(), {}, db.RotNoteType, {}, time.strftime("%Y%m%d"))
 		
@@ -621,7 +622,7 @@ class wunsch(response):
 		if path:
 			#print "Path: " + path
 			pid = path[1:]
-			session["pid"] = pid
+			session["selected_pid"] = pid
 		else:
 			return "No pid"
 		
