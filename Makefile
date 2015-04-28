@@ -1,3 +1,6 @@
+install:
+	./bin/extract.sh
+
 logview:
 	tail -f var/access.log var/application.log
 
