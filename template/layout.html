@@ -186,11 +186,18 @@ $:content
 			}
 		</script>
 		
-		<hr />
-		pid: $session.pid<br/>
-		selected_pid: $session.selected_pid<br/>
-		user: $session.user<br/>
-
+		$if config.web_debug == True:
+			<hr />
+			pid: $session.pid<br/>
+			selected_pid: $session.selected_pid<br/>
+			user: $session.user<br/>
+			
+			<table cellpascing="0" border="1">
+			$for e in env:
+				<tr>
+					<td>$e</td><td>$env[e]</td>
+				</tr>
+			</table>
 		</body>
 </html>
 
