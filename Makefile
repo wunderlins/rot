@@ -3,8 +3,7 @@ dbshell:
 
 install:
 	./bin/extract.sh
-	cd static/
-	ln -s dist bootstrap-3.3.1-dist || true
+	ln -s static/dist static/bootstrap-3.3.1-dist || true
 	sudo apt-get install uwsgi-plugins-all uwsgi python-opencv python-imaging
 
 logview:
