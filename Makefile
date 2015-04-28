@@ -1,3 +1,9 @@
+logview:
+	tail -f var/access.log var/application.log
+
+changelog:
+	./bin/changelog.py
+
 realpath:
 	gcc -o bin/realpath lib/realpath.c
 
