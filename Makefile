@@ -1,5 +1,11 @@
+dbshell:
+	python -i dshell.py
+
 install:
 	./bin/extract.sh
+	cd static/
+	ln -s dist bootstrap-3.3.1-dist || true
+	sudo apt-get install uwsgi-plugins-all uwsgi python-opencv python-imaging
 
 logview:
 	tail -f var/access.log var/application.log
