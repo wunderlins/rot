@@ -127,14 +127,14 @@ $def with (content)
       
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
-        	$if session.selected_pid > 0:
-		        <li id="nav_personal"><a href="personal/$session.selected_pid">
+        	$if session["selected_pid"] > 0:
+		        <li id="nav_personal"><a href="personal/$session["selected_pid"]">
 		        	<span class="glyphicon glyphicon-user"></span>
 		        	Mitarbeiter</a></li>
-		        <li id="nav_wunsch"><a href="wunsch/$session.selected_pid">
+		        <li id="nav_wunsch"><a href="wunsch/$session["selected_pid"]">
 		        	<span class="glyphicon glyphicon-tasks"></span> Wünsche</a>
 		        </li>
-		        <li id="nav_erfahrung"><a href="erfahrung/$session.selected_pid">
+		        <li id="nav_erfahrung"><a href="erfahrung/$session["selected_pid"]">
 		        	<span class="glyphicon glyphicon-book"></span> Erfahrung</a>
 		        </li>
           
@@ -188,9 +188,9 @@ $:content
 		
 		$if config.web_debug == True:
 			<hr />
-			pid: $session.pid<br/>
-			selected_pid: $session.selected_pid<br/>
-			user: $session.user<br/>
+			pid: $session["pid"]<br/>
+			selected_pid: $session["selected_pid"]<br/>
+			user: $session["user"]<br/>
 			
 			<table cellpascing="0" border="1">
 			$for e in env:

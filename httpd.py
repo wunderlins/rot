@@ -60,8 +60,10 @@ class Log(WsgiLog):
 			backups = 1000
 		)
 
-def init_session():
+def init_session(app):
+	s = None
 	if web.config.get('_session') is None:
+		print "no session"
 		web.config.session_parameters['cookie_name'] = 'rot'
 		web.config.session_parameters['cookie_domain'] = None
 		web.config.session_parameters['timeout'] = config.session_timeout,
@@ -71,29 +73,34 @@ def init_session():
 		web.config.session_parameters['expired_message'] = 'Session expired'
 		
 		temp = tempfile.mkdtemp(dir=config.session_dir, prefix='session_')
-		set_session(web.session.Session(
-			app, 
-			web.session.DiskStore(temp), 
+		s = web.session.Session(
+			app,
+			web.session.DiskStore(temp),
 			initializer = session_default
-		))
+		)
+		#set_session(s)
 		
 	else:
-		set_session(web.config._session)
+		print "recycling session"
+		s = web.config._session
 		try:
-			web.sess["pid"]
+			s["pid"]
 		except:
-			set_session(session_default)
+			print "default session"
+			s = session_default
 	
-	print get_session()
+	global session
+	session = s
 	
 if __name__ == "__main__":
 	
 	curdir = os.path.dirname(__file__)
 	curdir=""
 	web.config.debug = config.web_debug
+	#web.config.debug = False
 	
 	app = rot(urls, globals())
-	init_session()
+	init_session(app)
 	
 	app.add_processor(web.loadhook(loadhook))
 	app.add_processor(web.unloadhook(unloadhook))
@@ -102,7 +109,7 @@ if __name__ == "__main__":
 else:
 	
 	app = web.application(urls, globals())
-	init_session()
+	init_session(app)
 	
 	app.add_processor(web.loadhook(loadhook))
 	app.add_processor(web.unloadhook(unloadhook))

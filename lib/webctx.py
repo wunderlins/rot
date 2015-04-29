@@ -23,6 +23,7 @@ urls = (
 
 from HTMLParser import HTMLParser
 
+session = None
 session_default = {
 	"selected_pid": 0,
 	"pid": None,
@@ -55,10 +56,18 @@ def strip_tags(html):
 
 def basic_auth():
 	allowed = (
-		('admin','pass'),
+		('admin', 'pass'),
 	)
 	
-	session = get_session()
+	#session = get_session()
+	global session
+	if session == None:
+		session = session_default
+	
+	print session
+	print "session: "
+	for e in session:
+		print "%s, %s" % (e, session[e])
 	
 	auth = web.ctx.env.get('HTTP_AUTHORIZATION')
 	if auth is not None and session["user"] == None:
@@ -67,7 +76,7 @@ def basic_auth():
 		username, password = base64.decodestring(auth).split(':')
 		#print username,password
 		if (username, password) in allowed:
-			print "allowd"
+			#print "allowd"
 			session["user"] = username
 			session["pid"] = 0
 			session["selected_pid"] = 0
