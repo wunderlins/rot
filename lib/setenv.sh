@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+export basedir=`dirname ${BASH_SOURCE[0]}`"/.."
+basedir=`$basedir/bin/realpath $basedir`
+
 if [[ -n $0 && "$0" != "-bash" ]]; then
 	script=`basename $0`
 else
@@ -14,10 +17,9 @@ else
 	export cfg_file="config-dev.py"
 fi
 
-. etc/$cfg_file
+. $basedir/etc/$cfg_file
 
 PS1="<\[\033[31m\]\h\[\033[0m\]:\[\033[36m\]$server\[\033[0m\]> \[\033[34m\]\W\[\033[0m\]\[\033[37m\]%\[\033[0m\] "
-
 
 function variables() {
 	echo "Using cfg              : $cfg_file"
@@ -35,24 +37,24 @@ function variables() {
 }
 
 function start() {
-	./bin/start.sh
+	$basedir/bin/start.sh
 }
 
 function stop() {
-	./bin/stop.sh
+	$basedir/bin/stop.sh
 }
 
 function restart() {
-	./bin/restart.sh
+	$basedir/bin/restart.sh
 }
 
 function status() {
 	variables
-	./bin/status.sh
+	$basedir/bin/status.sh
 }
 
 function reload() {
-	. ./lib/setenv.sh
+	. $basedir/lib/setenv.sh
 }
 
 alias bash_help="bash -c 'help'"
@@ -77,7 +79,7 @@ status
 reload
 	reload configuration
 
-NOTE: The bash's builtin' help is now available as 'bash_help'.
+NOTE: The bash's builtin help is now available as 'bash_help'.
 
 
 ENVIRONMENT VARIABLES
@@ -86,3 +88,4 @@ EOT
 
 variables
 }
+
