@@ -3,7 +3,12 @@
 basedir="`cd $(dirname $0)/..;pwd`"; cd "$basedir"
 . lib/setenv.sh
 
-uwsgi --plugin python,http \
+bin=uwsgi
+if [[ "$system" == "Darwin" ]]; then
+	bin=$basedir/bin/uwsgi-osx
+fi
+
+$bin  --plugin python,http \
       --http :$port \
       --wsgi-file httpd.py \
       --static-map /static=static/ \

@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+system=""
+uname -v | grep "Darwin" >/dev/null 2>&1
+if [[ $? == 0 ]]; then system="Darwin"; fi
+uname -v | grep "Debian" >/dev/null 2>&1
+if [[ $? == 0 ]]; then system="Debian"; fi
+
+export system
 export basedir=`dirname ${BASH_SOURCE[0]}`"/.."
 basedir=`$basedir/bin/realpath $basedir`
 
@@ -33,6 +40,8 @@ function variables() {
 	echo ""
 	echo "Session Timeout        : $session_timeout # seconds"
 	echo "Session Directory      : $session_dir/session_*"
+	echo ""
+	echo "System                 : $system"
 	echo ""
 }
 
@@ -89,3 +98,4 @@ EOT
 variables
 }
 
+#echo $basedir
