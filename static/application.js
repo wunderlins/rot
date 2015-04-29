@@ -192,7 +192,7 @@ var notes = {
 			t = 0;
 		tags = $("#notetag").tagit("assignedTags")
 		payload = {
-			pid: app.pid,
+			pid: app.selected_pid,
 			comment: $('#comment', '#note').val(),
 			type: t,
 			due: dt,
