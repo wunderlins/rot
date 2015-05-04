@@ -571,7 +571,12 @@ Erfahrung.personal = relationship("Personal",
                                backref="rot_erfahrung", uselist=False)
 
 # bind engine to a session
-Session = sessionmaker(bind=engine)
+Session = sessionmaker(
+	bind=engine, 
+	expire_on_commit=True,
+	# autocommit=False,
+	# autoflush=True
+)
 session = Session()
 
 # commit transaction
