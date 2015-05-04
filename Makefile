@@ -1,7 +1,22 @@
-uwsgi-osx:
+
+all: clean realpath install uwsgi
+
+SYSTEM = ""
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S),Linux)
+    SYSTEM = "linux"
+endif
+ifeq ($(UNAME_S),Darwin)
+    SYSTEM = "darwin"
+endif
+
+uwsgi:
 	tar -C lib -xzf lib/uwsgi-2.0.10.tar.gz
 	cd lib/uwsgi-2.0.10 && $(MAKE)
-	cp lib/uwsgi-2.0.10/uwsgi bin/uwsgi-osx
+	cp lib/uwsgi-2.0.10/uwsgi bin/uwsgi-$(SYSTEM)
+	cd lib/uwsgi-2.0.10 && $(MAKE) plugin.http
+	cd lib/uwsgi-2.0.10 && $(MAKE) plugin.python
+	cp lib/uwsgi-2.0.10/*.so .
 
 dbshell:
 	python -i dshell.py

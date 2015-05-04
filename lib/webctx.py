@@ -346,7 +346,7 @@ class rotnote(response):
 			web.header('Content-Type', 'application/json; charset=utf-8', unique=True)
 			return '{"success": false, "error": "'+str(sys.exc_info()[0])+'"}'
 		
-		print p
+		#print p
 		web.header('Content-Type', 'application/json; charset=utf-8', unique=True) 
 		return '{"success": true, "id": '+str(n.id)+'}'
 

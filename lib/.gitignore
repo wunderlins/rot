@@ -6,3 +6,4 @@ SQLAlchemy/*
 wsgilog-0.3
 wsgilog/*
 uwsgi-2.0.10
+*.so
