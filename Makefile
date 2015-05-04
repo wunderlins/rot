@@ -11,6 +11,7 @@ ifeq ($(UNAME_S),Darwin)
 endif
 
 uwsgi:
+	gcc -v
 	tar -C lib -xzf lib/uwsgi-2.0.10.tar.gz
 	cd lib/uwsgi-2.0.10 && $(MAKE)
 	cp lib/uwsgi-2.0.10/uwsgi bin/uwsgi-$(SYSTEM)
@@ -22,7 +23,8 @@ dbshell:
 	python -i dshell.py
 
 install-deb:
-	sudo apt-get install uwsgi-plugins-all uwsgi python-opencv python-imaging
+	#sudo apt-get install uwsgi-plugins-all uwsgi python-opencv python-imaging
+	sudo apt-get install build-essential python-dev python-opencv python-imaging
 
 install:
 	./bin/extract.sh
