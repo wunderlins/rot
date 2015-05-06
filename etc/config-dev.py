@@ -21,3 +21,5 @@ web_debug=True
 session_salt="87525f4c-af0e-47bd-81c2-144bbc2bca0b"
 session_timeout=86400 #24 * 60 * 60, # 24 hours   in seconds
 session_dir='var'
+
+base_uri=""
