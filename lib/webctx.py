@@ -121,7 +121,8 @@ class response:
 			"ctx": web.ctx,
 			"strip_tags": strip_tags,
 			"env": web.ctx.env,
-			"config": config
+			"config": config,
+			"avatar": tpl.avatar
 		})
 
 	def person(self, pid, history):

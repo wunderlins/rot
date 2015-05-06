@@ -9,6 +9,14 @@ def btn_ok(onclick=None):
   	<span class="glyphicon glyphicon-ok" aria-hidden="true"></span> <strong>Ok</strong>
 	</button>
 	"""
+	
+def avatar(personal):
+	if len(personal.rot_pers) > 0:
+		return '<img style="width: 50px;" src="static/thumbnails/' + \
+		       str(personal.pid) + '_thumbnail.jpg" alt="Portrait">'
+	else:
+		return '<img style="width: 50px;" src="static/avatar.svg" alt="Portrait">'
+
 
 def btn_cancel(onclick=None):
 	if onclick == None:
