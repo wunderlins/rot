@@ -202,7 +202,7 @@ function init_upload() {
 	$$(function () {
 		  'use strict';
 		  // Change this to the location of your server-side upload handler:
-		  var url = 'image/' + app.pid;
+		  var url = 'image/' + app.selected_pid;
 		  $$('#fileupload').fileupload({
 		      url: url,
 		      //dataType: 'json',
@@ -213,7 +213,7 @@ function init_upload() {
 		          });
 		          $$('#progress').css("display", "none");
 				    	var randomId = new Date().getTime();
-				    	var u = "url(image/" + app.pid + "?random=" + randomId + ")"
+				    	var u = "url(image/" + app.selected_pid + "?random=" + randomId + ")"
 				    	$$("#portrait").css("background-image", u);
 		      },
 		      progressall: function (e, data) {
@@ -231,7 +231,7 @@ function init_upload() {
 	          app.log(data)
 		      	//alert("Failed, need to send proper response from server")
 		      	var randomId = new Date().getTime();
-		      	var u = "url(image/" + app.pid + "?random=" + randomId + ")"
+		      	var u = "url(image/" + app.selected_pid + "?random=" + randomId + ")"
 		      	$$("#portrait").css("background-image", u);
 		      }
 		  }).prop('disabled', !$$.support.fileInput)
