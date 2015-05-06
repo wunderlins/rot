@@ -574,7 +574,7 @@ Erfahrung.personal = relationship("Personal",
 Session = sessionmaker(
 	bind=engine, 
 	expire_on_commit=True,
-	# autocommit=False,
+	autocommit=True,
 	# autoflush=True
 )
 session = Session()
