@@ -399,7 +399,10 @@ class image(response):
 				#fp = open(tnpath, "r")
 				#img = fp.read()
 				#fp.close()
-				path = config.base_uri+"../static/thumbnails/" + pid + "_thumbnail.jpg"
+			
+				path = "../static/thumbnails/" + pid + "_thumbnail.jpg"
+				if config.base_uri:
+					path = config.base_uri + "static/thumbnails/" + pid + "_thumbnail.jpg"
 		
 		except:
 			db.session.rollback()
@@ -414,7 +417,9 @@ class image(response):
 		#web.header("Content-length", len(buffer))
 		#web.header("Content-type", "image/svg+xml")
 		if path == "":
-			path = config.base_uri+'../static/avatar.svg'
+			path = '../static/avatar.svg'
+			if config.base_uri:
+				path = config.base_uri+'static/avatar.svg'
 		print path
 		raise web.seeother(path)
 	
