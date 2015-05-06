@@ -244,10 +244,10 @@ class rotnote(response):
 				# remove existing tags
 				for t in r.tags:
 					r.tags.remove(t)
-				db.session.commit()
+				#db.session.commit()
 				
 				db.session.delete(r)
-				db.session.commit()
+				#db.session.commit()
 				
 				# FIXME: remove tags
 			except:
@@ -260,6 +260,7 @@ class rotnote(response):
 		
 		if id and p.action == "update":
 			print "Update"
+			# TODO: update tags
 			try:
 				r = db.session.query(db.RotNote).filter_by(id=id)[0]
 				d = None
@@ -271,7 +272,7 @@ class rotnote(response):
 				r.pid=p.pid
 				r.comment=p.comment
 				r.type=p.type
-				db.session.commit()
+				#db.session.commit()
 				
 				"""
 >>> t = r.tags[0]
@@ -292,7 +293,7 @@ class rotnote(response):
 				# remove existing tags
 				for t in r.tags:
 					r.tags.remove(t)
-				db.session.commit()
+				#db.session.commit()
 				
 				# add new tags to note
 				for t in tags:
@@ -304,7 +305,7 @@ class rotnote(response):
 						db.session.add(obj)
 					
 					r.tags.append(obj)
-				db.session.commit()
+				#db.session.commit()
 				
 				print "pid     " + str(r.pid)
 				print "comment " + str(r.comment)
@@ -329,9 +330,11 @@ class rotnote(response):
 			else:
 				n = db.RotNote(pid=p.pid, comment=p.comment, type=p.type, bis="0000-00-00")
 			db.session.add(n)
-			db.session.commit()
+			db.session.flush()
+			print n
 			
 			# add new tags to note
+			"""
 			for t in tags:
 				obj = db.session.query(db.NoteTag).filter_by(name=t)
 				if obj.count() != 0: # existing
@@ -341,7 +344,9 @@ class rotnote(response):
 					db.session.add(obj)
 				
 				n.tags.append(obj)
-			db.session.commit()
+				
+			"""
+			#db.session.commit()
 		except:
 			web.header('Content-Type', 'application/json; charset=utf-8', unique=True)
 			return '{"success": false, "error": "'+str(sys.exc_info()[0])+'"}'
@@ -457,12 +462,15 @@ class image(response):
 		# crop and resize image
 		import img
 		img.portrait(path, width=300, out=path_cropped , thumbnail=path_thumbnail)
-	
-		fd = open(path_cropped,'r')
+		
+		print "reading %s" % path_cropped
+		fd = open(path_cropped, 'r')
 		p.foto_cropped = fd.read()
 		fd.close()
+		
 	
-		fd = open(path_thumbnail,'r')
+		print "reading %s" % path_thumbnail
+		fd = open(path_thumbnail, 'r')
 		p.foto_thumbnail = fd.read()
 		fd.close()
 		
@@ -471,12 +479,19 @@ class image(response):
 		os.remove(path)
 		os.remove(path_cropped)
 		"""
-		os.rename(path_thumbnail, "../../static/thumbnails/" + pid + "_thumbnail.jpg")
+		try:
+			os.remove("static/thumbnails/" + pid + "_thumbnail.jpg")
+		except:
+			pass
+		print "copy file from %s to %s" % (
+			path_thumbnail, "static/thumbnails/" + pid + "_thumbnail.jpg"
+		)
+		#os.rename(path_thumbnail, "static/thumbnails/" + pid + "_thumbnail.jpg")
 		#for e in f["file"]:
 		#	print e
 		
 		# FIXME: handle errors
-		db.session.commit()
+		#db.session.commit()
 		#except Exception as e:
 		#	exc_type, exc_obj, exc_tb = sys.exc_info()
 		#	fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
@@ -744,7 +759,7 @@ class wunsch(response):
 
 		for l in lw:
 			l.latest = 0
-		db.session.commit()
+		#db.session.commit()
 		
 		# get rid of records with the current date
 		dt = datetime.datetime.now()
@@ -755,7 +770,7 @@ class wunsch(response):
 			# FIXME: handle DB Error
 		for l in lw:
 			db.session.delete(l)
-		db.session.commit()
+		#db.session.commit()
 		
 		# insert
 		inserts = []
@@ -778,4 +793,4 @@ class wunsch(response):
 		
 		#print inserts
 		db.session.add_all(inserts)
-		db.session.commit()
+		#db.session.commit()
