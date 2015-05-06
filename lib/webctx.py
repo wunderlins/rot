@@ -334,7 +334,6 @@ class rotnote(response):
 			print n
 			
 			# add new tags to note
-			"""
 			for t in tags:
 				obj = db.session.query(db.NoteTag).filter_by(name=t)
 				if obj.count() != 0: # existing
@@ -345,7 +344,7 @@ class rotnote(response):
 				
 				n.tags.append(obj)
 				
-			"""
+			
 			#db.session.commit()
 		except:
 			web.header('Content-Type', 'application/json; charset=utf-8', unique=True)
@@ -486,7 +485,7 @@ class image(response):
 		print "copy file from %s to %s" % (
 			path_thumbnail, "static/thumbnails/" + pid + "_thumbnail.jpg"
 		)
-		#os.rename(path_thumbnail, "static/thumbnails/" + pid + "_thumbnail.jpg")
+		os.rename(path_thumbnail, "static/thumbnails/" + pid + "_thumbnail.jpg")
 		#for e in f["file"]:
 		#	print e
 		
