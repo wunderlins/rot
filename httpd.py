@@ -29,6 +29,7 @@ session_default = {
 }
 
 def unloadhook():
+	db.session.flush()
 	db.connection.close()
 	
 def loadhook():
