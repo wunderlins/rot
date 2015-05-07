@@ -13,78 +13,72 @@ TODO:
 
 
 <div class="row">
-
 	<div class="col-sm-4 col-xs-12">
 		<div class="panel panel-danger">
 			<div class="panel-heading">Dringend</div>
-				$for d in due:
-					<div class="panel-body">
-						$ glyph = RotNoteType[d.type][1]
-						<span class="glyphicon $glyph"></span>
-						<span>$d.personal.name $d.personal.vorname ($d.personal.kuerzel)</span>
-						$if d.bis:
-							$d.bis.strftime("%d.%m.%Y")
-						<div style="float: left; height: 4em; margin-right: 0.5em;">
-							$:avatar(d.personal)
-						
-						</div>
-						<br/>	
-							
-						$strip_tags(d.comment[:100])
-						
-						<br />
-						$if len(d.tags):
-							<span class="glyphicon glyphicon-tags"></span>
-							$for t in d.tags:
-								$t.name
-						<div style="clear: both;"></div>
-						<br />
-						
+			$for d in due:
+				<div class="panel-body">
+					$ glyph = RotNoteType[d.type][1]
+					<span class="glyphicon $glyph"></span>
+					<span>
+						<a href="personal/$d.personal.pid">$d.personal.name $d.personal.vorname</a>
+					($d.personal.kuerzel)</span>
+					$if d.bis:
+						$d.bis.strftime("%d.%m.%Y")
+					<div style="float: left; height: 4em; margin-right: 0.5em;">
+						$:avatar(d.personal)
+					
 					</div>
-			</div>
+					<br/>	
+						
+					$strip_tags(d.comment[:100])
+					
+					<br />
+					$if len(d.tags):
+						<span class="glyphicon glyphicon-tags"></span>
+						$for t in d.tags:
+							$t.name
+					<div style="clear: both;"></div>
+					<br />
+					
+				</div>
 		</div>
-	</div>
-
+	</div><!-- end col -->
+	
 	$for t in tags:
 		<div class="col-sm-4 col-xs-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">$t.name</div>
-					<div class="panel-body">
-					$for n in t.rotnotes:
-						$ glyph = RotNoteType[n.type][1]
-						<div>
-							<span class="glyphicon $glyph"></span>
-							<!--$n.personal.name $n.personal.vorname (-->
-							<span>$n.personal.name $n.personal.vorname ($n.personal.kuerzel)</span>
-							$if n.bis:
-								$n.bis.strftime("%d.%m.%Y")
-							
-							<div style="float: left; height: 4em; margin-right: 0.5em;">
-								
-								$:avatar(n.personal)
-								
-								<!--
-								$if len(n.personal.rot_pers) > 0:
-									<img style="width: 50px;" src="static/thumbnails/${n.pid}_thumbnail.jpg" alt="Portrait">
-								$else:
-									<img style="width: 50px;" src="static/avatar.svg" alt="Portrait">
-								-->
-								
-							</div>
-							<br/>	
-								
-							$strip_tags(n.comment[:100])
-							
-							<br />
-							$if len(n.tags):
-								<span class="glyphicon glyphicon-tags"></span>
-								$for t in n.tags:
-									$t.name
-							<div style="clear: both;"></div>
-							<br />
-						</div>
+				<div class="panel-body">
+				$for n in t.rotnotes:
+					$ glyph = RotNoteType[n.type][1]
+					<div>
+						<span class="glyphicon $glyph"></span>
+						<!--$n.personal.name $n.personal.vorname (-->
+						<span>
+							<a href="personal/$n.personal.pid">$n.personal.name $n.personal.vorname</a>
+						($n.personal.kuerzel)</span>
+						$if n.bis:
+							$n.bis.strftime("%d.%m.%Y")
 						
+						<div style="float: left; height: 4em; margin-right: 0.5em;">
+							$:avatar(n.personal)
+						</div>
+						<br/>	
+							
+						$strip_tags(n.comment[:100])
+						
+						<br />
+						$if len(n.tags):
+							<span class="glyphicon glyphicon-tags"></span>
+							$for t in n.tags:
+								$t.name
+						<div style="clear: both;"></div>
+						<br />
+					</div>
+					
 				</div><!-- end panel body -->
-			</div>
-		</div><!-- end panel -->
+			</div><!-- end panel -->	
+		</div><!-- end col -->
+		
 </div>

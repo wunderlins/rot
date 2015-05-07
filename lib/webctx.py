@@ -180,8 +180,13 @@ class index(response):
 		                .filter(db.RotNote.type == 2, db.RotNote.bis < due_date, db.RotNote.bis > 0)\
 		                .order_by(db.RotNote.bis.asc())\
 		                .order_by(db.RotNote.created.asc())
-		# 2) get all other taksk
 		
+		dueids = []
+		for d in due:
+			dueids.append(d.id)
+		print dueids
+		
+		# 2) get all other tasks
 		tags = db.session.query(db.NoteTag).all()
 		return self.render().index(web.ctx, tags, db.RotNoteType, due)
 	
