@@ -16,7 +16,7 @@ web_logfile="var/access.log"
 app_logfile="var/application.log"
 sql_logfile="var/sql.log"
 
-web_debug=True
+web_debug=False
 
 session_salt="26fe3630-a4af-45bd-b063-3a9917c8cb97"
 session_timeout=86400 #24 * 60 * 60, # 24 hours   in seconds
