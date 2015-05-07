@@ -173,8 +173,17 @@ class response:
 class index(response):
 	def GET(self):
 		print "index class"
+		
+		# 1) get all due tasks
+		due_date = datetime.datetime.utcnow() + datetime.timedelta(days=7)
+		due = db.session.query(db.RotNote)\
+		                .filter(db.RotNote.type == 2, db.RotNote.bis < due_date, db.RotNote.bis > 0)\
+		                .order_by(db.RotNote.bis.asc())\
+		                .order_by(db.RotNote.created.asc())
+		# 2) get all other taksk
+		
 		tags = db.session.query(db.NoteTag).all()
-		return self.render().index(web.ctx, tags, db.RotNoteType)
+		return self.render().index(web.ctx, tags, db.RotNoteType, due)
 	
 class erfahrung(response):
 	def GET(self, path):
@@ -292,9 +301,10 @@ class rotnote(response):
 				"""
 				
 				# remove existing tags
+				db.session.begin()
 				for t in r.tags:
 					r.tags.remove(t)
-				#db.session.commit()
+				db.session.commit()
 				
 				# add new tags to note
 				for t in tags:

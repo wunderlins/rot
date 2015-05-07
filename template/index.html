@@ -1,4 +1,4 @@
-$def with (ctx, tags, RotNoteType)
+$def with (ctx, tags, RotNoteType, due)
 
 
 <!--
@@ -13,13 +13,43 @@ TODO:
 
 
 <div class="row">
+
+	<div class="col-sm-4 col-xs-12">
+		<div class="panel panel-danger">
+			<div class="panel-heading">Dringend</div>
+				$for d in due:
+					<div class="panel-body">
+						$ glyph = RotNoteType[d.type][1]
+						<span class="glyphicon $glyph"></span>
+						<span>$d.personal.name $d.personal.vorname ($d.personal.kuerzel)</span>
+						$if d.bis:
+							$d.bis.strftime("%d.%m.%Y")
+						<div style="float: left; height: 4em; margin-right: 0.5em;">
+							$:avatar(d.personal)
+						
+						</div>
+						<br/>	
+							
+						$strip_tags(d.comment[:100])
+						
+						<br />
+						$if len(d.tags):
+							<span class="glyphicon glyphicon-tags"></span>
+							$for t in d.tags:
+								$t.name
+						<div style="clear: both;"></div>
+						<br />
+						
+					</div>
+			</div>
+		</div>
+	</div>
+
 	$for t in tags:
 		<div class="col-sm-4 col-xs-12">
-		
-		<div class="panel panel-default">
-			<!-- Default panel contents -->
-			<div class="panel-heading">$t.name</div>
-				<div class="panel-body">
+			<div class="panel panel-default">
+				<div class="panel-heading">$t.name</div>
+					<div class="panel-body">
 					$for n in t.rotnotes:
 						$ glyph = RotNoteType[n.type][1]
 						<div>
@@ -54,7 +84,7 @@ TODO:
 							<br />
 						</div>
 						
-				</div>
+				</div><!-- end panel body -->
 			</div>
-		</div>
+		</div><!-- end panel -->
 </div>
