@@ -188,6 +188,15 @@ class index(response):
 		
 		# 2) get all other tasks
 		tags = db.session.query(db.NoteTag).all()
+		
+		"""
+		remaining_comments = db.session.query(db.RotNote).join(db.rotnote2notetags)\
+		                               .join(db.NoteTag)\
+		                               .filter(~db.NoteTag.id.in_(dueids))
+		
+		db.session.query(db.RotNote).filter(db.RotNote.tags.any(~db.NoteTag.id.in_([1,2,3]))).all()
+		"""
+		
 		return self.render().index(web.ctx, tags, db.RotNoteType, due)
 	
 class erfahrung(response):
