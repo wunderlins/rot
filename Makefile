@@ -1,5 +1,5 @@
 
-all: clean realpath install uwsgi
+all: clean realpath extract uwsgi
 
 SYSTEM = ""
 UNAME_S := $(shell uname -s)
@@ -26,7 +26,7 @@ install-deb:
 	#sudo apt-get install uwsgi-plugins-all uwsgi python-opencv python-imaging
 	sudo apt-get install build-essential python-dev python-opencv python-imaging
 
-install:
+extract:
 	./bin/extract.sh
 	ln -s static/dist static/bootstrap-3.3.1-dist || true
 
