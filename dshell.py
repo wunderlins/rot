@@ -7,6 +7,8 @@ import os, sys, json
 #os.chdir(os.path.dirname(__file__))
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'lib'))
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'lib', 'web'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'lib', 'SQLAlchemy', 'lib', 'sqlalchemy'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'lib', 'SQLAlchemy', 'lib'))
 
 import config
 import db

@@ -9,6 +9,7 @@ dependencies:
 	* python-dev 
 	* python-opencv 
 	* python-imaging
+	* (optional) python-pydot # for generating schma graphs
 	
 On a non debian system, make sure to install gcc (or equivalent) and the above 
 python libraries.

@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 import os, sys, json
-sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'lib', 'SQLAlchemy', 'lib'))
-sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'lib', 'SQLAlchemy', 'lib'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
 import config
 
