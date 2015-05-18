@@ -5,12 +5,12 @@
 
 - DONE check database error handling and rollback, might have to deal with locks
 - implement notes
-  - notes can have tags
-    * implement gui tags on comment input with 
-      + autocompletion 
-      + creation of new tags
+  - DONE notes can have tags
+    * DONE implement gui tags on comment input with 
+      + DONE autocompletion 
+      + DONE creation of new tags
     * optional, make tags editable / add title / comment / color
-  - notes belong to a pid
+  - DONE notes belong to a pid
   - notes can have replies (MAYBE)
 
 - sorteirung der wünsche unter Rotation kontrollieren
