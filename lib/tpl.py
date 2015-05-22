@@ -97,7 +97,7 @@ def monat_select(monat, name):
 	buffer += '</select>'
 	return buffer
 	
-	
+
 def wunsch_prio(prio):
 	if prio == 1:
 		return '&#xe133;&#xe133;'
@@ -130,6 +130,7 @@ def wunsch_select_wunsch(rid, wunsch):
 	buffer += '</select>'
 	return buffer
 
+"""
 def wunsch_select_prio(rid, wunsch):
 	buffer = ""
 	buffer += '<select name="prio_' + str(rid) + '" class="prio form-control">'
@@ -154,5 +155,33 @@ def wunsch_select_prio(rid, wunsch):
 		buffer += '<option value="5" selected="selected">&#xe134;&#xe134;</option>'
 	else:
 		buffer += '<option value="5">&#xe134;&#xe134;</option>'
+	buffer += '</select>'
+	return buffer
+"""
+
+def wunsch_select_prio(rid, wunsch):
+	buffer = ""
+	buffer += '<select name="prio_' + str(rid) + '" class="prio-select form-control">'
+	buffer += '<option value=""></option>'
+	if wunsch["prio"] == 1:
+		buffer += '<option value="1" selected="selected">Sehr hoch</option>'
+	else:
+		buffer += '<option value="1">Sehr hoch</option>'
+	if wunsch["prio"] == 2:
+		buffer += '<option value="2" selected="selected">Hoch</option>'
+	else:
+		buffer += '<option value="2">Hoch</option>'
+	if wunsch["prio"] == 3:
+		buffer += '<option value="3" selected="selected">Mittel</option>'
+	else:
+		buffer += '<option value="3">Mittel</option>'
+	if wunsch["prio"] == 4:
+		buffer += '<option value="4" selected="selected">Niedrig</option>'
+	else:
+		buffer += '<option value="4">Niedrig</option>'
+	if wunsch["prio"] == 5:
+		buffer += '<option value="5" selected="selected">Sehr niedrig</option>'
+	else:
+		buffer += '<option value="5">Sehr niedrig</option>'
 	buffer += '</select>'
 	return buffer

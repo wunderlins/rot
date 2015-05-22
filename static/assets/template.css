@@ -11,6 +11,11 @@ body {
 	font-family: 'Glyphicons Halflings' ! important;
 	width: 6em ! important;
 }
+
+.prio-select {
+	/* width: 10em ! important; */
+}
+
 .prio option {
 	text-align: center ! important;
 }

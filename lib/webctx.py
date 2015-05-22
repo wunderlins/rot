@@ -122,7 +122,9 @@ class response:
 			"strip_tags": strip_tags,
 			"env": web.ctx.env,
 			"config": config,
-			"avatar": tpl.avatar
+			"avatar": tpl.avatar,
+			"type": type, 
+			"input": web.input()
 		})
 
 	def person(self, pid, history):
@@ -818,3 +820,7 @@ class wunsch(response):
 		#print inserts
 		db.session.add_all(inserts)
 		#db.session.commit()
+		
+		path = config.base_uri+'wunsch/' + pid
+		raise web.seeother(path)
+

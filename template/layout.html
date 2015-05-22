@@ -196,6 +196,28 @@ $:content
 			selected_pid: $session["selected_pid"]<br/>
 			user: $session["user"]<br/>
 			
+			<h2>INPUT</h2>
+			<table cellpascing="0" border="1">
+			$for e in input:
+				<tr>
+					<td>$e</td><td>$input[e]</td>
+				</tr>
+			</table>
+			
+			
+			<h2>CTX</h2>
+			<table cellpascing="0" border="1">
+			$for e in ctx.keys():
+				$if e == "environ": 
+					$continue
+				$if e == "env": 
+					$continue
+				<tr>
+					<td>$e</td><td>$ctx[e]</td>
+				</tr>
+			</table>
+			
+			<h2>ENV</h2>
 			<table cellpascing="0" border="1">
 			$for e in env:
 				<tr>
