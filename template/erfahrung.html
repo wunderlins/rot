@@ -101,10 +101,12 @@ add_load_handler(function() {
 <span class="glyphicon glyphicon-book"></span>
 Anästhesie Erfahrung</h1>
 
+<form class="form-inline row" id="erfahrungform" method="post" action="erfahrung/mt/$pid">
+
 <div id="row_prototype">
 	<div class="col-sm-5 col-xs-12">
 		<input type="text" value="" name="was_" id="was_" size="12" class="form-control" placeholder="Rotation"/>
-		<input type="text" value="" name="ort_" id="ort_" size="10" class="form-control" placeholder="Ort"/>
+		<input type="text" value="" name="ort_" id="ort_" size="25" class="form-control" placeholder="Ort"/>
 	</div>
 
 
@@ -127,7 +129,6 @@ Anästhesie Erfahrung</h1>
 	Bitte füllen Sie die rot markierten Felder korrekt aus.
 </div>
 
-<form class="form-inline row" id="erfahrungform" method="post" action="erfahrung/mt/$pid">
 </form>
 
 <button class="btn" onclick="erfahrung.clone_row(erfahrung.count++)">
@@ -141,15 +142,29 @@ Speichern</button>
 <span class="glyphicon glyphicon-book"></span>
 Weiterbildungen</h1>
 
-<form class="form-inline row" id="erfahrungform" method="post" action="/erfahrung/wb/$pid">
+<form class="form-inline row" id="fbform" method="post" action="erfahrung/wb/$pid">
 
 	<div class="col-sm-6 col-xs-12">
 		<div class="checkbox">
 			<label>
-				<input type="checkbox"/> ATLS
+				<input type="checkbox" name="atls"/> ATLS
 			</label>
 			<input type="number" value="" name="atls_j" id="atls_j" size="4" class="form-control" placeholder="Jahr" min="1950" max="2100" step="1"/>
-			<input type="text" value="" name="atls_ort" id="atls_ort" size="20" class="form-control" placeholder="Ort"/>
+			<input type="text" value="" name="atls_ort" id="atls_ort" size="25" class="form-control" placeholder="Ort"/>
+		</div>	
+		<div class="checkbox">
+			<label>
+				<input type="checkbox" name="acls"/> ACLS
+			</label>
+			<input type="number" value="" name="acls_j" id="atls_j" size="4" class="form-control" placeholder="Jahr" min="1950" max="2100" step="1"/>
+			<input type="text" value="" name="acls_ort" id="atls_ort" size="25" class="form-control" placeholder="Ort"/>
+		</div>	
+		<div class="checkbox">
+			<label>
+				<input type="checkbox" name="pals"/> PALS
+			</label>
+			<input type="number" value="" name="pals_j" id="atls_j" size="4" class="form-control" placeholder="Jahr" min="1950" max="2100" step="1"/>
+			<input type="text" value="" name="pals_ort" id="atls_ort" size="25" class="form-control" placeholder="Ort"/>
 		</div>	
 	</div>
 	

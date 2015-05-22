@@ -203,12 +203,21 @@ class index(response):
 	
 class erfahrung(response):
 	def GET(self, path):
+	
+		pid = None
+		if path:
+			#print "Path: " + path
+			pid = path[1:]
+			session["selected_pid"] = pid
+		else:
+			return "No pid"
+		"""
 		id = None
 		if path:
 			id = path[1:]
 		else:
 			return "Missing pid"
-		
+		"""
 		return self.render().erfahrung(id)
 
 class rotnote(response):
@@ -682,6 +691,8 @@ class wunsch(response):
 			session["selected_pid"] = pid
 		else:
 			return "No pid"
+		
+		#print pid
 		
 		history = None
 		try:
