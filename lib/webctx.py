@@ -283,6 +283,7 @@ class rotnote(response):
 				
 				db.session.delete(r)
 				#db.session.commit()
+				db.session.flush()
 				
 				# FIXME: remove tags
 			except:
