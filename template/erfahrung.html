@@ -1,4 +1,4 @@
-$def with (pid)
+$def with (pid, erfahrung)
 
 <style type="text/css">
 #row_prototype {display: none;}
@@ -11,7 +11,7 @@ var erfahrung = {
 	count: 0,
 	errors: false,
 
-	clone_row: function(ix) {
+	clone_row: function(ix, was, wo, jahr, monate) {
 		var new_row = $$("#row_prototype").clone(true);
 		new_row.attr("id", "row_" + ix);
 	
@@ -28,6 +28,10 @@ var erfahrung = {
 		}
 		
 		$$("#erfahrungform").append(new_row)
+		$$("#was_"+ix).val(was)
+		$$("#wo_"+ix).val(wo)
+		$$("#von_j_"+ix).val(jahr)
+		$$("#dauer_"+ix).val(monate)
 	},
 
 	validate: function(el, state) {
@@ -81,18 +85,34 @@ var erfahrung = {
 			$$("#error").css("display", "block");
 		else
 			$$("#error").css("display", "none");
-	
-		app.log(result)
+
+
+		$$.ajax({
+			type: "POST",
+			url: "erfahrung/" + app.selected_pid,
+			// The key needs to match your method's input parameter (case-sensitive).
+			data: JSON.stringify({ erfahrung: result }),
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: function(data){
+				app.log(data);
+			},
+			failure: function(errMsg) {
+				alert(errMsg);
+			}
+		});
+
+		//app.log(result)
 	}
 }
 
 add_load_handler(function() {
 	if (erfahrung.count == 0) {
-		erfahrung.clone_row(erfahrung.count++)
-		erfahrung.clone_row(erfahrung.count++)
-		erfahrung.clone_row(erfahrung.count++)
-		erfahrung.clone_row(erfahrung.count++)
+		$for e in erfahrung:
+			erfahrung.clone_row(erfahrung.count++, '$e.was', '$e.ort', $e.von_mj, $e.monate)
+		
 	}
+	erfahrung.clone_row(erfahrung.count++)
 	erfahrung.clone_row(erfahrung.count++)
 })
 </script>
@@ -101,7 +121,7 @@ add_load_handler(function() {
 <span class="glyphicon glyphicon-book"></span>
 Anästhesie Erfahrung</h1>
 
-<form class="form-inline row" id="erfahrungform" method="post" action="erfahrung/mt/$pid">
+<form class="form-inline row" id="erfahrungform" method="post" action="">
 
 <div id="row_prototype">
 	<div class="col-sm-5 col-xs-12">

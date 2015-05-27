@@ -211,6 +211,9 @@ class erfahrung(response):
 			session["selected_pid"] = pid
 		else:
 			return "No pid"
+		
+		erf = db.session.query(db.Erfahrung).filter_by(pid=pid).all()
+		#print erf
 		"""
 		id = None
 		if path:
@@ -218,7 +221,48 @@ class erfahrung(response):
 		else:
 			return "Missing pid"
 		"""
-		return self.render().erfahrung(id)
+		return self.render().erfahrung(pid, erf)
+
+	def POST(self, path):
+		
+		pid = None
+		if path:
+			#print "Path: " + path
+			pid = path[1:]
+			session["selected_pid"] = pid
+		else:
+			return "No pid"
+		
+		inp = json.loads(web.data())
+		print inp
+		
+		
+		# loop over "erfahrung"
+		r = db.session.query(db.Erfahrung).filter_by(pid=pid).all()
+		# remove existing tags
+		for e in r:
+			print e
+			db.session.delete(e)
+		db.session.flush()
+		
+		# import all "weiterbilduungen"
+		for e in inp["erfahrung"]:
+			r = db.Erfahrung(pid=int(pid), \
+			                 von_mj=int(e["von"]), \
+			                 monate=int(e["dauer"]), \
+			                 ort=e["ort"], \
+			                 was=e["was"])
+			db.session.add(r)
+		db.session.flush()
+		
+		web.header('Content-Type', 'application/json; charset=utf-8', unique=True)
+		return '{"success": true, "data": null}'
+		
+		path = config.base_uri+'erfahrung/'+pid
+		#raise web.seeother(path)
+		
+		# ATLS, ACLS, PALS
+
 
 class rotnote(response):
 	def GET(self, path):
