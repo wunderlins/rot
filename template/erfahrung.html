@@ -29,7 +29,7 @@ var erfahrung = {
 		
 		$$("#erfahrungform").append(new_row)
 		$$("#was_"+ix).val(was)
-		$$("#wo_"+ix).val(wo)
+		$$("#ort_"+ix).val(wo)
 		$$("#von_j_"+ix).val(jahr)
 		$$("#dauer_"+ix).val(monate)
 	},
@@ -39,19 +39,24 @@ var erfahrung = {
 		//console.log(el + " " + e.val())
 		if (!e.val()) {
 			e.parent().addClass("has-error")
-			erfahrung.errors = true;
+			//erfahrung.errors = true;
+			return false
 		} else {
 			e.parent().removeClass("has-error")
 			if (e.attr("placeholder") == "Jahr") {
 				// must be greater than 1950
 				if (parseInt(e.val()) > 1900) {
 					e.parent().removeClass("has-error")
+					//erfahrung.errors = true
+					return true
 				}	else {
 					e.parent().addClass("has-error")
-					erfahrung.errors = true
+					//erfahrung.errors = true
+					return false
 				}
 			}
 		}
+		return true;
 	},
 
 	collect: function() {
@@ -73,20 +78,30 @@ var erfahrung = {
 				// validate
 				if (!row.was) row.was = "";
 				if (!row.ort) row.ort = "";
-			
-				erfahrung.validate("von_j_"+i);
-				erfahrung.validate("dauer_"+i);
+				
+				if (
+					erfahrung.validate("was_"+i) &&
+					erfahrung.validate("ort_"+i) &&
+					erfahrung.validate("von_j_"+i) &&
+					erfahrung.validate("dauer_"+i) ) {
+					//$$("#error").removeClass("has-error")
+				} else {
+					//$$("#error").addClass("has-error")
+					erfahrung.errors = true;
+				}
 			
 				result[i] = row;
 			}
 		}
+		console.log(erfahrung.errors)
 	
-		if (erfahrung.errors)
+		if (erfahrung.errors) {
 			$$("#error").css("display", "block");
-		else
-			$$("#error").css("display", "none");
-
-
+			return
+		}
+		
+		$$("#error").css("display", "none");
+		
 		$$.ajax({
 			type: "POST",
 			url: "erfahrung/" + app.selected_pid,
@@ -124,21 +139,23 @@ Anästhesie Erfahrung</h1>
 <form class="form-inline row" id="erfahrungform" method="post" action="">
 
 <div id="row_prototype">
-	<div class="col-sm-5 col-xs-12">
-		<input type="text" value="" name="was_" id="was_" size="12" class="form-control" placeholder="Rotation"/>
-		<input type="text" value="" name="ort_" id="ort_" size="25" class="form-control" placeholder="Ort"/>
+	<div class="col-sm-2 col-xs-5">
+		<input type="text" value="" name="was_" id="was_" size="12" class="form-control" placeholder="Rotation" required = "required"/>
+	</div>
+	<div class="col-sm-3 col-xs-7">
+		<input type="text" value="" name="ort_" id="ort_" size="25" class="form-control" placeholder="Ort" required = "required"/>
 	</div>
 
 
 	<div class="col-sm-7 col-xs-12">
 		<div class="form-group">
 			<label>Beginn: </label>
-			<input type="number" value="" name="von_j_" id="von_j_" size="4" class="form-control" placeholder="Jahr" min="1950" max="2100" step="1"/>
+			<input type="number" value="" name="von_j_" id="von_j_" size="4" class="form-control" placeholder="Jahr" min="1900" max="2100" step="1" required = "required"/>
 		</div>
 
 		<div class="form-group">
 			<label>Dauer: </label>
-			<input type="number" value="" name="dauer_" id="dauer_" size="2" class="form-control" placeholder="Monate" min="1" max="100"  step="1"/>
+			<input type="number" value="" name="dauer_" id="dauer_" size="2" class="form-control" placeholder="Monate" min="1" max="100"  step="1" required = "required"/>
 		</div>
 	</div>
 </div>
@@ -154,9 +171,6 @@ Anästhesie Erfahrung</h1>
 <button class="btn" onclick="erfahrung.clone_row(erfahrung.count++)">
 <span class="glyphicon glyphicon-plus"></span>
 Mehr</button>
-<button class="btn" onclick="erfahrung.collect()">
-<span class="glyphicon glyphicon-floppy-disk"></span>
-Speichern</button>
 
 <h1>
 <span class="glyphicon glyphicon-book"></span>
@@ -187,5 +201,9 @@ Weiterbildungen</h1>
 			<input type="text" value="" name="pals_ort" id="atls_ort" size="25" class="form-control" placeholder="Ort"/>
 		</div>	
 	</div>
-	
 </form>
+
+<button class="btn" onclick="erfahrung.collect()">
+<span class="glyphicon glyphicon-floppy-disk"></span>
+Speichern</button>
+

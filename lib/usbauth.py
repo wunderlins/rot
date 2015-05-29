@@ -138,7 +138,7 @@ class aduser(object):
 		baseDN = "ou=Users,ou=USB,dc=ms,dc=uhbs,dc=ch"
 		searchScope = ldap.SCOPE_SUBTREE
 		retrieveAttributes = None 
-		searchFilter = "mailNickname=" + self.__User
+		searchFilter = "sAMAccountName=" + self.__User
 
 		try:
 			ldap_result_id = l.search(baseDN, searchScope, searchFilter, retrieveAttributes)
@@ -185,7 +185,9 @@ class aduser(object):
 			self.__Error = e
 			self.__Code = 2
 			return False
-
+	
+	
+	
 if __name__ == "__main__":
 	k = aduser()
 	k.User= sys.argv[1]

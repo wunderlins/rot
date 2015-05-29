@@ -1,3 +1,17 @@
+== Milestone 1: Profiles
+ - AD Authentisierung
+ - HTML login
+ - ggf. session handling überarbeiten / testen
+ 
+== Milestone 2: Rotplanung
+ - Grid
+ 
+== Milestone 3: Usability
+ - vervollständigunshilfen
+ - validierung
+
+
+
 - HIGH prio: add phone number(s?), email(s?) to profile
 - DONE FIXME: add try catch to all commits in webctx
 
