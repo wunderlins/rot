@@ -1,9 +1,38 @@
 #!/usr/bin/env python
 # -*- coding: utf8 -*-
+"""
+This file provides lookup and authentication methods for AD users from the 
+ms.uhbs.ch AD directory.
 
-import ldap, sys #, json
+The filep rovides 2 main functions:
+	
+	lookup(username|emailaddr)
+		checks if a user exists. all active new and old emailaddresses are avialble 
+		keys which is sought for.
+	
+	check(username|emailaddr, password)
+		will try to authenticate with the provided credentials. returns dictionary 
+		of userinformation upon success, False if authentication failes and None 
+		if the Object could not be found.
+	
+	Both methods print a json string, with the following attributes, to stdout:
+		{
+			"dn" : None,          # ldap distinguished name
+			"username": None,     # the login name
+			"phone": None,        # phone number if any (cordless preferred)
+			"email": None,        # primary email address
+			"firstname": None,    # person's first name 
+			"lastname": None,     # person's last name 
+			"idmid": None,        # identity management id
+			"emplyeeNumber": None # employee id (Same as on the backside of the batch)
+		}
+"""
+
+
+import ldap, sys, json
 
 class usbauth(object):
+	""" lookup and authentication library """
 	
 	@property
 	def lastobj(self):
@@ -39,15 +68,26 @@ class usbauth(object):
 			l.simple_bind_s(userdn, pw)
 			
 		except ldap.LDAPError, e:
-			return None # e.message["desc"]
+			return False # e.message["desc"]
 		
 		return True
 	
 	def lookup(self, username):
 		""" returns the DN of an object with the sAMAccountName == username 
 		
+		will check if the username contains an "@", if so search for email address 
+		instead of account name.
+		
 		returns the DN as String or None if not found, False on error
 		"""
+		
+		is_email = False
+		try:
+			if username.index("@") > 0:
+				is_email = True
+				self.search_property = "mail"
+		except ValueError, e:
+			pass
 		
 		self.__lastobj = None
 		ldap_result_id = self.__conn.search(self.baseDN, 
@@ -58,7 +98,19 @@ class usbauth(object):
 		#print result_type, result_data
 		
 		if (result_type != 100):
-			return False
+			if not is_email:
+				return None
+			
+			# if this is an email addr and we didn't find it, try to find an 
+			# legacy emailaddress
+			self.search_property = "proxyAddresses"
+			ldap_result_id = self.__conn.search(self.baseDN, 
+				                                  ldap.SCOPE_SUBTREE, 
+				                                  self.search_property+"=smtp:"+username, 
+				                                  None)
+			result_type, result_data = self.__conn.result(ldap_result_id, 0)
+			if (result_type != 100):
+				return None
 		
 		#print result_type
 		try:
@@ -67,6 +119,8 @@ class usbauth(object):
 			return self.__lastobj[0]
 		except:
 			return None
+		
+		return None
 	
 	def info(self, obj):
 		""" Display data of a user
@@ -133,45 +187,58 @@ def lookup(username):
 		return a.info(a.lastobj)
 	else:
 		return None
-	
+
 if __name__ == "__main__":
-	usage = """Usage: auth.py <username> [password]
+	usage = """Usage: auth.py <username|emailaddr> [password]
 	
-When only a username is provided, then we do a lookup of the user via ldap.
+When only a username|emailaddr is provided, then we do a lookup of the user via ldap.
 
 If username and password is provided, we do an authentication.
 
-Exit code 0 means success, 1 means not found, 2 means wrong password. 127
-means argument error.
+Exit code 
+	  0 success
+	  1 not found
+	  2 wrong password. 
+	127 argument error
 """
+
 	# check how many arguments we've got.	
+	
+	# llokup user
 	if len(sys.argv) == 2:
 		emp = lookup(sys.argv[1])
 		if (emp == None):
 			sys.exit(1)
 		
-		print emp
+		print json.dumps(emp)
 		sys.exit(0)
-		
+	
+	# authenticate user
 	elif len(sys.argv) == 3:
 		emp = check(sys.argv[1], sys.argv[2])
 		#print emp
 		if (not emp):
 			#print emp
-			if emp == None:
+			if emp == False:
 				sys.stderr.write("Failed to authenticate\n")
 				sys.exit(2)
 			else:
 				sys.stderr.write("User not found\n")
 				sys.exit(1)
 		
-		print emp
+		print json.dumps(emp)
 		sys.exit(0)
-		
+	
+	# argument error
 	else:
 		print usage
-		sys.exit(127)
+	
+	sys.exit(127)
 	
 	# authenticate a user
 	#emp = check("muana", "anaana")
+	
+	# lookup eamil
+	#emp = lookup_email(sys.argv[1])
+	#print emp
 
