@@ -12,6 +12,35 @@ var erfahrung = {
 	errors: false,
 
 	clone_row: function(ix, was, wo, jahr, monate) {
+		
+		if (was && was.substr(0, 2) == '**') {
+			
+			nm = was.substr(2)
+			//console.log(nm)
+			
+			if (nm == "atls") {
+				$$("#atls").attr('checked', true);
+				$$("#atls_ort").val(wo)
+				$$("#atls_j").val(jahr)
+			}
+			
+			if (nm == "acls") {
+				$$("#acls").attr('checked', true);
+				$$("#acls_ort").val(wo)
+				$$("#acls_j").val(jahr)
+			}
+			
+			if (nm == "pals") {
+				$$("#pals").attr('checked', true);
+				$$("#pals_ort").val(wo)
+				$$("#pals_j").val(jahr)
+			}
+			
+			erfahrung.count--
+			return true;
+		}
+		
+		
 		var new_row = $$("#row_prototype").clone(true);
 		new_row.attr("id", "row_" + ix);
 	
@@ -102,6 +131,37 @@ var erfahrung = {
 		
 		$$("#error").css("display", "none");
 		
+		// collect ATLS / ACLS PALS
+		
+		if (e = $$("#atls").is(":checked")) {
+			result[result.length] = {
+				was: "**atls",
+				ort: $$("#atls_ort").val(),
+				von: "" + $$("#atls_j").val(),
+				dauer: null
+			}
+		}
+		
+		if (e = $$("#acls").is(":checked")) {
+			result[result.length] = {
+				was: "**acls",
+				ort: $$("#acls_ort").val(),
+				von: "" + $$("#acls_j").val(),
+				dauer: null
+			}
+		}
+		
+		if (e = $$("#pals").is(":checked")) {
+			result[result.length] = {
+				was: "**pals",
+				ort: $$("#pals_ort").val(),
+				von: "" + $$("#pals_j").val(),
+				dauer: null
+			}
+		}
+		
+		console.log(result)
+		
 		$$.ajax({
 			type: "POST",
 			url: "erfahrung/" + app.selected_pid,
@@ -124,7 +184,7 @@ var erfahrung = {
 add_load_handler(function() {
 	if (erfahrung.count == 0) {
 		$for e in erfahrung:
-			erfahrung.clone_row(erfahrung.count++, '$e.was', '$e.ort', $e.von_mj, $e.monate)
+			erfahrung.clone_row(erfahrung.count++, '$e.was', '$e.ort', $e.von_mj, '$e.monate')
 		
 	}
 	erfahrung.clone_row(erfahrung.count++)
@@ -181,24 +241,24 @@ Weiterbildungen</h1>
 	<div class="col-sm-6 col-xs-12">
 		<div class="checkbox">
 			<label>
-				<input type="checkbox" name="atls"/> ATLS
+				<input type="checkbox" name="atls" id="atls"/> ATLS
 			</label>
 			<input type="number" value="" name="atls_j" id="atls_j" size="4" class="form-control" placeholder="Jahr" min="1950" max="2100" step="1"/>
 			<input type="text" value="" name="atls_ort" id="atls_ort" size="25" class="form-control" placeholder="Ort"/>
 		</div>	
 		<div class="checkbox">
 			<label>
-				<input type="checkbox" name="acls"/> ACLS
+				<input type="checkbox" name="acls" id="acls"/> ACLS
 			</label>
-			<input type="number" value="" name="acls_j" id="atls_j" size="4" class="form-control" placeholder="Jahr" min="1950" max="2100" step="1"/>
-			<input type="text" value="" name="acls_ort" id="atls_ort" size="25" class="form-control" placeholder="Ort"/>
+			<input type="number" value="" name="acls_j" id="acls_j" size="4" class="form-control" placeholder="Jahr" min="1950" max="2100" step="1"/>
+			<input type="text" value="" name="acls_ort" id="acls_ort" size="25" class="form-control" placeholder="Ort"/>
 		</div>	
 		<div class="checkbox">
 			<label>
-				<input type="checkbox" name="pals"/> PALS
+				<input type="checkbox" name="pals" id="pals"/> PALS
 			</label>
-			<input type="number" value="" name="pals_j" id="atls_j" size="4" class="form-control" placeholder="Jahr" min="1950" max="2100" step="1"/>
-			<input type="text" value="" name="pals_ort" id="atls_ort" size="25" class="form-control" placeholder="Ort"/>
+			<input type="number" value="" name="pals_j" id="pals_j" size="4" class="form-control" placeholder="Jahr" min="1950" max="2100" step="1"/>
+			<input type="text" value="" name="pals_ort" id="pals_ort" size="25" class="form-control" placeholder="Ort"/>
 		</div>	
 	</div>
 </form>

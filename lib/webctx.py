@@ -247,9 +247,12 @@ class erfahrung(response):
 		
 		# import all "weiterbilduungen"
 		for e in inp["erfahrung"]:
+			d = None
+			if (e["dauer"]):
+				d = int(e["dauer"])
 			r = db.Erfahrung(pid=int(pid), \
 			                 von_mj=int(e["von"]), \
-			                 monate=int(e["dauer"]), \
+			                 monate=d, \
 			                 ort=e["ort"], \
 			                 was=e["was"])
 			db.session.add(r)
