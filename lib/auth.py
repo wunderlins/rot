@@ -4,7 +4,7 @@
 This file provides lookup and authentication methods for AD users from the 
 ms.uhbs.ch AD directory.
 
-The filep rovides 2 main functions:
+The file provides 2 main functions:
 	
 	lookup(username|emailaddr)
 		checks if a user exists. all active new and old emailaddresses are avialble 
@@ -141,7 +141,7 @@ class usbauth(object):
 		
 		try: ret["dn"] = obj[0]; 
 		except: pass
-		try: ret["username"] = obj[1][self.search_property][0]; 
+		try: ret["username"] = obj[1]["sAMAccountName"][0]; 
 		except: pass
 		try: 
 			ret["phone"] = obj[1]["telephoneNumber"][0];
