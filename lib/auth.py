@@ -24,14 +24,35 @@ The file provides 2 main functions:
 			"firstname": None,    # person's first name 
 			"lastname": None,     # person's last name 
 			"idmid": None,        # identity management id
-			"emplyeeNumber": None # employee id (Same as on the backside of the batch)
+			"emplyeeNumber": None, # employee id (Same as on the backside of the batch)
+			"memberOf": [],       # list of group membership cn
+			"lockoutTime": None   # datetime of lockout, None of not locked
 		}
 """
 
 
 import ldap, sys, json
+from datetime import datetime
 
 class usbauth(object):
+	@staticmethod
+	def _json_serial(obj):
+		"""JSON serializer for datetime"""
+
+		if isinstance(obj, datetime):
+			serial = obj.isoformat()
+			return serial
+			raise TypeError ("Type not serializable")
+
+	@staticmethod
+	def winfiletime2datetime(winfiletime):
+		""" convert NT Filesystem Time to datetime """
+		#print winfiletime
+		EPOCH_AS_FILETIME = 116444736000000000
+		HUNDREDS_OF_NANOSECONDS = 10000000
+		return datetime.fromtimestamp((int(winfiletime) - EPOCH_AS_FILETIME) / HUNDREDS_OF_NANOSECONDS)
+	
+	
 	""" lookup and authentication library """
 	
 	@property
@@ -136,7 +157,11 @@ class usbauth(object):
 			"firstname": None,
 			"lastname": None,
 			"idmid": None,
-			"emplyeeNumber": None
+			"emplyeeNumber": None,
+			"memberOf": [],
+			"lockoutTime": None,
+			"accountExpires": None,
+			"personalTitle": None
 		}
 		
 		try: ret["dn"] = obj[0]; 
@@ -159,6 +184,17 @@ class usbauth(object):
 		except: pass
 		try: ret["emplyeeNumber"] = int(obj[1]["employeeNumber"][0]); 
 		except: pass
+		try: ret["memberOf"] = obj[1]["memberOf"]; 
+		except: pass
+		try: ret["personalTitle"] = obj[1]["personalTitle"][0]; 
+		except: pass
+
+		try: 
+			if int(obj[1]["lockoutTime"][0]) > 0:
+				#print obj[1]["lockoutTime"][0]
+				ret["lockoutTime"] = usbauth.winfiletime2datetime(obj[1]["lockoutTime"][0])
+		except: 
+			pass
 		
 		return ret
 	
@@ -210,7 +246,7 @@ Exit code
 		if (emp == None):
 			sys.exit(1)
 		
-		print json.dumps(emp)
+		print json.dumps(emp, sort_keys=True, indent=4, separators=(',', ': '), default=usbauth._json_serial)
 		sys.exit(0)
 	
 	# authenticate user
@@ -226,7 +262,7 @@ Exit code
 				sys.stderr.write("User not found\n")
 				sys.exit(1)
 		
-		print json.dumps(emp)
+		print json.dumps(emp, sort_keys=True, indent=4, separators=(',', ': '), default=usbauth._json_serial)
 		sys.exit(0)
 	
 	# argument error
