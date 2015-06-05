@@ -1,0 +1,212 @@
+dn: CN=Wunderlin\, Simon (U106193),OU=Users,OU=USB,DC=ms,DC=uhbs,DC=ch
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: user
+cn: Wunderlin, Simon (U106193)
+instanceType: 4
+objectCategory: CN=Person,CN=Schema,CN=Configuration,DC=ms,DC=uhbs,DC=ch
+accountExpires: 9223372036854775807
+badPasswordTime: 130776246278811627
+badPwdCount: 0
+codePage: 0
+company:: VW5pdmVyc2l0w6R0c3NwaXRhbCBCYXNlbA==
+countryCode: 0
+department: Informations-und Kommunikationstechnologie, Ressort
+description:: QmVudXR6ZXIgZsO8ciBkaWUgQW7DpHN0aGVzaWUuIDEuOC4yMDA3
+directReports: CN=A_WunderlinS,OU=Admin,OU=Users,OU=MQInf,OU=USB,DC=ms,DC=uh
+ bs,DC=ch
+displayName: Wunderlin Simon
+distinguishedName: CN=Wunderlin\, Simon (U106193),OU=Users,OU=USB,DC=ms,DC=u
+ hbs,DC=ch
+dSCorePropagationData: 16010101000000.0Z
+employeeID: 106193
+employeeNumber: 30023338
+extensionAttribute1: YZtjgBGX5QVg/4AUa7o8Ug==
+extensionAttribute11:: QW7DpHN0aGVzaWU=
+facsimileTelephoneNumber: +41 61 26 57320
+givenName: Simon
+homeMDB: CN=DB14,CN=Databases,CN=Exchange Administrative Group (FYDIBOHF23SP
+ DLT),CN=Administrative Groups,CN=USB,CN=Microsoft Exchange,CN=Services,CN=C
+ onfiguration,DC=ms,DC=uhbs,DC=ch
+homeMTA: CN=Microsoft MTA,CN=VMEXCMS06,CN=Servers,CN=Exchange Administrative
+  Group (FYDIBOHF23SPDLT),CN=Administrative Groups,CN=USB,CN=Microsoft Excha
+ nge,CN=Services,CN=Configuration,DC=ms,DC=uhbs,DC=ch
+lastLogon: 130776965371111592
+lastLogonTimestamp: 130769675567009817
+legacyExchangeDN: /o=USB/ou=Exchange Administrative Group (FYDIBOHF23SPDLT)/
+ cn=Recipients/cn=WunderlinS
+lockoutTime: 130776976142279681
+logonCount: 14
+mail: simon.wunderlin@usb.ch
+mailNickname: WunderlinS
+managedObjects: CN=MQ_ANA_IT,OU=Exchange_Adressbuecher,OU=PITServer,DC=ms,DC
+ =uhbs,DC=ch
+mDBUseDefaults: TRUE
+memberOf: CN=Alle_Bereich_Leitung,OU=Exchange_Adressbuecher,OU=PITServer,DC=
+ ms,DC=uhbs,DC=ch
+memberOf: CN=Alle_Bereich_Querschnitt,OU=Exchange_Adressbuecher,OU=PITServer
+ ,DC=ms,DC=uhbs,DC=ch
+memberOf: CN=Alle_Ressort_ICT,OU=Exchange_Adressbuecher,OU=PITServer,DC=ms,D
+ C=uhbs,DC=ch
+memberOf: CN=Cherwell_Agenten,OU=Exchange_Adressbuecher,OU=PITServer,DC=ms,D
+ C=uhbs,DC=ch
+memberOf: CN=Distribution_Groups_Owners,OU=Microsoft Exchange Security Group
+ s,DC=ms,DC=uhbs,DC=ch
+memberOf: CN=ggAppSupporterMEDQ,OU=Groups,OU=PITServer,DC=ms,DC=uhbs,DC=ch
+memberOf: CN=ggIPAMRead,OU=Groups,OU=PITServer,DC=ms,DC=uhbs,DC=ch
+memberOf: CN=ggPDMSAusfallAdmins,OU=Groups,OU=PITServer,DC=ms,DC=uhbs,DC=ch
+memberOf: CN=ICT_B_PolypointUsers,OU=Business,OU=Groups,OU=ICTInf,OU=USB,DC=
+ ms,DC=uhbs,DC=ch
+memberOf: CN=ICT_BM_Meona_Viewer,OU=Business,OU=Groups,OU=ICTInf,OU=USB,DC=m
+ s,DC=uhbs,DC=ch
+memberOf: CN=MEDQ_Alarm,OU=Exchange_Adressbuecher,OU=PITServer,DC=ms,DC=uhbs
+ ,DC=ch
+memberOf: CN=MEQ_B_FilemakerANAAdmin,OU=Business,OU=TestGroups,OU=ZentraleGr
+ uppen,OU=USB,DC=ms,DC=uhbs,DC=ch
+memberOf: CN=MQ_ANA_IT,OU=Exchange_Adressbuecher,OU=PITServer,DC=ms,DC=uhbs,
+ DC=ch
+memberOf: CN=MQ_ANA_SEK,OU=Exchange_Adressbuecher,OU=PITServer,DC=ms,DC=uhbs
+ ,DC=ch
+memberOf: CN=MQ_B_VDI Pool MQW7STD1 Users,OU=Business,OU=Groups,OU=MQInf,OU=
+ USB,DC=ms,DC=uhbs,DC=ch
+memberOf: CN=MQ_Einheitsinformatik,OU=Exchange_Adressbuecher,OU=PITServer,DC
+ =ms,DC=uhbs,DC=ch
+memberOf: CN=MT_B_Bereichsinformatik,OU=Business,OU=Groups,OU=MTInf,OU=USB,D
+ C=ms,DC=uhbs,DC=ch
+memberOf: CN=MT_P_ictcmsswp04_medizintechnik_R,OU=Permission,OU=Groups,OU=MT
+ Inf,OU=USB,DC=ms,DC=uhbs,DC=ch
+memberOf: CN=MT_P_zzzpat_users,OU=Permission,OU=Groups,OU=MTInf,OU=USB,DC=ms
+ ,DC=uhbs,DC=ch
+memberOf: CN=Office-meeting,OU=Exchange_Adressbuecher,OU=PITServer,DC=ms,DC=
+ uhbs,DC=ch
+memberOf: CN=Tech-Series,OU=Exchange_Adressbuecher,OU=PITServer,DC=ms,DC=uhb
+ s,DC=ch
+memberOf: CN=UG-Q-Confluence Querschnitt,OU=Appl,OU=Groups,OU=Q,OU=USB,DC=ms
+ ,DC=uhbs,DC=ch
+memberOf: CN=UG-V-Confluence Windows7,OU=Appl,OU=Groups,OU=V,OU=USB,DC=ms,DC
+ =uhbs,DC=ch
+memberOf: CN=UG-VDIPit,OU=UniversalGroups,OU=Groups,OU=PITServer,DC=ms,DC=uh
+ bs,DC=ch
+msExchCoManagedObjectsBL: CN=MQ_ANA_AA,OU=Exchange_Adressbuecher,OU=PITServe
+ r,DC=ms,DC=uhbs,DC=ch
+msExchCoManagedObjectsBL: CN=MQ_ANA_AADienstplaner,OU=Exchange_Adressbuecher
+ ,OU=PITServer,DC=ms,DC=uhbs,DC=ch
+msExchCoManagedObjectsBL: CN=MQ_ANA_OA,OU=Exchange_Adressbuecher,OU=PITServe
+ r,DC=ms,DC=uhbs,DC=ch
+msExchCoManagedObjectsBL: CN=MQ_ANA_OIB_Aerzte,OU=Exchange_Adressbuecher,OU=
+ PITServer,DC=ms,DC=uhbs,DC=ch
+msExchCoManagedObjectsBL: CN=MQ_ANA_OIB_Pflege,OU=Exchange_Adressbuecher,OU=
+ PITServer,DC=ms,DC=uhbs,DC=ch
+msExchCoManagedObjectsBL: CN=MQ_ANA_OPS,OU=Exchange_Adressbuecher,OU=PITServ
+ er,DC=ms,DC=uhbs,DC=ch
+msExchCoManagedObjectsBL: CN=MQ_ANA_Pflege,OU=Exchange_Adressbuecher,OU=PITS
+ erver,DC=ms,DC=uhbs,DC=ch
+msExchCoManagedObjectsBL: CN=MQ_ANA_SEK,OU=Exchange_Adressbuecher,OU=PITServ
+ er,DC=ms,DC=uhbs,DC=ch
+msExchCoManagedObjectsBL: CN=MQ_ANA_TLOst,OU=Exchange_Adressbuecher,OU=PITSe
+ rver,DC=ms,DC=uhbs,DC=ch
+msExchCoManagedObjectsBL: CN=MQ_BLS_Instruktoren,OU=Exchange_Adressbuecher,O
+ U=PITServer,DC=ms,DC=uhbs,DC=ch
+msExchCoManagedObjectsBL: CN=SK_UAK_OP_Programm,OU=Exchange_Adressbuecher,OU
+ =PITServer,DC=ms,DC=uhbs,DC=ch
+msExchDelegateListBL: CN=op-ost-einfuehrung,OU=Generic,OU=Users,OU=MQInf,OU=
+ USB,DC=ms,DC=uhbs,DC=ch
+msExchHomeServerName: /o=USB/ou=Exchange Administrative Group (FYDIBOHF23SPD
+ LT)/cn=Configuration/cn=Servers/cn=VMEXCMS02
+msExchMailboxGuid:: AzHfmkYvYkW6ky83qHXEBg==
+msExchMailboxSecurityDescriptor:: AQAE77+9FAAAACAAAAAAAAAALAAAAAEBAAAAAAAFCg
+ AAAAEBAAAAAAAFCgAAAAQA77+9AxsAAAABAiQAAQAAAAEFAAAAAAAFFQAAAMaXV++/ve+/vSAeI
+ E7vv71XDu+/vQoAAAECJAABAAAAAQUAAAAAAAUVAAAAxpdX77+977+9IB4gTu+/vVcOWVkAAAAC
+ FAABAAIAAQEAAAAAAAUKAAAAAAIkAAEAAAABBQAAAAAABRUAAADGl1fvv73vv70gHiBO77+9Vw7
+ vv70ZAAAAAiQAAQAAAAEFAAAAAAAFFQAAAMaXV++/ve+/vSAeIE7vv71XDu+/vWwAAAASJAABAA
+ AAAQUAAAAAAAUVAAAAxpdX77+977+9IB4gTu+/vVcOWVkAAAASJAABAAAAAQUAAAAAAAUVAAAAx
+ pdX77+977+9IB4gTu+/vVcO77+9awAAARIkAAEAAAABBQAAAAAABRUAAADGl1fvv73vv70gHiBO
+ 77+9Vw4AAgAAARIkAAEAAAABBQAAAAAABRUAAADGl1fvv73vv70gHiBO77+9Vw4HAgAAARIkAAE
+ AAAABBQAAAAAABRUAAADGl1fvv73vv70gHiBO77+9Vw5FDAAAARIkAAEAAAABBQAAAAAABRUAAA
+ DGl1fvv73vv70gHiBO77+9Vw7vv71sAAABEiQAAQAAAAEFAAAAAAAFFQAAAMaXV++/ve+/vSAeI
+ E7vv71XDu+/vWsAAAESJAABAAAAAQUAAAAAAAUVAAAAxpdX77+977+9IB4gTu+/vVcO77+977+9
+ AAAAEiQAAQAAAAEFAAAAAAAFFQAAAMaXV++/ve+/vSAeIE7vv71XDu+/vWwAAAASJAAAAAIAAQU
+ AAAAAAAUVAAAAxpdX77+977+9IB4gTu+/vVcO77+9bAAAABIkAAAAAgABBQAAAAAABRUAAADGl1
+ fvv73vv70gHiBO77+9Vw7vv71sAAAAEhQAAQAAAAEBAAAAAAAFEgAAAAASFAAAAAIAAQEAAAAAA
+ AUUAAAAABIkAAAAAgABBQAAAAAABRUAAADGl1fvv73vv70gHiBO77+9Vw7vv71sAAAAEiQAAAAC
+ AAEFAAAAAAAFFQAAAMaXV++/ve+/vSAeIE7vv71XDu+/vWwAAAASJAABAA8AAQUAAAAAAAUVAAA
+ AxpdX77+977+9IB4gTu+/vVcORQwAAAASJAABAA8AAQUAAAAAAAUVAAAAxpdX77+977+9IB4gTu
+ +/vVcO77+9bAAAABIkAAEADwABBQAAAAAABRUAAADGl1fvv73vv70gHiBO77+9Vw7vv71rAAAAE
+ iQAAQAPAAEFAAAAAAAFFQAAAMaXV++/ve+/vSAeIE7vv71XDu+/vWwAAAASJAABAA8AAQUAAAAA
+ AAUVAAAAxpdX77+977+9IB4gTu+/vVcO77+977+9AAAAEiQAAQAPAAEFAAAAAAAFFQAAAMaXV++
+ /ve+/vSAeIE7vv71XDgcCAAAAEiQAAQAPAAEFAAAAAAAFFQAAAMaXV++/ve+/vSAeIE7vv71XDg
+ ACAAA=
+msExchMobileMailboxFlags: 1
+msExchOWAPolicy: CN=USB OWA Default,CN=OWA Mailbox Policies,CN=USB,CN=Micros
+ oft Exchange,CN=Services,CN=Configuration,DC=ms,DC=uhbs,DC=ch
+msExchPoliciesExcluded: {26491cfc-9e50-4857-861b-0cb8df22b5d7}
+msExchRBACPolicyLink: CN=Default Role Assignment Policy,CN=Policies,CN=RBAC,
+ CN=USB,CN=Microsoft Exchange,CN=Services,CN=Configuration,DC=ms,DC=uhbs,DC=
+ ch
+msExchRecipientDisplayType: 1073741824
+msExchRecipientTypeDetails: 1
+msExchShadowProxyAddresses: smtp:Simon.Wunderlin@usb.ch
+msExchShadowProxyAddresses: smtp:SWunderlin@uhbs.ch
+msExchShadowProxyAddresses: smtp:SWunderlin@usb.ch
+msExchTextMessagingState: 16842751
+msExchTextMessagingState: 302120705
+msExchThrottlingPolicyDN: CN=USB-Default-Policy,CN=Global Settings,CN=USB,CN
+ =Microsoft Exchange,CN=Services,CN=Configuration,DC=ms,DC=uhbs,DC=ch
+msExchUMDtmfMap: emailAddress:74666986337546
+msExchUMDtmfMap: firstNameLastName:74666986337546
+msExchUMDtmfMap: lastNameFirstName:98633754674666
+msExchUserAccountControl: 0
+msExchUserCulture: de-DE,de-CH
+msExchVersion: 44220983382016
+msExchWhenMailboxCreated: 20120608085512.0Z
+name: Wunderlin, Simon (U106193)
+objectGUID:: NK1yQDmrW02moF12pQcqyQ==
+objectSid:: AQUAAAAAAAUVAAAAxpdXrccgHiBO11cO1RkAAA==
+otherTelephone: +41 61 32 87426
+primaryGroupID: 513
+protocolSettings:: UE9QM8KnMMKnwqfCp8KnwqfCp8KnwqfCp8Knwqc=
+proxyAddresses: MAID:Simon Wunderlin@WunderlinS.MedQ1.KBS
+proxyAddresses: SMTP:Simon.Wunderlin@usb.ch
+proxyAddresses: smtp:SWunderlin@uhbs.ch
+proxyAddresses: smtp:SWunderlin@usb.ch
+proxyAddresses: smtp:WunderlinS@uhbs.ch
+publicDelegatesBL: CN=Anazeitung,OU=Mig_GRWMAIL_Users,OU=Users,OU=USB,DC=ms,
+ DC=uhbs,DC=ch
+publicDelegatesBL: CN=Bertazzi\, Roberto (U100565),OU=Users,OU=USB,DC=ms,DC=
+ uhbs,DC=ch
+publicDelegatesBL: CN=Mail-Inbox anaitunes,OU=Mig_GRWMAIL_Users,OU=Users,OU=
+ USB,DC=ms,DC=uhbs,DC=ch
+publicDelegatesBL: CN=op-ost-einfuehrung,OU=Generic,OU=Users,OU=MQInf,OU=USB
+ ,DC=ms,DC=uhbs,DC=ch
+publicDelegatesBL: CN=Ravessoud\, Thierry (U104474),OU=Users,OU=USB,DC=ms,DC
+ =uhbs,DC=ch
+pwdLastSet: 129597721617857103
+sAMAccountName: WunderlinS
+sAMAccountType: 805306368
+showInAddressBook: CN=All Mailboxes(VLV),CN=All System Address Lists,CN=Addr
+ ess Lists Container,CN=USB,CN=Microsoft Exchange,CN=Services,CN=Configurati
+ on,DC=ms,DC=uhbs,DC=ch
+showInAddressBook: CN=All Recipients(VLV),CN=All System Address Lists,CN=Add
+ ress Lists Container,CN=USB,CN=Microsoft Exchange,CN=Services,CN=Configurat
+ ion,DC=ms,DC=uhbs,DC=ch
+showInAddressBook: CN=All Users,CN=All Address Lists,CN=Address Lists Contai
+ ner,CN=USB,CN=Microsoft Exchange,CN=Services,CN=Configuration,DC=ms,DC=uhbs
+ ,DC=ch
+showInAddressBook: CN=Default Global Address List,CN=All Global Address List
+ s,CN=Address Lists Container,CN=USB,CN=Microsoft Exchange,CN=Services,CN=Co
+ nfiguration,DC=ms,DC=uhbs,DC=ch
+showInAddressBook: CN=Mailboxes(VLV),CN=All System Address Lists,CN=Address 
+ Lists Container,CN=USB,CN=Microsoft Exchange,CN=Services,CN=Configuration,D
+ C=ms,DC=uhbs,DC=ch
+sn: Wunderlin
+telephoneNumber: +41 61 26 57426
+title: Bereichsinformatiker
+userAccountControl: 512
+userPrincipalName: WunderlinS@ms.uhbs.ch
+uSNChanged: 1157021
+uSNCreated: 53019
+whenChanged: 20150602054703.0Z
+whenCreated: 20100427094342.0Z
+
+
