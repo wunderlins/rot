@@ -7,6 +7,9 @@ import re
 import base64
 import sys
 import os
+import usbauth
+import hashlib
+import sqlite3
 
 urls = (
   '/', 'index',
@@ -18,7 +21,8 @@ urls = (
 	'/typeahead', 'typeahead',
 	'/image(.*)', 'image',
 	'/rotnote(.*)', 'rotnote',
-	'/erfahrung(.*)', 'erfahrung'
+	'/erfahrung(.*)', 'erfahrung',
+  '/login', 'login'
 )
 
 from HTMLParser import HTMLParser
@@ -88,6 +92,8 @@ def basic_auth():
 		return
 
 class response:
+	no_auth = False
+	__authenticated = False
 	
 	def __init__(self):
 		"""
@@ -126,7 +132,33 @@ class response:
 			"type": type, 
 			"input": web.input()
 		})
-
+		
+	def auth_check(self):
+		""" check if user is authenticated """
+		
+		"""
+		try:
+			web_session.uid
+		except:
+			web.debug("creating session")
+			for e in session_default:
+				web_session[e] = session_default[e]
+		"""
+		
+		web_session = get_session()
+		
+		# check if we have a valid session
+		if web_session != None and web_session.uid > 0:
+			self.__authenticated = True
+			return True
+		
+		# authentication for this request not required
+		if self.no_auth == True:
+			return True
+			
+		# check if the user has submitted credentials
+		return None
+	
 	def person(self, pid, history):
 		# get latest wishes
 		if history == None:
@@ -171,6 +203,72 @@ class response:
 						wunsch[r.id] = {"prio": e.prio, "wunsch": e.janein}
 						break
 		return (g, wunsch, dates)
+
+class login(response):
+	no_auth = True
+	
+	def GET(self):
+		global web_session
+	
+		user_data = web.input(logout=False)
+		web.debug(user_data.logout)
+		if (user_data.logout == "true"):
+			#web_session = session_default
+			web_session.kill()
+			raise web.seeother('/')
+	
+	""" authenticate user """
+	def POST(self):
+		global web_session
+		
+		# read posted json data
+		data = web.data()
+		credentials = json.loads(data)
+		
+		username = credentials["username"]
+		password = credentials["password"]
+		
+		# check credentials against database
+		pwhash = hashlib.md5(password).hexdigest()
+		web.debug(pwhash)
+		authdb = sqlite3.connect('etc/user.db')
+		cur = authdb.cursor()
+		sql = 'SELECT id FROM user WHERE username=? AND password=?'
+		web.debug(sql)
+		check = cur.execute(sql, (username, pwhash))
+		web.debug(str(check) + " " + str(cur.rowcount))
+		
+		if check:
+			row = cur.fetchone()
+			if row:
+				authdb.close()
+				web.debug(row)
+				#web_session = session_default
+				web_session.uid = row[0]
+				web_session.user = username
+			
+				# if we found one, exit
+				return '{"success": true}'
+		
+		authdb.close()
+		
+		# if not found check against ldap
+		usbauth.init(
+			authdn = "CN=MUANA,OU=GenericMove,OU=Users,OU=USB,DC=ms,DC=uhbs,DC=ch",
+			authpw = "anaana",
+			baseDN = "ou=USB,dc=ms,dc=uhbs,dc=ch",
+			host = "ms.uhbs.ch",
+		)
+		
+		emp = usbauth.check(username, password)
+		if (emp and emp["lockoutTime"] == None):
+			#web_session = session_default
+			web_session.uid = emp["employeeNumber"]
+			web_session.user = username
+			web_session.email = emp["email"]
+			return '{"success": true}'
+		
+		return '{"success": false}'
 
 class index(response):
 	def GET(self):
