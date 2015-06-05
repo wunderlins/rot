@@ -104,7 +104,10 @@ class response:
 		Not sure if this is a sane way.
 		
 		"""
-		basic_auth()
+		global session
+		if session == None:
+			session = session_default
+		#basic_auth()
 	
 	def header(self, content_type="text/html"):
 		web.header('Content-Type', content_type+'; charset=utf-8', unique=True) 
@@ -112,10 +115,10 @@ class response:
 		web.header('Pragma','no-cache')
 		web.header('Expires','0')
 	
-	def render(self):
+	def render(self, base="layout"):
 		global urls
 		print session
-		return web.template.render('template', base="layout", globals={
+		return web.template.render('template', base=base, globals={
 			'wunsch_select_wunsch': tpl.wunsch_select_wunsch,
 			'wunsch_select_prio': tpl.wunsch_select_prio,
 			'wunsch_prio': tpl.wunsch_prio,
@@ -138,17 +141,18 @@ class response:
 		
 		"""
 		try:
-			web_session.uid
+			web_session.pid
 		except:
 			web.debug("creating session")
 			for e in session_default:
 				web_session[e] = session_default[e]
 		"""
 		
-		web_session = get_session()
+		#web_session = get_session()
 		
 		# check if we have a valid session
-		if web_session != None and web_session.uid > 0:
+		print session
+		if session != None and session["pid"] > 0:
 			self.__authenticated = True
 			return True
 		
@@ -208,18 +212,21 @@ class login(response):
 	no_auth = True
 	
 	def GET(self):
-		global web_session
+		#global web_session
 	
 		user_data = web.input(logout=False)
 		web.debug(user_data.logout)
 		if (user_data.logout == "true"):
 			#web_session = session_default
-			web_session.kill()
-			raise web.seeother('/')
+			session = session_default
+			if config.base_uri:
+				raise web.seeother(config.base_uri)
+			else:
+				raise web.seeother("/")
 	
 	""" authenticate user """
 	def POST(self):
-		global web_session
+		#global web_session
 		
 		# read posted json data
 		data = web.data()
@@ -244,8 +251,8 @@ class login(response):
 				authdb.close()
 				web.debug(row)
 				#web_session = session_default
-				web_session.uid = row[0]
-				web_session.user = username
+				session["pid"] = row[0]
+				session["user"] = username
 			
 				# if we found one, exit
 				return '{"success": true}'
@@ -263,9 +270,9 @@ class login(response):
 		emp = usbauth.check(username, password)
 		if (emp and emp["lockoutTime"] == None):
 			#web_session = session_default
-			web_session.uid = emp["employeeNumber"]
-			web_session.user = username
-			web_session.email = emp["email"]
+			session["pid"] = emp["employeeNumber"]
+			session["user"] = username
+			session["email"] = emp["email"]
 			return '{"success": true}'
 		
 		return '{"success": false}'
@@ -273,6 +280,8 @@ class login(response):
 class index(response):
 	def GET(self):
 		print "index class"
+		if not self.auth_check():
+			return self.render(base=None).login()
 		
 		# 1) get all due tasks
 		due_date = datetime.datetime.utcnow() + datetime.timedelta(days=7)
