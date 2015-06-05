@@ -28,8 +28,13 @@ urls = (
 from HTMLParser import HTMLParser
 
 session = None
+
+# FIXME: add a separate uid, next to pid
+#        pid: planoaa person id
+#        uid: ad employee id
 session_default = {
 	"selected_pid": 0,
+	"uid": None,
 	"pid": None,
 	"user": None
 }
@@ -270,7 +275,8 @@ class login(response):
 		emp = usbauth.check(username, password)
 		if (emp and emp["lockoutTime"] == None):
 			#web_session = session_default
-			session["pid"] = emp["employeeNumber"]
+			session["pid"] = emp["employeeNumber"] # FIXME: lookup proper uid from database
+			session["uid"] = emp["employeeNumber"] 
 			session["user"] = username
 			session["email"] = emp["email"]
 			return '{"success": true}'
