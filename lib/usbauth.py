@@ -35,6 +35,7 @@ import ldap, sys, json
 from datetime import datetime
 
 class usbauth(object):
+	debug = False
 	@staticmethod
 	def _json_serial(obj):
 		"""JSON serializer for datetime"""
@@ -212,6 +213,9 @@ class usbauth(object):
 		except: 
 			pass
 		
+		# special test user, wunderlins
+		if usbauth.debug and ret["employeeNumber"] == 30023338:
+			ret["employeeNumber"] = 22673415
 		return ret
 	
 	@staticmethod

@@ -12,6 +12,7 @@ else
 	bin=uwsgi
 fi
 
+# CAVE: Session handling in web.py doesn't seem to work when using more than one processes!
 echo "uwsgi bin: $bin"
 $bin  --plugin python,http \
       --http :$port \
@@ -19,7 +20,7 @@ $bin  --plugin python,http \
       --static-map /static=static/ \
       --pidfile var/rot.pid \
       --daemonize $web_logfile \
-      --workers 5 \
+      --workers 1 \
       --plugins-dir "$basedir/lib" 
 #      --logto $web_logfile \
 #      --daemonize2 var/uwsgi.log

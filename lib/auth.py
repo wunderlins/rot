@@ -35,6 +35,8 @@ import ldap, sys, json
 from datetime import datetime
 
 class usbauth(object):
+	debug = False
+	
 	@staticmethod
 	def _json_serial(obj):
 		"""JSON serializer for datetime"""

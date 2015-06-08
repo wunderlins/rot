@@ -27,21 +27,33 @@ urls = (
 
 from HTMLParser import HTMLParser
 
+"""
+try:
+	session
+except:
+	web.debug("==> Resetting session!")
+	session = None
+
+"""
+
+web.debug("==> Resetting session!")
 session = None
 
 # FIXME: add a separate uid, next to pid
 #        pid: planoaa person id
-#        uid: ad employee id
+#        eid: ad employee id
 session_default = {
 	"selected_pid": 0,
-	"uid": None,
+	"eid": None,
 	"pid": None,
 	"user": None
 }
 
-def set_session(s):
+def set_session(n, v):
 	global session
-	session = s
+	if session == None:
+		session = {}
+	session[n] = v
 
 def get_session():
 	global session
@@ -69,9 +81,10 @@ def basic_auth():
 	)
 	
 	#session = get_session()
-	global session
+	session = get_session()
 	if session == None:
-		session = session_default
+		for e in session_default:
+			set_session(e, session_default[e])
 	
 	print session
 	print "session: "
@@ -81,7 +94,7 @@ def basic_auth():
 	auth = web.ctx.env.get('HTTP_AUTHORIZATION')
 	if auth is not None and session["user"] == None:
 		session["user"] = None
-		auth = re.sub('^Basic ','',auth)
+		auth = re.sub('^Basic ', '', auth)
 		username, password = base64.decodestring(auth).split(':')
 		#print username,password
 		if (username, password) in allowed:
@@ -101,6 +114,7 @@ class response:
 	__authenticated = False
 	
 	def __init__(self):
+		web.debug("> class " + self.__class__.__name__)
 		"""
 		Every response object will, when instatiated, do a basic authentication.
 		
@@ -109,10 +123,11 @@ class response:
 		Not sure if this is a sane way.
 		
 		"""
-		global session
+		session = get_session()
 		if session == None:
-			session = session_default
-		#basic_auth()
+			web.debug("==> session init in response.__init__")
+			for e in session_default:
+				set_session(e, session_default[e])
 	
 	def header(self, content_type="text/html"):
 		web.header('Content-Type', content_type+'; charset=utf-8', unique=True) 
@@ -122,6 +137,7 @@ class response:
 	
 	def render(self, base="layout"):
 		global urls
+		session = get_session()
 		print session
 		return web.template.render('template', base=base, globals={
 			'wunsch_select_wunsch': tpl.wunsch_select_wunsch,
@@ -154,9 +170,10 @@ class response:
 		"""
 		
 		#web_session = get_session()
+		session = get_session()
 		
 		# check if we have a valid session
-		print session
+		#print session
 		if session != None and session["pid"] > 0:
 			self.__authenticated = True
 			return True
@@ -256,8 +273,9 @@ class login(response):
 				authdb.close()
 				web.debug(row)
 				#web_session = session_default
-				session["pid"] = row[0]
-				session["user"] = username
+				set_session("pid", row[0])
+				set_session("eid", 0)
+				set_session("user", username)
 			
 				# if we found one, exit
 				return '{"success": true}'
@@ -275,17 +293,30 @@ class login(response):
 		emp = usbauth.check(username, password)
 		if (emp and emp["lockoutTime"] == None):
 			#web_session = session_default
-			session["pid"] = emp["employeeNumber"] # FIXME: lookup proper uid from database
-			session["uid"] = emp["employeeNumber"] 
-			session["user"] = username
-			session["email"] = emp["email"]
+			set_session("pid", 0)
+			set_session("eid", emp["employeeNumber"])
+			set_session("user", username)
+			set_session("email", emp["email"])
+			
+			# now that we have a user, find the pid for this uid
+			ret = db.session.query(db.Personal).\
+			         filter_by(personalid=emp["employeeNumber"]).all()
+			#web.debug("pid: " + str(ret[0].pid))
+			
+			try:
+				set_session("pid", ret[0].pid)
+			except:
+				pass # FIXME do we have to catch unknown pids on login or just ignore ?
+			
+			web.debug("==> succesfully logged in")
+			web.debug(get_session())
+			
 			return '{"success": true}'
 		
 		return '{"success": false}'
 
 class index(response):
 	def GET(self):
-		print "index class"
 		if not self.auth_check():
 			return self.render(base=None).login()
 		
@@ -316,7 +347,11 @@ class index(response):
 	
 class erfahrung(response):
 	def GET(self, path):
-	
+		if not self.auth_check():
+			return self.render(base=None).login()
+		
+		session = get_session()
+		
 		pid = None
 		if path:
 			#print "Path: " + path
@@ -337,6 +372,8 @@ class erfahrung(response):
 		return self.render().erfahrung(pid, erf)
 
 	def POST(self, path):
+		if not self.auth_check():
+			return self.render(base=None).login()
 		
 		pid = None
 		if path:
@@ -382,6 +419,9 @@ class erfahrung(response):
 
 class rotnote(response):
 	def GET(self, path):
+		if not self.auth_check():
+			return self.render(base=None).login()
+		
 		id = None
 		if path:
 			id = path[1:]
@@ -417,6 +457,9 @@ class rotnote(response):
 		
 		
 	def POST(self, path):
+		if not self.auth_check():
+			return self.render(base=None).login()
+		
 		id = None
 		if path:
 			id = int(path[1:])
@@ -553,6 +596,9 @@ class rotnote(response):
 
 class test(response):
 	def GET(self):
+		if not self.auth_check():
+			return self.render(base=None).login()
+		
 		s = db.session
 		#p = s.query(db.personal).filter_by(aktiv=1)
 		out = ""
@@ -571,6 +617,9 @@ class test(response):
 
 class image(response):
 	def GET(self, path):
+		if not self.auth_check():
+			return self.render(base=None).login()
+		
 		pid = None
 		
 		if path:
@@ -625,6 +674,9 @@ class image(response):
 		raise web.seeother(path)
 	
 	def POST(self, path):
+		if not self.auth_check():
+			return self.render(base=None).login()
+		
 		#print "Path: ", path
 		pid = None
 		if path:
@@ -712,6 +764,9 @@ class image(response):
 
 class personal_data(response):
 	def GET(self):
+		if not self.auth_check():
+			return self.render(base=None).login()
+		
 		"""
 		db = web.database(
 			host = config.db_host,
@@ -746,6 +801,8 @@ class personal_data(response):
 
 class typeahead(response):
 	def GET(self):
+		if not self.auth_check():
+			return self.render(base=None).login()
 		
 		ret = 'var names = { "options": [';
 		self.header(content_type="application/json")
@@ -782,13 +839,17 @@ class typeahead(response):
 
 class personal(response):
 	def GET(self, path=None):
+		if not self.auth_check():
+			return self.render(base=None).login()
+		
+		session = get_session()
 		
 		pid = None
 		
 		if path:
 			#print "Path: " + path
 			pid = path[1:]
-			session["selected_pid"] = pid
+			set_session("selected_pid", pid)
 		else:
 			return self.render().personal(db.Personal(), {}, db.RotNoteType, {}, time.strftime("%Y%m%d"))
 		
@@ -844,12 +905,15 @@ class personal(response):
 
 class wunsch(response):
 	def GET(self, path):
+		if not self.auth_check():
+			return self.render(base=None).login()
 		
+		session = get_session()
 		pid = None
 		if path:
 			#print "Path: " + path
 			pid = path[1:]
-			session["selected_pid"] = pid
+			set_session("selected_pid", pid)
 		else:
 			return "No pid"
 		
@@ -911,6 +975,8 @@ class wunsch(response):
 		If there is already a set with the current day, replace it, otherwise 
 		create a new set and make it active.
 		"""
+		if not self.auth_check():
+			return self.render(base=None).login()
 		
 		#get personalid
 		pid = web.input("pid").pid
@@ -996,3 +1062,5 @@ class wunsch(response):
 		path = config.base_uri+'wunsch/' + pid
 		raise web.seeother(path)
 
+if config.web_debug:
+	usbauth.usbauth.debug = True

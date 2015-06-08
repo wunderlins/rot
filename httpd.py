@@ -74,6 +74,7 @@ def init_session(app):
 		web.config.session_parameters['expired_message'] = 'Session expired'
 		
 		temp = tempfile.mkdtemp(dir=config.session_dir, prefix='session_')
+		web.debug("==> init web.session.Session()")
 		s = web.session.Session(
 			app,
 			web.session.DiskStore(temp),
@@ -82,12 +83,12 @@ def init_session(app):
 		#set_session(s)
 		
 	else:
-		print "recycling session"
+		print "==> recycling session"
 		s = web.config._session
 		try:
 			s["pid"]
 		except:
-			print "default session"
+			print "==> default session"
 			s = session_default
 	
 	global session
