@@ -164,3 +164,4 @@ UPDATE personal SET personalid=40001512 WHERE pid=585;
 UPDATE personal SET personalid=40001514 WHERE pid=473;
 UPDATE personal SET personalid=40001664 WHERE pid=511;
 UPDATE personal SET personalid=40002223 WHERE pid=479;
+UPDATE `personal` SET `personalid`='3002338' WHERE `pid`='332';

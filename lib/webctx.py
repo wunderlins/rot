@@ -174,7 +174,8 @@ class response:
 		
 		# check if we have a valid session
 		#print session
-		if session != None and session["pid"] > 0:
+		if session != None and session["eid"] > 0:
+			web.debug("==> Autenticated")
 			self.__authenticated = True
 			return True
 		
@@ -183,6 +184,7 @@ class response:
 			return True
 			
 		# check if the user has submitted credentials
+		web.debug("==> NOT Autenticated")
 		return None
 	
 	def person(self, pid, history):
@@ -240,6 +242,7 @@ class login(response):
 		web.debug(user_data.logout)
 		if (user_data.logout == "true"):
 			#web_session = session_default
+			global session
 			session = session_default
 			if config.base_uri:
 				raise web.seeother(config.base_uri)
