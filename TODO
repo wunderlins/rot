@@ -1,11 +1,11 @@
 == BUGS
- - logout doesn't work when web_debug = False
+ - DONE logout doesn't work when web_debug = False
 
 
 == Milestone 1: Profiles
  - DONE AD Authentisierung
  - DONE HTML login
- - ggf. session handling überarbeiten / testen
+ - DONE ggf. session handling überarbeiten / testen
  - permissions: user/admin
  
 == Milestone 2: Rotplanung
