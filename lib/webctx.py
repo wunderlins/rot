@@ -46,7 +46,8 @@ session_default = {
 	"selected_pid": 0,
 	"eid": None,
 	"pid": None,
-	"user": None
+	"user": None,
+	"isadmin": False
 }
 
 def set_session(n, v):
@@ -279,6 +280,7 @@ class login(response):
 				set_session("pid", row[0])
 				set_session("eid", 0)
 				set_session("user", username)
+				set_session("isadmin", [username in config.adminuser])
 			
 				# if we found one, exit
 				return '{"success": true}'
@@ -300,6 +302,7 @@ class login(response):
 			set_session("eid", emp["employeeNumber"])
 			set_session("user", username)
 			set_session("email", emp["email"])
+			set_session("isadmin", [username in config.adminuser])
 			
 			# now that we have a user, find the pid for this uid
 			ret = db.session.query(db.Personal).\

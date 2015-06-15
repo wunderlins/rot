@@ -197,10 +197,13 @@ $:content
 		
 		$if config.web_debug == True:
 			<hr />
-			pid: $session["pid"]<br/>
-			eid: $session["eid"]<br/>
-			selected_pid: $session["selected_pid"]<br/>
-			user: $session["user"]<br/>
+			<h2>SESSION</h2>
+			<table cellpascing="0" border="1">
+			$for e in session:
+				<tr>
+					<td>$e</td><td>$session[e]</td>
+				</tr>
+			</table>
 			
 			<h2>INPUT</h2>
 			<table cellpascing="0" border="1">

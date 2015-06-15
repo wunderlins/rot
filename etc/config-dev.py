@@ -23,3 +23,5 @@ session_timeout=86400 #24 * 60 * 60, # 24 hours   in seconds
 session_dir='var'
 
 base_uri=""
+
+adminuser=["wunderlins","girardt"]
