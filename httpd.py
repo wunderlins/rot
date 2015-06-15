@@ -116,5 +116,5 @@ else:
 	app.add_processor(web.loadhook(loadhook))
 	app.add_processor(web.unloadhook(unloadhook))
 	
-	application = app.wsgifunc()
+	application = app.wsgifunc(Log)
 
