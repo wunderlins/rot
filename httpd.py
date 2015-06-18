@@ -110,6 +110,7 @@ if __name__ == "__main__":
 	app.run(config.port, "0.0.0.0", Log)
 else:
 	
+	web.config.debug = config.web_debug
 	app = web.application(urls, globals())
 	init_session(app)
 	

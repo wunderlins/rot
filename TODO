@@ -3,6 +3,7 @@
 
 
 == Milestone 1: Profiles
+ - Display all personal information on profile
  - DONE AD Authentisierung
  - DONE HTML login
  - DONE ggf. session handling überarbeiten / testen
@@ -18,6 +19,7 @@
 
 
 - HIGH prio: add phone number(s?), email(s?) to profile
+  DONE: email and phone from AD
 - DONE FIXME: add try catch to all commits in webctx
 
 - FIXME: image upload from phone failed after about 10% uploading
