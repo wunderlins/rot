@@ -186,6 +186,7 @@ class response:
 			
 		# check if the user has submitted credentials
 		web.debug("==> NOT Autenticated")
+		web.debug(web.config.get('_session'))
 		return None
 	
 	def person(self, pid, history):
@@ -893,6 +894,12 @@ class personal(response):
 			db.session.rollback()
 			# FIXME: handle DB Error
 		
+		
+		# erfahrung
+		erfahrung = db.session.query(db.Erfahrung)\
+			.order_by(db.Erfahrung.von_mj.desc())
+		
+		
 		# alternative personen und vertraege
 		"""
 		vertraege = []
@@ -906,7 +913,8 @@ class personal(response):
 			for v in vert:
 				vertraege.apppend(v)
 		"""
-		return self.render().personal(person, wunsch, db.RotNoteType, notes, time.strftime("%Y%m%d"), tags)
+		return self.render().personal(person, wunsch, db.RotNoteType, notes, \
+		                              time.strftime("%Y%m%d"), tags, erfahrung)
 		#return "Hello World"
 
 class wunsch(response):

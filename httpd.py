@@ -69,7 +69,7 @@ def init_session(app):
 		web.config.session_parameters['cookie_domain'] = None
 		web.config.session_parameters['timeout'] = config.session_timeout,
 		web.config.session_parameters['ignore_expiry'] = True
-		web.config.session_parameters['ignore_change_ip'] = False
+		web.config.session_parameters['ignore_change_ip'] = True
 		web.config.session_parameters['secret_key'] = config.session_salt
 		web.config.session_parameters['expired_message'] = 'Session expired'
 		
@@ -107,6 +107,9 @@ if __name__ == "__main__":
 	app.add_processor(web.loadhook(loadhook))
 	app.add_processor(web.unloadhook(unloadhook))
 	
+	# web.myapp = app
+	# web.init_session = init_session
+	
 	app.run(config.port, "0.0.0.0", Log)
 else:
 	
@@ -116,6 +119,9 @@ else:
 	
 	app.add_processor(web.loadhook(loadhook))
 	app.add_processor(web.unloadhook(unloadhook))
+	
+	# web.myapp = app
+	# web.init_session = init_session
 	
 	application = app.wsgifunc(Log)
 

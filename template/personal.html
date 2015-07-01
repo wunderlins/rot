@@ -1,4 +1,4 @@
-$def with (person, wunsch, RotNoteType, notes, today, tags)
+$def with (person, wunsch, RotNoteType, notes, today, tags, erfahrung)
 <!--
 <ul class="list-group" id="users">
 </ul>
@@ -180,7 +180,63 @@ $person.name $person.vorname ($person.kuerzel)</h1>
 		
 	</div>
 	<div class="col-sm-4 col-xs-12">
-		Verträge
+
+		<div class="panel panel-default">
+			<!-- Default panel contents -->
+			<div class="panel-heading">Weiterbildungen</div>
+
+			<!-- Table -->
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Jahr</th>
+						<th>Weiterbildung</th>
+					</tr>
+				</thead>
+				<tbody>
+				$for e in erfahrung:
+					$if e.was[0:2] == "**":
+						<tr>
+							<td>$e.von_mj</td>
+							<td>
+								$e.was[2:].upper()
+							</td>
+						</tr>
+					
+				</tbody>
+			</table>
+		</div>
+
+		<div class="panel panel-default">
+			<!-- Default panel contents -->
+			<div class="panel-heading">Erfahrung</div>
+
+			<!-- Table -->
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Jahr</th>
+						<th>Dauer</th>
+						<th>Ort</th>
+						<th>Rotation</th>
+					</tr>
+				</thead>
+				<tbody>
+				$for e in erfahrung:
+					$if e.was[0:2] == "**":
+						$continue
+					<tr>
+						<td>$e.von_mj</td>
+						<td>$e.monate</td>
+						<td>$e.ort</td>
+						<td>$e.was</td>
+					</tr>
+					
+				</tbody>
+			</table>
+		</div>
+
+
 	</div>
 </div>
 

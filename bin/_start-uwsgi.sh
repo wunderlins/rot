@@ -21,6 +21,7 @@ $bin  --plugin python,http \
       --pidfile var/rot.pid \
       --daemonize $web_logfile \
       --workers 1 \
-      --plugins-dir "$basedir/lib" 
+      --plugins-dir "$basedir/lib" \
+      --single-interpreter
 #      --logto $web_logfile \
 #      --daemonize2 var/uwsgi.log
