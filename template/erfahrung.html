@@ -36,6 +36,12 @@ var erfahrung = {
 				$$("#pals_j").val(jahr)
 			}
 			
+			if (nm == "notarzt") {
+				$$("#notarzt").attr('checked', true);
+				$$("#notarzt_ort").val(wo)
+				$$("#notarzt_j").val(jahr)
+			}
+			
 			erfahrung.count--
 			return true;
 		}
@@ -160,6 +166,15 @@ var erfahrung = {
 			}
 		}
 		
+		if (e = $$("#notarzt").is(":checked")) {
+			result[result.length] = {
+				was: "**notarzt",
+				ort: $$("#notarzt_ort").val(),
+				von: "" + $$("#notarzt_j").val(),
+				dauer: null
+			}
+		}
+		
 		console.log(result)
 		
 		$$.ajax({
@@ -205,8 +220,7 @@ Anästhesie Erfahrung</h1>
 	<div class="col-sm-3 col-xs-7">
 		<input type="text" value="" name="ort_" id="ort_" size="25" class="form-control" placeholder="Ort" required = "required"/>
 	</div>
-
-
+	
 	<div class="col-sm-7 col-xs-12">
 		<div class="form-group">
 			<label>Beginn: </label>
@@ -259,6 +273,13 @@ Weiterbildungen</h1>
 			</label>
 			<input type="number" value="" name="pals_j" id="pals_j" size="4" class="form-control" placeholder="Jahr" min="1950" max="2100" step="1"/>
 			<input type="text" value="" name="pals_ort" id="pals_ort" size="25" class="form-control" placeholder="Ort"/>
+		</div>	
+		<div class="checkbox">
+			<label>
+				<input type="checkbox" name="notarzt" id="notarzt"/> Notarzt
+			</label>
+			<input type="number" value="" name="notarzt_j" id="notarzt_j" size="4" class="form-control" placeholder="Jahr" min="1950" max="2100" step="1"/>
+			<input type="text" value="" name="notarzt_ort" id="notarzt_ort" size="25" class="form-control" placeholder="Ort"/>
 		</div>	
 	</div>
 </form>
