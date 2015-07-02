@@ -22,4 +22,6 @@ session_salt="26fe3630-a4af-45bd-b063-3a9917c8cb97"
 session_timeout=86400 #24 * 60 * 60, # 24 hours   in seconds
 session_dir='var'
 
-base_uri="/rot/"
+base_uri="/rot"
+
+adminuser=["wunderlins","girardt"]

@@ -244,12 +244,11 @@ class login(response):
 		web.debug(user_data.logout)
 		if (user_data.logout == "true"):
 			#web_session = session_default
-			global session
-			session = session_default
-			if config.base_uri:
-				raise web.seeother(config.base_uri)
-			else:
-				raise web.seeother("/")
+			session = get_session()
+			for e in session_default:
+				set_session(e, session_default[e])
+				
+			raise web.seeother(config.base_uri + "/")
 	
 	""" authenticate user """
 	def POST(self):
@@ -272,6 +271,7 @@ class login(response):
 		check = cur.execute(sql, (username, pwhash))
 		web.debug(str(check) + " " + str(cur.rowcount))
 		
+		a = [username in config.adminuser][0]
 		if check:
 			row = cur.fetchone()
 			if row:
@@ -279,9 +279,10 @@ class login(response):
 				web.debug(row)
 				#web_session = session_default
 				set_session("pid", row[0])
+				#set_session("selected_pid", row[0])
 				set_session("eid", 0)
 				set_session("user", username)
-				set_session("isadmin", [username in config.adminuser])
+				set_session("isadmin", a[0])
 			
 				# if we found one, exit
 				return '{"success": true}'
@@ -303,7 +304,7 @@ class login(response):
 			set_session("eid", emp["employeeNumber"])
 			set_session("user", username)
 			set_session("email", emp["email"])
-			set_session("isadmin", [username in config.adminuser])
+			set_session("isadmin", a)
 			
 			# now that we have a user, find the pid for this uid
 			ret = db.session.query(db.Personal).\
@@ -326,6 +327,11 @@ class index(response):
 	def GET(self):
 		if not self.auth_check():
 			return self.render(base=None).login()
+		
+		# check if the user is allowed to access this page, otherwise redirect
+		if not session["isadmin"]:
+			path = config.base_uri+'/erfahrung/' + str(session["pid"])
+			raise web.seeother(path)			
 		
 		# 1) get all due tasks
 		due_date = datetime.datetime.utcnow() + datetime.timedelta(days=7)
@@ -418,7 +424,7 @@ class erfahrung(response):
 		web.header('Content-Type', 'application/json; charset=utf-8', unique=True)
 		return '{"success": true, "data": null}'
 		
-		path = config.base_uri+'erfahrung/'+pid
+		path = config.base_uri+'/erfahrung/'+pid
 		#raise web.seeother(path)
 		
 		# ATLS, ACLS, PALS
@@ -676,7 +682,7 @@ class image(response):
 		if path == "":
 			path = '../static/avatar.svg'
 			if config.base_uri:
-				path = config.base_uri+'static/avatar.svg'
+				path = config.base_uri+'/static/avatar.svg'
 		print path
 		raise web.seeother(path)
 	
@@ -850,6 +856,11 @@ class personal(response):
 			return self.render(base=None).login()
 		
 		session = get_session()
+		
+		# check if the user is allowed to access this page, otherwise redirect
+		if not session["isadmin"]:
+			path = config.base_uri+'/erfahrung/' + str(session["pid"])
+			raise web.seeother(path)			
 		
 		pid = None
 		
@@ -1073,7 +1084,7 @@ class wunsch(response):
 		db.session.add_all(inserts)
 		#db.session.commit()
 		
-		path = config.base_uri+'wunsch/' + pid
+		path = config.base_uri+'/wunsch/' + str(pid)
 		raise web.seeother(path)
 
 if config.web_debug:
