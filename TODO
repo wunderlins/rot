@@ -7,9 +7,20 @@
  - DONE AD Authentisierung
  - DONE HTML login
  - DONE ggf. session handling überarbeiten / testen
- - permissions: user/admin
+ - DONE permissions: user/admin
+ - add file upload
+ - add image upload
+ - prüfungen erweitern gem. mail von hierry (ohne jahr)
+ - kategorisierung der aussenrotationen:
+   * anästhesie, intensiv, innere, chir, anderes
  
 == Milestone 2: Rotplanung
+ - liste zur priorisierung, sortirt nach
+   * austrittsdatum
+   * prüfung mündlich
+   * dito schrifftlich
+   * anz jahre
+   * geplantes austrittsdatum (je näher desto höher prio)
  - Grid
  
 == Milestone 3: Usability
