@@ -7,3 +7,4 @@ wsgilog-0.3
 wsgilog/*
 uwsgi-2.0.10
 *.so
+Beaker-1.7.0
