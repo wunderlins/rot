@@ -27,6 +27,7 @@ if __name__ == "__main__":
 			fp = open(tnpath, "w")
 			fp.write(p.foto_thumbnail)
 			fp.close()
-			print "%s created" % p.pid
+			print "%s thumbnail created" % p.pid
 		else:
-			print "%s exists" % p.pid
+			#print "%s exists" % p.pid
+			pass
