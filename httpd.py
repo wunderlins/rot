@@ -13,19 +13,24 @@ import os, sys
 #os.chdir(os.path.dirname(__file__))
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'lib'))
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'lib', 'web'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'lib', 'beaker'))
 
 import web, config, json, db
 import datetime
 import time
 from sqlalchemy import *
 import tpl
-from webctx import *
+#from webctx import *
+import webctx
 import tempfile
 
 session_default = {
 	"selected_pid": 0,
 	"pid": None,
-	"user": None
+	"user": None,
+	"isadmin": False,
+	"email": None,
+	"eid": None
 }
 
 def unloadhook():
@@ -36,6 +41,7 @@ def loadhook():
 	print datetime.datetime.now().strftime("%Y-%m-%d %H.%M.%S") + "\t" +\
 	web.ctx.method + "\t" + \
 	web.ctx.env.get('REQUEST_URI')
+	#init_session(app)
 
 # allow to pass a custom port/ip into the application
 class rot(web.application):
@@ -62,7 +68,6 @@ class Log(WsgiLog):
 		)
 
 def init_session(app):
-	s = None
 	if web.config.get('_session') is None:
 		print "no session"
 		web.config.session_parameters['cookie_name'] = 'rot'
@@ -75,7 +80,7 @@ def init_session(app):
 		
 		temp = tempfile.mkdtemp(dir=config.session_dir, prefix='session_')
 		web.debug("==> init web.session.Session()")
-		s = web.session.Session(
+		webctx.session = web.session.Session(
 			app,
 			web.session.DiskStore(temp),
 			initializer = session_default
@@ -84,16 +89,17 @@ def init_session(app):
 		
 	else:
 		print "==> recycling session"
-		s = web.config._session
+		webctx.session = web.config._session
+		"""
 		try:
 			s["pid"]
 		except:
 			print "==> default session"
 			s = session_default
-	
-	global session
-	session = s
-	
+		"""
+	#global session
+	#session = s
+
 if __name__ == "__main__":
 	
 	curdir = os.path.dirname(__file__)
@@ -101,7 +107,7 @@ if __name__ == "__main__":
 	web.config.debug = config.web_debug
 	#web.config.debug = False
 	
-	app = rot(urls, globals())
+	app = rot(webctx.urls, globals())
 	init_session(app)
 	
 	app.add_processor(web.loadhook(loadhook))
@@ -114,7 +120,7 @@ if __name__ == "__main__":
 else:
 	
 	web.config.debug = config.web_debug
-	app = web.application(urls, globals())
+	app = web.application(webctx.urls, globals())
 	init_session(app)
 	
 	app.add_processor(web.loadhook(loadhook))

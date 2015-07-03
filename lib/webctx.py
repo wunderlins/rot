@@ -12,17 +12,17 @@ import hashlib
 import sqlite3
 
 urls = (
-  '/', 'index',
-  '/personal(.*)', 'personal',
-	'/personal_data', 'personal_data',
-	'/test', 'test', # test methods, remove these in production
-	'/wunsch(.*)', 'wunsch', # test methods, remove these in production
-	'/wunsch_save(.*)', 'wunsch',
-	'/typeahead', 'typeahead',
-	'/image(.*)', 'image',
-	'/rotnote(.*)', 'rotnote',
-	'/erfahrung(.*)', 'erfahrung',
-  '/login', 'login'
+  '/', 'webctx.index',
+  '/personal(.*)', 'webctx.personal',
+	'/personal_data', 'webctx.personal_data',
+	'/test', 'webctx.test', # test methods, remove these in production
+	'/wunsch(.*)', 'webctx.wunsch', # test methods, remove these in production
+	'/wunsch_save(.*)', 'webctx.wunsch',
+	'/typeahead', 'webctx.typeahead',
+	'/image(.*)', 'webctx.image',
+	'/rotnote(.*)', 'webctx.rotnote',
+	'/erfahrung(.*)', 'webctx.erfahrung',
+  '/login', 'webctx.login'
 )
 
 from HTMLParser import HTMLParser
@@ -39,6 +39,7 @@ except:
 web.debug("==> Resetting session!")
 session = None
 
+"""
 # FIXME: add a separate uid, next to pid
 #        pid: planoaa person id
 #        eid: ad employee id
@@ -49,7 +50,9 @@ session_default = {
 	"user": None,
 	"isadmin": False
 }
+"""
 
+"""
 def set_session(n, v):
 	global session
 	if session == None:
@@ -59,6 +62,7 @@ def set_session(n, v):
 def get_session():
 	global session
 	return session
+"""
 
 class MLStripper(HTMLParser):
 	def __init__(self):
@@ -81,28 +85,29 @@ def basic_auth():
 		('admin', 'pass'),
 	)
 	
+	"""
 	#session = get_session()
 	session = get_session()
 	if session == None:
 		for e in session_default:
 			set_session(e, session_default[e])
-	
+	"""
 	print session
 	print "session: "
 	for e in session:
 		print "%s, %s" % (e, session[e])
 	
 	auth = web.ctx.env.get('HTTP_AUTHORIZATION')
-	if auth is not None and session["user"] == None:
-		session["user"] = None
+	if auth is not None and session.user == None:
+		session.user = None
 		auth = re.sub('^Basic ', '', auth)
 		username, password = base64.decodestring(auth).split(':')
 		#print username,password
 		if (username, password) in allowed:
 			#print "allowd"
-			session["user"] = username
-			session["pid"] = 0
-			session["selected_pid"] = 0
+			session.user = username
+			session.pid = 0
+			session.selected_pid = 0
 			return
 	
 	if session["user"] == None:
@@ -124,12 +129,13 @@ class response:
 		Not sure if this is a sane way.
 		
 		"""
+		"""
 		session = get_session()
 		if session == None:
 			web.debug("==> session init in response.__init__")
 			for e in session_default:
 				set_session(e, session_default[e])
-	
+		"""
 	def header(self, content_type="text/html"):
 		web.header('Content-Type', content_type+'; charset=utf-8', unique=True) 
 		web.header('Cache-Control','no-cache, no-store, must-revalidate')
@@ -138,7 +144,7 @@ class response:
 	
 	def render(self, base="layout"):
 		global urls
-		session = get_session()
+		#session = get_session()
 		print session
 		return web.template.render('template', base=base, globals={
 			'wunsch_select_wunsch': tpl.wunsch_select_wunsch,
@@ -171,11 +177,11 @@ class response:
 		"""
 		
 		#web_session = get_session()
-		session = get_session()
+		#session = get_session()
 		
 		# check if we have a valid session
 		#print session
-		if session != None and session["eid"] > 0:
+		if session != None and session.eid > 0:
 			web.debug("==> Autenticated")
 			self.__authenticated = True
 			return True
@@ -244,10 +250,12 @@ class login(response):
 		web.debug(user_data.logout)
 		if (user_data.logout == "true"):
 			#web_session = session_default
+			"""
 			session = get_session()
 			for e in session_default:
 				set_session(e, session_default[e])
-				
+			"""
+			# FIXME: reset session
 			raise web.seeother(config.base_uri + "/")
 	
 	""" authenticate user """
@@ -278,11 +286,11 @@ class login(response):
 				authdb.close()
 				web.debug(row)
 				#web_session = session_default
-				set_session("pid", row[0])
+				session.pid = row[0]
 				#set_session("selected_pid", row[0])
-				set_session("eid", 0)
-				set_session("user", username)
-				set_session("isadmin", a[0])
+				session.eid = 0
+				session.user = username
+				session.isadmin = a[0]
 			
 				# if we found one, exit
 				return '{"success": true}'
@@ -298,13 +306,15 @@ class login(response):
 		)
 		
 		emp = usbauth.check(username, password)
+		#global session
+		web.debug(session)
 		if (emp and emp["lockoutTime"] == None):
 			#web_session = session_default
-			set_session("pid", 0)
-			set_session("eid", emp["employeeNumber"])
-			set_session("user", username)
-			set_session("email", emp["email"])
-			set_session("isadmin", a)
+			session.pid = 0
+			session.eid = emp["employeeNumber"]
+			session.user = username
+			session.email = emp["email"]
+			session.isadmin = a
 			
 			# now that we have a user, find the pid for this uid
 			ret = db.session.query(db.Personal).\
@@ -312,12 +322,12 @@ class login(response):
 			#web.debug("pid: " + str(ret[0].pid))
 			
 			try:
-				set_session("pid", ret[0].pid)
+				session.pid = ret[0].pid
 			except:
 				pass # FIXME do we have to catch unknown pids on login or just ignore ?
 			
 			web.debug("==> succesfully logged in")
-			web.debug(get_session())
+			web.debug(session)
 			
 			return '{"success": true}'
 		
@@ -363,13 +373,13 @@ class erfahrung(response):
 		if not self.auth_check():
 			return self.render(base=None).login()
 		
-		session = get_session()
+		#session = get_session()
 		
 		pid = None
 		if path:
 			#print "Path: " + path
 			pid = path[1:]
-			session["selected_pid"] = pid
+			session.selected_pid = pid
 		else:
 			return "No pid"
 		
@@ -392,7 +402,7 @@ class erfahrung(response):
 		if path:
 			#print "Path: " + path
 			pid = path[1:]
-			session["selected_pid"] = pid
+			session.selected_pid = pid
 		else:
 			return "No pid"
 		
@@ -424,7 +434,7 @@ class erfahrung(response):
 		web.header('Content-Type', 'application/json; charset=utf-8', unique=True)
 		return '{"success": true, "data": null}'
 		
-		path = config.base_uri+'/erfahrung/'+pid
+		path = config.base_uri+'/erfahrung/' + str(pid)
 		#raise web.seeother(path)
 		
 		# ATLS, ACLS, PALS
@@ -855,11 +865,11 @@ class personal(response):
 		if not self.auth_check():
 			return self.render(base=None).login()
 		
-		session = get_session()
+		#session = get_session()
 		
 		# check if the user is allowed to access this page, otherwise redirect
-		if not session["isadmin"]:
-			path = config.base_uri+'/erfahrung/' + str(session["pid"])
+		if not session.isadmin:
+			path = config.base_uri+'/erfahrung/' + str(session.pid)
 			raise web.seeother(path)			
 		
 		pid = None
@@ -867,7 +877,7 @@ class personal(response):
 		if path:
 			#print "Path: " + path
 			pid = path[1:]
-			set_session("selected_pid", pid)
+			session.selected_pid = pid
 		else:
 			return self.render().personal(db.Personal(), {}, db.RotNoteType, {}, time.strftime("%Y%m%d"))
 		
@@ -933,12 +943,12 @@ class wunsch(response):
 		if not self.auth_check():
 			return self.render(base=None).login()
 		
-		session = get_session()
+		#session = get_session()
 		pid = None
 		if path:
 			#print "Path: " + path
 			pid = path[1:]
-			set_session("selected_pid", pid)
+			session.selected_pid = pid
 		else:
 			return "No pid"
 		
