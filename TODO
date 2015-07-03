@@ -1,6 +1,7 @@
 == BUGS
  - DONE logout doesn't work when web_debug = False
  - session management persistent over different computers? FTW
+ - FIX logout, kill session propperly
 
 
 == Milestone 1: Profiles

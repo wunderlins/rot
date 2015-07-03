@@ -252,13 +252,7 @@ class login(response):
 		user_data = web.input(logout=False)
 		web.debug(user_data.logout)
 		if (user_data.logout == "true"):
-			#web_session = session_default
-			"""
-			session = get_session()
-			for e in session_default:
-				set_session(e, session_default[e])
-			"""
-			# FIXME: reset session
+			session.kill()
 			raise web.seeother(config.base_uri + "/")
 	
 	""" authenticate user """
