@@ -66,6 +66,11 @@ function reload() {
 	. $basedir/lib/setenv.sh
 }
 
+function rebuild() {
+	rm $basedir/static/thumbnails/*.jpg
+	$basedir/bin/cache_images.py
+}
+
 alias bash_help="bash -c 'help'"
 
 function help() {
@@ -87,6 +92,9 @@ status
 
 reload
 	reload configuration
+
+rebuild
+	clears and rebuilds the thumbnail cache on disk.
 
 NOTE: The bash's builtin help is now available as 'bash_help'.
 

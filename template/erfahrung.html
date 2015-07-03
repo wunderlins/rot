@@ -3,6 +3,7 @@ $def with (pid, erfahrung)
 <style type="text/css">
 #row_prototype {display: none;}
 #error {display: none}
+.fortbildung div label {width: 15em;}
 </style>
 
 <script type="application/javascript">
@@ -40,6 +41,31 @@ var erfahrung = {
 				$$("#notarzt").attr('checked', true);
 				$$("#notarzt_ort").val(wo)
 				$$("#notarzt_j").val(jahr)
+			}
+			
+			if (nm == "facharzt") {
+				$$("#facharzt").attr('checked', true);
+				$$("#facharzt_j").val(jahr)
+			}
+			
+			if (nm == "ana_schriftlich") {
+				$$("#ana_schriftlich").attr('checked', true);
+				$$("#ana_schriftlich_j").val(jahr)
+			}
+			
+			if (nm == "ana_muendlich") {
+				$$("#ana_muendlich").attr('checked', true);
+				$$("#ana_muendlich_j").val(jahr)
+			}
+			
+			if (nm == "intensiv_schriftlich") {
+				$$("#intensiv_schriftlich").attr('checked', true);
+				$$("#intensiv_schriftlich_j").val(jahr)
+			}
+			
+			if (nm == "intensiv_muendlich") {
+				$$("#intensiv_muendlich").attr('checked', true);
+				$$("#intensiv_muendlich_j").val(jahr)
 			}
 			
 			erfahrung.count--
@@ -175,6 +201,51 @@ var erfahrung = {
 			}
 		}
 		
+		if (e = $$("#facharzt").is(":checked")) {
+			result[result.length] = {
+				was: "**facharzt",
+				ort: null,
+				von: "" + $$("#facharzt_j").val(),
+				dauer: null
+			}
+		}
+		
+		if (e = $$("#ana_schriftlich").is(":checked")) {
+			result[result.length] = {
+				was: "**ana_schriftlich",
+				ort: null,
+				von: "" + $$("#ana_schriftlich_j").val(),
+				dauer: null
+			}
+		}
+		
+		if (e = $$("#ana_muendlich").is(":checked")) {
+			result[result.length] = {
+				was: "**ana_muendlich",
+				ort: null,
+				von: "" + $$("#ana_muendlich_j").val(),
+				dauer: null
+			}
+		}
+
+		if (e = $$("#intensiv_schriftlich").is(":checked")) {
+			result[result.length] = {
+				was: "**intensiv_schriftlich",
+				ort: null,
+				von: "" + $$("#intensiv_schriftlich_j").val(),
+				dauer: null
+			}
+		}
+
+		if (e = $$("#intensiv_muendlich").is(":checked")) {
+			result[result.length] = {
+				was: "**intensiv_muendlich",
+				ort: null,
+				von: "" + $$("#intensiv_muendlich_j").val(),
+				dauer: null
+			}
+		}
+		
 		console.log(result)
 		
 		$$.ajax({
@@ -252,7 +323,48 @@ Weiterbildungen</h1>
 
 <form class="form-inline row" id="fbform" method="post" action="erfahrung/wb/$pid">
 
-	<div class="col-sm-6 col-xs-12">
+	<div class="col-sm-6 col-xs-12 fortbildung">
+		
+		<div class="checkbox">
+			<label>
+				<input type="checkbox" name="facharzt" id="facharzt"/> Facharzprüfung
+			</label>
+			<input type="number" value="" name="facharzt_j" id="facharzt_j" size="4" class="form-control" placeholder="Jahr" min="1950" max="2100" step="1"/>
+			<input type="hidden" value="" name="facharzt_ort" id="facharzt_ort" size="25" class="form-control" placeholder="Ort"/>
+		</div>
+		
+		<div class="checkbox">
+			<label>
+				<input type="checkbox" name="ana_schriftlich" id="ana_schriftlich"/> Anästhesie schriftlich
+			</label>
+			<input type="number" value="" name="ana_schriftlich_j" id="ana_schriftlich_j" size="4" class="form-control" placeholder="Jahr" min="1950" max="2100" step="1"/>
+			<input type="hidden" value="" name="ana_schriftlich_ort" id="ana_schriftlich_ort" size="25" class="form-control" placeholder="Ort"/>
+		</div>
+		
+		<div class="checkbox">
+			<label>
+				<input type="checkbox" name="ana_muendlich" id="ana_muendlich"/> Anästhesie mündlich
+			</label>
+			<input type="number" value="" name="ana_muendlich_j" id="ana_muendlich_j" size="4" class="form-control" placeholder="Jahr" min="1950" max="2100" step="1"/>
+			<input type="hidden" value="" name="ana_muendlich_ort" id="ana_muendlich_ort" size="25" class="form-control" placeholder="Ort"/>
+		</div>
+		
+		<div class="checkbox">
+			<label>
+				<input type="checkbox" name="intensiv_schriftlich" id="intensiv_schriftlich"/> Intensivmedizin schriftlich
+			</label>
+			<input type="number" value="" name="intensiv_schriftlich_j" id="intensiv_schriftlich_j" size="4" class="form-control" placeholder="Jahr" min="1950" max="2100" step="1"/>
+			<input type="hidden" value="" name="intensiv_schriftlich_ort" id="intensiv_schriftlich_ort" size="25" class="form-control" placeholder="Ort"/>
+		</div>
+		
+		<div class="checkbox">
+			<label>
+				<input type="checkbox" name="intensiv_muendlich" id="intensiv_muendlich"/> Intensivmedizin mündlich
+			</label>
+			<input type="number" value="" name="intensiv_muendlich_j" id="intensiv_muendlich_j" size="4" class="form-control" placeholder="Jahr" min="1950" max="2100" step="1"/>
+			<input type="hidden" value="" name="intensiv_muendlich_ort" id="intensiv_muendlich_ort" size="25" class="form-control" placeholder="Ort"/>
+		</div>
+
 		<div class="checkbox">
 			<label>
 				<input type="checkbox" name="atls" id="atls"/> ATLS
@@ -273,14 +385,16 @@ Weiterbildungen</h1>
 			</label>
 			<input type="number" value="" name="pals_j" id="pals_j" size="4" class="form-control" placeholder="Jahr" min="1950" max="2100" step="1"/>
 			<input type="text" value="" name="pals_ort" id="pals_ort" size="25" class="form-control" placeholder="Ort"/>
-		</div>	
+		</div>
+		
 		<div class="checkbox">
 			<label>
 				<input type="checkbox" name="notarzt" id="notarzt"/> Notarzt
 			</label>
 			<input type="number" value="" name="notarzt_j" id="notarzt_j" size="4" class="form-control" placeholder="Jahr" min="1950" max="2100" step="1"/>
 			<input type="text" value="" name="notarzt_ort" id="notarzt_ort" size="25" class="form-control" placeholder="Ort"/>
-		</div>	
+		</div>
+
 	</div>
 </form>
 
