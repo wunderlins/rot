@@ -203,9 +203,10 @@ $:content
 			<hr />
 			<h2>SESSION</h2>
 			<table cellpascing="0" border="1">
-			for e in session:
+			$ d = session.get_data()
+			$for e in session.get_data().keys():
 				<tr>
-					<td>e</td><td>session[e]</td>
+					<td>$e</td><td>$session.get(e)</td>
 				</tr>
 			</table>
 			

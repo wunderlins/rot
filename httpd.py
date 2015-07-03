@@ -23,6 +23,7 @@ import tpl
 #from webctx import *
 import webctx
 import tempfile
+from websession import WebSession
 
 session_default = {
 	"selected_pid": 0,
@@ -80,7 +81,7 @@ def init_session(app):
 		
 		temp = tempfile.mkdtemp(dir=config.session_dir, prefix='session_')
 		web.debug("==> init web.session.Session()")
-		webctx.session = web.session.Session(
+		webctx.session = WebSession(
 			app,
 			web.session.DiskStore(temp),
 			initializer = session_default
