@@ -367,6 +367,7 @@ class index(response):
 	
 class erfahrung(response):
 	
+	# TODO: should move this to the db module
 	erftype = [
 		"Anästhesie",
 		"Intensiv",
@@ -532,7 +533,6 @@ class rotnote(response):
 		
 		if id and p.action == "update":
 			print "Update"
-			# TODO: update tags
 			try:
 				r = db.session.query(db.RotNote).filter_by(id=id)[0]
 				d = None
@@ -719,8 +719,6 @@ class image(response):
 			personal = db.session.query(db.Personal).filter_by(pid=pid)[0]
 		except:
 			db.session.rollback()
-			# FIXME: handle DB Error
-			#print personal
 	
 		if len(personal.rot_pers) == 0:
 			p = db.Person()
@@ -1059,7 +1057,7 @@ class wunsch(response):
 		
 		#print wunsch
 		
-		# TODO: delete all latest flags
+		# delete all latest flags
 		try:
 			lw = db.session.query(db.Wunsch).filter_by(pid=pid, latest=1)
 		except:
