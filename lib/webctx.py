@@ -366,6 +366,15 @@ class index(response):
 		return self.render().index(web.ctx, tags, db.RotNoteType, due)
 	
 class erfahrung(response):
+	
+	erftype = [
+		"Anästhesie",
+		"Intensiv",
+		"Innere",
+		"Chirurgie",
+		"Anderes"
+	]
+	
 	def GET(self, path):
 		if not self.auth_check():
 			return self.render(base=None).login()
@@ -389,7 +398,7 @@ class erfahrung(response):
 		else:
 			return "Missing pid"
 		"""
-		return self.render().erfahrung(pid, erf)
+		return self.render().erfahrung(pid, erf, self.erftype)
 
 	def POST(self, path):
 		if not self.auth_check():
@@ -418,11 +427,15 @@ class erfahrung(response):
 		# import all "weiterbilduungen"
 		for e in inp["erfahrung"]:
 			d = None
+			t = None
 			if (e["dauer"]):
 				d = int(e["dauer"])
+			if (e["typ"]):
+				t = int(e["typ"])
 			r = db.Erfahrung(pid=int(pid), \
 			                 von_mj=int(e["von"]), \
 			                 monate=d, \
+											 typ=t, \
 			                 ort=e["ort"], \
 			                 was=e["was"])
 			db.session.add(r)

@@ -1,4 +1,4 @@
-$def with (pid, erfahrung)
+$def with (pid, erfahrung, erftyp)
 
 <style type="text/css">
 #row_prototype {display: none;}
@@ -12,7 +12,7 @@ var erfahrung = {
 	count: 0,
 	errors: false,
 
-	clone_row: function(ix, was, wo, jahr, monate) {
+	clone_row: function(ix, was, wo, jahr, monate, typ) {
 		
 		if (was && was.substr(0, 2) == '**') {
 			
@@ -93,6 +93,7 @@ var erfahrung = {
 		$$("#ort_"+ix).val(wo)
 		$$("#von_j_"+ix).val(jahr)
 		$$("#dauer_"+ix).val(monate)
+		$$("#erftyp_"+ix+" option[value='"+typ+"']").attr("selected", "selected")
 	},
 
 	validate: function(el, state) {
@@ -129,7 +130,8 @@ var erfahrung = {
 				was: $$("#was_"+i).val(),
 				ort: $$("#ort_"+i).val(),
 				von: "" + $$("#von_j_"+i).val(),
-				dauer: "" + $$("#dauer_"+i).val()
+				dauer: "" + $$("#dauer_"+i).val(),
+				typ: "" + $$("#erftyp_"+i).val()
 			}
 		
 			//console.log(row.was)
@@ -170,7 +172,8 @@ var erfahrung = {
 				was: "**atls",
 				ort: $$("#atls_ort").val(),
 				von: "" + $$("#atls_j").val(),
-				dauer: null
+				dauer: null,
+				typ: null
 			}
 		}
 		
@@ -179,7 +182,8 @@ var erfahrung = {
 				was: "**acls",
 				ort: $$("#acls_ort").val(),
 				von: "" + $$("#acls_j").val(),
-				dauer: null
+				dauer: null,
+				typ: null
 			}
 		}
 		
@@ -188,7 +192,8 @@ var erfahrung = {
 				was: "**pals",
 				ort: $$("#pals_ort").val(),
 				von: "" + $$("#pals_j").val(),
-				dauer: null
+				dauer: null,
+				typ: null
 			}
 		}
 		
@@ -197,7 +202,8 @@ var erfahrung = {
 				was: "**notarzt",
 				ort: $$("#notarzt_ort").val(),
 				von: "" + $$("#notarzt_j").val(),
-				dauer: null
+				dauer: null,
+				typ: null
 			}
 		}
 		
@@ -206,7 +212,8 @@ var erfahrung = {
 				was: "**facharzt",
 				ort: null,
 				von: "" + $$("#facharzt_j").val(),
-				dauer: null
+				dauer: null,
+				typ: null
 			}
 		}
 		
@@ -215,7 +222,8 @@ var erfahrung = {
 				was: "**ana_schriftlich",
 				ort: null,
 				von: "" + $$("#ana_schriftlich_j").val(),
-				dauer: null
+				dauer: null,
+				typ: null
 			}
 		}
 		
@@ -224,7 +232,8 @@ var erfahrung = {
 				was: "**ana_muendlich",
 				ort: null,
 				von: "" + $$("#ana_muendlich_j").val(),
-				dauer: null
+				dauer: null,
+				typ: null
 			}
 		}
 
@@ -233,7 +242,8 @@ var erfahrung = {
 				was: "**intensiv_schriftlich",
 				ort: null,
 				von: "" + $$("#intensiv_schriftlich_j").val(),
-				dauer: null
+				dauer: null,
+				typ: null
 			}
 		}
 
@@ -242,7 +252,8 @@ var erfahrung = {
 				was: "**intensiv_muendlich",
 				ort: null,
 				von: "" + $$("#intensiv_muendlich_j").val(),
-				dauer: null
+				dauer: null,
+				typ: null
 			}
 		}
 		
@@ -270,7 +281,7 @@ var erfahrung = {
 add_load_handler(function() {
 	if (erfahrung.count == 0) {
 		$for e in erfahrung:
-			erfahrung.clone_row(erfahrung.count++, '$e.was', '$e.ort', $e.von_mj, '$e.monate')
+			erfahrung.clone_row(erfahrung.count++, '$e.was', '$e.ort', $e.von_mj, '$e.monate', $e.typ)
 		
 	}
 	erfahrung.clone_row(erfahrung.count++)
@@ -294,10 +305,18 @@ Anästhesie Erfahrung</h1>
 	
 	<div class="col-sm-7 col-xs-12">
 		<div class="form-group">
+			<label>Typ: </label>
+			<select name="erftyp_" id="erftyp_" class="form-control">
+				$for i,e in enumerate(erftyp)
+					<option value="$i">$e</option>
+			</select>
+		</div>
+		
+		<div class="form-group">
 			<label>Beginn: </label>
 			<input type="number" value="" name="von_j_" id="von_j_" size="4" class="form-control" placeholder="Jahr" min="1900" max="2100" step="1" required = "required"/>
 		</div>
-
+		
 		<div class="form-group">
 			<label>Dauer: </label>
 			<input type="number" value="" name="dauer_" id="dauer_" size="2" class="form-control" placeholder="Monate" min="1" max="100"  step="1" required = "required"/>
@@ -370,21 +389,21 @@ Weiterbildungen</h1>
 				<input type="checkbox" name="atls" id="atls"/> ATLS
 			</label>
 			<input type="number" value="" name="atls_j" id="atls_j" size="4" class="form-control" placeholder="Jahr" min="1950" max="2100" step="1"/>
-			<input type="text" value="" name="atls_ort" id="atls_ort" size="25" class="form-control" placeholder="Ort"/>
+			<input type="text" value="" name="atls_ort" id="atls_ort" size="15" class="form-control" placeholder="Ort"/>
 		</div>	
 		<div class="checkbox">
 			<label>
 				<input type="checkbox" name="acls" id="acls"/> ACLS
 			</label>
 			<input type="number" value="" name="acls_j" id="acls_j" size="4" class="form-control" placeholder="Jahr" min="1950" max="2100" step="1"/>
-			<input type="text" value="" name="acls_ort" id="acls_ort" size="25" class="form-control" placeholder="Ort"/>
+			<input type="text" value="" name="acls_ort" id="acls_ort" size="15" class="form-control" placeholder="Ort"/>
 		</div>	
 		<div class="checkbox">
 			<label>
 				<input type="checkbox" name="pals" id="pals"/> PALS
 			</label>
 			<input type="number" value="" name="pals_j" id="pals_j" size="4" class="form-control" placeholder="Jahr" min="1950" max="2100" step="1"/>
-			<input type="text" value="" name="pals_ort" id="pals_ort" size="25" class="form-control" placeholder="Ort"/>
+			<input type="text" value="" name="pals_ort" id="pals_ort" size="15" class="form-control" placeholder="Ort"/>
 		</div>
 		
 		<div class="checkbox">
@@ -392,7 +411,7 @@ Weiterbildungen</h1>
 				<input type="checkbox" name="notarzt" id="notarzt"/> Notarzt
 			</label>
 			<input type="number" value="" name="notarzt_j" id="notarzt_j" size="4" class="form-control" placeholder="Jahr" min="1950" max="2100" step="1"/>
-			<input type="text" value="" name="notarzt_ort" id="notarzt_ort" size="25" class="form-control" placeholder="Ort"/>
+			<input type="text" value="" name="notarzt_ort" id="notarzt_ort" size="15" class="form-control" placeholder="Ort"/>
 		</div>
 
 	</div>

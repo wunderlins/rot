@@ -154,6 +154,7 @@ class Erfahrung(Base, DefaultAttributes):
 	ort     = Column(Unicode(100))
 	was     = Column(Unicode(100))
 	pid     = Column(Integer)
+	typ     = Column(Integer)
 
 class Einteilung(Base, DefaultAttributes):
 	""" 
