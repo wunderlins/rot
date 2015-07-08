@@ -25,7 +25,7 @@ dbshell:
 
 install-deb:
 	#sudo apt-get install uwsgi-plugins-all uwsgi python-opencv python-imaging
-	sudo apt-get install build-essential python-dev python-opencv python-imaging
+	sudo apt-get install build-essential python-dev python-opencv python-imaging python-ldap
 
 extract:
 	./bin/extract.sh

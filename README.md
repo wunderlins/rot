@@ -8,6 +8,7 @@ dependencies:
 	* build-essential 
 	* python-dev 
 	* python-opencv 
+	* python-ldap 
 	* python-imaging
 	* (optional) python-pydot # for generating schma graphs
 	
@@ -19,23 +20,18 @@ Installation
 ==
 
 First setup the environment:
-$ . ./lib/setenv.sh
+$ make extract # extract all archives
+$ make realpath # compile our version of realpath
+$ . ./lib/setenv.sh # setup environment
 
 Install prerequesites:
-<hostname:uwsgi> rot% make install-deb
-
-unpack all custom libraries an packages:
-<hostname:uwsgi> rot% make install
-
-if this system has not realpath builtin or binary, build it (check with 
-realpath if it exists):
-<hostname:uwsgi> rot% make realpath
+<hostname:uwsgi> rot% sudo make install-deb
 
 build uwsgi (current build target debian and osx, requires command line 
 xcode tools):
 <hostname:uwsgi> rot% make uwsgi
 
-make sure no old session files are left
+make sure no old session files are left, and backup files are removed
 <hostname:uwsgi> rot% make clean
 
 check the config files, change whatever needed then reload the environment
@@ -49,3 +45,9 @@ optional: if the database needs to be created
 
 if everythin worked well so far, start the application
 <hostname:uwsgi> rot% start # or restart or stop
+
+after the application is started, check access.log and application.log. No 
+errors then point a browser at localhost:1975 (or whatever is configured in the
+config file). You can find out which config gile is used by issueing the 
+following command:
+<hostname:uwsgi> rot% status
