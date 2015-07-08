@@ -337,7 +337,7 @@ class index(response):
 		
 		# check if the user is allowed to access this page, otherwise redirect
 		if not session["isadmin"]:
-			path = config.base_uri+'/erfahrung/' + str(session["pid"])
+			path = config.base_uri+'/personal/' + str(session["pid"])
 			raise web.seeother(path)			
 		
 		# 1) get all due tasks
@@ -875,11 +875,6 @@ class personal(response):
 		
 		#session = get_session()
 		
-		# check if the user is allowed to access this page, otherwise redirect
-		if not session.isadmin:
-			path = config.base_uri+'/erfahrung/' + str(session.pid)
-			raise web.seeother(path)			
-		
 		pid = None
 		
 		if path:
@@ -942,6 +937,12 @@ class personal(response):
 			for v in vert:
 				vertraege.apppend(v)
 		"""
+
+		# normal user gets simple template
+		if not session.isadmin:
+			return self.render().personal_simple(person, wunsch, db.RotNoteType, notes, \
+				                            time.strftime("%Y%m%d"), tags, erfahrung)
+
 		return self.render().personal(person, wunsch, db.RotNoteType, notes, \
 		                              time.strftime("%Y%m%d"), tags, erfahrung)
 		#return "Hello World"
