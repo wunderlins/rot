@@ -24,4 +24,4 @@ session_dir='var'
 
 base_uri=""
 
-adminuser=["girardt","wunderlins"]
+adminuser=["girardt"]
