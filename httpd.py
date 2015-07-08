@@ -74,8 +74,8 @@ def init_session(app):
 		web.config.session_parameters['cookie_name'] = 'rot'
 		web.config.session_parameters['cookie_domain'] = None
 		web.config.session_parameters['timeout'] = config.session_timeout,
-		web.config.session_parameters['ignore_expiry'] = True
-		web.config.session_parameters['ignore_change_ip'] = True
+		web.config.session_parameters['ignore_expiry'] = False
+		web.config.session_parameters['ignore_change_ip'] = False
 		web.config.session_parameters['secret_key'] = config.session_salt
 		web.config.session_parameters['expired_message'] = 'Session expired'
 		

@@ -875,7 +875,7 @@ class personal(response):
 		
 		#session = get_session()
 		
-		pid = None
+		pid = 0
 		
 		if path:
 			#print "Path: " + path
@@ -884,6 +884,7 @@ class personal(response):
 		else:
 			# return self.render().personal(db.Personal(), {}, db.RotNoteType, {}, time.strftime("%Y%m%d"))
 			pid = session.pid
+			web.debug(session)
 		
 		# person und wuensch
 		try:
