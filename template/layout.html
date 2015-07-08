@@ -133,11 +133,11 @@ $def with (content)
       
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
-					$if session["selected_pid"] > 0 and session["isadmin"]:
-
-						<li id="nav_personal"><a href="personal/$session["selected_pid"]">
-							<span class="glyphicon glyphicon-user"></span>
-							Mitarbeiter</a></li>
+					$if session["selected_pid"] > 0:
+						$if session["isadmin"]:
+							<li id="nav_personal"><a href="personal/$session["selected_pid"]">
+								<span class="glyphicon glyphicon-user"></span>
+								Mitarbeiter</a></li>
 						<li id="nav_wunsch"><a href="wunsch/$session["selected_pid"]">
 							<span class="glyphicon glyphicon-tasks"></span> Wünsche</a>
 						</li>
