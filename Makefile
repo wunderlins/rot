@@ -13,12 +13,12 @@ endif
 
 uwsgi:
 	gcc -v
-	tar -C lib -xzf lib/uwsgi-2.0.10.tar.gz
-	cd lib/uwsgi-2.0.10 && $(MAKE)
-	cp lib/uwsgi-2.0.10/uwsgi bin/uwsgi-$(SYSTEM)
-	cd lib/uwsgi-2.0.10 && $(MAKE) plugin.http
-	cd lib/uwsgi-2.0.10 && $(MAKE) plugin.python
-	cp lib/uwsgi-2.0.10/*.so .
+	tar -C lib -xzf lib/uwsgi-2.0.11.tar.gz
+	cd lib/uwsgi-2.0.11 && $(MAKE)
+	cp lib/uwsgi-2.0.11/uwsgi bin/uwsgi-$(SYSTEM)
+	cd lib/uwsgi-2.0.11 && $(MAKE) plugin.http
+	cd lib/uwsgi-2.0.11 && $(MAKE) plugin.python
+	cp lib/uwsgi-2.0.11/*.so .
 
 dbshell:
 	python -i dshell.py
