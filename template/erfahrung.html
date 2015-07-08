@@ -281,7 +281,10 @@ var erfahrung = {
 add_load_handler(function() {
 	if (erfahrung.count == 0) {
 		$for e in erfahrung:
-			erfahrung.clone_row(erfahrung.count++, '$e.was', '$e.ort', $e.von_mj, '$e.monate', $e.typ)
+			$ t = e.typ
+			$if not e.typ:
+				$ t = 'null'
+			erfahrung.clone_row(erfahrung.count++, '$e.was', '$e.ort', $e.von_mj, '$e.monate', $t)
 		
 	}
 	erfahrung.clone_row(erfahrung.count++)

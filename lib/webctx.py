@@ -388,7 +388,7 @@ class erfahrung(response):
 			pid = path[1:]
 			session.selected_pid = pid
 		else:
-			return "No pid"
+			pid = session.pid
 		
 		erf = db.session.query(db.Erfahrung).filter_by(pid=pid).all()
 		#print erf
@@ -411,7 +411,7 @@ class erfahrung(response):
 			pid = path[1:]
 			session.selected_pid = pid
 		else:
-			return "No pid"
+			pid = session.pid
 		
 		inp = json.loads(web.data())
 		print inp
@@ -882,7 +882,8 @@ class personal(response):
 			pid = path[1:]
 			session.selected_pid = pid
 		else:
-			return self.render().personal(db.Personal(), {}, db.RotNoteType, {}, time.strftime("%Y%m%d"))
+			# return self.render().personal(db.Personal(), {}, db.RotNoteType, {}, time.strftime("%Y%m%d"))
+			pid = session.pid
 		
 		# person und wuensch
 		try:
@@ -959,7 +960,7 @@ class wunsch(response):
 			pid = path[1:]
 			session.selected_pid = pid
 		else:
-			return "No pid"
+			pid = session.pid
 		
 		#print pid
 		
