@@ -1,0 +1,238 @@
+$def with (person, wunsch, RotNoteType, notes, today, tags, erfahrung)
+<!--
+<ul class="list-group" id="users">
+</ul>
+<script type="application/javascript">add_load_handler(load_personal);</script>
+-->
+
+<style type="text/css">
+	.portrait {
+		background-image: url("image/$person.pid");
+		background-repeat: no-repeat; 
+		background-size: 100% auto;
+	}
+</style>
+
+
+<h1>
+<span class="glyphicon glyphicon-user"></span>
+$person.name $person.vorname ($person.kuerzel)</h1>
+
+<div class="row">
+	<div class="col-sm-4 col-xs-12">
+		
+		<div class="portrait" id="portrait">
+			<div class="inner">
+		  <span class="btn btn-info fileinput-button">
+		      <span class="glyphicon glyphicon-camera" style="font-size: 3em;"></span>
+		      <!-- The file input field used as target for the file upload widget -->
+		      <input id="fileupload" type="file" name="file" accept="image/*;capture=camera"/>
+		  </span>
+		  </div>
+		</div>
+		
+    <!-- The global progress bar -->
+    <div id="progress" class="progress" style="display: none">
+    	<div class="progress-bar progress-bar-success"></div>
+    </div>	
+		<br />
+		<br />
+		
+	</div>
+	<div class="col-sm-4 col-xs-12">
+		
+		<div class="panel panel-default">
+			<!-- Default panel contents -->
+			<div class="panel-heading">
+			
+				Wünsche
+				
+				<button class="btn btn-xs pull-right">Bearbeiten »</button>
+			
+			</div>
+
+			<!-- Table -->
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Prio</th>
+						<th>Rotation</th>
+					</tr>
+				</thead>
+				<tbody>
+				$for w in wunsch:
+					<tr>
+						<td class="prio">$:wunsch_prio(w.prio)</td>
+						<td>$w.rot.name</td>
+					</tr>
+					
+				</tbody>
+			</table>
+		</div>
+
+	</div>
+	
+	<div class="col-sm-4 col-xs-12">
+		<div class="panel panel-default">
+			<!-- Default panel contents -->
+			<div class="panel-heading">
+				Erfahrung
+				<button class="btn btn-xs pull-right">Bearbeiten »</button>
+			</div>
+
+			<!-- Table -->
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Jahr</th>
+						<th>Dauer</th>
+						<th>Ort</th>
+						<th>Rotation</th>
+					</tr>
+				</thead>
+				<tbody>
+				$for e in erfahrung:
+					$if e.was[0:2] == "**":
+						$continue
+					<tr>
+						<td>$e.von_mj</td>
+						<td>$e.monate</td>
+						<td>$e.ort</td>
+						<td>$e.was</td>
+					</tr>
+					
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="col-sm-4 col-xs-12">
+
+		<div class="panel panel-default">
+			<!-- Default panel contents -->
+			<div class="panel-heading">
+				Weiterbildungen
+				<button class="btn btn-xs pull-right">Bearbeiten »</button>
+			</div>
+
+			<!-- Table -->
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Jahr</th>
+						<th>Weiterbildung</th>
+					</tr>
+				</thead>
+				<tbody>
+				$for e in erfahrung:
+					$if e.was[0:2] == "**":
+						<tr>
+							<td>$e.von_mj</td>
+							<td>
+								$e.was[2:].upper()
+							</td>
+						</tr>
+					
+				</tbody>
+			</table>
+		</div>
+		
+		
+	</div>
+</div>
+
+<script>
+function init_tags() {
+	$$("#notetag").tagit({
+		fieldName: "tags",
+		availableTags: [
+		$for e in tags:
+			"$e.name",
+		""]
+	});
+}
+add_load_handler(init_tags);
+
+function init_upload() {
+	/*jslint unparam: true */
+	/*global window, $$ */
+	$$(function () {
+		  'use strict';
+		  // Change this to the location of your server-side upload handler:
+		  var url = 'image/' + app.selected_pid;
+		  $$('#fileupload').fileupload({
+		      url: url,
+		      //dataType: 'json',
+		      //contentType: "application/json; charset=utf-8",
+		      done: function (e, data) {
+		          $$.each(data.result.files, function (index, file) {
+		              //$$('<p/>').text(file.name).appendTo('#file');
+		          });
+		          $$('#progress').css("display", "none");
+				    	var randomId = new Date().getTime();
+				    	var u = "url(image/" + app.selected_pid + "?random=" + randomId + ")"
+				    	
+				    	//app.log("Refreshing image")
+				    	setTimeout(function(){ 
+				    		$$("#portrait").css("background-image", u);
+				    	}, 500);
+				    	
+		      },
+		      progressall: function (e, data) {
+		          console.log(data.total)
+		          $$('#progress').css("display", "block");
+		          //alert("progress")
+		          var progress = parseInt(data.loaded / data.total * 100, 10);
+		          $$('#progress .progress-bar').css(
+		              'width',
+		              progress + '%'
+		          );
+		      },
+		      fail: function (e, data) {
+	          $$('#progress').css("display", "none");
+	          app.log(data)
+		      	//alert("Failed, need to send proper response from server")
+		      	var randomId = new Date().getTime();
+		      	var u = "url(image/" + app.selected_pid + "?random=" + randomId + ")"
+		      	$$("#portrait").css("background-image", u);
+		      }
+		  }).prop('disabled', !$$.support.fileInput)
+		      .parent().addClass($$.support.fileInput ? undefined : 'disabled');
+	});
+}
+add_load_handler(init_upload);
+
+function init_wysiwyg() {
+	$$('#comment').wysihtml5({
+		toolbar: {
+			"font-styles": false, //Font styling, e.g. h1, h2, etc. Default true
+			"emphasis": true, //Italics, bold, etc. Default true
+			"lists": true, //(Un)ordered lists, e.g. Bullets, Numbers. Default true
+			"html": false, //Button which allows you to edit the generated HTML. Default false
+			"link": true, //Button to insert a link. Default true
+			"image": false, //Button to insert an image. Default true,
+			"color": false, //Button to change color of font  
+			"blockquote": false, //Blockquote  
+			"size": "xs" //default: none, other options are xs, sm, lg
+		}
+	});
+
+	//$$(".wysihtml5-toolbar").css("display": "none");
+	
+	add_load_handler(function() {
+		$$("wysihtml5-sandbox").on("focus", notes.focus)
+		$$("wysihtml5-sandbox").on("blur", notes.collapse)
+		//$$(".wysihtml5-toolbar").css("display", "none");
+	})
+}
+
+add_load_handler(init_wysiwyg);
+
+add_load_handler(function() {
+	// make portrait a square, set height dynamically
+	$$("#portrait").css("height", $$("#portrait").width() + "px")
+})
+
+
+</script>
+
+
