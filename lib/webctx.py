@@ -184,7 +184,7 @@ class response:
 		
 		# check if we have a valid session
 		#print session
-		if session != None and session.eid > 0:
+		if session != None: #and session.eid > 0:
 			web.debug("==> Autenticated")
 			self.__authenticated = True
 			return True
@@ -281,13 +281,13 @@ class login(response):
 			row = cur.fetchone()
 			if row:
 				authdb.close()
-				web.debug(row)
+				web.debug("username " + str(row))
 				#web_session = session_default
 				session.pid = row[0]
 				#set_session("selected_pid", row[0])
 				session.eid = 0
 				session.user = username
-				session.isadmin = a[0]
+				session.isadmin = True
 			
 				# if we found one, exit
 				return '{"success": true}'
