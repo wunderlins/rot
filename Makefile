@@ -29,7 +29,7 @@ install-deb:
 
 extract:
 	./bin/extract.sh
-	ln -s static/dist static/bootstrap-3.3.1-dist || true
+	#ln -s static/dist static/bootstrap-3.3.1-dist || true
 
 logview:
 	tail -f var/access.log var/application.log
