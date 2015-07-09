@@ -5,12 +5,12 @@ http://webpy.org/
 http://getbootstrap.com/getting-started/
 
 dependencies:
-	* build-essential 
-	* python-dev 
-	* python-opencv 
-	* python-ldap 
-	* python-imaging
-	* (optional) python-pydot # for generating schma graphs
+* build-essential 
+* python-dev 
+* python-opencv 
+* python-ldap 
+* python-imaging
+* (optional) python-pydot # for generating schma graphs
 	
 On a non debian system, make sure to install gcc (or equivalent) and the above 
 python libraries.
