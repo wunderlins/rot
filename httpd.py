@@ -13,7 +13,6 @@ import os, sys
 #os.chdir(os.path.dirname(__file__))
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'lib'))
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'lib', 'web'))
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'lib', 'beaker'))
 
 import web, config, json, db
 import datetime

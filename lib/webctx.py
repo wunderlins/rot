@@ -184,7 +184,7 @@ class response:
 		
 		# check if we have a valid session
 		#print session
-		if session != None: #and session.eid > 0:
+		if session != None and session.eid >= 0:
 			web.debug("==> Autenticated")
 			self.__authenticated = True
 			return True
