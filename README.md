@@ -1,24 +1,23 @@
-Rotationsplanung
-====
+# Rotationsplanung
 
 http://webpy.org/
 http://getbootstrap.com/getting-started/
 
 dependencies:
-* build-essential 
-* python-dev 
-* python-opencv 
-* python-ldap 
-* python-imaging
-* (optional) python-pydot # for generating schma graphs
+*  build-essential 
+*  python-dev 
+*  python-opencv 
+*  python-ldap 
+*  python-imaging
+*  (optional) python-pydot # for generating schma graphs
 	
 On a non debian system, make sure to install gcc (or equivalent) and the above 
 python libraries.
 
 
-Installation
-==
+## Installation
 
+### Prepare environment
 First setup the environment:
 ```bash
 $ make extract # extract all archives
@@ -26,6 +25,7 @@ $ make realpath # compile our version of realpath
 $ . ./lib/setenv.sh # setup environment
 ```
 
+### install and setup packages
 ```bash
 Install prerequesites:
 <hostname:uwsgi> rot% sudo make install-deb
@@ -55,3 +55,5 @@ config file). You can find out which config gile is used by issueing the
 following command:
 <hostname:uwsgi> rot% status
 ```
+
+

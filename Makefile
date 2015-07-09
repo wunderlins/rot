@@ -25,7 +25,12 @@ dbshell:
 
 install-deb:
 	#sudo apt-get install uwsgi-plugins-all uwsgi python-opencv python-imaging
-	sudo apt-get install build-essential python-dev python-opencv python-imaging python-ldap
+	sudo apt-get -y install build-essential python-dev python-opencv python-imaging python-ldap
+
+install-dev:
+	#sudo apt-get install uwsgi-plugins-all uwsgi python-opencv python-imaging
+	sudo pip install grip
+	sudo apt-get -y install python-sphinx
 
 extract:
 	./bin/extract.sh
@@ -45,3 +50,5 @@ clean:
 	rm -r var/session_* 2>/dev/null || true
 	rm -r var/*.pid 2>/dev/null || true
 	find ./ -iname '*.pyc' -exec rm {} \; 2>/dev/null || true
+
+

@@ -71,6 +71,28 @@ function rebuild() {
 	$basedir/bin/cache_images.py
 }
 
+function grip() {
+	if [[ "$1" == "start" ]]; then
+		make code
+	fi
+	
+	if [[ "$1" == "stop" ]]; then
+		kill -TERM $(lsof -ni TCP | grep 6419 | awk '{print $2}')
+	fi
+
+	if [[ "$1" == "status" ]]; then
+		proc=$(lsof -ni TCP | grep 6419)
+		
+		if [[ "$proc" == "" ]]; then
+			echo "grip running: false"
+			return 0
+		else
+			echo "grip running: true"
+			return 1
+		fi
+	fi
+}
+
 alias bash_help="bash -c 'help'"
 
 function help() {
