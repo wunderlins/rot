@@ -20,10 +20,13 @@ Installation
 ==
 
 First setup the environment:
+```bash
 $ make extract # extract all archives
 $ make realpath # compile our version of realpath
 $ . ./lib/setenv.sh # setup environment
+```
 
+```bash
 Install prerequesites:
 <hostname:uwsgi> rot% sudo make install-deb
 
@@ -51,3 +54,4 @@ errors then point a browser at localhost:1975 (or whatever is configured in the
 config file). You can find out which config gile is used by issueing the 
 following command:
 <hostname:uwsgi> rot% status
+```
