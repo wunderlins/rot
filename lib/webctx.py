@@ -25,7 +25,8 @@ urls = (
 	'/image(.*)', 'webctx.image',
 	'/rotnote(.*)', 'webctx.rotnote',
 	'/erfahrung(.*)', 'webctx.erfahrung',
-  '/login', 'webctx.login'
+  '/login', 'webctx.login',
+  '/plan', 'webctx.plan'
 )
 
 from HTMLParser import HTMLParser
@@ -329,6 +330,24 @@ class login(response):
 			return '{"success": true}'
 		
 		return '{"success": false}'
+
+class plan:
+	def GET(self):
+		# open static index file, read it and return it
+		#print os.path.dirname(os.path.realpath(__file__))
+		fp = open('static/rot/index.html', 'r')
+		content = fp.read()
+		fp.close()
+		
+		# inject base tag after opening head tag
+		base = '<base href="static/rot/" target="_blank">'
+		content = content.replace("<head>", "<head>" + base);
+		
+		# sencha architect is unable to set the title tag properly, do it here! WTF
+		reg = re.compile( '<title>[^<]+</title>')
+		content = reg.sub("<title>Rotationsplan</title>", content)
+		
+		return content
 
 class index(response):
 	def GET(self):
