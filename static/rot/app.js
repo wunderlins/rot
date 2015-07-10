@@ -20,6 +20,9 @@ Ext.Loader.setConfig({
 
 
 Ext.application({
+    stores: [
+        'rotStore'
+    ],
     views: [
         'MainView'
     ],
@@ -27,6 +30,7 @@ Ext.application({
 
     launch: function() {
         Ext.create('calendar.view.MainView');
+        rot.grid.init()
     }
 
 });

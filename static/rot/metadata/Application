@@ -7,10 +7,31 @@
     "codeClass": null,
     "userConfig": {
         "name": "calendar",
+        "stores": [
+            "rotStore"
+        ],
         "views": [
             "MainView"
         ]
     },
     "name": "Application",
-    "designerId": "application"
+    "designerId": "application",
+    "cn": [
+        {
+            "type": "fixedfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "launch",
+                "implHandler": [
+                    "rot.grid.init()"
+                ]
+            },
+            "name": "launch",
+            "designerId": "cee2d164-07b5-46f3-a861-25964cc4ad62"
+        }
+    ]
 }

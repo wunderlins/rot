@@ -38,13 +38,16 @@
             "14919279-0e28-406c-9391-fcda2ba19b90",
             "fe559d16-91c1-47e0-8577-a011a201a0a1"
         ],
-        "store": [],
+        "store": [
+            "aeb6b904-924a-4718-817c-f45c40138474"
+        ],
         "controller": [],
         "model": [],
         "resource": [
             "76d17007-2335-4c00-b7ab-dad9b996582b",
             "c5a3bf20-3e93-43eb-8e25-111f7aafe448",
-            "d9e37ad4-96e5-4ca1-bfef-b4046b337b72"
+            "d9e37ad4-96e5-4ca1-bfef-b4046b337b72",
+            "1efb8fe6-ee3a-45f9-ab60-3234a6ccad2b"
         ],
         "app": [
             "application"

@@ -1,0 +1,15 @@
+{
+    "type": "jsresource",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "js",
+        "includeInBundle": true,
+        "url": "rot.js"
+    },
+    "name": "js",
+    "designerId": "1efb8fe6-ee3a-45f9-ab60-3234a6ccad2b"
+}

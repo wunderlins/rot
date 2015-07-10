@@ -1,0 +1,45 @@
+{
+    "type": "jsonstore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "rotStore",
+        "storeId": "rotStore"
+    },
+    "name": "MyJsonStore",
+    "designerId": "aeb6b904-924a-4718-817c-f45c40138474",
+    "cn": [
+        {
+            "type": "Ext.data.proxy.Ajax",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|displayName": "rotAjaxProxy",
+                "url": "../../get_plan"
+            },
+            "name": "MyAjaxProxy",
+            "designerId": "3676c8bb-c929-4c2a-99c9-cf12652300b2",
+            "cn": [
+                {
+                    "type": "Ext.data.reader.Json",
+                    "reference": {
+                        "name": "reader",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "designer|displayName": "rotJsonReader"
+                    },
+                    "name": "MyJsonReader",
+                    "designerId": "8a47cb52-2ed3-4581-bb25-78c7f074aaf8"
+                }
+            ]
+        }
+    ]
+}

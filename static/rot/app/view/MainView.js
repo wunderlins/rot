@@ -22,9 +22,7 @@ Ext.define('calendar.view.MainView', {
         'Ext.form.field.Date',
         'Ext.form.field.TextArea',
         'Ext.grid.Panel',
-        'Ext.grid.column.Number',
-        'Ext.grid.column.Date',
-        'Ext.grid.column.Boolean',
+        'Ext.grid.column.Column',
         'Ext.grid.View',
         'Ext.tab.Panel',
         'Ext.tab.Tab'
@@ -147,27 +145,13 @@ Ext.define('calendar.view.MainView', {
                     xtype: 'gridpanel',
                     flex: 1,
                     height: 150,
+                    itemId: 'contentGrid',
                     titleCollapse: false,
                     columns: [
                         {
                             xtype: 'gridcolumn',
                             dataIndex: 'string',
-                            text: 'String'
-                        },
-                        {
-                            xtype: 'numbercolumn',
-                            dataIndex: 'number',
-                            text: 'Number'
-                        },
-                        {
-                            xtype: 'datecolumn',
-                            dataIndex: 'date',
-                            text: 'Date'
-                        },
-                        {
-                            xtype: 'booleancolumn',
-                            dataIndex: 'bool',
-                            text: 'Boolean'
+                            text: 'Rotation'
                         }
                     ]
                 }
