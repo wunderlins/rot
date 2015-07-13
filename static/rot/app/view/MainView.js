@@ -92,6 +92,7 @@ Ext.define('calendar.view.MainView', {
                                         },
                                         {
                                             xtype: 'button',
+                                            itemId: 'btnReload',
                                             text: 'Yeppers'
                                         }
                                     ]
@@ -147,7 +148,6 @@ Ext.define('calendar.view.MainView', {
                     height: 150,
                     itemId: 'contentGrid',
                     titleCollapse: false,
-                    autoLoad: true,
                     store: 'rotStore',
                     columns: [
                         {

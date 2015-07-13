@@ -129,6 +129,7 @@
                                             },
                                             "codeClass": null,
                                             "userConfig": {
+                                                "itemId": "btnReload",
                                                 "text": "Yeppers"
                                             },
                                             "name": "MyButton",
@@ -234,7 +235,6 @@
                     },
                     "codeClass": null,
                     "userConfig": {
-                        "autoLoad": true,
                         "designer|displayName": "contentGrid",
                         "height": 150,
                         "itemId": "contentGrid",
@@ -267,8 +267,8 @@
                                 "dataIndex": "id",
                                 "text": "Id"
                             },
-                            "name": "MyColumn1",
-                            "designerId": "6801b499-8c82-489c-80fd-4a6ba2ac3bf0"
+                            "name": "MyColumn",
+                            "designerId": "25f962d4-93cb-4da2-964b-ce14ffa10c7d"
                         },
                         {
                             "type": "Ext.grid.column.Column",
@@ -281,8 +281,8 @@
                                 "dataIndex": "name",
                                 "text": "Name"
                             },
-                            "name": "MyColumn2",
-                            "designerId": "14bff1e2-82ae-43f8-83ab-e57176d49f8c"
+                            "name": "MyColumn3",
+                            "designerId": "66051ff4-a5c7-4a75-a790-7b642a929588"
                         }
                     ]
                 }

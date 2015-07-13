@@ -16,7 +16,7 @@ rot.grid.init = function() {
 	rot.grid.grid = Ext.ComponentQuery.query('#contentGrid')[0];
 	rot.log("==> rot.grid.init()")
 	
-	rot.loadData()
+	//rot.loadData()
 }
 
 rot.grid.column = {
@@ -30,10 +30,61 @@ rot.log = function(str) {
 	c.setValue(c.getValue() + str + "\n");
 }
 
-rot.loadData = function() {
+// double declaration to make architects event handling happy
+rot.loadData = function(button, e, eOpts) {
 	var store = Ext.getStore('rotStore');
 	var proxy = store.getProxy();
+	rot.log(store)
+
+	// create a new model
+	rot.model = Ext.define('calendar.model.rotModel', {
+		extend: 'Ext.data.Model',
+		itemid: 'rotModel',
+
+		requires: [
+			'Ext.data.field.Integer',
+			'Ext.data.field.String'
+		],
+
+		fields: [
+			{
+				type: 'int',
+				mapping: 0,
+				name: 'id'
+			},
+			{
+				type: 'string',
+				mapping: 1,
+				name: 'name'
+			}
+		]
+	});
 	
+	
+	// create new column list for the grid
+	var columns = [
+		{
+			xtype: 'gridcolumn',
+			dataIndex: 'id',
+			text: 'Id'
+		},
+		{
+			xtype: 'gridcolumn',
+			dataIndex: 'name',
+			text: 'Name'
+		}	
+	]
+	
+	// apply new model to store
+	store.setModel(rot.model);
+	
+	// apply new store to grid
+	rot.grid.grid.reconfigure(store, columns);
+
+	// reload store
+	store.load();
+	
+	return true;
 }
 
 /*

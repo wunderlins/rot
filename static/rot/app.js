@@ -29,6 +29,9 @@ Ext.application({
     views: [
         'MainView'
     ],
+    controllers: [
+        'rotController'
+    ],
     name: 'calendar',
 
     launch: function() {

@@ -41,7 +41,9 @@
         "store": [
             "aeb6b904-924a-4718-817c-f45c40138474"
         ],
-        "controller": [],
+        "controller": [
+            "68e71231-a367-4d04-8e7d-f039f845a6fb"
+        ],
         "model": [
             "e824ce7a-d84a-4602-9faf-4292f052a8ba"
         ],
