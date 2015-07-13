@@ -13,6 +13,11 @@ rot.grid = {}
 rot.model = null;
 rot.grid.grid = null;
 rot.grid.init = function() {
+	
+	// set store for combobox month
+	//var monthStore = Ext.getStore('monthStore');
+	//Ext.ComponentQuery.query('#vonm')[0].setStore(monthStore);
+	
 	rot.grid.grid = Ext.ComponentQuery.query('#contentGrid')[0];
 	rot.log("==> rot.grid.init()")
 	
@@ -32,47 +37,33 @@ rot.log = function(str) {
 
 // double declaration to make architects event handling happy
 rot.loadData = function(button, e, eOpts) {
+	// get a reference to the data store and proxy
 	var store = Ext.getStore('rotStore');
 	var proxy = store.getProxy();
-	rot.log(store)
-
+	//rot.log(store)
+	
+	// read the time span
+	
+	
 	// create a new model
 	rot.model = Ext.define('calendar.model.rotModel', {
 		extend: 'Ext.data.Model',
-		itemid: 'rotModel',
-
 		requires: [
 			'Ext.data.field.Integer',
 			'Ext.data.field.String'
 		],
 
 		fields: [
-			{
-				type: 'int',
-				mapping: 0,
-				name: 'id'
-			},
-			{
-				type: 'string',
-				mapping: 1,
-				name: 'name'
-			}
+			{type: 'int', mapping: 0, name: 'id'},
+			{type: 'string', mapping: 1, name: 'name'}
 		]
 	});
 	
 	
 	// create new column list for the grid
 	var columns = [
-		{
-			xtype: 'gridcolumn',
-			dataIndex: 'id',
-			text: 'Id'
-		},
-		{
-			xtype: 'gridcolumn',
-			dataIndex: 'name',
-			text: 'Name'
-		}	
+		{xtype: 'gridcolumn', text: 'Id', dataIndex: 'id'},
+		{xtype: 'gridcolumn', text: 'Name', dataIndex: 'name'}	
 	]
 	
 	// apply new model to store
@@ -86,6 +77,104 @@ rot.loadData = function(button, e, eOpts) {
 	
 	return true;
 }
+
+
+/*
+Ext.define('calendar.model.monthModel', {
+    extend: 'Ext.data.Model',
+
+    requires: [
+        'Ext.data.field.Integer',
+        'Ext.data.field.String'
+    ],
+
+    fields: [
+        {
+            type: 'int',
+            name: 'id'
+        },
+        {
+            type: 'string',
+            name: 'name'
+        }
+    ]
+});
+
+Ext.define('calendar.store.monthStore', {
+    extend: 'Ext.data.Store',
+
+    requires: [
+        'calendar.model.monthModel'
+    ],
+
+    constructor: function(cfg) {
+        var me = this;
+        cfg = cfg || {};
+        me.callParent([Ext.apply({
+            storeId: 'monthStore',
+            autoLoad: true,
+            model: 'calendar.model.monthModel',
+            reader: {
+                type: 'json',
+                rootProperty: 'root'
+            },
+            data: {"root": [
+                {
+                    id: 1,
+                    name: 'Jan'
+                },
+                {
+                    id: 2,
+                    name: 'Feb'
+                },
+                {
+                    id: 3,
+                    name: 'Mar'
+                },
+                {
+                    id: 4,
+                    name: 'Apr'
+                },
+                {
+                    id: 5,
+                    name: 'Mai'
+                },
+                {
+                    id: 6,
+                    name: 'Jun'
+                },
+                {
+                    id: 7,
+                    name: 'Jul'
+                },
+                {
+                    id: 8,
+                    name: 'Aug'
+                },
+                {
+                    id: 9,
+                    name: 'Sep'
+                },
+                {
+                    id: 10,
+                    name: 'Nov'
+                },
+                {
+                    id: 11,
+                    name: 'Oct'
+                },
+                {
+                    id: 12,
+                    name: 'Dez'
+                }
+            ]
+        }}, cfg)]);
+    }
+});
+
+
+*/
+
 
 /*
 rot.loadData = function() {

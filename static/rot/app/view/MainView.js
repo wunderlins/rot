@@ -19,7 +19,7 @@ Ext.define('calendar.view.MainView', {
 
     requires: [
         'calendar.view.MainViewViewModel',
-        'Ext.form.field.Date',
+        'Ext.form.field.ComboBox',
         'Ext.form.field.TextArea',
         'Ext.grid.Panel',
         'Ext.grid.View',
@@ -79,16 +79,44 @@ Ext.define('calendar.view.MainView', {
                                     },
                                     items: [
                                         {
-                                            xtype: 'datefield',
-                                            width: 140,
+                                            xtype: 'combobox',
+                                            itemId: 'vonm',
+                                            width: 100,
                                             fieldLabel: 'Von',
-                                            labelWidth: 30
+                                            labelWidth: 30,
+                                            value: 1,
+                                            displayField: 'name',
+                                            forceSelection: true,
+                                            store: 'monthStore',
+                                            valueField: 'id'
                                         },
                                         {
-                                            xtype: 'datefield',
-                                            width: 140,
+                                            xtype: 'textfield',
+                                            itemId: 'vony',
+                                            width: 60,
+                                            hideEmptyLabel: false,
+                                            hideLabel: true,
+                                            value: 2015
+                                        },
+                                        {
+                                            xtype: 'combobox',
+                                            itemId: 'bism',
+                                            width: 100,
                                             fieldLabel: 'Bis',
-                                            labelWidth: 30
+                                            labelWidth: 30,
+                                            value: 12,
+                                            displayField: 'name',
+                                            forceSelection: true,
+                                            store: 'monthStore',
+                                            valueField: 'id'
+                                        },
+                                        {
+                                            xtype: 'textfield',
+                                            itemId: 'bisy',
+                                            width: 60,
+                                            hideEmptyLabel: false,
+                                            hideLabel: true,
+                                            value: 2015
                                         },
                                         {
                                             xtype: 'button',

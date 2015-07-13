@@ -92,34 +92,92 @@
                                     "designerId": "782662d5-6960-4b17-9a50-a5004e6e05d7",
                                     "cn": [
                                         {
-                                            "type": "Ext.form.field.Date",
+                                            "type": "Ext.form.field.ComboBox",
                                             "reference": {
                                                 "name": "items",
                                                 "type": "array"
                                             },
                                             "codeClass": null,
                                             "userConfig": {
+                                                "autoLoadOnValue": null,
+                                                "displayField": "name",
                                                 "fieldLabel": "Von",
+                                                "forceSelection": true,
+                                                "itemId": "vonm",
                                                 "labelWidth": 30,
-                                                "width": 140
+                                                "store": "monthStore",
+                                                "value": [
+                                                    "1"
+                                                ],
+                                                "valueField": "id",
+                                                "width": 100
                                             },
-                                            "name": "MyDateField",
+                                            "name": "MyComboBox",
                                             "designerId": "002d333c-e837-4229-8464-b15a0cbe319c"
                                         },
                                         {
-                                            "type": "Ext.form.field.Date",
+                                            "type": "Ext.form.field.Text",
                                             "reference": {
                                                 "name": "items",
                                                 "type": "array"
                                             },
                                             "codeClass": null,
                                             "userConfig": {
-                                                "fieldLabel": "Bis",
-                                                "labelWidth": 30,
-                                                "width": 140
+                                                "fieldLabel": null,
+                                                "hideEmptyLabel": false,
+                                                "hideLabel": true,
+                                                "itemId": "vony",
+                                                "value": [
+                                                    "2015"
+                                                ],
+                                                "width": 60
                                             },
-                                            "name": "MyDateField1",
-                                            "designerId": "738ee557-7207-4f4d-9c5e-978754faf70e"
+                                            "name": "MyTextField2",
+                                            "designerId": "66136ede-3c7d-4808-a097-71b57a00a84a"
+                                        },
+                                        {
+                                            "type": "Ext.form.field.ComboBox",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "autoLoadOnValue": null,
+                                                "displayField": "name",
+                                                "fieldLabel": "Bis",
+                                                "forceSelection": true,
+                                                "itemId": "bism",
+                                                "labelWidth": 30,
+                                                "store": "monthStore",
+                                                "value": [
+                                                    "12"
+                                                ],
+                                                "valueField": "id",
+                                                "width": 100
+                                            },
+                                            "name": "MyComboBox1",
+                                            "designerId": "13f185a6-756f-453d-b5ba-0af28e522035"
+                                        },
+                                        {
+                                            "type": "Ext.form.field.Text",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "fieldLabel": null,
+                                                "hideEmptyLabel": false,
+                                                "hideLabel": true,
+                                                "itemId": "bisy",
+                                                "value": [
+                                                    "2015"
+                                                ],
+                                                "width": 60
+                                            },
+                                            "name": "MyTextField3",
+                                            "designerId": "7fcd9cab-91aa-48d6-96e8-c11d29f3f3b4"
                                         },
                                         {
                                             "type": "Ext.button.Button",

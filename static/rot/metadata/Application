@@ -10,11 +10,13 @@
             "rotController"
         ],
         "models": [
-            "rotModel"
+            "rotModel",
+            "monthModel"
         ],
         "name": "calendar",
         "stores": [
-            "rotStore"
+            "rotStore",
+            "monthStore"
         ],
         "views": [
             "MainView"
@@ -33,6 +35,7 @@
             "userConfig": {
                 "fn": "launch",
                 "implHandler": [
+                    "",
                     "rot.grid.init()"
                 ]
             },
