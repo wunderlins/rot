@@ -32,7 +32,8 @@ Ext.define('calendar.store.rotStore', {
                 type: 'ajax',
                 url: '../../get_plan',
                 reader: {
-                    type: 'json'
+                    type: 'json',
+                    rootProperty: 'root'
                 }
             }
         }, cfg)]);

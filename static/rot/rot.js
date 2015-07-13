@@ -33,6 +33,13 @@ rot.log = function(str) {
 rot.loadData = function() {
 	var store = Ext.getStore('rotStore');
 	var proxy = store.getProxy();
+	
+}
+
+/*
+rot.loadData = function() {
+	var store = Ext.getStore('rotStore');
+	var proxy = store.getProxy();
 	rot.log(store)
 	
 	var start = [2015, 1];
@@ -81,6 +88,7 @@ rot.loadData = function() {
 	//proxy.read(operation)
 	//store.load();
 }
+*/
 
 /*
 eint.loadData = function() {

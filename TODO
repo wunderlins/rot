@@ -27,6 +27,8 @@
  - Grid
    * dynamischer aufbau des grid
    * multi header grid
+   * grouped rows
+   * add row to group
  
 == Milestone 3: Usability
  - vervollständigunshilfen

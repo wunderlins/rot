@@ -54,10 +54,13 @@
                             "id": "cc8cdb9e-1929-44b7-bb02-65f2d23fbfb9",
                             "cn": [
                                 {
-                                    "id": "7fa25a6a-da78-474b-8b7c-078df05bf5f9"
+                                    "id": "c4a78c1a-d69e-4299-a4f8-5d2e747745c7"
                                 },
                                 {
-                                    "id": "c4a78c1a-d69e-4299-a4f8-5d2e747745c7"
+                                    "id": "6801b499-8c82-489c-80fd-4a6ba2ac3bf0"
+                                },
+                                {
+                                    "id": "14bff1e2-82ae-43f8-83ab-e57176d49f8c"
                                 }
                             ]
                         }
@@ -151,8 +154,8 @@
         "topInstance": "570ee77a-0bfc-47b0-bb1b-7772ff3b7215"
     },
     "inspectorState": {
-        "topInstance": "570ee77a-0bfc-47b0-bb1b-7772ff3b7215",
-        "selectedInstance": "c4a78c1a-d69e-4299-a4f8-5d2e747745c7"
+        "topInstance": "aeb6b904-924a-4718-817c-f45c40138474",
+        "selectedInstance": "8a47cb52-2ed3-4581-bb25-78c7f074aaf8"
     },
     "editMode": "design",
     "userSettings": {

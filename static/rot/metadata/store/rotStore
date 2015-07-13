@@ -35,7 +35,8 @@
                     },
                     "codeClass": null,
                     "userConfig": {
-                        "designer|displayName": "rotJsonReader"
+                        "designer|displayName": "rotJsonReader",
+                        "rootProperty": "root"
                     },
                     "name": "MyJsonReader",
                     "designerId": "8a47cb52-2ed3-4581-bb25-78c7f074aaf8"

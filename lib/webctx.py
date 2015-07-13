@@ -26,7 +26,8 @@ urls = (
 	'/rotnote(.*)', 'webctx.rotnote',
 	'/erfahrung(.*)', 'webctx.erfahrung',
   '/login', 'webctx.login',
-  '/plan', 'webctx.plan'
+  '/plan', 'webctx.plan',
+  '/get_plan', 'webctx.get_plan',
 )
 
 from HTMLParser import HTMLParser
@@ -331,6 +332,13 @@ class login(response):
 		
 		return '{"success": false}'
 
+class get_plan:
+	def GET(self):
+		web.header('Content-Type', 'application/json; charset=utf-8', unique=True)
+		return '{"root": [{"id": 0, "name": "Rotation 1"}, {"id": 1, "name": "Rotation 2"}]}'
+	
+	
+	
 class plan:
 	def GET(self):
 		# open static index file, read it and return it

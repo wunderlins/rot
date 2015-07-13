@@ -22,8 +22,8 @@ Ext.define('calendar.view.MainView', {
         'Ext.form.field.Date',
         'Ext.form.field.TextArea',
         'Ext.grid.Panel',
-        'Ext.grid.column.Column',
         'Ext.grid.View',
+        'Ext.grid.column.Column',
         'Ext.tab.Panel',
         'Ext.tab.Tab'
     ],
@@ -147,11 +147,18 @@ Ext.define('calendar.view.MainView', {
                     height: 150,
                     itemId: 'contentGrid',
                     titleCollapse: false,
+                    autoLoad: true,
+                    store: 'rotStore',
                     columns: [
                         {
                             xtype: 'gridcolumn',
-                            dataIndex: 'string',
-                            text: 'Rotation'
+                            dataIndex: 'id',
+                            text: 'Id'
+                        },
+                        {
+                            xtype: 'gridcolumn',
+                            dataIndex: 'name',
+                            text: 'Name'
                         }
                     ]
                 }

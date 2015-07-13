@@ -234,30 +234,18 @@
                     },
                     "codeClass": null,
                     "userConfig": {
+                        "autoLoad": true,
                         "designer|displayName": "contentGrid",
                         "height": 150,
                         "itemId": "contentGrid",
                         "layout|flex": 1,
+                        "store": "rotStore",
                         "title": null,
                         "titleCollapse": false
                     },
                     "name": "MyGridPanel",
                     "designerId": "cc8cdb9e-1929-44b7-bb02-65f2d23fbfb9",
                     "cn": [
-                        {
-                            "type": "Ext.grid.column.Column",
-                            "reference": {
-                                "name": "columns",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "dataIndex": "string",
-                                "text": "Rotation"
-                            },
-                            "name": "MyColumn",
-                            "designerId": "7fa25a6a-da78-474b-8b7c-078df05bf5f9"
-                        },
                         {
                             "type": "Ext.grid.View",
                             "reference": {
@@ -267,6 +255,34 @@
                             "codeClass": null,
                             "name": "MyGridView",
                             "designerId": "c4a78c1a-d69e-4299-a4f8-5d2e747745c7"
+                        },
+                        {
+                            "type": "Ext.grid.column.Column",
+                            "reference": {
+                                "name": "columns",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "dataIndex": "id",
+                                "text": "Id"
+                            },
+                            "name": "MyColumn1",
+                            "designerId": "6801b499-8c82-489c-80fd-4a6ba2ac3bf0"
+                        },
+                        {
+                            "type": "Ext.grid.column.Column",
+                            "reference": {
+                                "name": "columns",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "dataIndex": "name",
+                                "text": "Name"
+                            },
+                            "name": "MyColumn2",
+                            "designerId": "14bff1e2-82ae-43f8-83ab-e57176d49f8c"
                         }
                     ]
                 }
