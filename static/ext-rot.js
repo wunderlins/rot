@@ -59,6 +59,56 @@ rot.loadData = function(button, e, eOpts) {
 		return false;
 	}
 	
+	vonix = "" + vony;
+	bisix = "" + bisy;
+	vonix += (vonm < 10) ? "0" + vonm : vonm;
+	bisix += (bism < 10) ? "0" + bism : bism;
+	rot.log("ix: " + vonix + " - " + bisix)
+	
+	if (bisix < vonix) {
+		// TODO: notify user about error
+		rot.log("End date must be large than start date")
+		return false;
+	}
+	
+	// count number of months
+	cm = vonm;
+	cy = vony;
+	months = 0;
+	
+	rot.fields = [
+		{type: 'int', mapping: 0, name: 'id'},
+		{type: 'string', mapping: 1, name: 'name'}
+	]
+	
+	rot.columns =  [
+		{xtype: 'gridcolumn', text: 'Id', dataIndex: 'id'},
+		{xtype: 'gridcolumn', text: 'Name', dataIndex: 'name'}	
+	]
+	
+	while (true) {
+		months++;
+		
+		// add row
+		var n = "" + cy;
+		n += (cm < 10) ? "0" + cm : cm;
+		
+		rot.fields[rot.fields.length] = {type: 'int', mapping: months+2, name: n}
+		rot.columns[rot.columns.length] = {xtype: 'gridcolumn', text: cm, dataIndex: n}	
+		
+		if (cm == 12) {
+			cm = 1;
+			cy++;
+		} else {
+			cm++;
+		}
+		
+		if (cm == bism && cy == bisy)
+			break;
+	}
+	rot.fields[rot.fields.length] = {type: 'int', mapping: months+2, name: n}
+	rot.columns[rot.columns.length] = {xtype: 'gridcolumn', text: cm, dataIndex: n}	
+	rot.log("Months: " + months)
 	
 	
 	// create a new model
@@ -69,18 +119,12 @@ rot.loadData = function(button, e, eOpts) {
 			'Ext.data.field.String'
 		],
 
-		fields: [
-			{type: 'int', mapping: 0, name: 'id'},
-			{type: 'string', mapping: 1, name: 'name'}
-		]
+		fields: rot.fields
 	});
 	
 	
 	// create new column list for the grid
-	var columns = [
-		{xtype: 'gridcolumn', text: 'Id', dataIndex: 'id'},
-		{xtype: 'gridcolumn', text: 'Name', dataIndex: 'name'}	
-	]
+	var columns = rot.columns
 	
 	// apply new model to store
 	store.setModel(rot.model);
