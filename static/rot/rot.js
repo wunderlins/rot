@@ -1,17 +1,85 @@
+Object.clone = function(obj) {
+	if (null == obj || "object" != typeof obj) return obj;
+	var copy = obj.constructor();
+	for (var attr in obj) {
+		if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
+	}
+	return copy;
+}
+
 rot = {};
 rot.grid = {}
 
+rot.model = null;
 rot.grid.grid = null;
 rot.grid.init = function() {
 	rot.grid.grid = Ext.ComponentQuery.query('#contentGrid')[0];
 	rot.log("==> rot.grid.init()")
 	
-	
+	rot.loadData()
+}
+
+rot.grid.column = {
+	xtype: 'gridcolumn',
+	dataIndex: 'string',
+	text: 'Rotation'
 }
 
 rot.log = function(str) {
 	c = Ext.ComponentQuery.query('#debugConsole')[0];
-	c.setValue(c.getValue() + str + "\n")
+	c.setValue(c.getValue() + str + "\n");
+}
+
+rot.loadData = function() {
+	var store = Ext.getStore('rotStore');
+	var proxy = store.getProxy();
+	rot.log(store)
+	
+	var start = [2015, 1];
+	var count = 12;
+	
+	var fields = []
+	var cols = []
+	
+	var y = start[0]
+	var m = start[1]
+	for (i=0; i>=count; i++) {
+		mm = (m < 10) ? "0"+m : m;
+		yyyymm = "" + y + mm
+		ix = "d"+yyyymm
+		fields[fields.length] = {name: ix,  type: 'int', 'mapping' : i};
+	
+		var o = Object.clone(rot.grid.column);
+		o.width = 90;
+		o.text = ix;
+		o.dataIndex = ix;
+		cols[cols.length] = o;
+		
+		if (m == 12) {
+			m = 1;
+			y++;
+		} else {
+			m++;
+		}
+	}
+	
+	console.log(fields)
+	console.log(cols)
+	// create a data model
+	rot.model = Ext.define('rot.view.gridmodel', {
+		extend: 'Ext.data.Model',
+		fields: fields,
+		itemId: "rotModel"
+	});
+	console.log(rot.model)
+	
+	//proxy.setExtraParam("dt_from", dt_from.getSubmitData())
+	//proxy.setExtraParam("dt_to",   dt_to.getSubmitData())
+	store.setModel(rot.model);
+	
+	rot.grid.grid.reconfigure(store, cols);
+	//proxy.read(operation)
+	//store.load();
 }
 
 /*

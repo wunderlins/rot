@@ -17,6 +17,7 @@ Ext.define('calendar.store.rotStore', {
     extend: 'Ext.data.Store',
 
     requires: [
+        'calendar.model.rotModel',
         'Ext.data.proxy.Ajax',
         'Ext.data.reader.Json'
     ],
@@ -26,6 +27,7 @@ Ext.define('calendar.store.rotStore', {
         cfg = cfg || {};
         me.callParent([Ext.apply({
             storeId: 'rotStore',
+            model: 'calendar.model.rotModel',
             proxy: {
                 type: 'ajax',
                 url: '../../get_plan',

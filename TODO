@@ -25,6 +25,8 @@
    * anz jahre
    * geplantes austrittsdatum (je näher desto höher prio)
  - Grid
+   * dynamischer aufbau des grid
+   * multi header grid
  
 == Milestone 3: Usability
  - vervollständigunshilfen

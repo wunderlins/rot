@@ -42,7 +42,9 @@
             "aeb6b904-924a-4718-817c-f45c40138474"
         ],
         "controller": [],
-        "model": [],
+        "model": [
+            "e824ce7a-d84a-4602-9faf-4292f052a8ba"
+        ],
         "resource": [
             "76d17007-2335-4c00-b7ab-dad9b996582b",
             "c5a3bf20-3e93-43eb-8e25-111f7aafe448",
