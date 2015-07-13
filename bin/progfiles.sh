@@ -9,7 +9,9 @@ if [[ "$1" == '-v' ]]; then
 				! -path "./.git/*" \
 				! -path "*~" \
 				! -path "*.log" \
+				! -path "*.log.*" \
 				! -path "*.pid" \
+				! -path "*/session_*" \
 				! -path "./.*" \
 				! -path "./doc/*" \
 				! -path "*.csv" \
@@ -29,7 +31,9 @@ else
 				! -path "./.git/*" \
 				! -path "*~" \
 				! -path "*.log" \
+				! -path "*.log.*" \
 				! -path "*.pid" \
+				! -path "*/session_*" \
 				! -path "./.*" \
 				! -path "./doc/*" \
 				! -path "*.csv" \

@@ -1,0 +1,41 @@
+{
+    "type": "Ext.data.Model",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "monthModel"
+    },
+    "name": "MyModel",
+    "designerId": "479d91cd-00f2-4268-b7ca-308960a13b6c",
+    "cn": [
+        {
+            "type": "Ext.data.field.Integer",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "id"
+            },
+            "name": "MyInteger2",
+            "designerId": "b5e0636b-87b4-4c1e-8f77-4aa59ca9f35d"
+        },
+        {
+            "type": "Ext.data.field.String",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "name"
+            },
+            "name": "MyString2",
+            "designerId": "0bf344aa-349a-47d8-8dcd-0f2e20c5e8da"
+        }
+    ]
+}

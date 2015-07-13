@@ -10,6 +10,10 @@ Object.clone = function(obj) {
 rot = {};
 rot.grid = {}
 
+rot.get = function(selector) {
+	return Ext.ComponentQuery.query(selector)[0];
+}
+
 rot.model = null;
 rot.grid.grid = null;
 rot.grid.init = function() {
@@ -43,6 +47,18 @@ rot.loadData = function(button, e, eOpts) {
 	//rot.log(store)
 	
 	// read the time span
+	var vonm = parseInt(rot.get("#vonm").getValue())
+	var vony = parseInt(rot.get("#vony").getValue())
+	var bism = parseInt(rot.get("#bism").getValue())
+	var bisy = parseInt(rot.get("#bisy").getValue())
+	rot.log(vonm + "." + vony + " " + bism + "." + bisy)
+	
+	if (isNaN(vonm) || isNaN(vony) || isNaN(bism) || isNaN(bisy)) {
+		// TODO: notify user about error
+		rot.log("Input format error in date")
+		return false;
+	}
+	
 	
 	
 	// create a new model

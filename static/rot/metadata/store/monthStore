@@ -1,0 +1,100 @@
+{
+    "type": "Ext.data.Store",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "autoLoad": true,
+        "designer|userClassName": "monthStore",
+        "model": "monthModel",
+        "storeId": "monthStore"
+    },
+    "name": "MyStore",
+    "designerId": "0c1f4a14-ad1f-40e0-89d5-d1fbcd78e027",
+    "cn": [
+        {
+            "type": "Ext.data.proxy.Memory",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "data": [
+                    "",
+                    "{ \"root\": [",
+                    "                {",
+                    "                    id: 1,",
+                    "                    name: 'Jan'",
+                    "                },",
+                    "                {",
+                    "                    id: 2,",
+                    "                    name: 'Feb'",
+                    "                },",
+                    "                {",
+                    "                    id: 3,",
+                    "                    name: 'Mar'",
+                    "                },",
+                    "                {",
+                    "                    id: 4,",
+                    "                    name: 'Apr'",
+                    "                },",
+                    "                {",
+                    "                    id: 5,",
+                    "                    name: 'Mai'",
+                    "                },",
+                    "                {",
+                    "                    id: 6,",
+                    "                    name: 'Jun'",
+                    "                },",
+                    "                {",
+                    "                    id: 7,",
+                    "                    name: 'Jul'",
+                    "                },",
+                    "                {",
+                    "                    id: 8,",
+                    "                    name: 'Aug'",
+                    "                },",
+                    "                {",
+                    "                    id: 9,",
+                    "                    name: 'Sep'",
+                    "                },",
+                    "                {",
+                    "                    id: 10,",
+                    "                    name: 'Nov'",
+                    "                },",
+                    "                {",
+                    "                    id: 11,",
+                    "                    name: 'Oct'",
+                    "                },",
+                    "                {",
+                    "                    id: 12,",
+                    "                    name: 'Dez'",
+                    "                }",
+                    "            ]",
+                    "        ",
+                    " } "
+                ]
+            },
+            "name": "MyMemoryProxy",
+            "designerId": "86605c7e-fbab-477e-afa4-adbf6bdfb4c2",
+            "cn": [
+                {
+                    "type": "Ext.data.reader.Json",
+                    "reference": {
+                        "name": "reader",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "rootProperty": "root"
+                    },
+                    "name": "MyJsonReader1",
+                    "designerId": "126bff87-0aac-464a-80c6-be702d499feb"
+                }
+            ]
+        }
+    ]
+}

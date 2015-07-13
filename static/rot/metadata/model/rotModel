@@ -1,0 +1,47 @@
+{
+    "type": "Ext.data.Model",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "rotModel"
+    },
+    "name": "MyModel",
+    "designerId": "e824ce7a-d84a-4602-9faf-4292f052a8ba",
+    "cn": [
+        {
+            "type": "Ext.data.field.Integer",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "mapping": [
+                    "0"
+                ],
+                "name": "id"
+            },
+            "name": "MyInteger",
+            "designerId": "74e0a914-4eee-452f-bfbf-f9537fcfcfca"
+        },
+        {
+            "type": "Ext.data.field.String",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "mapping": [
+                    "1"
+                ],
+                "name": "name"
+            },
+            "name": "MyString",
+            "designerId": "357fbbd0-1f66-4bb2-9e98-a63a63297096"
+        }
+    ]
+}

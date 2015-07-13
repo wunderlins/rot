@@ -99,17 +99,27 @@
                                             },
                                             "codeClass": null,
                                             "userConfig": {
+                                                "allowBlank": false,
+                                                "allowOnlyWhitespace": false,
                                                 "autoLoadOnValue": null,
+                                                "autoSelect": null,
                                                 "displayField": "name",
+                                                "enableKeyEvents": true,
                                                 "fieldLabel": "Von",
                                                 "forceSelection": true,
                                                 "itemId": "vonm",
                                                 "labelWidth": 30,
+                                                "queryCaching": null,
+                                                "queryMode": "local",
+                                                "selectOnFocus": true,
                                                 "store": "monthStore",
+                                                "typeAhead": true,
+                                                "typeAheadDelay": 100,
                                                 "value": [
                                                     "1"
                                                 ],
                                                 "valueField": "id",
+                                                "vtype": null,
                                                 "width": 100
                                             },
                                             "name": "MyComboBox",
@@ -143,21 +153,31 @@
                                             },
                                             "codeClass": null,
                                             "userConfig": {
+                                                "allowBlank": false,
+                                                "allowOnlyWhitespace": false,
                                                 "autoLoadOnValue": null,
+                                                "autoSelect": null,
                                                 "displayField": "name",
-                                                "fieldLabel": "Bis",
+                                                "enableKeyEvents": true,
+                                                "fieldLabel": "Von",
                                                 "forceSelection": true,
                                                 "itemId": "bism",
                                                 "labelWidth": 30,
+                                                "queryCaching": null,
+                                                "queryMode": "local",
+                                                "selectOnFocus": true,
                                                 "store": "monthStore",
+                                                "typeAhead": true,
+                                                "typeAheadDelay": 100,
                                                 "value": [
                                                     "12"
                                                 ],
                                                 "valueField": "id",
+                                                "vtype": null,
                                                 "width": 100
                                             },
-                                            "name": "MyComboBox1",
-                                            "designerId": "13f185a6-756f-453d-b5ba-0af28e522035"
+                                            "name": "MyComboBox2",
+                                            "designerId": "67713d7b-ce5d-4364-94f0-9205bcdd51a3"
                                         },
                                         {
                                             "type": "Ext.form.field.Text",
