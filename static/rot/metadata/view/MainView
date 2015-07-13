@@ -241,9 +241,10 @@
                                             "codeClass": null,
                                             "userConfig": {
                                                 "fieldLabel": "x",
+                                                "itemId": "dbgx",
                                                 "labelWidth": 30,
                                                 "readOnly": true,
-                                                "width": 140
+                                                "width": 100
                                             },
                                             "name": "MyTextField",
                                             "designerId": "88ba008a-c4da-470b-844b-5341bf5389b2"
@@ -257,9 +258,10 @@
                                             "codeClass": null,
                                             "userConfig": {
                                                 "fieldLabel": "y",
+                                                "itemId": "dbgy",
                                                 "labelWidth": 30,
                                                 "readOnly": true,
-                                                "width": 140
+                                                "width": 100
                                             },
                                             "name": "MyTextField1",
                                             "designerId": "c66ce2cb-cd3c-49be-bc1e-9fec1840568d"
@@ -332,7 +334,43 @@
                             },
                             "codeClass": null,
                             "name": "MyGridView",
-                            "designerId": "c4a78c1a-d69e-4299-a4f8-5d2e747745c7"
+                            "designerId": "c4a78c1a-d69e-4299-a4f8-5d2e747745c7",
+                            "cn": [
+                                {
+                                    "type": "viewcontrollereventbinding",
+                                    "reference": {
+                                        "name": "listeners",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "onViewCellClick",
+                                        "name": "cellclick",
+                                        "scope": "me"
+                                    },
+                                    "name": "onViewCellClick",
+                                    "designerId": "84600556-1710-4978-acf6-0d715facdb37"
+                                },
+                                {
+                                    "type": "viewcontrollereventbinding",
+                                    "reference": {
+                                        "name": "listeners",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "onViewCellDblClick",
+                                        "implHandler": [
+                                            "rot.get(\"#dbgx\").setValue(rowIndex);",
+                                            "rot.get(\"#dbgy\").setValue(cellIndex);"
+                                        ],
+                                        "name": "celldblclick",
+                                        "scope": "me"
+                                    },
+                                    "name": "onViewCellDblClick",
+                                    "designerId": "6e0da3e7-ac86-466b-8c70-08b2c41069fb"
+                                }
+                            ]
                         },
                         {
                             "type": "Ext.grid.column.Column",
@@ -343,6 +381,13 @@
                             "codeClass": null,
                             "userConfig": {
                                 "dataIndex": "id",
+                                "draggable": false,
+                                "hidden": true,
+                                "hideable": false,
+                                "locked": true,
+                                "menuDisabled": true,
+                                "resizable": false,
+                                "sortable": false,
                                 "text": "Id"
                             },
                             "name": "MyColumn",
@@ -357,10 +402,25 @@
                             "codeClass": null,
                             "userConfig": {
                                 "dataIndex": "name",
+                                "hidden": true,
+                                "locked": true,
                                 "text": "Name"
                             },
                             "name": "MyColumn3",
                             "designerId": "66051ff4-a5c7-4a75-a790-7b642a929588"
+                        },
+                        {
+                            "type": "Ext.selection.CellModel",
+                            "reference": {
+                                "name": "selModel",
+                                "type": "object"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|displayName": "contentGridSelect"
+                            },
+                            "name": "MyCellSelectionModel",
+                            "designerId": "f2b906d8-21f1-4a49-bc6b-9f3e9c27789f"
                         }
                     ]
                 }

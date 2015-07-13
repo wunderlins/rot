@@ -15,5 +15,15 @@
 
 Ext.define('calendar.view.MainViewViewController', {
     extend: 'Ext.app.ViewController',
-    alias: 'controller.mainview'
+    alias: 'controller.mainview',
+
+    onViewCellClick: function(tableview, td, cellIndex, record, tr, rowIndex, e, eOpts) {
+
+    },
+
+    onViewCellDblClick: function(tableview, td, cellIndex, record, tr, rowIndex, e, eOpts) {
+        rot.get("#dbgx").setValue(rowIndex);
+        rot.get("#dbgy").setValue(cellIndex);
+    }
+
 });

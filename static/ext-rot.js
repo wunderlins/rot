@@ -9,6 +9,7 @@ Object.clone = function(obj) {
 
 rot = {};
 rot.grid = {}
+rot.grid.cellwidth = 50
 
 rot.get = function(selector) {
 	return Ext.ComponentQuery.query(selector)[0];
@@ -28,12 +29,6 @@ rot.grid.init = function() {
 	//rot.loadData()
 }
 
-rot.grid.column = {
-	xtype: 'gridcolumn',
-	dataIndex: 'string',
-	text: 'Rotation'
-}
-
 rot.log = function(str) {
 	c = Ext.ComponentQuery.query('#debugConsole')[0];
 	c.setValue(c.getValue() + str + "\n");
@@ -41,6 +36,7 @@ rot.log = function(str) {
 
 // double declaration to make architects event handling happy
 rot.loadData = function(button, e, eOpts) {
+	
 	// get a reference to the data store and proxy
 	var store = Ext.getStore('rotStore');
 	var proxy = store.getProxy();
@@ -76,15 +72,32 @@ rot.loadData = function(button, e, eOpts) {
 	cy = vony;
 	months = 0;
 	
+	
 	rot.fields = [
 		{type: 'int', mapping: 0, name: 'id'},
 		{type: 'string', mapping: 1, name: 'name'}
 	]
 	
 	rot.columns =  [
-		{xtype: 'gridcolumn', text: 'Id', dataIndex: 'id'},
-		{xtype: 'gridcolumn', text: 'Name', dataIndex: 'name'}	
+		{
+			//xtype: 'gridcolumn', 
+			hidden: true,
+			text: 'Id', 
+			dataIndex: 'id', 
+			width: 40, 
+			locked: true
+		},
+		{
+			xtype: 'gridcolumn', 
+			text: 'Name', 
+			dataIndex: 'name', 
+			width: rot.grid.cellwidth, 
+			width: 150,
+			locked: true
+		},
+		{text: cy, columns: [], menuDisabled: true}
 	]
+	colptr = rot.columns[rot.columns.length-1]
 	
 	while (true) {
 		months++;
@@ -94,11 +107,25 @@ rot.loadData = function(button, e, eOpts) {
 		n += (cm < 10) ? "0" + cm : cm;
 		
 		rot.fields[rot.fields.length] = {type: 'int', mapping: months+2, name: n}
-		rot.columns[rot.columns.length] = {xtype: 'gridcolumn', text: cm, dataIndex: n}	
+		colptr.columns[colptr.columns.length] = {
+			xtype: 'gridcolumn', 
+			text: cm, 
+			dataIndex: n, 
+			width: rot.grid.cellwidth,
+			draggable: false,
+			resizable: false,
+			dataIndex: 'id',
+			hideable: false,
+			locked: true,
+			menuDisabled: true,
+			sortable: false
+		}
 		
 		if (cm == 12) {
 			cm = 1;
 			cy++;
+			rot.columns[rot.columns.length] = {text: cy, columns: [], menuDisabled: true}
+			colptr = rot.columns[rot.columns.length-1]
 		} else {
 			cm++;
 		}
@@ -107,7 +134,19 @@ rot.loadData = function(button, e, eOpts) {
 			break;
 	}
 	rot.fields[rot.fields.length] = {type: 'int', mapping: months+2, name: n}
-	rot.columns[rot.columns.length] = {xtype: 'gridcolumn', text: cm, dataIndex: n}	
+	colptr.columns[colptr.columns.length] = {
+		xtype: 'gridcolumn', 
+		text: cm, 
+		dataIndex: n, width: 
+		rot.grid.cellwidth,
+		draggable: false,
+		resizable: false,
+		dataIndex: 'id',
+		hideable: false,
+		locked: true,
+		menuDisabled: true,
+		sortable: false
+	}
 	rot.log("Months: " + months)
 	
 	
@@ -118,7 +157,7 @@ rot.loadData = function(button, e, eOpts) {
 			'Ext.data.field.Integer',
 			'Ext.data.field.String'
 		],
-
+		
 		fields: rot.fields
 	});
 	
@@ -237,6 +276,12 @@ Ext.define('calendar.store.monthStore', {
 
 
 /*
+rot.grid.column = {
+	xtype: 'gridcolumn',
+	dataIndex: 'string',
+	text: 'Rotation'
+}
+
 rot.loadData = function() {
 	var store = Ext.getStore('rotStore');
 	var proxy = store.getProxy();

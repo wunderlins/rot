@@ -19,15 +19,18 @@ Ext.define('calendar.view.MainView', {
 
     requires: [
         'calendar.view.MainViewViewModel',
+        'calendar.view.MainViewViewController',
         'Ext.form.field.ComboBox',
         'Ext.form.field.TextArea',
         'Ext.grid.Panel',
         'Ext.grid.View',
         'Ext.grid.column.Column',
+        'Ext.selection.CellModel',
         'Ext.tab.Panel',
         'Ext.tab.Tab'
     ],
 
+    controller: 'mainview',
     viewModel: {
         type: 'mainview'
     },
@@ -150,14 +153,16 @@ Ext.define('calendar.view.MainView', {
                                     items: [
                                         {
                                             xtype: 'textfield',
-                                            width: 140,
+                                            itemId: 'dbgx',
+                                            width: 100,
                                             fieldLabel: 'x',
                                             labelWidth: 30,
                                             readOnly: true
                                         },
                                         {
                                             xtype: 'textfield',
-                                            width: 140,
+                                            itemId: 'dbgy',
+                                            width: 100,
                                             fieldLabel: 'y',
                                             labelWidth: 30,
                                             readOnly: true
@@ -191,18 +196,36 @@ Ext.define('calendar.view.MainView', {
                     itemId: 'contentGrid',
                     titleCollapse: false,
                     store: 'rotStore',
+                    viewConfig: {
+                        listeners: {
+                            cellclick: 'onViewCellClick',
+                            celldblclick: 'onViewCellDblClick'
+                        }
+                    },
                     columns: [
                         {
                             xtype: 'gridcolumn',
+                            draggable: false,
+                            hidden: true,
+                            resizable: false,
+                            sortable: false,
                             dataIndex: 'id',
+                            hideable: false,
+                            locked: true,
+                            menuDisabled: true,
                             text: 'Id'
                         },
                         {
                             xtype: 'gridcolumn',
+                            hidden: true,
                             dataIndex: 'name',
+                            locked: true,
                             text: 'Name'
                         }
-                    ]
+                    ],
+                    selModel: {
+                        selType: 'cellmodel'
+                    }
                 }
             ]
         },

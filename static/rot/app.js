@@ -39,7 +39,7 @@ Ext.application({
     launch: function() {
         Ext.create('calendar.view.MainView');
 
-        rot.grid.init()
+        rot.grid.init();
     }
 
 });
