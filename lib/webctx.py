@@ -335,7 +335,8 @@ class login(response):
 class get_plan:
 	def GET(self):
 		web.header('Content-Type', 'application/json; charset=utf-8', unique=True)
-		return '{"root": [{"id": 0, "name": "Rotation 1"}, {"id": 1, "name": "Rotation 2"}]}'
+		return '{"root": [[0, "Rotation 1"], [1, "Rotation 2"]]}'
+		#return '{"root": [{"id": 0, "name": "Rotation 1"}, {"id": 1, "name": "Rotation 2"}]}'
 	
 	
 	
