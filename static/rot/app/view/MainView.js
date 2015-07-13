@@ -26,6 +26,7 @@ Ext.define('calendar.view.MainView', {
         'Ext.grid.View',
         'Ext.grid.column.Column',
         'Ext.selection.CellModel',
+        'Ext.grid.feature.Grouping',
         'Ext.tab.Panel',
         'Ext.tab.Tab'
     ],
@@ -225,7 +226,12 @@ Ext.define('calendar.view.MainView', {
                     ],
                     selModel: {
                         selType: 'cellmodel'
-                    }
+                    },
+                    features: [
+                        {
+                            ftype: 'grouping'
+                        }
+                    ]
                 }
             ]
         },

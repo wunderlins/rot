@@ -25,10 +25,11 @@
    * anz jahre
    * geplantes austrittsdatum (je näher desto höher prio)
  - Grid
-   * dynamischer aufbau des grid
-   * multi header grid
+   * DONE dynamischer aufbau des grid
+   * DONE multi header grid
+   * rot_group feld in resultaten hinzufügen um gruppierungen zu ermöglichen.
    * grouped rows
-   * add row to group
+   * add row to vert. group
  
 == Milestone 3: Usability
  - vervollständigunshilfen

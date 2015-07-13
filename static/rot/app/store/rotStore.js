@@ -26,6 +26,7 @@ Ext.define('calendar.store.rotStore', {
         var me = this;
         cfg = cfg || {};
         me.callParent([Ext.apply({
+            groupField: 'rot_group',
             storeId: 'rotStore',
             model: 'calendar.model.rotModel',
             proxy: {

@@ -421,6 +421,16 @@
                             },
                             "name": "MyCellSelectionModel",
                             "designerId": "f2b906d8-21f1-4a49-bc6b-9f3e9c27789f"
+                        },
+                        {
+                            "type": "Ext.grid.feature.Grouping",
+                            "reference": {
+                                "name": "features",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "name": "MyGroupingFeature",
+                            "designerId": "11c4cd0a-ca42-4b65-870c-3149d91ed562"
                         }
                     ]
                 }
