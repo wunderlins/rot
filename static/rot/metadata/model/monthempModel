@@ -1,0 +1,145 @@
+{
+    "type": "Ext.data.Model",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "monthempModel"
+    },
+    "name": "MyModel",
+    "designerId": "601ee8ba-c8f9-4af4-999c-4749fabef85f",
+    "cn": [
+        {
+            "type": "Ext.data.field.Integer",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "rid"
+            },
+            "name": "MyInteger3",
+            "designerId": "d7e969cc-163a-4e19-a2a0-48f2a4ab6b19"
+        },
+        {
+            "type": "Ext.data.field.String",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "kuerzel"
+            },
+            "name": "MyString4",
+            "designerId": "7b1d9890-47fe-4344-a89c-a896353d2dba"
+        },
+        {
+            "type": "Ext.data.field.Integer",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "ptid"
+            },
+            "name": "MyInteger4",
+            "designerId": "5316938e-661a-49c6-999d-3b46152a9c34"
+        },
+        {
+            "type": "Ext.data.field.Integer",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "pid"
+            },
+            "name": "MyInteger5",
+            "designerId": "e5f30fee-25ac-4326-bb24-17a70ac6db32"
+        },
+        {
+            "type": "Ext.data.field.Number",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "bgrad"
+            },
+            "name": "MyNumber",
+            "designerId": "a367d7e7-254b-4e55-9a53-a50bdac631a2"
+        },
+        {
+            "type": "Ext.data.field.String",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "comment"
+            },
+            "name": "MyString5",
+            "designerId": "d8b75964-13d4-4fdc-9a51-72cb7c88ce38"
+        },
+        {
+            "type": "Ext.data.field.String",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "fg"
+            },
+            "name": "MyString6",
+            "designerId": "ad6bdf2f-5fe3-480a-a241-b72fae010e78"
+        },
+        {
+            "type": "Ext.data.field.String",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "bg"
+            },
+            "name": "MyString7",
+            "designerId": "ca82ff3f-7c05-4ea9-8c66-b62218afbfb1"
+        },
+        {
+            "type": "Ext.data.field.String",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "name"
+            },
+            "name": "MyString8",
+            "designerId": "885fe604-c911-42d6-b2e1-078bb9e4ac42"
+        },
+        {
+            "type": "Ext.data.field.String",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "vorname"
+            },
+            "name": "MyString9",
+            "designerId": "53abdf91-4f86-4834-858b-022edb9e84e3"
+        }
+    ]
+}
