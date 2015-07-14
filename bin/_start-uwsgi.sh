@@ -20,7 +20,7 @@ $bin  --plugin python,http \
       --static-map /static=static/ \
       --pidfile var/rot.pid \
       --daemonize $web_logfile \
-      --workers 10 \
+      --workers 1 \
       --plugins-dir "$basedir/lib" \
       --single-interpreter
 #      --logto $web_logfile \

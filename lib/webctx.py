@@ -28,6 +28,7 @@ urls = (
   '/login', 'webctx.login',
   '/plan', 'webctx.plan',
   '/get_plan', 'webctx.get_plan',
+  '/get_meta', 'webctx.get_meta',
   '/get_month', 'webctx.get_month',
 )
 
@@ -246,6 +247,14 @@ class response:
 						break
 		return (g, wunsch, dates)
 
+	def json(self, obj):
+		web.header('Content-Type', 'application/json; charset=utf-8', unique=True)
+		#web.config.debug = False
+		if web.config.debug:
+			return json.dumps(obj, encoding="utf-8", indent=2)
+		else:
+			return json.dumps(obj, encoding="utf-8")
+
 class login(response):
 	no_auth = True
 	
@@ -333,7 +342,7 @@ class login(response):
 		
 		return '{"success": false}'
 
-class get_month:
+class get_month(response):
 	def GET(self):
 		ym = web.input(ym=None)
 		
@@ -369,14 +378,189 @@ class get_month:
 			ret["count"] += 1
 		
 		web.header('Content-Type', 'application/json; charset=utf-8', unique=True)
-		return json.dumps(ret, encoding="utf8")
+		return self.json(ret)
 
-class get_plan:
+class get_meta(response):
+	def GET(self):
+		# get user input
+		try:
+			von = web.input(von=None).von
+			bis = web.input(von=None).bis
+		except:
+			return self.json({
+				"success": False,
+				"root": {},
+				"count": 0,
+				"error": "failed to parse input."
+			})
+		
+		return self.json(data.plan_meta(von, bis))
+	
+
+class data:
+	
+	# von bis are dates, format yyyymm (4digit year, 2 digit month)
+	@staticmethod
+	def plan_meta(von, bis): 
+		months = 0
+		cellwidth = 50
+		
+		# validate user input
+		try:
+			date_sel = {
+				"von": {
+					"m": von[4:],
+					"y": von[0:4] 
+				},
+				"bis": {
+					"m": bis[4:],
+					"y": bis[0:4] 
+				}
+			}
+
+		except:
+			return {
+				"success": False,
+				"root": None,
+				"count": 0,
+				"error": "failed to parse input."
+			}
+			
+		# metadata
+		ret = {"count": 0, "root" : None, "metaData": None}
+		ret["metaData"] = {
+			#"root": "root",
+			"von": von,
+			"bis": bis,
+			"date_sel": date_sel,
+			"months": 0,
+			"error": None,
+			"fields" : [
+				{"type": 'int', "mapping": 0, "name": 'id'},
+				{"type": 'string', "mapping": 1, "name": "rot_group"},
+				{"type": 'string', "mapping": 2, "name": 'name'},
+			],
+			"columns": [
+				{
+					"xtype": 'gridcolumn', 
+					"hidden": True,
+					"text": 'Id', 
+					"dataIndex": 'id', 
+					"width": 40, 
+					"locked": True
+				},{
+					"xtype": 'gridcolumn', 
+					"text": "rot_group", 
+					"dataIndex": "rot_group", 
+					"width": 60,
+					"draggable": False,
+					"resizable": False,
+					"hideable": False,
+					"menuDisabled": True,
+					"sortable": False,
+					"hidden": True,
+					"locked": True
+				},{
+					"xtype": 'gridcolumn', 
+					"text": 'Name', 
+					"dataIndex": 'name', 
+					"width": 60, 
+					"width": 150,
+					"locked": True
+				}, {"text": str(date_sel["von"]["y"]), "columns": [], "menuDisabled": True}
+			]
+		}
+		
+		# pointer to last year
+		currenty = ret["metaData"]["columns"][len(ret["metaData"]["columns"])-1]
+		
+		# count number of months
+		tmp = date_sel["von"]
+		tmp["y"] = int(tmp["y"])
+		tmp["m"] = int(tmp["m"])
+		web.debug("counting months %d %d" % (tmp["m"], tmp["y"]))
+		n = ""
+		while tmp["m"] != int(date_sel["bis"]["m"]) or tmp["y"] != int(date_sel["bis"]["y"]):
+			#web.debug(str(months))
+			n = "" + str(tmp["y"]);
+			if tmp["m"] < 10:
+				n = n + "0" + str(tmp["m"])
+			else: 
+				n = n + str(tmp["m"]);
+			
+			currenty["columns"].append({
+				"xtype": 'gridcolumn', 
+				"text": str(tmp["m"]), 
+				"dataIndex": n, 
+				"width": cellwidth,
+				"draggable": False,
+				"resizable": False,
+				"hideable": False,
+				"menuDisabled": True,
+				"sortable": False
+			})
+			
+			ret["metaData"]["fields"].append({
+				"type": 'int', 
+				"mapping": months+3, 
+				"name": n
+			})
+			
+			tmp["m"] += 1
+			if tmp["m"] == 13:
+				tmp["y"] += 1
+				tmp["m"] = 1
+				
+				col = {"text": str(tmp["y"]), "columns": [], "menuDisabled": True}
+				ret["metaData"]["columns"].append(col)
+				currenty = ret["metaData"]["columns"][len(ret["metaData"]["columns"])-1]
+			
+			months += 1
+		#web.debug(str(months))
+		# add last month
+		months += 1
+		n = "" + str(tmp["y"]);
+		if tmp["m"] < 10:
+			n = n + "0" + str(tmp["m"])
+		else: 
+			n = n + str(tmp["m"]);
+		
+		currenty["columns"].append({
+			"xtype": 'gridcolumn', 
+			"text": str(tmp["m"]), 
+			"dataIndex": n, 
+			"width": cellwidth,
+			"draggable": False,
+			"resizable": False,
+			"hideable": False,
+			"menuDisabled": True,
+			"sortable": False
+		})
+		ret["metaData"]["fields"].append({
+			"type": 'int', 
+			"mapping": months+3, 
+			"name": n
+		})
+		ret["metaData"]["months"] = months
+				
+		return ret
+
+class get_plan(response):
 	def GET(self):
 		
 		# get user input
-		von = web.input(von=None).von
-		bis = web.input(von=None).bis
+		try:
+			von = web.input(von=None).von
+			bis = web.input(von=None).bis
+		except:
+			return self.json({
+				"success": False,
+				"root": {},
+				"count": 0,
+				"error": "failed to parse input."
+			})
+			
+		"""
 		months = 0
 		cellwidth = 50
 		
@@ -394,11 +578,12 @@ class get_plan:
 		# metadata
 		ret = {"count": 0, "root" : [], "metaData": None}
 		ret["metaData"] = {
-			"root": "root",
+			#"root": "root",
 			"von": von,
 			"bis": bis,
 			"date_sel": date_sel,
 			"months": 0,
+			"error": None,
 			"fields" : [
 				{"type": 'int', "mapping": 0, "name": 'id'},
 				{"type": 'string', "mapping": 1, "name": "rot_group"},
@@ -506,9 +691,9 @@ class get_plan:
 			"name": n
 		})
 		ret["metaData"]["months"] = months
+		"""
 		
-		web.header('Content-Type', 'application/json; charset=utf-8', unique=True)
-		
+		ret = data.plan_meta(von, bis)
 		sql = db.text("""
 			SELECT rr.id rrid, rg.name groupname, rr.name rotname, 
 			       rr.bemerkung, CONCAT(rg.sort, LPAD(rr.sort, 4, '0')) sort
@@ -517,6 +702,7 @@ class get_plan:
 		
 		res = db.engine.execute(sql)
 		
+		ret["root"] = []
 		for r in res:
 			row = []
 			for e in r:
@@ -525,7 +711,9 @@ class get_plan:
 			ret["count"] += 1
 		
 		
-		return json.dumps(ret, encoding="utf8")
+			return self.json(ret)
+			#return json.dumps(ret, encoding="utf8")
+			
 		'''
 		return """{"root": [
 			[0, "Rotation 1", "Herz"], 
