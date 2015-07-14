@@ -72,7 +72,7 @@
                 "fn": "onJsonstoreMetaChange",
                 "implHandler": [
                     "console.log(\"MetaChange for rotStore\");",
-                    "",
+                    "/*",
                     "// create a new model",
                     "rot.model = Ext.define('calendar.model.rotModel', {",
                     "    extend: 'Ext.data.Model',",
@@ -86,7 +86,8 @@
                     "console.log(meta.fields);",
                     "console.log(meta.columns);",
                     "store.setModel(rot.model);",
-                    "rot.grid.grid.reconfigure(store, meta.columns);"
+                    "rot.grid.grid.reconfigure(store, meta.columns);",
+                    "*/"
                 ],
                 "name": "metachange",
                 "scope": "me"
@@ -111,6 +112,26 @@
             },
             "name": "onJsonstoreEndupdate",
             "designerId": "58baf620-7b17-4b35-b074-4ccea5d1a4e4"
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onJsonstoreBeforeLoad",
+                "implHandler": [
+                    "console.log(\"onBeforeLoad monthempStore\");",
+                    "",
+                    "rot.get_meta(store, operation, eOpts);"
+                ],
+                "name": "beforeload",
+                "scope": "me"
+            },
+            "name": "onJsonstoreBeforeLoad",
+            "designerId": "0158c338-2501-4919-b7fe-7f0a08040518"
         }
     ]
 }

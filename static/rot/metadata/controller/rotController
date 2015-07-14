@@ -23,13 +23,96 @@
                 "designer|targetType": "Ext.button.Button",
                 "fn": "loadData",
                 "implHandler": [
-                    "rot.loadData(button, e, eOpts)"
+                    "rot.loadData(button, e, eOpts);",
+                    "//rot.get_meta();"
                 ],
                 "name": "click",
                 "scope": "me"
             },
             "name": "loadData",
             "designerId": "09810671-4d09-4ec6-bc89-220ce804fc35"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|controlQuery": "#vonm",
+                "designer|targetType": "Ext.form.field.ComboBox",
+                "fn": "load_mata_vonm",
+                "implHandler": [
+                    "rot.get_meta(field, newValue, oldValue);"
+                ],
+                "name": "change",
+                "scope": "me"
+            },
+            "name": "load_mata_vonm",
+            "designerId": "28c21de3-8391-44f5-b6c6-0ec4c6fc2681"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|controlQuery": "#vony",
+                "designer|targetType": "Ext.form.field.Text",
+                "fn": "load_mata_vony",
+                "implHandler": [
+                    "if (newValue > 999)",
+                    "    rot.get_meta(field, newValue, oldValue);"
+                ],
+                "name": "change",
+                "scope": "me"
+            },
+            "name": "load_mata_vony",
+            "designerId": "079f01b6-85de-4c68-8ec0-8b07fb3a839b"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|controlQuery": "#bism",
+                "designer|targetType": "Ext.form.field.ComboBox",
+                "fn": "load_mata_bism",
+                "implHandler": [
+                    "rot.get_meta(field, newValue, oldValue);"
+                ],
+                "name": "change",
+                "scope": "me"
+            },
+            "name": "load_mata_bism",
+            "designerId": "ccab3ca0-75ad-4882-a7d9-985af4717b13"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|controlQuery": "#bisy",
+                "designer|targetType": "Ext.form.field.Text",
+                "fn": "load_mata_bisy",
+                "implHandler": [
+                    "if (newValue > 999)",
+                    "    rot.get_meta(field, newValue, oldValue);"
+                ],
+                "name": "change",
+                "scope": "me"
+            },
+            "name": "load_mata_bisy",
+            "designerId": "599c6c0c-e9f3-43dd-82a8-913613ff3d2e"
         }
     ]
 }

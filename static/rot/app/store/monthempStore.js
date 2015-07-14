@@ -51,6 +51,10 @@ Ext.define('calendar.store.monthempStore', {
                 endupdate: {
                     fn: me.onJsonstoreEndupdate,
                     scope: me
+                },
+                beforeload: {
+                    fn: me.onJsonstoreBeforeLoad,
+                    scope: me
                 }
             }
         }, cfg)]);
@@ -62,7 +66,7 @@ Ext.define('calendar.store.monthempStore', {
 
     onJsonstoreMetaChange: function(store, meta, eOpts) {
         console.log("MetaChange for rotStore");
-
+        /*
         // create a new model
         rot.model = Ext.define('calendar.model.rotModel', {
             extend: 'Ext.data.Model',
@@ -77,10 +81,17 @@ Ext.define('calendar.store.monthempStore', {
         console.log(meta.columns);
         store.setModel(rot.model);
         rot.grid.grid.reconfigure(store, meta.columns);
+        */
     },
 
     onJsonstoreEndupdate: function(eOpts) {
         console.log("Done updating rotStore");
+    },
+
+    onJsonstoreBeforeLoad: function(store, operation, eOpts) {
+        console.log("onBeforeLoad monthempStore");
+
+        rot.get_meta(store, operation, eOpts);
     }
 
 });

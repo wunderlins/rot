@@ -13,11 +13,75 @@ rot.init = function() {
 }
 
 rot.grid = {}
+rot.grid.meta = null
 rot.grid.cellwidth = 50
 rot.meta = null
 
 rot.get = function(selector) {
 	return Ext.ComponentQuery.query(selector)[0];
+}
+
+rot.error = function(title, message) {
+	Ext.MessageBox.alert(title, message);
+}
+
+
+rot.get_meta = function(field, newValue, oldValue) {
+	rot.grid.selection = {
+		von: {y: null, m: null},
+		bis: {y: null, m: null}
+	}
+	
+	// read the time span
+	var vonm = parseInt(rot.get("#vonm").getValue())
+	var vony = parseInt(rot.get("#vony").getValue())
+	var bism = parseInt(rot.get("#bism").getValue())
+	var bisy = parseInt(rot.get("#bisy").getValue())
+	// rot.log(vonm + "." + vony + " " + bism + "." + bisy)
+	
+	console.log("field: ")
+	console.log(field)
+	if (isNaN(vonm) || isNaN(vony) || isNaN(bism) || isNaN(bisy)) {
+		// TODO: notify user about error
+		field.setValue(oldValue);
+		rot.error("Error", "Invalid date value.");
+		return false;
+	}
+	
+	vonix = "" + vony;
+	bisix = "" + bisy;
+	vonix += (vonm < 10) ? "0" + vonm : vonm;
+	bisix += (bism < 10) ? "0" + bism : bism;
+	
+	if (bisix < vonix) {
+		// TODO: notify user about error
+		field.setValue(oldValue);
+		rot.error("Error", "End date must be large than start date.");
+		return false;
+	}
+	
+	// make selected parameters globally available
+	rot.grid.selection.von.y = vony;
+	rot.grid.selection.von.m = vonm;
+	rot.grid.selection.bis.y = bisy;
+	rot.grid.selection.bis.m = bism;
+
+	Ext.Ajax.request({
+		url: '../../get_meta',
+		method: "get",
+		params: {
+			von: vonix,
+			bis: bisix
+		},
+		success: function(response){
+			var text = response.responseText;
+			console.log(Ext.decode(text));
+			rot.grid.meta = Ext.decode(text).metaData
+		}
+	});
+}
+function get_meta() {
+	return rot.get_meta();
 }
 
 rot.grid.selection = {
@@ -85,7 +149,8 @@ rot.grid.init = function() {
 	rot.grid.grid = Ext.ComponentQuery.query('#contentGrid')[0];
 	rot.log("==> rot.grid.init()")
 	
-	rot.loadData()
+	//rot.loadData()
+	rot.get_meta();
 }
 
 rot.log = function(str) {

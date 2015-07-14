@@ -19,11 +19,42 @@ Ext.define('calendar.controller.rotController', {
     control: {
         "#btnReload": {
             click: 'loadData'
+        },
+        "#vonm": {
+            change: 'load_mata_vonm'
+        },
+        "#vony": {
+            change: 'load_mata_vony'
+        },
+        "#bism": {
+            change: 'load_mata_bism'
+        },
+        "#bisy": {
+            change: 'load_mata_bisy'
         }
     },
 
     loadData: function(button, e, eOpts) {
-        rot.loadData(button, e, eOpts)
+        rot.loadData(button, e, eOpts);
+        //rot.get_meta();
+    },
+
+    load_mata_vonm: function(field, newValue, oldValue, eOpts) {
+        rot.get_meta(field, newValue, oldValue);
+    },
+
+    load_mata_vony: function(field, newValue, oldValue, eOpts) {
+        if (newValue > 999)
+            rot.get_meta(field, newValue, oldValue);
+    },
+
+    load_mata_bism: function(field, newValue, oldValue, eOpts) {
+        rot.get_meta(field, newValue, oldValue);
+    },
+
+    load_mata_bisy: function(field, newValue, oldValue, eOpts) {
+        if (newValue > 999)
+            rot.get_meta(field, newValue, oldValue);
     }
 
 });
