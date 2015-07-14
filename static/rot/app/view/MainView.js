@@ -106,8 +106,9 @@ Ext.define('calendar.view.MainView', {
                                             xtype: 'textfield',
                                             itemId: 'vony',
                                             width: 60,
-                                            hideEmptyLabel: false,
                                             hideLabel: true,
+                                            labelPad: 0,
+                                            labelWidth: 0,
                                             value: 2015
                                         },
                                         {
@@ -133,8 +134,9 @@ Ext.define('calendar.view.MainView', {
                                             xtype: 'textfield',
                                             itemId: 'bisy',
                                             width: 60,
-                                            hideEmptyLabel: false,
                                             hideLabel: true,
+                                            labelPad: 0,
+                                            labelWidth: 0,
                                             value: 2015
                                         },
                                         {

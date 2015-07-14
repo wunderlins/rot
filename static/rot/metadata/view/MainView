@@ -134,9 +134,10 @@
                                             "codeClass": null,
                                             "userConfig": {
                                                 "fieldLabel": null,
-                                                "hideEmptyLabel": false,
                                                 "hideLabel": true,
                                                 "itemId": "vony",
+                                                "labelPad": 0,
+                                                "labelWidth": 0,
                                                 "value": [
                                                     "2015"
                                                 ],
@@ -188,9 +189,10 @@
                                             "codeClass": null,
                                             "userConfig": {
                                                 "fieldLabel": null,
-                                                "hideEmptyLabel": false,
                                                 "hideLabel": true,
                                                 "itemId": "bisy",
+                                                "labelPad": 0,
+                                                "labelWidth": 0,
                                                 "value": [
                                                     "2015"
                                                 ],
