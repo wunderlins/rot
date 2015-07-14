@@ -612,6 +612,7 @@
                                     },
                                     "codeClass": null,
                                     "userConfig": {
+                                        "align": "right",
                                         "dataIndex": "bgrad",
                                         "text": "%",
                                         "width": 80
@@ -638,12 +639,13 @@
                                                 ],
                                                 "fn": "renderer",
                                                 "implHandler": [
-                                                    "metaData.tdStyle = \" background-color: \"+record.data.bg+\";\";",
+                                                    "if (record.data.bg != '#FFFFFF')",
+                                                    "    metaData.tdStyle = \" background-color: \"+record.data.bg+\";\";",
                                                     "metaData.style = \" color: \"+record.data.fg+\";\";",
                                                     "metaData.tdAttr = ' data-qtip=\"' + record.data.vorname + \" \" + record.data.name + '\"';",
                                                     "",
                                                     "//console.log(metaData);",
-                                                    "if (!value) return record.data.comment;",
+                                                    "if (!value) return \"<i>\" + record.data.comment + \"</i>\";",
                                                     "return parseInt(value*100);"
                                                 ]
                                             },

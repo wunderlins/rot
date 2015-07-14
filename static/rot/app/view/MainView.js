@@ -287,15 +287,17 @@ Ext.define('calendar.view.MainView', {
                                 {
                                     xtype: 'gridcolumn',
                                     renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                        if (record.data.bg != '#FFFFFF')
                                         metaData.tdStyle = " background-color: "+record.data.bg+";";
                                         metaData.style = " color: "+record.data.fg+";";
                                         metaData.tdAttr = ' data-qtip="' + record.data.vorname + " " + record.data.name + '"';
 
                                         //console.log(metaData);
-                                        if (!value) return record.data.comment;
+                                        if (!value) return "<i>" + record.data.comment + "</i>";
                                         return parseInt(value*100);
                                     },
                                     width: 80,
+                                    align: 'right',
                                     dataIndex: 'bgrad',
                                     text: '%'
                                 },
