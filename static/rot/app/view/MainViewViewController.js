@@ -25,10 +25,6 @@ Ext.define('calendar.view.MainViewViewController', {
         //rot.get("#dbgx").setValue(rowIndex);
         //rot.get("#dbgy").setValue(cellIndex);
         rot.grid.ondblclick(tableview, td, cellIndex, record, tr, rowIndex, e, eOpts);
-    },
-
-    onViewSelectionChange: function(model, selected, eOpts) {
-        console.log(selected);
     }
 
 });

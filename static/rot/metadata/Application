@@ -38,7 +38,7 @@
                 "fn": "launch",
                 "implHandler": [
                     "",
-                    "rot.grid.init();"
+                    "rot.init();"
                 ]
             },
             "name": "launch",

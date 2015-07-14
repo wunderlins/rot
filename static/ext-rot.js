@@ -8,6 +8,10 @@ Object.clone = function(obj) {
 }
 
 rot = {};
+rot.init = function() {
+	rot.grid.init();
+}
+
 rot.grid = {}
 rot.grid.cellwidth = 50
 
@@ -80,7 +84,7 @@ rot.grid.init = function() {
 	rot.grid.grid = Ext.ComponentQuery.query('#contentGrid')[0];
 	rot.log("==> rot.grid.init()")
 	
-	//rot.loadData()
+	rot.loadData()
 }
 
 rot.log = function(str) {

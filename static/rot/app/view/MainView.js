@@ -201,8 +201,7 @@ Ext.define('calendar.view.MainView', {
                     viewConfig: {
                         listeners: {
                             cellclick: 'onViewCellClick',
-                            celldblclick: 'onViewCellDblClick',
-                            selectionchange: 'onViewSelectionChange'
+                            celldblclick: 'onViewCellDblClick'
                         }
                     },
                     columns: [
@@ -276,11 +275,12 @@ Ext.define('calendar.view.MainView', {
                                 {
                                     xtype: 'gridcolumn',
                                     renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                        metaData.tdAttr = ' data-qtip="' + record.data.vorname + " " + record.data.name + '"';
-                                        return value;
+                                        // metaData.tdAttr = ' data-qtip="' + record.data.vorname + " " + record.data.name + '"';
+                                        return "<b>" + value + "</b> " + record.data.vorname + " " + record.data.name;
                                     },
+                                    width: 200,
                                     dataIndex: 'kuerzel',
-                                    text: 'Kuerzel'
+                                    text: 'Name'
                                 },
                                 {
                                     xtype: 'gridcolumn',
@@ -293,6 +293,7 @@ Ext.define('calendar.view.MainView', {
                                         if (!value) return record.data.comment;
                                         return parseInt(value*100);
                                     },
+                                    width: 80,
                                     dataIndex: 'bgrad',
                                     text: '%'
                                 },

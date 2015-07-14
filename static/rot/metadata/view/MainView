@@ -373,24 +373,6 @@
                                     },
                                     "name": "onViewCellDblClick",
                                     "designerId": "6e0da3e7-ac86-466b-8c70-08b2c41069fb"
-                                },
-                                {
-                                    "type": "viewcontrollereventbinding",
-                                    "reference": {
-                                        "name": "listeners",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "fn": "onViewSelectionChange",
-                                        "implHandler": [
-                                            "console.log(selected);"
-                                        ],
-                                        "name": "selectionchange",
-                                        "scope": "me"
-                                    },
-                                    "name": "onViewSelectionChange",
-                                    "designerId": "8a0f2dd0-396a-4d40-8e8c-b38c847e8dd2"
                                 }
                             ]
                         },
@@ -586,7 +568,8 @@
                                     "codeClass": null,
                                     "userConfig": {
                                         "dataIndex": "kuerzel",
-                                        "text": "Kuerzel"
+                                        "text": "Name",
+                                        "width": 200
                                     },
                                     "name": "MyColumn4",
                                     "designerId": "36e635e8-89af-478c-aed3-299c9619bc6c",
@@ -610,8 +593,8 @@
                                                 ],
                                                 "fn": "renderer",
                                                 "implHandler": [
-                                                    "metaData.tdAttr = ' data-qtip=\"' + record.data.vorname + \" \" + record.data.name + '\"';",
-                                                    "return value;"
+                                                    "// metaData.tdAttr = ' data-qtip=\"' + record.data.vorname + \" \" + record.data.name + '\"';",
+                                                    "return \"<b>\" + value + \"</b> \" + record.data.vorname + \" \" + record.data.name;"
                                                 ]
                                             },
                                             "name": "renderer",
@@ -628,7 +611,8 @@
                                     "codeClass": null,
                                     "userConfig": {
                                         "dataIndex": "bgrad",
-                                        "text": "%"
+                                        "text": "%",
+                                        "width": 80
                                     },
                                     "name": "MyColumn7",
                                     "designerId": "4e593d0e-a916-475b-9457-d8148a4bbdd8",
