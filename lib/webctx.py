@@ -28,6 +28,7 @@ urls = (
   '/login', 'webctx.login',
   '/plan', 'webctx.plan',
   '/get_plan', 'webctx.get_plan',
+  '/get_month', 'webctx.get_month',
 )
 
 from HTMLParser import HTMLParser
@@ -332,10 +333,53 @@ class login(response):
 		
 		return '{"success": false}'
 
+class get_month:
+	def GET(self):
+		ym = web.input(ym=None)
+		
+		if ym == None:
+			web.header('Content-Type', 'application/json; charset=utf-8', unique=True)
+			return '{"root": [], "count": 0 }'
+		
+		sql = db.text("""SELECT r.rid, p.kuerzel, p.ptid,
+						 r.pid, r.bgrad, r.bemerkung2 as comment,
+						 c.fg, c.bg, p.name, p.vorname
+
+			FROM rotation r LEFT JOIN personal p on (r.pid = p.pid)
+						          LEFT JOIN color c on (r.cid = c.cid)
+
+			WHERE 1=1
+				AND r.jm = '"""+str(ym.ym)+"""'
+				AND r.pid IN (SELECT rb.pid as id
+					FROM rotblock rb LEFT JOIN personal p ON (rb.pid = p.pid)
+					WHERE rvon <= '"""+str(ym.ym)+"""' and rbis >= '"""+str(ym.ym)+"""' and p.ptid = 4)
+
+			ORDER BY p.kuerzel ASC""")
+
+
+		res = db.engine.execute(sql)
+		
+		ret = {"count": 0, "root" : []}
+		
+		for r in res:
+			row = []
+			for e in r:
+				row.append(e)
+			ret["root"].append(row)
+			ret["count"] += 1
+		
+		web.header('Content-Type', 'application/json; charset=utf-8', unique=True)
+		return json.dumps(ret, encoding="utf8")
+
 class get_plan:
 	def GET(self):
 		web.header('Content-Type', 'application/json; charset=utf-8', unique=True)
-		return '{"root": [[0, "Rotation 1"], [1, "Rotation 2"]]}'
+		return """{"root": [
+			[0, "Rotation 1", "Herz"], 
+			[1, "Rotation 2", "Herz"],
+			[3, "Rotation 3", "Herz"],
+			[4, "Rotation 4", "Herz"]
+		]}"""
 		#return '{"root": [{"id": 0, "name": "Rotation 1"}, {"id": 1, "name": "Rotation 2"}]}'
 	
 	

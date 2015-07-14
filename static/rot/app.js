@@ -22,11 +22,13 @@ Ext.Loader.setConfig({
 Ext.application({
     models: [
         'rotModel',
-        'monthModel'
+        'monthModel',
+        'monthempModel'
     ],
     stores: [
         'rotStore',
-        'monthStore'
+        'monthStore',
+        'monthempStore'
     ],
     views: [
         'MainView'

@@ -15,8 +15,62 @@ rot.get = function(selector) {
 	return Ext.ComponentQuery.query(selector)[0];
 }
 
+rot.grid.selection = {
+	von: {y: null, m: null},
+	bis: {y: null, m: null}
+};
+
+rot.add_month = function(months, ym) {
+	ret = Object.clone(ym)
+	for (i=0; i<months; i++) {
+		ret.m++
+		if (ret.m == 13) {
+			ret.m = 1
+			ret.y++
+		}
+	}
+	
+	return ret;
+}
+
+rot.month_str = function(ym) {
+	var buffer = "" + ym.y
+	if (ym.m < 10)
+		buffer += "0"
+	buffer += ym.m
+	
+	return buffer
+}
+
 rot.model = null;
 rot.grid.grid = null;
+rot.lastym = null;
+
+rot.grid.onclick = function(tableview, td, cellIndex, record, tr, rowIndex, e, eOpts) {
+	
+	//rot.log(cellIndex + " " + rot.grid.selection.von.m)
+	selected_date = rot.add_month(cellIndex, rot.grid.selection.von)
+	//rot.log(selected_date.y + " " + selected_date.m)
+	
+	if (rot.lastym && selected_date.y == rot.lastym.y && selected_date.m == rot.lastym.m)
+		return true;
+	
+	rot.lastym = Object.clone(selected_date)
+	
+	// get a reference to the data store and proxy
+	var store = Ext.getStore('monthempStore');
+	var proxy = store.getProxy();
+	
+	proxy.setExtraParam("ym", rot.month_str(selected_date))
+	store.load()
+	
+}
+
+rot.grid.ondblclick = function(tableview, td, cellIndex, record, tr, rowIndex, e, eOpts) {
+	rot.get("#dbgx").setValue(rowIndex);
+	rot.get("#dbgy").setValue(cellIndex);
+}
+
 rot.grid.init = function() {
 	
 	// set store for combobox month
@@ -37,6 +91,11 @@ rot.log = function(str) {
 // double declaration to make architects event handling happy
 rot.loadData = function(button, e, eOpts) {
 	
+	rot.grid.selection = {
+		von: {y: null, m: null},
+		bis: {y: null, m: null}
+	}
+
 	// get a reference to the data store and proxy
 	var store = Ext.getStore('rotStore');
 	var proxy = store.getProxy();
@@ -67,6 +126,12 @@ rot.loadData = function(button, e, eOpts) {
 		return false;
 	}
 	
+	// make selected parameters globally available
+	rot.grid.selection.von.y = vony;
+	rot.grid.selection.von.m = vonm;
+	rot.grid.selection.bis.y = bisy;
+	rot.grid.selection.bis.m = bism;
+	
 	// count number of months
 	cm = vonm;
 	cy = vony;
@@ -75,19 +140,31 @@ rot.loadData = function(button, e, eOpts) {
 	
 	rot.fields = [
 		{type: 'int', mapping: 0, name: 'id'},
-		{type: 'string', mapping: 1, name: 'name'}
+		{type: 'string', mapping: 1, name: 'name'},
+		{type: 'string', mapping: 2, name: "rot_group"},
 	]
 	
 	rot.columns =  [
 		{
-			//xtype: 'gridcolumn', 
+			xtype: 'gridcolumn', 
 			hidden: true,
 			text: 'Id', 
 			dataIndex: 'id', 
 			width: 40, 
 			locked: true
-		},
-		{
+		},{
+			xtype: 'gridcolumn', 
+			text: "rot_group", 
+			dataIndex: "rot_group", 
+			width: rot.grid.cellwidth,
+			draggable: false,
+			resizable: false,
+			hideable: false,
+			menuDisabled: true,
+			sortable: false,
+			hidden: true,
+			locked: true
+		},{
 			xtype: 'gridcolumn', 
 			text: 'Name', 
 			dataIndex: 'name', 
@@ -95,8 +172,9 @@ rot.loadData = function(button, e, eOpts) {
 			width: 150,
 			locked: true
 		},
-		{text: cy, columns: [], menuDisabled: true}
 	]
+
+	rot.columns[rot.columns.length] = {text: cy, columns: [], menuDisabled: true}
 	colptr = rot.columns[rot.columns.length-1]
 	
 	while (true) {
@@ -114,39 +192,42 @@ rot.loadData = function(button, e, eOpts) {
 			width: rot.grid.cellwidth,
 			draggable: false,
 			resizable: false,
-			dataIndex: 'id',
 			hideable: false,
 			locked: true,
 			menuDisabled: true,
 			sortable: false
 		}
 		
-		if (cm == 12) {
+		cm++;
+		if (cm == 13) {
 			cm = 1;
 			cy++;
 			rot.columns[rot.columns.length] = {text: cy, columns: [], menuDisabled: true}
 			colptr = rot.columns[rot.columns.length-1]
-		} else {
-			cm++;
 		}
 		
 		if (cm == bism && cy == bisy)
 			break;
 	}
-	rot.fields[rot.fields.length] = {type: 'int', mapping: months+2, name: n}
+	
+	months++;
+	var n = "" + cy;
+	n += (cm < 10) ? "0" + cm : cm;
+	
+	// add last month
+	rot.fields[rot.fields.length] = {type: 'int', mapping: months+3, name: n}
 	colptr.columns[colptr.columns.length] = {
 		xtype: 'gridcolumn', 
 		text: cm, 
-		dataIndex: n, width: 
-		rot.grid.cellwidth,
+		dataIndex: n, 
+		width: rot.grid.cellwidth,
 		draggable: false,
 		resizable: false,
-		dataIndex: 'id',
 		hideable: false,
-		locked: true,
 		menuDisabled: true,
 		sortable: false
 	}
+	
 	rot.log("Months: " + months)
 	
 	

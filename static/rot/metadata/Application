@@ -11,12 +11,14 @@
         ],
         "models": [
             "rotModel",
-            "monthModel"
+            "monthModel",
+            "monthempModel"
         ],
         "name": "calendar",
         "stores": [
             "rotStore",
-            "monthStore"
+            "monthStore",
+            "monthempStore"
         ],
         "views": [
             "MainView"

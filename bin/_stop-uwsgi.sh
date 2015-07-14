@@ -16,4 +16,4 @@
 basedir="`cd $(dirname $0)/..;pwd`"; cd "$basedir"
 . lib/setenv.sh
 
-kill -9 `lsof -ni TCP | grep $port | cut -d' ' -f2`
+kill -9 `lsof -ni TCP | grep $port | awk '{print $2}'`

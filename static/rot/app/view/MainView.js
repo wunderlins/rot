@@ -27,6 +27,7 @@ Ext.define('calendar.view.MainView', {
         'Ext.grid.column.Column',
         'Ext.selection.CellModel',
         'Ext.grid.feature.Grouping',
+        'Ext.XTemplate',
         'Ext.tab.Panel',
         'Ext.tab.Tab'
     ],
@@ -200,7 +201,8 @@ Ext.define('calendar.view.MainView', {
                     viewConfig: {
                         listeners: {
                             cellclick: 'onViewCellClick',
-                            celldblclick: 'onViewCellDblClick'
+                            celldblclick: 'onViewCellDblClick',
+                            selectionchange: 'onViewSelectionChange'
                         }
                     },
                     columns: [
@@ -229,7 +231,13 @@ Ext.define('calendar.view.MainView', {
                     },
                     features: [
                         {
-                            ftype: 'grouping'
+                            ftype: 'grouping',
+                            showSummaryRow: true,
+                            collapsible: false,
+                            groupByText: '--',
+                            groupHeaderTpl: [
+                                '<!--{columnName}: -->{name}'
+                            ]
                         }
                     ]
                 }
@@ -249,13 +257,54 @@ Ext.define('calendar.view.MainView', {
             region: 'east',
             split: true,
             itemId: 'rightPanel',
-            width: 300,
+            width: 350,
             title: '',
             activeTab: 0,
             items: [
                 {
                     xtype: 'panel',
-                    title: 'Prio'
+                    autoScroll: true,
+                    title: 'Verfügbar',
+                    items: [
+                        {
+                            xtype: 'gridpanel',
+                            itemId: 'gridVerfuegbar',
+                            titleCollapse: false,
+                            autoLoad: true,
+                            store: 'monthempStore',
+                            columns: [
+                                {
+                                    xtype: 'gridcolumn',
+                                    renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                        metaData.tdAttr = ' data-qtip="' + record.data.vorname + " " + record.data.name + '"';
+                                        return value;
+                                    },
+                                    dataIndex: 'kuerzel',
+                                    text: 'Kuerzel'
+                                },
+                                {
+                                    xtype: 'gridcolumn',
+                                    renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                        metaData.tdStyle = " background-color: "+record.data.bg+";";
+                                        metaData.style = " color: "+record.data.fg+";";
+                                        metaData.tdAttr = ' data-qtip="' + record.data.vorname + " " + record.data.name + '"';
+
+                                        //console.log(metaData);
+                                        if (!value) return record.data.comment;
+                                        return parseInt(value*100);
+                                    },
+                                    dataIndex: 'bgrad',
+                                    text: '%'
+                                },
+                                {
+                                    xtype: 'gridcolumn',
+                                    hidden: true,
+                                    dataIndex: 'comment',
+                                    text: 'Comment'
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     xtype: 'panel',

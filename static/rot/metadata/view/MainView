@@ -345,6 +345,9 @@
                                     "codeClass": null,
                                     "userConfig": {
                                         "fn": "onViewCellClick",
+                                        "implHandler": [
+                                            "return rot.grid.onclick(tableview, td, cellIndex, record, tr, rowIndex, e, eOpts);"
+                                        ],
                                         "name": "cellclick",
                                         "scope": "me"
                                     },
@@ -361,14 +364,33 @@
                                     "userConfig": {
                                         "fn": "onViewCellDblClick",
                                         "implHandler": [
-                                            "rot.get(\"#dbgx\").setValue(rowIndex);",
-                                            "rot.get(\"#dbgy\").setValue(cellIndex);"
+                                            "//rot.get(\"#dbgx\").setValue(rowIndex);",
+                                            "//rot.get(\"#dbgy\").setValue(cellIndex);",
+                                            "rot.grid.ondblclick(tableview, td, cellIndex, record, tr, rowIndex, e, eOpts);"
                                         ],
                                         "name": "celldblclick",
                                         "scope": "me"
                                     },
                                     "name": "onViewCellDblClick",
                                     "designerId": "6e0da3e7-ac86-466b-8c70-08b2c41069fb"
+                                },
+                                {
+                                    "type": "viewcontrollereventbinding",
+                                    "reference": {
+                                        "name": "listeners",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "onViewSelectionChange",
+                                        "implHandler": [
+                                            "console.log(selected);"
+                                        ],
+                                        "name": "selectionchange",
+                                        "scope": "me"
+                                    },
+                                    "name": "onViewSelectionChange",
+                                    "designerId": "8a0f2dd0-396a-4d40-8e8c-b38c847e8dd2"
                                 }
                             ]
                         },
@@ -429,8 +451,32 @@
                                 "type": "array"
                             },
                             "codeClass": null,
+                            "userConfig": {
+                                "collapsible": false,
+                                "groupByText": "--",
+                                "showGroupsText": null,
+                                "showSummaryRow": true
+                            },
                             "name": "MyGroupingFeature",
-                            "designerId": "11c4cd0a-ca42-4b65-870c-3149d91ed562"
+                            "designerId": "11c4cd0a-ca42-4b65-870c-3149d91ed562",
+                            "cn": [
+                                {
+                                    "type": "Ext.XTemplate",
+                                    "reference": {
+                                        "name": "groupHeaderTpl",
+                                        "type": "object"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "designer|displayName": "groupHeaderTpl",
+                                        "implHandler": [
+                                            "<!--{columnName}: -->{name}"
+                                        ]
+                                    },
+                                    "name": "groupHeaderTpl",
+                                    "designerId": "4ac185d6-ce5f-4050-9fcf-b90b50928081"
+                                }
+                            ]
                         }
                     ]
                 }
@@ -474,7 +520,7 @@
                 "layout|split": true,
                 "title": "",
                 "titleCollapse": null,
-                "width": 300
+                "width": 350
             },
             "name": "MyTabPanel",
             "designerId": "42591753-568e-44d8-9c7c-937e4e0cd8e7",
@@ -487,7 +533,8 @@
                     },
                     "codeClass": null,
                     "userConfig": {
-                        "title": "Prio"
+                        "autoScroll": true,
+                        "title": "Verfügbar"
                     },
                     "name": "MyPanel",
                     "designerId": "2b9b13bd-5d99-4131-87ee-a5c70b34aab2",
@@ -501,6 +548,140 @@
                             "codeClass": null,
                             "name": "TabConfig",
                             "designerId": "dd610343-cc8d-4de9-bfef-dc985f095527"
+                        },
+                        {
+                            "type": "Ext.grid.Panel",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "autoLoad": true,
+                                "designer|displayName": "gridVerfuegbar",
+                                "itemId": "gridVerfuegbar",
+                                "store": "monthempStore",
+                                "title": null,
+                                "titleCollapse": false
+                            },
+                            "name": "MyGridPanel1",
+                            "designerId": "2322d1fc-0ca4-4b2b-a29f-d7847e76af4d",
+                            "cn": [
+                                {
+                                    "type": "Ext.grid.View",
+                                    "reference": {
+                                        "name": "viewConfig",
+                                        "type": "object"
+                                    },
+                                    "codeClass": null,
+                                    "name": "MyGridView1",
+                                    "designerId": "92896d2c-89da-4100-8036-44199add5826"
+                                },
+                                {
+                                    "type": "Ext.grid.column.Column",
+                                    "reference": {
+                                        "name": "columns",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "dataIndex": "kuerzel",
+                                        "text": "Kuerzel"
+                                    },
+                                    "name": "MyColumn4",
+                                    "designerId": "36e635e8-89af-478c-aed3-299c9619bc6c",
+                                    "cn": [
+                                        {
+                                            "type": "fixedfunction",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "designer|params": [
+                                                    "value",
+                                                    "metaData",
+                                                    "record",
+                                                    "rowIndex",
+                                                    "colIndex",
+                                                    "store",
+                                                    "view"
+                                                ],
+                                                "fn": "renderer",
+                                                "implHandler": [
+                                                    "metaData.tdAttr = ' data-qtip=\"' + record.data.vorname + \" \" + record.data.name + '\"';",
+                                                    "return value;"
+                                                ]
+                                            },
+                                            "name": "renderer",
+                                            "designerId": "8cb2fb4e-cb65-4f93-9d9b-8a6cb803dd3c"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "Ext.grid.column.Column",
+                                    "reference": {
+                                        "name": "columns",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "dataIndex": "bgrad",
+                                        "text": "%"
+                                    },
+                                    "name": "MyColumn7",
+                                    "designerId": "4e593d0e-a916-475b-9457-d8148a4bbdd8",
+                                    "cn": [
+                                        {
+                                            "type": "fixedfunction",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "designer|params": [
+                                                    "value",
+                                                    "metaData",
+                                                    "record",
+                                                    "rowIndex",
+                                                    "colIndex",
+                                                    "store",
+                                                    "view"
+                                                ],
+                                                "fn": "renderer",
+                                                "implHandler": [
+                                                    "metaData.tdStyle = \" background-color: \"+record.data.bg+\";\";",
+                                                    "metaData.style = \" color: \"+record.data.fg+\";\";",
+                                                    "metaData.tdAttr = ' data-qtip=\"' + record.data.vorname + \" \" + record.data.name + '\"';",
+                                                    "",
+                                                    "//console.log(metaData);",
+                                                    "if (!value) return record.data.comment;",
+                                                    "return parseInt(value*100);"
+                                                ]
+                                            },
+                                            "name": "renderer",
+                                            "designerId": "b12697e3-a0c3-429e-9600-a47ef8f3b01a"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "Ext.grid.column.Column",
+                                    "reference": {
+                                        "name": "columns",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "dataIndex": "comment",
+                                        "hidden": true,
+                                        "text": "Comment"
+                                    },
+                                    "name": "MyColumn8",
+                                    "designerId": "7d2df265-1635-4802-a2e8-b60d4d49ccaf"
+                                }
+                            ]
                         }
                     ]
                 },

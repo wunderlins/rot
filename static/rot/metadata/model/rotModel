@@ -42,6 +42,19 @@
             },
             "name": "MyString",
             "designerId": "357fbbd0-1f66-4bb2-9e98-a63a63297096"
+        },
+        {
+            "type": "Ext.data.field.String",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "rot_group"
+            },
+            "name": "MyString3",
+            "designerId": "54078c8a-dfce-4644-9693-1b49eb2cb17c"
         }
     ]
 }
