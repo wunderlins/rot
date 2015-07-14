@@ -91,7 +91,8 @@ Ext.define('calendar.store.monthempStore', {
     onJsonstoreBeforeLoad: function(store, operation, eOpts) {
         console.log("onBeforeLoad monthempStore");
 
-        rot.get_meta(store, operation, eOpts);
+        //rot.get_meta(store, operation, eOpts);
+        rot.prepare_load();
     }
 
 });

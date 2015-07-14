@@ -80,6 +80,7 @@ rot.get_meta = function(field, newValue, oldValue) {
 		}
 	});
 }
+
 function get_meta() {
 	return rot.get_meta();
 }
@@ -158,9 +159,39 @@ rot.log = function(str) {
 	c.setValue(c.getValue() + str + "\n");
 }
 
+rot.prepare_load = function() {
+	console.log("rot.prepare_load")
+	/*
+	// get a reference to the data store and proxy
+	var store = Ext.getStore('rotStore');
+	var proxy = store.getProxy();
+	
+	// create a new model
+	rot.model = Ext.define('calendar.model.rotModel', {
+		extend: 'Ext.data.Model',
+		requires: [
+			'Ext.data.field.Integer',
+			'Ext.data.field.String'
+		],
+		
+		fields: rot.meta.fields
+	});
+	
+	// apply new model to store
+	store.setModel(rot.model);
+	
+	// apply new store to grid
+	rot.grid.grid.reconfigure(store, rot.meta.columns);
+	
+	// set time range parameters
+	proxy.setExtraParam("von", rot.meta.von)
+	proxy.setExtraParam("bis", rot.meta.bis)
+	*/
+}
+
 // double declaration to make architects event handling happy
 rot.loadData = function(button, e, eOpts) {
-	
+	console.log("loadData")
 	rot.grid.selection = {
 		von: {y: null, m: null},
 		bis: {y: null, m: null}
