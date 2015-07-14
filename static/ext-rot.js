@@ -14,6 +14,7 @@ rot.init = function() {
 
 rot.grid = {}
 rot.grid.cellwidth = 50
+rot.meta = null
 
 rot.get = function(selector) {
 	return Ext.ComponentQuery.query(selector)[0];
@@ -136,6 +137,7 @@ rot.loadData = function(button, e, eOpts) {
 	rot.grid.selection.bis.y = bisy;
 	rot.grid.selection.bis.m = bism;
 	
+	/*
 	// count number of months
 	cm = vonm;
 	cy = vony;
@@ -144,8 +146,8 @@ rot.loadData = function(button, e, eOpts) {
 	
 	rot.fields = [
 		{type: 'int', mapping: 0, name: 'id'},
-		{type: 'string', mapping: 1, name: 'name'},
-		{type: 'string', mapping: 2, name: "rot_group"},
+		{type: 'string', mapping: 1, name: "rot_group"},
+		{type: 'string', mapping: 2, name: 'name'},
 	]
 	
 	rot.columns =  [
@@ -255,8 +257,13 @@ rot.loadData = function(button, e, eOpts) {
 	
 	// apply new store to grid
 	rot.grid.grid.reconfigure(store, columns);
-
+	*/
+	
+	// set time range parameters
+	proxy.setExtraParam("von", vonix)
+	proxy.setExtraParam("bis", bisix)
 	// reload store
+	console.log("Reloading rotStore ...")
 	store.load();
 	
 	return true;

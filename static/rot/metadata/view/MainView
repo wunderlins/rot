@@ -437,7 +437,7 @@
                             "codeClass": null,
                             "userConfig": {
                                 "collapsible": false,
-                                "groupByText": "--",
+                                "groupByText": null,
                                 "showGroupsText": null,
                                 "showSummaryRow": true
                             },

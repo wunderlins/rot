@@ -235,7 +235,6 @@ Ext.define('calendar.view.MainView', {
                             ftype: 'grouping',
                             showSummaryRow: true,
                             collapsible: false,
-                            groupByText: '--',
                             groupHeaderTpl: [
                                 '<!--{columnName}: -->{name}'
                             ]

@@ -8,6 +8,7 @@
     "userConfig": {
         "designer|userClassName": "monthempStore",
         "model": "monthempModel",
+        "sortOnLoad": null,
         "storeId": "monthempStore"
     },
     "name": "MyJsonStore",
@@ -39,8 +40,77 @@
                     },
                     "name": "MyJsonReader2",
                     "designerId": "a7b44826-0714-42b5-8da0-cf00e97cdf0f"
+                },
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onAjaxMetaChange",
+                        "implHandler": [
+                            "console.log(\"Reader MEtaChange\");"
+                        ],
+                        "name": "metachange",
+                        "scope": "me"
+                    },
+                    "name": "onAjaxMetaChange",
+                    "designerId": "5ad350e1-7168-4444-ab92-42e26c416b86"
                 }
             ]
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onJsonstoreMetaChange",
+                "implHandler": [
+                    "console.log(\"MetaChange for rotStore\");",
+                    "",
+                    "// create a new model",
+                    "rot.model = Ext.define('calendar.model.rotModel', {",
+                    "    extend: 'Ext.data.Model',",
+                    "    requires: [",
+                    "        'Ext.data.field.Integer',",
+                    "        'Ext.data.field.String'",
+                    "    ],",
+                    "",
+                    "    fields: meta.fields",
+                    "});",
+                    "console.log(meta.fields);",
+                    "console.log(meta.columns);",
+                    "store.setModel(rot.model);",
+                    "rot.grid.grid.reconfigure(store, meta.columns);"
+                ],
+                "name": "metachange",
+                "scope": "me"
+            },
+            "name": "onJsonstoreMetaChange",
+            "designerId": "89a22866-af74-4a16-b68f-25b4ffe0a1ec"
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onJsonstoreEndupdate",
+                "implHandler": [
+                    "console.log(\"Done updating rotStore\");"
+                ],
+                "name": "endupdate",
+                "scope": "me"
+            },
+            "name": "onJsonstoreEndupdate",
+            "designerId": "58baf620-7b17-4b35-b074-4ccea5d1a4e4"
         }
     ]
 }

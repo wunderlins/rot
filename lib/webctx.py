@@ -373,13 +373,167 @@ class get_month:
 
 class get_plan:
 	def GET(self):
+		
+		# get user input
+		von = web.input(von=None).von
+		bis = web.input(von=None).bis
+		months = 0
+		cellwidth = 50
+		
+		date_sel = {
+			"von": {
+				"m": von[4:],
+				"y": von[0:4] 
+			},
+			"bis": {
+				"m": bis[4:],
+				"y": bis[0:4] 
+			}
+		}
+
+		# metadata
+		ret = {"count": 0, "root" : [], "metaData": None}
+		ret["metaData"] = {
+			"root": "root",
+			"von": von,
+			"bis": bis,
+			"date_sel": date_sel,
+			"months": 0,
+			"fields" : [
+				{"type": 'int', "mapping": 0, "name": 'id'},
+				{"type": 'string', "mapping": 1, "name": "rot_group"},
+				{"type": 'string', "mapping": 2, "name": 'name'},
+			],
+			"columns": [
+				{
+					"xtype": 'gridcolumn', 
+					"hidden": True,
+					"text": 'Id', 
+					"dataIndex": 'id', 
+					"width": 40, 
+					"locked": True
+				},{
+					"xtype": 'gridcolumn', 
+					"text": "rot_group", 
+					"dataIndex": "rot_group", 
+					"width": 60,
+					"draggable": False,
+					"resizable": False,
+					"hideable": False,
+					"menuDisabled": True,
+					"sortable": False,
+					"hidden": True,
+					"locked": True
+				},{
+					"xtype": 'gridcolumn', 
+					"text": 'Name', 
+					"dataIndex": 'name', 
+					"width": 60, 
+					"width": 150,
+					"locked": True
+				}, {"text": str(date_sel["von"]["y"]), "columns": [], "menuDisabled": True}
+			]
+		}
+		
+		# pointer to last year
+		currenty = ret["metaData"]["columns"][len(ret["metaData"]["columns"])-1]
+		
+		# count number of months
+		tmp = date_sel["von"]
+		tmp["y"] = int(tmp["y"])
+		tmp["m"] = int(tmp["m"])
+		web.debug("counting months %d %d" % (tmp["m"], tmp["y"]))
+		n = ""
+		while tmp["m"] != int(date_sel["bis"]["m"]) or tmp["y"] != int(date_sel["bis"]["y"]):
+			#web.debug(str(months))
+			n = "" + str(tmp["y"]);
+			if tmp["m"] < 10:
+				n = n + "0" + str(tmp["m"])
+			else: 
+				n = n + str(tmp["m"]);
+			
+			currenty["columns"].append({
+				"xtype": 'gridcolumn', 
+				"text": str(tmp["m"]), 
+				"dataIndex": n, 
+				"width": cellwidth,
+				"draggable": False,
+				"resizable": False,
+				"hideable": False,
+				"menuDisabled": True,
+				"sortable": False
+			})
+			
+			ret["metaData"]["fields"].append({
+				"type": 'int', 
+				"mapping": months+3, 
+				"name": n
+			})
+			
+			tmp["m"] += 1
+			if tmp["m"] == 13:
+				tmp["y"] += 1
+				tmp["m"] = 1
+				
+				col = {"text": str(tmp["y"]), "columns": [], "menuDisabled": True}
+				ret["metaData"]["columns"].append(col)
+				currenty = ret["metaData"]["columns"][len(ret["metaData"]["columns"])-1]
+			
+			months += 1
+		web.debug(str(months))
+		# add last month
+		months += 1
+		n = "" + str(tmp["y"]);
+		if tmp["m"] < 10:
+			n = n + "0" + str(tmp["m"])
+		else: 
+			n = n + str(tmp["m"]);
+		
+		currenty["columns"].append({
+			"xtype": 'gridcolumn', 
+			"text": str(tmp["m"]), 
+			"dataIndex": n, 
+			"width": cellwidth,
+			"draggable": False,
+			"resizable": False,
+			"hideable": False,
+			"menuDisabled": True,
+			"sortable": False
+		})
+		ret["metaData"]["fields"].append({
+			"type": 'int', 
+			"mapping": months+3, 
+			"name": n
+		})
+		ret["metaData"]["months"] = months
+		
 		web.header('Content-Type', 'application/json; charset=utf-8', unique=True)
+		
+		sql = db.text("""
+			SELECT rr.id rrid, rg.name groupname, rr.name rotname, 
+			       rr.bemerkung, CONCAT(rg.sort, LPAD(rr.sort, 4, '0')) sort
+			FROM rot_rot rr LEFT JOIN rot_group rg ON (rr.group_id = rg.id)
+			ORDER BY rg.sort, rr.sort""")
+		
+		res = db.engine.execute(sql)
+		
+		for r in res:
+			row = []
+			for e in r:
+				row.append(e)
+			ret["root"].append(row)
+			ret["count"] += 1
+		
+		
+		return json.dumps(ret, encoding="utf8")
+		'''
 		return """{"root": [
 			[0, "Rotation 1", "Herz"], 
 			[1, "Rotation 2", "Herz"],
 			[3, "Rotation 3", "Herz"],
 			[4, "Rotation 4", "Herz"]
 		]}"""
+		'''
 		#return '{"root": [{"id": 0, "name": "Rotation 1"}, {"id": 1, "name": "Rotation 2"}]}'
 	
 	
