@@ -525,7 +525,8 @@ class data:
 				"resizable": False,
 				"hideable": False,
 				"menuDisabled": True,
-				"sortable": False
+				"sortable": False,
+				"editor": 'textfield'
 			})
 			
 			ret["metaData"]["fields"].append({
@@ -562,7 +563,8 @@ class data:
 			"resizable": False,
 			"hideable": False,
 			"menuDisabled": True,
-			"sortable": False
+			"sortable": False,
+			"editor": 'textfield'
 		})
 		ret["metaData"]["fields"].append({
 			"type": 'string', 
@@ -733,12 +735,20 @@ class get_plan(response):
 		ret["root"] = []
 		ret["metaData"]["maxid"] = 0;
 		for r in res:
-			web.debug(r)
+			#web.debug(r)
 			row = []
 			if r[0] > ret["metaData"]["maxid"]:
 				ret["metaData"]["maxid"] = r[0]
+			# add metadata
 			for e in r:
 				row.append(e)
+				
+			# add cel lvalues
+			c = 0
+			while c < ret["metaData"]["months"]:
+				row.append("---")
+				c += 1
+			
 			ret["root"].append(row)
 			ret["count"] += 1
 		
