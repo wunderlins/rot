@@ -501,7 +501,7 @@ class data:
 			})
 			
 			ret["metaData"]["fields"].append({
-				"type": 'int', 
+				"type": 'string', 
 				"mapping": months+3, 
 				"name": n
 			})
@@ -537,7 +537,7 @@ class data:
 			"sortable": False
 		})
 		ret["metaData"]["fields"].append({
-			"type": 'int', 
+			"type": 'string', 
 			"mapping": months+3, 
 			"name": n
 		})
