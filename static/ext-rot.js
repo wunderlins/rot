@@ -443,6 +443,7 @@ rot.loadData = function(button, e, eOpts) {
 	
 	
 	// create a new model
+	/*
 	rot.model = Ext.define('calendar.model.rotModel', {
 		extend: 'Ext.data.Model',
 		requires: [
@@ -452,13 +453,18 @@ rot.loadData = function(button, e, eOpts) {
 		
 		fields: rot.grid.meta.fields
 	});
+	*/
+	
+	// update fields on our existing model
+	var model = proxy.getModel()
+	model.fields = rot.grid.meta.fields
 	
 	
 	// create new column list for the grid
 	//var columns = rot.columns
 	
 	// apply new model to store
-	store.setModel(rot.model);
+	//store.setModel(rot.model);
 	
 	// apply new store to grid
 	rot.grid.grid.reconfigure(store, rot.grid.meta.columns);

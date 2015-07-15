@@ -415,6 +415,21 @@
                                     },
                                     "name": "onViewCellkeydown",
                                     "designerId": "549e643a-fdc1-4c5a-93b1-7accea9cc184"
+                                },
+                                {
+                                    "type": "viewcontrollereventbinding",
+                                    "reference": {
+                                        "name": "listeners",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "onViewItemUpdate",
+                                        "name": "itemupdate",
+                                        "scope": "me"
+                                    },
+                                    "name": "onViewItemUpdate",
+                                    "designerId": "6049cf65-786c-4f61-a9ca-66477e93d792"
                                 }
                             ]
                         },
@@ -466,52 +481,7 @@
                                 "designer|displayName": "contentGridSelect"
                             },
                             "name": "MyCellSelectionModel",
-                            "designerId": "f2b906d8-21f1-4a49-bc6b-9f3e9c27789f",
-                            "cn": [
-                                {
-                                    "type": "basiceventbinding",
-                                    "reference": {
-                                        "name": "listeners",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "fn": "onCellModelSelect",
-                                        "implHandler": [
-                                            "//console.log(cellmodel.getPosition());",
-                                            "//console.log(\"onCellModelSelect \" + row + \" \" + column);",
-                                            "//console.log(cellmodel.selection.column.dataIndex);",
-                                            "",
-                                            "",
-                                            ""
-                                        ],
-                                        "name": "select",
-                                        "scope": "me"
-                                    },
-                                    "name": "onCellModelSelect",
-                                    "designerId": "b64657af-75e2-4711-9813-d5001cb6672e"
-                                },
-                                {
-                                    "type": "basiceventbinding",
-                                    "reference": {
-                                        "name": "listeners",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "fn": "onCellModelFocusChange",
-                                        "implHandler": [
-                                            "//console.log(\"onCellModelFocusChange \");",
-                                            "//console.log(oldFocused);",
-                                            "//console.log(newFocused);"
-                                        ],
-                                        "name": "focuschange",
-                                        "scope": "me"
-                                    },
-                                    "name": "onCellModelFocusChange",
-                                    "designerId": "8cfc5519-d3e7-4fa4-9695-7acd17734278"
-                                }
-                            ]
+                            "designerId": "f2b906d8-21f1-4a49-bc6b-9f3e9c27789f"
                         },
                         {
                             "type": "Ext.grid.feature.Grouping",
@@ -539,9 +509,9 @@
                                     "userConfig": {
                                         "designer|displayName": "groupHeaderTpl",
                                         "implHandler": [
-                                            "<!--{columnName}: --><!--button class=\"x-btn x-btn-default-small\"><span class=\"x-btn-inner x-btn-inner-default-small\">+</span></button-->",
                                             "{children:this.dbgtpl}"
-                                        ]
+                                        ],
+                                        "strict": true
                                     },
                                     "name": "groupHeaderTpl",
                                     "designerId": "4ac185d6-ce5f-4050-9fcf-b90b50928081",

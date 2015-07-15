@@ -7,6 +7,7 @@
     "codeClass": null,
     "userConfig": {
         "basePath": "../ext-5.0.1/build/",
+        "debug": true,
         "designer|userClassName": "Library",
         "theme": "MyNeptuneTheme"
     },

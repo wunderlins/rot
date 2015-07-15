@@ -75,6 +75,9 @@
                                         },
                                         {
                                             "id": "549e643a-fdc1-4c5a-93b1-7accea9cc184"
+                                        },
+                                        {
+                                            "id": "6049cf65-786c-4f61-a9ca-66477e93d792"
                                         }
                                     ]
                                 },
@@ -85,19 +88,10 @@
                                     "id": "66051ff4-a5c7-4a75-a790-7b642a929588"
                                 },
                                 {
-                                    "id": "f2b906d8-21f1-4a49-bc6b-9f3e9c27789f",
-                                    "cn": [
-                                        {
-                                            "id": "b64657af-75e2-4711-9813-d5001cb6672e"
-                                        },
-                                        {
-                                            "id": "8cfc5519-d3e7-4fa4-9695-7acd17734278"
-                                        }
-                                    ]
+                                    "id": "f2b906d8-21f1-4a49-bc6b-9f3e9c27789f"
                                 },
                                 {
                                     "id": "11c4cd0a-ca42-4b65-870c-3149d91ed562",
-                                    "expanded": false,
                                     "cn": [
                                         {
                                             "id": "4ac185d6-ce5f-4050-9fcf-b90b50928081",
@@ -362,8 +356,8 @@
         "topInstance": null
     },
     "inspectorState": {
-        "topInstance": "fe559d16-91c1-47e0-8577-a011a201a0a1",
-        "selectedInstance": "fe559d16-91c1-47e0-8577-a011a201a0a1"
+        "topInstance": "570ee77a-0bfc-47b0-bb1b-7772ff3b7215",
+        "selectedInstance": "570ee77a-0bfc-47b0-bb1b-7772ff3b7215"
     },
     "editMode": "code",
     "userSettings": {

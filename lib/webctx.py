@@ -526,7 +526,7 @@ class data:
 				"hideable": False,
 				"menuDisabled": True,
 				"sortable": False,
-				"editor": 'textfield'
+				"editor": 'combobox'
 			})
 			
 			ret["metaData"]["fields"].append({
@@ -564,7 +564,7 @@ class data:
 			"hideable": False,
 			"menuDisabled": True,
 			"sortable": False,
-			"editor": 'textfield'
+			"editor": 'combobox'
 		})
 		ret["metaData"]["fields"].append({
 			"type": 'string', 

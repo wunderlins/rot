@@ -221,6 +221,10 @@ Ext.define('calendar.view.MainView', {
                             cellkeydown: {
                                 fn: 'onViewCellkeydown',
                                 scope: 'controller'
+                            },
+                            itemupdate: {
+                                fn: 'onViewItemUpdate',
+                                scope: 'controller'
                             }
                         }
                     },
@@ -246,11 +250,7 @@ Ext.define('calendar.view.MainView', {
                         }
                     ],
                     selModel: {
-                        selType: 'cellmodel',
-                        listeners: {
-                            select: 'onCellModelSelect',
-                            focuschange: 'onCellModelFocusChange'
-                        }
+                        selType: 'cellmodel'
                     },
                     features: [
                         {
@@ -258,14 +258,14 @@ Ext.define('calendar.view.MainView', {
                             showSummaryRow: true,
                             collapsible: false,
                             groupHeaderTpl: Ext.create('Ext.XTemplate', 
-                                '<!--{columnName}: --><!--button class="x-btn x-btn-default-small"><span class="x-btn-inner x-btn-inner-default-small">+</span></button-->',
                                 '{children:this.dbgtpl}',
                                 {
                                     dbgtpl: function(o) {
                                         //return rot.dbgtpl(o);
                                         //console.log(o[0]);
                                         return o[0].data.rot_group;
-                                    }
+                                    },
+                                    strict: true
                                 }
                             )
                         }
@@ -369,21 +369,6 @@ Ext.define('calendar.view.MainView', {
     onButtonClick: function(button, e, eOpts) {
 
         rot.grid.add_row(button, e, eOpts);
-    },
-
-    onCellModelSelect: function(cellmodel, record, row, column, eOpts) {
-        //console.log(cellmodel.getPosition());
-        //console.log("onCellModelSelect " + row + " " + column);
-        //console.log(cellmodel.selection.column.dataIndex);
-
-
-
-    },
-
-    onCellModelFocusChange: function(model, oldFocused, newFocused, eOpts) {
-        //console.log("onCellModelFocusChange ");
-        //console.log(oldFocused);
-        //console.log(newFocused);
     },
 
     onCellEditingValidateedit: function(editor, context, eOpts) {
