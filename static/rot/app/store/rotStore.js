@@ -19,7 +19,8 @@ Ext.define('calendar.store.rotStore', {
     requires: [
         'calendar.model.rotModel',
         'Ext.data.proxy.Ajax',
-        'Ext.data.reader.Json'
+        'Ext.data.reader.Json',
+        'Ext.util.Sorter'
     ],
 
     constructor: function(cfg) {
@@ -42,6 +43,9 @@ Ext.define('calendar.store.rotStore', {
                     fn: me.onJsonstoreMetaChange,
                     scope: me
                 }
+            },
+            sorters: {
+                property: 'srt'
             }
         }, cfg)]);
     },

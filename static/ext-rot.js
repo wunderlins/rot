@@ -135,14 +135,16 @@ rot.grid.add_row = function(button, e, eOpts) {
 	var proxy = store.getProxy();
 	
 	var rec = Ext.create("calendar.store.rotStore", {
-		id: 200, 
+		id: 0, 
+		group_sort: "sort001",
 		rot_group: "Viszeral/Urologie/Lunge", 
-		name: "Allgemeinchirurgie, Urologie", 
+		name: "sdfsdfdf", 
 		description: null, 
-		sort: 100101
+		srt: "100000"
 	})
 	
 	store.addSorted(rec)
+	store.sort("srt", "ASC")
 }
 
 rot.grid.onclick = function(tableview, td, cellIndex, record, tr, rowIndex, e, eOpts) {

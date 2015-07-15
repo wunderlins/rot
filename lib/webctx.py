@@ -441,7 +441,7 @@ class data:
 				{"type": 'string', "mapping": 2, "name": "rot_group"},
 				{"type": 'string', "mapping": 3, "name": 'name'},
 				{"type": 'string', "mapping": 4, "name": 'description'},
-				{"type": 'string', "mapping": 5, "name": 'sort'},
+				{"type": 'string', "mapping": 5, "name": 'srt'},
 			],
 			"columns": [
 				{
@@ -473,8 +473,12 @@ class data:
 					"xtype": 'gridcolumn', 
 					"text": 'Name', 
 					"dataIndex": 'name', 
-					"width": 60, 
-					"width": 150,
+					"width": 180,
+					"draggable": False,
+					"resizable": False,
+					"hideable": False,
+					"menuDisabled": True,
+					"sortable": False,
 					"locked": True
 				},{
 					"xtype": 'gridcolumn', 
@@ -486,7 +490,7 @@ class data:
 				},{
 					"xtype": 'gridcolumn', 
 					"text": 'Sort', 
-					"dataIndex": 'sort', 
+					"dataIndex": 'srt', 
 					"width": 60, 
 					"width": 150,
 					"hidden": True
@@ -719,7 +723,7 @@ class get_plan(response):
 		
 		ret = data.plan_meta(von, bis)
 		sql = db.text("""
-			SELECT rr.id rrid, CONCAT("sort", rg.sort) as groupsort, rg.name groupname, rr.name rotname, 
+			SELECT rr.id rrid, CONCAT("sort", LPAD(rg.sort, 3, '0')) as groupsort, rg.name groupname, rr.name rotname, 
 			       rr.bemerkung, CONCAT(rg.sort, LPAD(rr.sort*100, 5, '0')) sort
 			FROM rot_rot rr LEFT JOIN rot_group rg ON (rr.group_id = rg.id)
 			ORDER BY rg.sort, rr.sort""")

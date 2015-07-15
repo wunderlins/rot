@@ -61,6 +61,20 @@
             },
             "name": "onJsonstoreMetaChange",
             "designerId": "a4a07849-b901-4886-b014-b3d665ce7622"
+        },
+        {
+            "type": "Ext.util.Sorter",
+            "reference": {
+                "name": "sorters",
+                "type": "object"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "property": "srt",
+                "root": null
+            },
+            "name": "MySorter",
+            "designerId": "e61017b5-6ad4-4c79-a682-283b9043b612"
         }
     ]
 }
