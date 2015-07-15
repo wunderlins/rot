@@ -392,6 +392,29 @@
                                     },
                                     "name": "onViewCellClick",
                                     "designerId": "84600556-1710-4978-acf6-0d715facdb37"
+                                },
+                                {
+                                    "type": "viewcontrollereventbinding",
+                                    "reference": {
+                                        "name": "listeners",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "onViewCellkeydown",
+                                        "implHandler": [
+                                            "// this is a hack to disable the Tab key in the grdEditor. It will make editor fiels hang when hit.",
+                                            "//console.log(e.parentEvent.keyCode);",
+                                            "/*",
+                                            "if (e.parentEvent.keyCode == 9)",
+                                            "    e.stopEvent();",
+                                            "*/"
+                                        ],
+                                        "name": "cellkeydown",
+                                        "scope": "me"
+                                    },
+                                    "name": "onViewCellkeydown",
+                                    "designerId": "549e643a-fdc1-4c5a-93b1-7accea9cc184"
                                 }
                             ]
                         },

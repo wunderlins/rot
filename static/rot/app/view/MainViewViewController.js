@@ -19,6 +19,15 @@ Ext.define('calendar.view.MainViewViewController', {
 
     onViewCellClick: function(tableview, td, cellIndex, record, tr, rowIndex, e, eOpts) {
         return rot.grid.onclick(tableview, td, cellIndex, record, tr, rowIndex, e, eOpts);
+    },
+
+    onViewCellkeydown: function(tableview, td, cellIndex, record, tr, rowIndex, e, eOpts) {
+        // this is a hack to disable the Tab key in the grdEditor. It will make editor fiels hang when hit.
+        //console.log(e.parentEvent.keyCode);
+        /*
+        if (e.parentEvent.keyCode == 9)
+        e.stopEvent();
+        */
     }
 
 });
