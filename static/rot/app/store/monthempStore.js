@@ -37,21 +37,11 @@ Ext.define('calendar.store.monthempStore', {
                     type: 'json',
                     rootProperty: 'root',
                     totalProperty: 'count'
-                },
-                listeners: {
-                    metachange: {
-                        fn: me.onAjaxMetaChange,
-                        scope: me
-                    }
                 }
             },
             listeners: {
                 metachange: {
                     fn: me.onJsonstoreMetaChange,
-                    scope: me
-                },
-                endupdate: {
-                    fn: me.onJsonstoreEndupdate,
                     scope: me
                 },
                 beforeload: {
@@ -60,10 +50,6 @@ Ext.define('calendar.store.monthempStore', {
                 }
             }
         }, cfg)]);
-    },
-
-    onAjaxMetaChange: function(proxy, meta, eOpts) {
-        console.log("Reader MEtaChange");
     },
 
     onJsonstoreMetaChange: function(store, meta, eOpts) {
@@ -84,10 +70,6 @@ Ext.define('calendar.store.monthempStore', {
         store.setModel(rot.model);
         rot.grid.grid.reconfigure(store, meta.columns);
         */
-    },
-
-    onJsonstoreEndupdate: function(eOpts) {
-        console.log("Done updating rotStore");
     },
 
     onJsonstoreBeforeLoad: function(store, operation, eOpts) {

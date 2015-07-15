@@ -41,24 +41,6 @@
                     },
                     "name": "MyJsonReader2",
                     "designerId": "a7b44826-0714-42b5-8da0-cf00e97cdf0f"
-                },
-                {
-                    "type": "basiceventbinding",
-                    "reference": {
-                        "name": "listeners",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "fn": "onAjaxMetaChange",
-                        "implHandler": [
-                            "console.log(\"Reader MEtaChange\");"
-                        ],
-                        "name": "metachange",
-                        "scope": "me"
-                    },
-                    "name": "onAjaxMetaChange",
-                    "designerId": "5ad350e1-7168-4444-ab92-42e26c416b86"
                 }
             ]
         },
@@ -95,24 +77,6 @@
             },
             "name": "onJsonstoreMetaChange",
             "designerId": "89a22866-af74-4a16-b68f-25b4ffe0a1ec"
-        },
-        {
-            "type": "basiceventbinding",
-            "reference": {
-                "name": "listeners",
-                "type": "array"
-            },
-            "codeClass": null,
-            "userConfig": {
-                "fn": "onJsonstoreEndupdate",
-                "implHandler": [
-                    "console.log(\"Done updating rotStore\");"
-                ],
-                "name": "endupdate",
-                "scope": "me"
-            },
-            "name": "onJsonstoreEndupdate",
-            "designerId": "58baf620-7b17-4b35-b074-4ccea5d1a4e4"
         },
         {
             "type": "basiceventbinding",

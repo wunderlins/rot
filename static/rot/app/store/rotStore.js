@@ -60,6 +60,7 @@ Ext.define('calendar.store.rotStore', {
     },
 
     onJsonstoreLoad: function(store, records, successful, eOpts) {
+        console.log("onBeforeLoad: rotStore");
         rot.rotStore.load(store, records, successful, eOpts);
     }
 

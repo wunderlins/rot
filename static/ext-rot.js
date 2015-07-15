@@ -21,6 +21,22 @@ rot.grid.meta = null
 rot.grid.cellwidth = 50
 rot.meta = null
 
+rot.grid.celledit = function(editor, context, eOpts) {
+	console.log(editor)
+	console.log(context)
+	console.log(eOpts)
+	
+	// aknowledge change
+	//context.record.data[context.field] = context.value;
+	//console.log(context.record.data)
+	//Ext.getStore('rotStore').sync()
+	
+	// BUG: using tab hangs the editor.
+	
+	rot.log("NewV " + context.colIdx + ":" + context.rowIdx + "> " + context.value)
+	
+}
+
 rot.get = function(selector) {
 	return Ext.ComponentQuery.query(selector)[0];
 }

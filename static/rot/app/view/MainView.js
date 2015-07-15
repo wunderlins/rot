@@ -243,7 +243,6 @@ Ext.define('calendar.view.MainView', {
                     ],
                     selModel: {
                         selType: 'cellmodel',
-                        enableKeyNav: false,
                         listeners: {
                             select: 'onCellModelSelect',
                             focuschange: 'onCellModelFocusChange'
@@ -269,7 +268,10 @@ Ext.define('calendar.view.MainView', {
                     ],
                     plugins: [
                         {
-                            ptype: 'cellediting'
+                            ptype: 'cellediting',
+                            listeners: {
+                                validateedit: 'onCellEditingValidateedit'
+                            }
                         }
                     ]
                 }
@@ -378,6 +380,12 @@ Ext.define('calendar.view.MainView', {
         //console.log("onCellModelFocusChange ");
         //console.log(oldFocused);
         //console.log(newFocused);
+    },
+
+    onCellEditingValidateedit: function(editor, context, eOpts) {
+        rot.grid.celledit(editor, context, eOpts);
+        return true;
+
     }
 
 });

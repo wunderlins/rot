@@ -440,8 +440,7 @@
                             },
                             "codeClass": null,
                             "userConfig": {
-                                "designer|displayName": "contentGridSelect",
-                                "enableKeyNav": false
+                                "designer|displayName": "contentGridSelect"
                             },
                             "name": "MyCellSelectionModel",
                             "designerId": "f2b906d8-21f1-4a49-bc6b-9f3e9c27789f",
@@ -557,7 +556,29 @@
                             },
                             "codeClass": null,
                             "name": "MyCellEditingPlugin",
-                            "designerId": "1582c054-f83c-4481-baaf-f8422dca4e55"
+                            "designerId": "1582c054-f83c-4481-baaf-f8422dca4e55",
+                            "cn": [
+                                {
+                                    "type": "basiceventbinding",
+                                    "reference": {
+                                        "name": "listeners",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "onCellEditingValidateedit",
+                                        "implHandler": [
+                                            "rot.grid.celledit(editor, context, eOpts);",
+                                            "return true;",
+                                            ""
+                                        ],
+                                        "name": "validateedit",
+                                        "scope": "me"
+                                    },
+                                    "name": "onCellEditingValidateedit",
+                                    "designerId": "b64d1870-e9d7-490e-8887-c953f66a775a"
+                                }
+                            ]
                         }
                     ]
                 }

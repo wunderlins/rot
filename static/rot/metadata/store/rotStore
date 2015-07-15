@@ -88,6 +88,7 @@
             "userConfig": {
                 "fn": "onJsonstoreLoad",
                 "implHandler": [
+                    "console.log(\"onBeforeLoad: rotStore\");",
                     "rot.rotStore.load(store, records, successful, eOpts);"
                 ],
                 "name": "load",

@@ -69,7 +69,6 @@
                             "cn": [
                                 {
                                     "id": "c4a78c1a-d69e-4299-a4f8-5d2e747745c7",
-                                    "expanded": false,
                                     "cn": [
                                         {
                                             "id": "84600556-1710-4978-acf6-0d715facdb37"
@@ -109,7 +108,12 @@
                                     ]
                                 },
                                 {
-                                    "id": "1582c054-f83c-4481-baaf-f8422dca4e55"
+                                    "id": "1582c054-f83c-4481-baaf-f8422dca4e55",
+                                    "cn": [
+                                        {
+                                            "id": "b64d1870-e9d7-490e-8887-c953f66a775a"
+                                        }
+                                    ]
                                 }
                             ]
                         }
@@ -221,17 +225,11 @@
                     "cn": [
                         {
                             "id": "a7b44826-0714-42b5-8da0-cf00e97cdf0f"
-                        },
-                        {
-                            "id": "5ad350e1-7168-4444-ab92-42e26c416b86"
                         }
                     ]
                 },
                 {
                     "id": "89a22866-af74-4a16-b68f-25b4ffe0a1ec"
-                },
-                {
-                    "id": "58baf620-7b17-4b35-b074-4ccea5d1a4e4"
                 },
                 {
                     "id": "0158c338-2501-4919-b7fe-7f0a08040518"
@@ -362,8 +360,8 @@
         "topInstance": null
     },
     "inspectorState": {
-        "topInstance": "76d17007-2335-4c00-b7ab-dad9b996582b",
-        "selectedInstance": "76d17007-2335-4c00-b7ab-dad9b996582b"
+        "topInstance": "570ee77a-0bfc-47b0-bb1b-7772ff3b7215",
+        "selectedInstance": "f2b906d8-21f1-4a49-bc6b-9f3e9c27789f"
     },
     "editMode": "code",
     "userSettings": {
