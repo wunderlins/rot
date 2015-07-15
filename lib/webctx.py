@@ -731,9 +731,12 @@ class get_plan(response):
 		res = db.engine.execute(sql)
 		
 		ret["root"] = []
+		ret["metaData"]["maxid"] = 0;
 		for r in res:
 			web.debug(r)
 			row = []
+			if r[0] > ret["metaData"]["maxid"]:
+				ret["metaData"]["maxid"] = r[0]
 			for e in r:
 				row.append(e)
 			ret["root"].append(row)

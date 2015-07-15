@@ -54,7 +54,8 @@
             "userConfig": {
                 "fn": "onJsonstoreMetaChange",
                 "implHandler": [
-                    "console.log(\"rotStore metaChange\");"
+                    "//console.log(\"rotStore metaChange\");",
+                    "rot.rotStore.metaChange(store, meta, eOpts);"
                 ],
                 "name": "metachange",
                 "scope": "me"
@@ -70,11 +71,30 @@
             },
             "codeClass": null,
             "userConfig": {
+                "designer|displayName": "customSorter",
                 "property": "srt",
                 "root": null
             },
             "name": "MySorter",
             "designerId": "e61017b5-6ad4-4c79-a682-283b9043b612"
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onJsonstoreLoad",
+                "implHandler": [
+                    "rot.rotStore.load(store, records, successful, eOpts);"
+                ],
+                "name": "load",
+                "scope": "me"
+            },
+            "name": "onJsonstoreLoad",
+            "designerId": "02d044f4-3ffa-49cd-baa6-159fecedfaa9"
         }
     ]
 }

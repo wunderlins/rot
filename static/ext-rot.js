@@ -120,6 +120,17 @@ rot.model = null;
 rot.grid.grid = null;
 rot.lastym = null;
 
+rot.rotStore = {}
+rot.rotStore.metaData = null
+rot.rotStore.load = function(store, records, successful, eOpts) {
+	//console.log(store);
+}
+
+rot.rotStore.metaChange = function(store, meta, eOpts) {
+	rot.rotStore.metaData = meta;
+}
+
+
 rot.grid.cellIndex = null
 rot.grid.rowIndex = null
 
@@ -129,13 +140,50 @@ rot.grid.add_row = function(button, e, eOpts) {
 		return;
 	}
 	
-	// get the current record
-	//var selection = rot.get("#contentGrid").getSelection()
+	var store = Ext.getStore('rotStore');
+	var proxy = store.getProxy();
+	
+	// get the current record, clone it, empty id, set new id and append
+	var selection = rot.get("#contentGrid").getSelection()
+	//console.log(selection)
+	
+	// copy record, give it a unique id
+	var rec = selection[0].copy(++rot.rotStore.metaData.maxid)
+	console.log(rec)
+	
+	// clear all vlaues, increment sort to place it under the cloned record
+	for (e in rec.data) {
+		if (e.substr(0, 2) == "20") {
+			rec.data[e] = ""
+		}
+		
+		if (e == "srt")
+			rec.data[e] = "" + (parseInt(rec.data[e]) + 1) // cast to int, increment, cast to str
+	}
+	
+	/*
+	// var data = Object.clone(selection[0].data)
+	for (e in data) {
+		if (e.substr(0, 2) == "20") {
+			data[e] = "111"
+		}
+		
+		if (e == "id")
+			data[e] = ++rot.rotStore.metaData.maxid;
+	}
+	//console.log(data)
+	var rec = Ext.create("calendar.store.rotStore", data);
+	*/
+	
+	store.addSorted(rec)
+	store.sort("srt", "ASC")
+	return true;
+	
 	var store = Ext.getStore('rotStore');
 	var proxy = store.getProxy();
 	
 	var rec = Ext.create("calendar.store.rotStore", {
-		id: 0, 
+		id: ++rot.rotStore.metaData.maxid, 
 		group_sort: "sort001",
 		rot_group: "Viszeral/Urologie/Lunge", 
 		name: "sdfsdfdf", 

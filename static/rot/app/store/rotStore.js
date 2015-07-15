@@ -42,6 +42,10 @@ Ext.define('calendar.store.rotStore', {
                 metachange: {
                     fn: me.onJsonstoreMetaChange,
                     scope: me
+                },
+                load: {
+                    fn: me.onJsonstoreLoad,
+                    scope: me
                 }
             },
             sorters: {
@@ -51,7 +55,12 @@ Ext.define('calendar.store.rotStore', {
     },
 
     onJsonstoreMetaChange: function(store, meta, eOpts) {
-        console.log("rotStore metaChange");
+        //console.log("rotStore metaChange");
+        rot.rotStore.metaChange(store, meta, eOpts);
+    },
+
+    onJsonstoreLoad: function(store, records, successful, eOpts) {
+        rot.rotStore.load(store, records, successful, eOpts);
     }
 
 });

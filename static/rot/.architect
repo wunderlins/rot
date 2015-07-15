@@ -191,6 +191,9 @@
                 },
                 {
                     "id": "e61017b5-6ad4-4c79-a682-283b9043b612"
+                },
+                {
+                    "id": "02d044f4-3ffa-49cd-baa6-159fecedfaa9"
                 }
             ]
         },
@@ -356,8 +359,8 @@
         "topInstance": null
     },
     "inspectorState": {
-        "topInstance": "e824ce7a-d84a-4602-9faf-4292f052a8ba",
-        "selectedInstance": "54078c8a-dfce-4644-9693-1b49eb2cb17c"
+        "topInstance": "aeb6b904-924a-4718-817c-f45c40138474",
+        "selectedInstance": "a4a07849-b901-4886-b014-b3d665ce7622"
     },
     "editMode": "code",
     "userSettings": {
