@@ -117,7 +117,14 @@ rot.grid.grid = null;
 rot.lastym = null;
 
 rot.grid.onclick = function(tableview, td, cellIndex, record, tr, rowIndex, e, eOpts) {
-	
+	/*
+	rot.log(cellIndex + " " + rowIndex)
+	console.log(cellIndex + " " + rowIndex)
+	console.log(e)
+	console.log(eOpts)
+	console.log(tableview)
+	console.log(record)
+	*/
 	//rot.log(cellIndex + " " + rot.grid.selection.von.m)
 	selected_date = rot.add_month(cellIndex, rot.grid.selection.von)
 	//rot.log(selected_date.y + " " + selected_date.m)

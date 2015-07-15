@@ -38,6 +38,7 @@ Ext.define('calendar.view.MainView', {
     },
     itemId: 'mainView',
     layout: 'border',
+    defaultListenerScope: true,
 
     items: [
         {
@@ -202,8 +203,14 @@ Ext.define('calendar.view.MainView', {
                     store: 'rotStore',
                     viewConfig: {
                         listeners: {
-                            cellclick: 'onViewCellClick',
-                            celldblclick: 'onViewCellDblClick'
+                            cellclick: {
+                                fn: 'onViewCellClick',
+                                scope: 'controller'
+                            },
+                            celldblclick: {
+                                fn: 'onViewCellDblClick',
+                                scope: 'controller'
+                            }
                         }
                     },
                     columns: [
@@ -228,7 +235,12 @@ Ext.define('calendar.view.MainView', {
                         }
                     ],
                     selModel: {
-                        selType: 'cellmodel'
+                        selType: 'cellmodel',
+                        enableKeyNav: false,
+                        listeners: {
+                            select: 'onCellModelSelect',
+                            focuschange: 'onCellModelFocusChange'
+                        }
                     },
                     features: [
                         {
@@ -236,7 +248,7 @@ Ext.define('calendar.view.MainView', {
                             showSummaryRow: true,
                             collapsible: false,
                             groupHeaderTpl: [
-                                '<!--{columnName}: -->{name}'
+                                '<!--{columnName}: --><button class="x-btn x-btn-default-small"><span class="x-btn-inner x-btn-inner-default-small">+</span></button> {name}'
                             ]
                         }
                     ]
@@ -326,6 +338,21 @@ Ext.define('calendar.view.MainView', {
             hideCollapseTool: true,
             title: 'Footer'
         }
-    ]
+    ],
+
+    onCellModelSelect: function(cellmodel, record, row, column, eOpts) {
+        console.log(cellmodel.getPosition());
+        //console.log("onCellModelSelect " + row + " " + column);
+        //console.log(cellmodel.selection.column.dataIndex);
+
+
+
+    },
+
+    onCellModelFocusChange: function(model, oldFocused, newFocused, eOpts) {
+        //console.log("onCellModelFocusChange ");
+        //console.log(oldFocused);
+        //console.log(newFocused);
+    }
 
 });

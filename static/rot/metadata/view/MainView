@@ -423,10 +423,56 @@
                             },
                             "codeClass": null,
                             "userConfig": {
-                                "designer|displayName": "contentGridSelect"
+                                "designer|displayName": "contentGridSelect",
+                                "enableKeyNav": false
                             },
                             "name": "MyCellSelectionModel",
-                            "designerId": "f2b906d8-21f1-4a49-bc6b-9f3e9c27789f"
+                            "designerId": "f2b906d8-21f1-4a49-bc6b-9f3e9c27789f",
+                            "cn": [
+                                {
+                                    "type": "basiceventbinding",
+                                    "reference": {
+                                        "name": "listeners",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "onCellModelSelect",
+                                        "implHandler": [
+                                            "console.log(cellmodel.getPosition());",
+                                            "//console.log(\"onCellModelSelect \" + row + \" \" + column);",
+                                            "//console.log(cellmodel.selection.column.dataIndex);",
+                                            "",
+                                            "",
+                                            ""
+                                        ],
+                                        "name": "select",
+                                        "scope": "me"
+                                    },
+                                    "name": "onCellModelSelect",
+                                    "designerId": "b64657af-75e2-4711-9813-d5001cb6672e"
+                                },
+                                {
+                                    "type": "basiceventbinding",
+                                    "reference": {
+                                        "name": "listeners",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "onCellModelFocusChange",
+                                        "implHandler": [
+                                            "//console.log(\"onCellModelFocusChange \");",
+                                            "//console.log(oldFocused);",
+                                            "//console.log(newFocused);"
+                                        ],
+                                        "name": "focuschange",
+                                        "scope": "me"
+                                    },
+                                    "name": "onCellModelFocusChange",
+                                    "designerId": "8cfc5519-d3e7-4fa4-9695-7acd17734278"
+                                }
+                            ]
                         },
                         {
                             "type": "Ext.grid.feature.Grouping",
@@ -454,7 +500,7 @@
                                     "userConfig": {
                                         "designer|displayName": "groupHeaderTpl",
                                         "implHandler": [
-                                            "<!--{columnName}: -->{name}"
+                                            "<!--{columnName}: --><button class=\"x-btn x-btn-default-small\"><span class=\"x-btn-inner x-btn-inner-default-small\">+</span></button> {name}"
                                         ]
                                     },
                                     "name": "groupHeaderTpl",

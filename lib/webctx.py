@@ -466,7 +466,8 @@ class data:
 					"dataIndex": 'name', 
 					"width": 60, 
 					"width": 150,
-					"locked": True
+					"locked": True,
+					"focusable": False
 				}, {"text": str(date_sel["von"]["y"]), "columns": [], "menuDisabled": True}
 			]
 		}
