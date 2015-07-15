@@ -92,7 +92,7 @@ Ext.define('calendar.store.monthempStore', {
         console.log("onBeforeLoad monthempStore");
 
         //rot.get_meta(store, operation, eOpts);
-        rot.prepare_load();
+        //rot.prepare_load();
     }
 
 });

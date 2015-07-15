@@ -704,15 +704,15 @@ class get_plan(response):
 		
 		ret["root"] = []
 		for r in res:
+			web.debug(r)
 			row = []
 			for e in r:
 				row.append(e)
 			ret["root"].append(row)
 			ret["count"] += 1
 		
-		
-			return self.json(ret)
-			#return json.dumps(ret, encoding="utf8")
+		return self.json(ret)
+		#return json.dumps(ret, encoding="utf8")
 			
 		'''
 		return """{"root": [

@@ -331,6 +331,7 @@ rot.loadData = function(button, e, eOpts) {
 	}
 	
 	rot.log("Months: " + months)
+	*/
 	
 	
 	// create a new model
@@ -341,19 +342,18 @@ rot.loadData = function(button, e, eOpts) {
 			'Ext.data.field.String'
 		],
 		
-		fields: rot.fields
+		fields: rot.grid.meta.fields
 	});
 	
 	
 	// create new column list for the grid
-	var columns = rot.columns
+	//var columns = rot.columns
 	
 	// apply new model to store
 	store.setModel(rot.model);
 	
 	// apply new store to grid
-	rot.grid.grid.reconfigure(store, columns);
-	*/
+	rot.grid.grid.reconfigure(store, rot.grid.meta.columns);
 	
 	// set time range parameters
 	proxy.setExtraParam("von", vonix)
