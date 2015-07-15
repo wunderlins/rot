@@ -28,6 +28,7 @@ Ext.define('calendar.view.MainView', {
         'Ext.selection.CellModel',
         'Ext.grid.feature.Grouping',
         'Ext.XTemplate',
+        'Ext.grid.plugin.CellEditing',
         'Ext.tab.Panel',
         'Ext.tab.Tab'
     ],
@@ -216,10 +217,6 @@ Ext.define('calendar.view.MainView', {
                             cellclick: {
                                 fn: 'onViewCellClick',
                                 scope: 'controller'
-                            },
-                            celldblclick: {
-                                fn: 'onViewCellDblClick',
-                                scope: 'controller'
                             }
                         }
                     },
@@ -268,6 +265,11 @@ Ext.define('calendar.view.MainView', {
                                     }
                                 }
                             )
+                        }
+                    ],
+                    plugins: [
+                        {
+                            ptype: 'cellediting'
                         }
                     ]
                 }

@@ -69,12 +69,10 @@
                             "cn": [
                                 {
                                     "id": "c4a78c1a-d69e-4299-a4f8-5d2e747745c7",
+                                    "expanded": false,
                                     "cn": [
                                         {
                                             "id": "84600556-1710-4978-acf6-0d715facdb37"
-                                        },
-                                        {
-                                            "id": "6e0da3e7-ac86-466b-8c70-08b2c41069fb"
                                         }
                                     ]
                                 },
@@ -86,6 +84,7 @@
                                 },
                                 {
                                     "id": "f2b906d8-21f1-4a49-bc6b-9f3e9c27789f",
+                                    "expanded": false,
                                     "cn": [
                                         {
                                             "id": "b64657af-75e2-4711-9813-d5001cb6672e"
@@ -97,6 +96,7 @@
                                 },
                                 {
                                     "id": "11c4cd0a-ca42-4b65-870c-3149d91ed562",
+                                    "expanded": false,
                                     "cn": [
                                         {
                                             "id": "4ac185d6-ce5f-4050-9fcf-b90b50928081",
@@ -107,6 +107,9 @@
                                             ]
                                         }
                                     ]
+                                },
+                                {
+                                    "id": "1582c054-f83c-4481-baaf-f8422dca4e55"
                                 }
                             ]
                         }
@@ -359,8 +362,8 @@
         "topInstance": null
     },
     "inspectorState": {
-        "topInstance": "aeb6b904-924a-4718-817c-f45c40138474",
-        "selectedInstance": "a4a07849-b901-4886-b014-b3d665ce7622"
+        "topInstance": "76d17007-2335-4c00-b7ab-dad9b996582b",
+        "selectedInstance": "76d17007-2335-4c00-b7ab-dad9b996582b"
     },
     "editMode": "code",
     "userSettings": {

@@ -392,26 +392,6 @@
                                     },
                                     "name": "onViewCellClick",
                                     "designerId": "84600556-1710-4978-acf6-0d715facdb37"
-                                },
-                                {
-                                    "type": "viewcontrollereventbinding",
-                                    "reference": {
-                                        "name": "listeners",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "fn": "onViewCellDblClick",
-                                        "implHandler": [
-                                            "//rot.get(\"#dbgx\").setValue(rowIndex);",
-                                            "//rot.get(\"#dbgy\").setValue(cellIndex);",
-                                            "rot.grid.ondblclick(tableview, td, cellIndex, record, tr, rowIndex, e, eOpts);"
-                                        ],
-                                        "name": "celldblclick",
-                                        "scope": "me"
-                                    },
-                                    "name": "onViewCellDblClick",
-                                    "designerId": "6e0da3e7-ac86-466b-8c70-08b2c41069fb"
                                 }
                             ]
                         },
@@ -568,6 +548,16 @@
                                     ]
                                 }
                             ]
+                        },
+                        {
+                            "type": "Ext.grid.plugin.CellEditing",
+                            "reference": {
+                                "name": "plugins",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "name": "MyCellEditingPlugin",
+                            "designerId": "1582c054-f83c-4481-baaf-f8422dca4e55"
                         }
                     ]
                 }
