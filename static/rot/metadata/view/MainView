@@ -68,7 +68,7 @@
                             "userConfig": {
                                 "container|align": "stretch",
                                 "layout": "vbox",
-                                "layout|flex": 0.5
+                                "layout|flex": 0.6
                             },
                             "name": "MyContainer2",
                             "designerId": "562c5b37-497f-4ead-8dfd-656d4aa6308e",
@@ -267,6 +267,40 @@
                                             },
                                             "name": "MyTextField1",
                                             "designerId": "c66ce2cb-cd3c-49be-bc1e-9fec1840568d"
+                                        },
+                                        {
+                                            "type": "Ext.button.Button",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "text": "Add"
+                                            },
+                                            "name": "MyButton1",
+                                            "designerId": "30f1404d-c7f9-4555-acc0-e65970067bc7",
+                                            "cn": [
+                                                {
+                                                    "type": "basiceventbinding",
+                                                    "reference": {
+                                                        "name": "listeners",
+                                                        "type": "array"
+                                                    },
+                                                    "codeClass": null,
+                                                    "userConfig": {
+                                                        "fn": "onButtonClick",
+                                                        "implHandler": [
+                                                            "",
+                                                            "rot.grid.add_row(button, e, eOpts);"
+                                                        ],
+                                                        "name": "click",
+                                                        "scope": "me"
+                                                    },
+                                                    "name": "onButtonClick",
+                                                    "designerId": "6fb37a57-e15e-453c-a6c5-1ceae517641e"
+                                                }
+                                            ]
                                         }
                                     ]
                                 }
@@ -280,7 +314,7 @@
                             },
                             "codeClass": null,
                             "userConfig": {
-                                "layout|flex": 0.5
+                                "layout|flex": 0.4
                             },
                             "name": "MyContainer3",
                             "designerId": "476bb3d6-482a-46b7-8bfd-7a7a5e6062ec",
@@ -299,6 +333,8 @@
                                         "height": "100%",
                                         "hideLabel": true,
                                         "itemId": "debugConsole",
+                                        "labelPad": 0,
+                                        "labelWidth": 0,
                                         "readOnly": true,
                                         "width": "100%"
                                     },
@@ -321,6 +357,7 @@
                         "height": 150,
                         "itemId": "contentGrid",
                         "layout|flex": 1,
+                        "sortableColumns": false,
                         "store": "rotStore",
                         "title": null,
                         "titleCollapse": false
@@ -439,7 +476,7 @@
                                     "userConfig": {
                                         "fn": "onCellModelSelect",
                                         "implHandler": [
-                                            "console.log(cellmodel.getPosition());",
+                                            "//console.log(cellmodel.getPosition());",
                                             "//console.log(\"onCellModelSelect \" + row + \" \" + column);",
                                             "//console.log(cellmodel.selection.column.dataIndex);",
                                             "",
@@ -500,11 +537,35 @@
                                     "userConfig": {
                                         "designer|displayName": "groupHeaderTpl",
                                         "implHandler": [
-                                            "<!--{columnName}: --><button class=\"x-btn x-btn-default-small\"><span class=\"x-btn-inner x-btn-inner-default-small\">+</span></button> {name}"
+                                            "<!--{columnName}: --><!--button class=\"x-btn x-btn-default-small\"><span class=\"x-btn-inner x-btn-inner-default-small\">+</span></button-->",
+                                            "{children:this.dbgtpl}"
                                         ]
                                     },
                                     "name": "groupHeaderTpl",
-                                    "designerId": "4ac185d6-ce5f-4050-9fcf-b90b50928081"
+                                    "designerId": "4ac185d6-ce5f-4050-9fcf-b90b50928081",
+                                    "cn": [
+                                        {
+                                            "type": "templatefunction",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "designer|params": [
+                                                    "o"
+                                                ],
+                                                "fn": "dbgtpl",
+                                                "implHandler": [
+                                                    "//return rot.dbgtpl(o);",
+                                                    "//console.log(o[0]);",
+                                                    "return o[0].data.rot_group;"
+                                                ]
+                                            },
+                                            "name": "dbgtpl",
+                                            "designerId": "f6dcb1d2-064a-4e24-8fb6-17d8a5ac0dda"
+                                        }
+                                    ]
                                 }
                             ]
                         }

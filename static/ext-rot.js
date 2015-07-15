@@ -12,6 +12,10 @@ rot.init = function() {
 	rot.grid.init();
 }
 
+rot.dbgtpl = function(o) {
+	console.log(o)
+}
+
 rot.grid = {}
 rot.grid.meta = null
 rot.grid.cellwidth = 50
@@ -116,7 +120,38 @@ rot.model = null;
 rot.grid.grid = null;
 rot.lastym = null;
 
+rot.grid.cellIndex = null
+rot.grid.rowIndex = null
+
+rot.grid.add_row = function(button, e, eOpts) {
+	if (rot.grid.cellIndex === null) {
+		rot.log("No selection")
+		return;
+	}
+	
+	// get the current record
+	//var selection = rot.get("#contentGrid").getSelection()
+	var store = Ext.getStore('rotStore');
+	var proxy = store.getProxy();
+	
+	var rec = Ext.create("calendar.store.rotStore", {
+		id: 200, 
+		rot_group: "Viszeral/Urologie/Lunge", 
+		name: "Allgemeinchirurgie, Urologie", 
+		description: null, 
+		sort: 100101
+	})
+	
+	store.addSorted(rec)
+}
+
 rot.grid.onclick = function(tableview, td, cellIndex, record, tr, rowIndex, e, eOpts) {
+	
+	rot.grid.cellIndex = cellIndex
+	rot.grid.rowIndex = rowIndex
+	rot.get("#dbgx").setValue(rowIndex);
+	rot.get("#dbgy").setValue(cellIndex);
+	
 	/*
 	rot.log(cellIndex + " " + rowIndex)
 	console.log(cellIndex + " " + rowIndex)

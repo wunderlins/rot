@@ -51,6 +51,19 @@
             },
             "codeClass": null,
             "userConfig": {
+                "name": "group_sort"
+            },
+            "name": "MyString1",
+            "designerId": "20f1c521-4fe2-460d-a93d-41bb47a244d1"
+        },
+        {
+            "type": "Ext.data.field.String",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
                 "name": "rot_group"
             },
             "name": "MyString3",

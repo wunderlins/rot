@@ -8,7 +8,8 @@
     "userConfig": {
         "designer|userClassName": "monthempStore",
         "model": "monthempModel",
-        "sortOnLoad": null,
+        "remoteSort": true,
+        "sortOnLoad": false,
         "storeId": "monthempStore"
     },
     "name": "MyJsonStore",

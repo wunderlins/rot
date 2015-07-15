@@ -437,8 +437,11 @@ class data:
 			"error": None,
 			"fields" : [
 				{"type": 'int', "mapping": 0, "name": 'id'},
-				{"type": 'string', "mapping": 1, "name": "rot_group"},
-				{"type": 'string', "mapping": 2, "name": 'name'},
+				{"type": 'string', "mapping": 1, "name": "group_sort"},
+				{"type": 'string', "mapping": 2, "name": "rot_group"},
+				{"type": 'string', "mapping": 3, "name": 'name'},
+				{"type": 'string', "mapping": 4, "name": 'description'},
+				{"type": 'string', "mapping": 5, "name": 'sort'},
 			],
 			"columns": [
 				{
@@ -450,8 +453,8 @@ class data:
 					"locked": True
 				},{
 					"xtype": 'gridcolumn', 
-					"text": "rot_group", 
-					"dataIndex": "rot_group", 
+					"text": "group_sort", 
+					"dataIndex": "group_sort", 
 					"width": 60,
 					"draggable": False,
 					"resizable": False,
@@ -462,13 +465,33 @@ class data:
 					"locked": True
 				},{
 					"xtype": 'gridcolumn', 
+					"text": "rot_group", 
+					"dataIndex": "rot_group", 
+					"hidden": True,
+					"locked": False
+				},{
+					"xtype": 'gridcolumn', 
 					"text": 'Name', 
 					"dataIndex": 'name', 
 					"width": 60, 
 					"width": 150,
-					"locked": True,
-					"focusable": False
-				}, {"text": str(date_sel["von"]["y"]), "columns": [], "menuDisabled": True}
+					"locked": True
+				},{
+					"xtype": 'gridcolumn', 
+					"text": 'Description', 
+					"dataIndex": 'description', 
+					"width": 60, 
+					"width": 150,
+					"hidden": True
+				},{
+					"xtype": 'gridcolumn', 
+					"text": 'Sort', 
+					"dataIndex": 'sort', 
+					"width": 60, 
+					"width": 150,
+					"hidden": True
+				},
+				{"text": str(date_sel["von"]["y"]), "columns": [], "menuDisabled": True}
 			]
 		}
 		
@@ -503,7 +526,7 @@ class data:
 			
 			ret["metaData"]["fields"].append({
 				"type": 'string', 
-				"mapping": months+3, 
+				"mapping": months+6, 
 				"name": n
 			})
 			
@@ -539,7 +562,7 @@ class data:
 		})
 		ret["metaData"]["fields"].append({
 			"type": 'string', 
-			"mapping": months+3, 
+			"mapping": months+6, 
 			"name": n
 		})
 		ret["metaData"]["months"] = months
@@ -696,8 +719,8 @@ class get_plan(response):
 		
 		ret = data.plan_meta(von, bis)
 		sql = db.text("""
-			SELECT rr.id rrid, rg.name groupname, rr.name rotname, 
-			       rr.bemerkung, CONCAT(rg.sort, LPAD(rr.sort, 4, '0')) sort
+			SELECT rr.id rrid, CONCAT("sort", rg.sort) as groupsort, rg.name groupname, rr.name rotname, 
+			       rr.bemerkung, CONCAT(rg.sort, LPAD(rr.sort*100, 5, '0')) sort
 			FROM rot_rot rr LEFT JOIN rot_group rg ON (rr.group_id = rg.id)
 			ORDER BY rg.sort, rr.sort""")
 		

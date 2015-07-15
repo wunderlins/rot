@@ -26,7 +26,7 @@ Ext.define('calendar.store.rotStore', {
         var me = this;
         cfg = cfg || {};
         me.callParent([Ext.apply({
-            groupField: 'rot_group',
+            groupField: 'group_sort',
             storeId: 'rotStore',
             model: 'calendar.model.rotModel',
             proxy: {
@@ -36,7 +36,18 @@ Ext.define('calendar.store.rotStore', {
                     type: 'json',
                     rootProperty: 'root'
                 }
+            },
+            listeners: {
+                metachange: {
+                    fn: me.onJsonstoreMetaChange,
+                    scope: me
+                }
             }
         }, cfg)]);
+    },
+
+    onJsonstoreMetaChange: function(store, meta, eOpts) {
+        console.log("rotStore metaChange");
     }
+
 });

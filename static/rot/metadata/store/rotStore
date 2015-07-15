@@ -7,7 +7,7 @@
     "codeClass": null,
     "userConfig": {
         "designer|userClassName": "rotStore",
-        "groupField": "rot_group",
+        "groupField": "group_sort",
         "model": "rotModel",
         "storeId": "rotStore"
     },
@@ -43,6 +43,24 @@
                     "designerId": "8a47cb52-2ed3-4581-bb25-78c7f074aaf8"
                 }
             ]
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onJsonstoreMetaChange",
+                "implHandler": [
+                    "console.log(\"rotStore metaChange\");"
+                ],
+                "name": "metachange",
+                "scope": "me"
+            },
+            "name": "onJsonstoreMetaChange",
+            "designerId": "a4a07849-b901-4886-b014-b3d665ce7622"
         }
     ]
 }

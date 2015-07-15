@@ -34,6 +34,10 @@ Ext.define('calendar.model.rotModel', {
         },
         {
             type: 'string',
+            name: 'group_sort'
+        },
+        {
+            type: 'string',
             name: 'rot_group'
         }
     ]

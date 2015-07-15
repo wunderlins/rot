@@ -26,8 +26,10 @@ Ext.define('calendar.store.monthempStore', {
         var me = this;
         cfg = cfg || {};
         me.callParent([Ext.apply({
+            remoteSort: true,
             storeId: 'monthempStore',
             model: 'calendar.model.monthempModel',
+            sortOnLoad: false,
             proxy: {
                 type: 'ajax',
                 url: '../../get_month',

@@ -68,7 +68,7 @@ Ext.define('calendar.view.MainView', {
                     items: [
                         {
                             xtype: 'container',
-                            flex: 0.5,
+                            flex: 0.6,
                             layout: {
                                 type: 'vbox',
                                 align: 'stretch'
@@ -171,6 +171,13 @@ Ext.define('calendar.view.MainView', {
                                             fieldLabel: 'y',
                                             labelWidth: 30,
                                             readOnly: true
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            text: 'Add',
+                                            listeners: {
+                                                click: 'onButtonClick'
+                                            }
                                         }
                                     ]
                                 }
@@ -178,7 +185,7 @@ Ext.define('calendar.view.MainView', {
                         },
                         {
                             xtype: 'container',
-                            flex: 0.5,
+                            flex: 0.4,
                             items: [
                                 {
                                     xtype: 'textareafield',
@@ -187,6 +194,8 @@ Ext.define('calendar.view.MainView', {
                                     width: '100%',
                                     fieldLabel: 'Label',
                                     hideLabel: true,
+                                    labelPad: 0,
+                                    labelWidth: 0,
                                     readOnly: true,
                                     emptyText: 'Console'
                                 }
@@ -200,6 +209,7 @@ Ext.define('calendar.view.MainView', {
                     height: 150,
                     itemId: 'contentGrid',
                     titleCollapse: false,
+                    sortableColumns: false,
                     store: 'rotStore',
                     viewConfig: {
                         listeners: {
@@ -247,9 +257,17 @@ Ext.define('calendar.view.MainView', {
                             ftype: 'grouping',
                             showSummaryRow: true,
                             collapsible: false,
-                            groupHeaderTpl: [
-                                '<!--{columnName}: --><button class="x-btn x-btn-default-small"><span class="x-btn-inner x-btn-inner-default-small">+</span></button> {name}'
-                            ]
+                            groupHeaderTpl: Ext.create('Ext.XTemplate', 
+                                '<!--{columnName}: --><!--button class="x-btn x-btn-default-small"><span class="x-btn-inner x-btn-inner-default-small">+</span></button-->',
+                                '{children:this.dbgtpl}',
+                                {
+                                    dbgtpl: function(o) {
+                                        //return rot.dbgtpl(o);
+                                        //console.log(o[0]);
+                                        return o[0].data.rot_group;
+                                    }
+                                }
+                            )
                         }
                     ]
                 }
@@ -340,8 +358,13 @@ Ext.define('calendar.view.MainView', {
         }
     ],
 
+    onButtonClick: function(button, e, eOpts) {
+
+        rot.grid.add_row(button, e, eOpts);
+    },
+
     onCellModelSelect: function(cellmodel, record, row, column, eOpts) {
-        console.log(cellmodel.getPosition());
+        //console.log(cellmodel.getPosition());
         //console.log("onCellModelSelect " + row + " " + column);
         //console.log(cellmodel.selection.column.dataIndex);
 
