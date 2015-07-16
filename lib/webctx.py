@@ -578,6 +578,7 @@ class data:
 				"hideable": False,
 				"menuDisabled": True,
 				"sortable": False,
+				"renderer": "rot.grid.cell_renderer",
 				"editor": {
 					"xtype": "combobox",
 					"store": "monthempStore",
@@ -591,7 +592,6 @@ class data:
 					"queryMode": "local",
 					"typeAhead": True
 				},
-				"renderer": "rot.grid.cell_renderer"
 			})
 			
 			ret["metaData"]["fields"].append({
@@ -635,7 +635,7 @@ class data:
 				"displayField": "kuerzel",
 				"valueField": "pid",
 				"selectOnFocus": True,
-				"selectOnTab": True,
+				"selectOnTab": False,
 				"autoSelect": True,
 				"caseSensitive": False,
 				"maxLength": 3,

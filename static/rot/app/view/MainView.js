@@ -277,6 +277,7 @@ Ext.define('calendar.view.MainView', {
                     plugins: [
                         {
                             ptype: 'cellediting',
+                            triggerEvent: 'cellclick',
                             listeners: {
                                 edit: 'onCellEditingEdit'
                             }
@@ -382,7 +383,7 @@ Ext.define('calendar.view.MainView', {
 
     onCellEditingEdit: function(editor, context, eOpts) {
         rot.grid.celledit(editor, context, eOpts);
-        return true;
+        //return true;
 
     }
 

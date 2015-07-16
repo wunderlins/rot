@@ -558,6 +558,9 @@
                                 "type": "array"
                             },
                             "codeClass": null,
+                            "userConfig": {
+                                "triggerEvent": "cellclick"
+                            },
                             "name": "MyCellEditingPlugin",
                             "designerId": "1582c054-f83c-4481-baaf-f8422dca4e55",
                             "cn": [
@@ -569,10 +572,11 @@
                                     },
                                     "codeClass": null,
                                     "userConfig": {
+                                        "delay": null,
                                         "fn": "onCellEditingEdit",
                                         "implHandler": [
                                             "rot.grid.celledit(editor, context, eOpts);",
-                                            "return true;",
+                                            "//return true;",
                                             ""
                                         ],
                                         "name": "edit",

@@ -62,8 +62,21 @@ rot.kuerzelupdate = function(store, records, successful, eOpts) {
 }
 */
 
+rot.grid.beforeEdit = function(editor, context, eOpts) {
+	console.log("beforeEdit");
+	//console.log(editor);
+	//console.log(editor);
+	if (editor.editors.items.length) {
+		//editor.editors.items[1].selectText();
+		//console.log(editor.editors.items);
+		//editor.editors.items[0].field.selectText()
+		;
+	}
+}
+
 // FIXME: this event handler migh not be used anymore.
 rot.grid.celledit = function(editor, context, eOpts) {
+	//console.log("rot.grid.celledit")
 	//console.log(editor)
 	//console.log(context)
 	//console.log(eOpts)
@@ -88,6 +101,7 @@ rot.grid.celledit = function(editor, context, eOpts) {
 	// now remove the first element from modified
 	mod = {}
 	first = true;
+	
 	for (e in context.record.modified) {
 		if (first) {
 			first = false;
@@ -97,6 +111,21 @@ rot.grid.celledit = function(editor, context, eOpts) {
 		mod[e] = context.record.modified[e]
 	}
 	
+	rot.log("NewV " + context.colIdx + ":" + context.rowIdx + "> " + context.value)
+	
+	// TODO: fire off an ajax update event
+	Ext.Ajax.request({
+		url: '../../update_rot',
+		method: "get",
+		params: rec,
+		success: function(response){
+			var text = response.responseText;
+			result = Ext.decode(text)
+			console.log(result);
+		}
+	});	
+
+
 	//context.record.modified = mod
 	
 	
@@ -108,27 +137,12 @@ rot.grid.celledit = function(editor, context, eOpts) {
 	*/
 	
 	//context.record.data[context.field] = context.value;
-	console.log(context.record)
+	//console.log(context.record)
 	//console.log(context.record.data)
 	//Ext.getStore('rotStore').sync()
 	
 	// BUG: using tab hangs the editor.
 	
-	rot.log("NewV " + context.colIdx + ":" + context.rowIdx + "> " + context.value)
-	//rot.grid.modified();
-	
-	// TODO: fire off an ajax update event
-
-	Ext.Ajax.request({
-		url: '../../update_rot',
-		method: "get",
-		params: rec,
-		success: function(response){
-			var text = response.responseText;
-			result = Ext.decode(text)
-			console.log(result);
-		}
-	});	
 }
 
 rot.get = function(selector) {
