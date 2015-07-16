@@ -1,0 +1,67 @@
+{
+    "type": "jsonstore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "assiStore",
+        "model": "assiModel",
+        "remoteSort": true,
+        "sortOnLoad": false,
+        "storeId": "assiStore"
+    },
+    "name": "monthempStore1",
+    "designerId": "f736994f-bb8d-4a56-af59-01a6d8b6e7ec",
+    "cn": [
+        {
+            "type": "Ext.data.proxy.Ajax",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "url": "../../get_emp"
+            },
+            "name": "MyAjaxProxy1",
+            "designerId": "fdc9138b-5042-44a6-b61e-2113ac92652b",
+            "cn": [
+                {
+                    "type": "Ext.data.reader.Json",
+                    "reference": {
+                        "name": "reader",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "rootProperty": "root",
+                        "totalProperty": "count"
+                    },
+                    "name": "MyJsonReader2",
+                    "designerId": "875db530-1622-401d-ad4c-d34d51decf22"
+                }
+            ]
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onJsonstoreLoad",
+                "implHandler": [
+                    "//console.log(\"monthempStoreAll: onJsonstoreLoad\");",
+                    "rot.personal_load(store, records, successful, eOpts);"
+                ],
+                "name": "load",
+                "scope": "me"
+            },
+            "name": "onJsonstoreLoad",
+            "designerId": "ad310cbc-e101-4c9d-a22b-51ce1a8fe99c"
+        }
+    ]
+}

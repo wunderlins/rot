@@ -21,6 +21,7 @@ Ext.define('calendar.view.MainView', {
         'calendar.view.MainViewViewModel',
         'calendar.view.MainViewViewController',
         'Ext.form.field.ComboBox',
+        'Ext.form.field.Number',
         'Ext.form.field.TextArea',
         'Ext.grid.Panel',
         'Ext.grid.View',
@@ -105,13 +106,15 @@ Ext.define('calendar.view.MainView', {
                                             valueField: 'id'
                                         },
                                         {
-                                            xtype: 'textfield',
+                                            xtype: 'numberfield',
                                             itemId: 'vony',
-                                            width: 60,
+                                            width: 70,
                                             hideLabel: true,
                                             labelPad: 0,
                                             labelWidth: 0,
-                                            value: 2015
+                                            value: 2015,
+                                            decimalPrecision: 0,
+                                            minValue: 2010
                                         },
                                         {
                                             xtype: 'combobox',
@@ -133,13 +136,15 @@ Ext.define('calendar.view.MainView', {
                                             valueField: 'id'
                                         },
                                         {
-                                            xtype: 'textfield',
+                                            xtype: 'numberfield',
                                             itemId: 'bisy',
-                                            width: 60,
+                                            width: 70,
                                             hideLabel: true,
                                             labelPad: 0,
                                             labelWidth: 0,
-                                            value: 2015
+                                            value: 2015,
+                                            decimalPrecision: 0,
+                                            minValue: 2010
                                         },
                                         {
                                             xtype: 'button',
@@ -290,6 +295,7 @@ Ext.define('calendar.view.MainView', {
             xtype: 'tabpanel',
             region: 'east',
             split: true,
+            splitterResize: false,
             itemId: 'rightPanel',
             width: 350,
             title: '',
@@ -313,7 +319,7 @@ Ext.define('calendar.view.MainView', {
                                         // metaData.tdAttr = ' data-qtip="' + record.data.vorname + " " + record.data.name + '"';
                                         return "<b>" + value + "</b> " + record.data.vorname + " " + record.data.name;
                                     },
-                                    width: 200,
+                                    minWidth: 220,
                                     dataIndex: 'kuerzel',
                                     text: 'Name'
                                 },

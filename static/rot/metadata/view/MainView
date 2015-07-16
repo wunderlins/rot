@@ -126,24 +126,26 @@
                                             "designerId": "002d333c-e837-4229-8464-b15a0cbe319c"
                                         },
                                         {
-                                            "type": "Ext.form.field.Text",
+                                            "type": "Ext.form.field.Number",
                                             "reference": {
                                                 "name": "items",
                                                 "type": "array"
                                             },
                                             "codeClass": null,
                                             "userConfig": {
+                                                "decimalPrecision": 0,
                                                 "fieldLabel": null,
                                                 "hideLabel": true,
                                                 "itemId": "vony",
                                                 "labelPad": 0,
                                                 "labelWidth": 0,
+                                                "minValue": 2010,
                                                 "value": [
                                                     "2015"
                                                 ],
-                                                "width": 60
+                                                "width": 70
                                             },
-                                            "name": "MyTextField2",
+                                            "name": "MyNumberField",
                                             "designerId": "66136ede-3c7d-4808-a097-71b57a00a84a"
                                         },
                                         {
@@ -181,24 +183,26 @@
                                             "designerId": "67713d7b-ce5d-4364-94f0-9205bcdd51a3"
                                         },
                                         {
-                                            "type": "Ext.form.field.Text",
+                                            "type": "Ext.form.field.Number",
                                             "reference": {
                                                 "name": "items",
                                                 "type": "array"
                                             },
                                             "codeClass": null,
                                             "userConfig": {
+                                                "decimalPrecision": 0,
                                                 "fieldLabel": null,
                                                 "hideLabel": true,
                                                 "itemId": "bisy",
                                                 "labelPad": 0,
                                                 "labelWidth": 0,
+                                                "minValue": 2010,
                                                 "value": [
                                                     "2015"
                                                 ],
-                                                "width": 60
+                                                "width": 70
                                             },
-                                            "name": "MyTextField3",
+                                            "name": "MyNumberField1",
                                             "designerId": "7fcd9cab-91aa-48d6-96e8-c11d29f3f3b4"
                                         },
                                         {
@@ -599,6 +603,7 @@
                 "layout|collapseMode": null,
                 "layout|region": "east",
                 "layout|split": true,
+                "layout|splitterResize": false,
                 "title": "",
                 "titleCollapse": null,
                 "width": 350
@@ -615,7 +620,8 @@
                     "codeClass": null,
                     "userConfig": {
                         "autoScroll": true,
-                        "title": "Verfügbar"
+                        "title": "Verfügbar",
+                        "width": null
                     },
                     "name": "MyPanel",
                     "designerId": "2b9b13bd-5d99-4131-87ee-a5c70b34aab2",
@@ -667,8 +673,9 @@
                                     "codeClass": null,
                                     "userConfig": {
                                         "dataIndex": "kuerzel",
+                                        "minWidth": 220,
                                         "text": "Name",
-                                        "width": 200
+                                        "width": null
                                     },
                                     "name": "MyColumn4",
                                     "designerId": "36e635e8-89af-478c-aed3-299c9619bc6c",
@@ -711,6 +718,7 @@
                                     "userConfig": {
                                         "align": "right",
                                         "dataIndex": "bgrad",
+                                        "flex": null,
                                         "text": "%",
                                         "width": 80
                                     },
