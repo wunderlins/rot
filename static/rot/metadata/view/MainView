@@ -354,6 +354,7 @@
                     "codeClass": null,
                     "userConfig": {
                         "designer|displayName": "contentGrid",
+                        "designer|uiInterfaceName": "default",
                         "height": 150,
                         "itemId": "contentGrid",
                         "layout|flex": 1,

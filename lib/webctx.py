@@ -453,7 +453,7 @@ class data:
 	@staticmethod
 	def plan_meta(von, bis): 
 		months = 0
-		cellwidth = 50
+		cellwidth = 55
 		
 		# validate user input
 		try:
@@ -633,7 +633,12 @@ class data:
 				"displayField": "kuerzel",
 				"valueField": "pid",
 				"selectOnFocus": True,
-				"selectOnTab": True
+				"selectOnTab": True,
+				"autoSelect": True,
+				"caseSensitive": False,
+				"maxLength": 3,
+				"queryMode": "local",
+				"typeAhead": True
 			},
 			"renderer": "rot.grid.cell_renderer"
 		})

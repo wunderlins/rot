@@ -27,9 +27,10 @@
  - Grid
    * DONE dynamischer aufbau des grid
    * DONE multi header grid
-   * rot_group feld in resultaten hinzufügen um gruppierungen zu ermöglichen.
-   * grouped rows
-   * add row to vert. group
+   * DONE rot_group feld in resultaten hinzufügen um gruppierungen zu ermöglichen.
+   * DONE grouped rows
+   * DONE add row to vert. group
+   * Laod and safe grid data
  
 == Milestone 3: Usability
  - vervollständigunshilfen
