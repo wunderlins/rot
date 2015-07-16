@@ -251,7 +251,10 @@ Ext.define('calendar.view.MainView', {
                         }
                     ],
                     selModel: {
-                        selType: 'cellmodel'
+                        selType: 'cellmodel',
+                        listeners: {
+                            selectionchange: 'onCellModelSelectionChange'
+                        }
                     },
                     features: [
                         {
@@ -371,6 +374,10 @@ Ext.define('calendar.view.MainView', {
     onButtonClick: function(button, e, eOpts) {
 
         rot.grid.add_row(button, e, eOpts);
+    },
+
+    onCellModelSelectionChange: function(model, selected, eOpts) {
+        rot.grid.selection_change(model, selected, eOpts);
     },
 
     onCellEditingEdit: function(editor, context, eOpts) {

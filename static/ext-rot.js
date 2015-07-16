@@ -336,8 +336,56 @@ rot.grid.add_row = function(button, e, eOpts) {
 	store.sort("srt", "ASC")
 }
 
+rot.grid.selection_change = function(model, selected, eOpts) {
+	if(selected.length) {
+		//console.log(model);
+		//console.log(selected);
+		//console.log(eOpts);
+
+		cellIndex = model.nextSelection.colIdx;
+		rowIndex = model.nextSelection.rowIdx;
+
+		rot.grid.cellIndex = cellIndex;
+		rot.grid.rowIndex = rowIndex;
+		rot.get("#dbgx").setValue(rowIndex);
+		rot.get("#dbgy").setValue(cellIndex);
+
+		/*
+		rot.log(cellIndex + " " + rowIndex)
+		console.log(cellIndex + " " + rowIndex)
+		console.log(e)
+		console.log(eOpts)
+		console.log(tableview)
+		console.log(record)
+		*/
+		//rot.log(cellIndex + " " + rot.grid.selection.von.m)
+		selected_date = rot.add_month(cellIndex, rot.grid.selection.von);
+		//rot.log(selected_date.y + " " + selected_date.m)
+
+		if (rot.lastym && selected_date.y == rot.lastym.y && selected_date.m == rot.lastym.m)
+			return;
+
+		rot.lastym = Object.clone(selected_date);
+
+		// get a reference to the data store and proxy
+		var store = Ext.getStore('monthempStore');
+		var proxy = store.getProxy();
+
+		proxy.setExtraParam("ym", rot.month_str(selected_date));
+		store.load();
+
+	} else {
+		/*
+		console.log(model);
+		console.log(selected);
+		console.log(eOpts);
+		*/
+		;
+	}
+}
+
 rot.grid.onclick = function(tableview, td, cellIndex, record, tr, rowIndex, e, eOpts) {
-	
+	/*
 	rot.grid.cellIndex = cellIndex
 	rot.grid.rowIndex = rowIndex
 	rot.get("#dbgx").setValue(rowIndex);
@@ -350,7 +398,7 @@ rot.grid.onclick = function(tableview, td, cellIndex, record, tr, rowIndex, e, e
 	console.log(eOpts)
 	console.log(tableview)
 	console.log(record)
-	*/
+	* /
 	//rot.log(cellIndex + " " + rot.grid.selection.von.m)
 	selected_date = rot.add_month(cellIndex, rot.grid.selection.von)
 	//rot.log(selected_date.y + " " + selected_date.m)
@@ -366,7 +414,7 @@ rot.grid.onclick = function(tableview, td, cellIndex, record, tr, rowIndex, e, e
 	
 	proxy.setExtraParam("ym", rot.month_str(selected_date))
 	store.load()
-	
+	*/
 }
 
 rot.grid.ondblclick = function(tableview, td, cellIndex, record, tr, rowIndex, e, eOpts) {

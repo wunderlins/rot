@@ -471,7 +471,27 @@
                                 "designer|displayName": "contentGridSelect"
                             },
                             "name": "MyCellSelectionModel",
-                            "designerId": "f2b906d8-21f1-4a49-bc6b-9f3e9c27789f"
+                            "designerId": "f2b906d8-21f1-4a49-bc6b-9f3e9c27789f",
+                            "cn": [
+                                {
+                                    "type": "basiceventbinding",
+                                    "reference": {
+                                        "name": "listeners",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "onCellModelSelectionChange",
+                                        "implHandler": [
+                                            "rot.grid.selection_change(model, selected, eOpts);"
+                                        ],
+                                        "name": "selectionchange",
+                                        "scope": "me"
+                                    },
+                                    "name": "onCellModelSelectionChange",
+                                    "designerId": "3a872be3-8028-4ba9-8589-dc6ee1d2fd0d"
+                                }
+                            ]
                         },
                         {
                             "type": "Ext.grid.feature.Grouping",
