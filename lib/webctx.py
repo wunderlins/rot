@@ -30,6 +30,7 @@ urls = (
   '/get_plan', 'webctx.get_plan',
   '/get_meta', 'webctx.get_meta',
   '/get_month', 'webctx.get_month',
+  '/get_emp', 'webctx.get_emp'
 )
 
 from HTMLParser import HTMLParser
@@ -342,20 +343,70 @@ class login(response):
 		
 		return '{"success": false}'
 
+class get_emp(response): 
+	"""
+	rbid, pid, rvon, rbis, kuerzel, anrede, name, vorname, email, combi
+	"""
+	def GET(self):
+		von = web.input(von=None)
+		bis = web.input(bis=None)
+
+		sql = db.text("""SELECT rb.rbid, p.pid, rb.rvon, rb.rbis, p.kuerzel, p.anrede, p.name, p.vorname, p.email, p.combi
+						FROM rotblock rb LEFT JOIN personal p ON (rb.pid = p.pid)
+						WHERE (rvon <= '"""+str(von.von)+"""' and rbis >= '"""+str(von.von)+"""' OR 
+						       rvon <= '"""+str(bis.bis)+"""' and rbis >= '"""+str(bis.bis)+"""')
+						 AND p.ptid = 4""")
+
+		res = db.engine.execute(sql)
+		
+		ret = {"count": 0, "root" : []}
+		
+		for r in res:
+			row = []
+			for e in r:
+				row.append(e)
+			ret["root"].append(row)
+			ret["count"] += 1
+		
+		web.header('Content-Type', 'application/json; charset=utf-8', unique=True)
+		return self.json(ret)
+		
+		
 class get_month(response):
 	def GET(self):
-		ym = web.input(ym=None)
+		ym  = web.input(ym=None)
+		#von = web.input(von=None)
+		#bis = web.input(bis=None)
+		
 		
 		if ym == None:
 			web.header('Content-Type', 'application/json; charset=utf-8', unique=True)
 			return '{"root": [], "count": 0 }'
 		
+		'''
+			sql = db.text("""SELECT r.rid, p.kuerzel, p.ptid,
+							 r.pid, r.bgrad, r.bemerkung2 as comment,
+							 c.fg, c.bg, p.name, p.vorname
+
+				FROM rotation r LEFT JOIN personal p on (r.pid = p.pid)
+								        LEFT JOIN color c on (r.cid = c.cid)
+
+				WHERE 1=1
+					AND r.jm = '"""+str(ym.ym)+"""'
+					AND r.pid IN (SELECT rb.pid as id
+						FROM rotblock rb LEFT JOIN personal p ON (rb.pid = p.pid)
+						WHERE (rvon <= '"""+str(von.von)+"""' and rbis >= '"""+str(von.von)+"""' OR 
+						       rvon <= '"""+str(bis.bis)+"""' and rbis >= '"""+str(bis.bis)+"""')
+						      AND p.ptid = 4)
+
+				ORDER BY p.kuerzel ASC""")
+		'''
 		sql = db.text("""SELECT r.rid, p.kuerzel, p.ptid,
 						 r.pid, r.bgrad, r.bemerkung2 as comment,
 						 c.fg, c.bg, p.name, p.vorname
 
 			FROM rotation r LEFT JOIN personal p on (r.pid = p.pid)
-						          LEFT JOIN color c on (r.cid = c.cid)
+								      LEFT JOIN color c on (r.cid = c.cid)
 
 			WHERE 1=1
 				AND r.jm = '"""+str(ym.ym)+"""'
@@ -364,7 +415,6 @@ class get_month(response):
 					WHERE rvon <= '"""+str(ym.ym)+"""' and rbis >= '"""+str(ym.ym)+"""' and p.ptid = 4)
 
 			ORDER BY p.kuerzel ASC""")
-
 
 		res = db.engine.execute(sql)
 		
@@ -526,7 +576,20 @@ class data:
 				"hideable": False,
 				"menuDisabled": True,
 				"sortable": False,
-				"editor": 'combobox'
+				"editor": {
+					"xtype": "combobox",
+					"store": "monthempStore",
+					"displayField": "kuerzel",
+					"valueField": "pid",
+					"selectOnFocus": True,
+					"selectOnTab": True,
+					"autoSelect": True,
+					"caseSensitive": False,
+					"maxLength": 3,
+					"queryMode": "local",
+					"typeAhead": True
+				},
+				"renderer": "rot.grid.cell_renderer"
 			})
 			
 			ret["metaData"]["fields"].append({
@@ -564,7 +627,15 @@ class data:
 			"hideable": False,
 			"menuDisabled": True,
 			"sortable": False,
-			"editor": 'combobox'
+			"editor": {
+				"xtype": "combobox",
+				"store": "monthempStore",
+				"displayField": "kuerzel",
+				"valueField": "pid",
+				"selectOnFocus": True,
+				"selectOnTab": True
+			},
+			"renderer": "rot.grid.cell_renderer"
 		})
 		ret["metaData"]["fields"].append({
 			"type": 'string', 

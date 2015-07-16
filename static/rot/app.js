@@ -23,12 +23,14 @@ Ext.application({
     models: [
         'rotModel',
         'monthModel',
-        'monthempModel'
+        'monthempModel',
+        'assiModel'
     ],
     stores: [
         'rotStore',
         'monthStore',
-        'monthempStore'
+        'monthempStore',
+        'assiStore'
     ],
     views: [
         'MainView'

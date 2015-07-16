@@ -415,21 +415,6 @@
                                     },
                                     "name": "onViewCellkeydown",
                                     "designerId": "549e643a-fdc1-4c5a-93b1-7accea9cc184"
-                                },
-                                {
-                                    "type": "viewcontrollereventbinding",
-                                    "reference": {
-                                        "name": "listeners",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "fn": "onViewItemUpdate",
-                                        "name": "itemupdate",
-                                        "scope": "me"
-                                    },
-                                    "name": "onViewItemUpdate",
-                                    "designerId": "6049cf65-786c-4f61-a9ca-66477e93d792"
                                 }
                             ]
                         },
@@ -559,16 +544,16 @@
                                     },
                                     "codeClass": null,
                                     "userConfig": {
-                                        "fn": "onCellEditingValidateedit",
+                                        "fn": "onCellEditingEdit",
                                         "implHandler": [
                                             "rot.grid.celledit(editor, context, eOpts);",
                                             "return true;",
                                             ""
                                         ],
-                                        "name": "validateedit",
+                                        "name": "edit",
                                         "scope": "me"
                                     },
-                                    "name": "onCellEditingValidateedit",
+                                    "name": "onCellEditingEdit",
                                     "designerId": "b64d1870-e9d7-490e-8887-c953f66a775a"
                                 }
                             ]

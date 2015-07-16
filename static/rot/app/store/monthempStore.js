@@ -43,10 +43,6 @@ Ext.define('calendar.store.monthempStore', {
                 metachange: {
                     fn: me.onJsonstoreMetaChange,
                     scope: me
-                },
-                beforeload: {
-                    fn: me.onJsonstoreBeforeLoad,
-                    scope: me
                 }
             }
         }, cfg)]);
@@ -70,13 +66,6 @@ Ext.define('calendar.store.monthempStore', {
         store.setModel(rot.model);
         rot.grid.grid.reconfigure(store, meta.columns);
         */
-    },
-
-    onJsonstoreBeforeLoad: function(store, operation, eOpts) {
-        console.log("onBeforeLoad monthempStore");
-
-        //rot.get_meta(store, operation, eOpts);
-        //rot.prepare_load();
     }
 
 });

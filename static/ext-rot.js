@@ -21,6 +21,19 @@ rot.grid.meta = null
 rot.grid.cellwidth = 50
 rot.meta = null
 
+/*
+// hashtable for quick id to kuerzel lookup
+rot.kuerzel = []
+rot.kuerzelupdate = function(store, records, successful, eOpts) {
+	rot.kuerzel = []
+	for (e in records) {
+		rot.kuerzel[records[e].data.pid] = records[e].data.kuerzel
+	}
+	//console.log(rot.kuerzel)
+}
+*/
+
+// FIXME: this event handler migh not be used anymore.
 rot.grid.celledit = function(editor, context, eOpts) {
 	console.log(editor)
 	console.log(context)
@@ -34,7 +47,6 @@ rot.grid.celledit = function(editor, context, eOpts) {
 	// BUG: using tab hangs the editor.
 	
 	rot.log("NewV " + context.colIdx + ":" + context.rowIdx + "> " + context.value)
-	
 }
 
 rot.get = function(selector) {
@@ -95,8 +107,39 @@ rot.get_meta = function(field, newValue, oldValue) {
 		},
 		success: function(response){
 			var text = response.responseText;
-			console.log(Ext.decode(text));
+			//console.log(Ext.decode(text));
 			rot.grid.meta = Ext.decode(text).metaData
+			
+			// convert function stringos into objects
+			for (x in rot.grid.meta.columns) {
+				var e = rot.grid.meta.columns[x]
+				if (!e.columns)
+					continue;
+				//console.log(e.columns)
+				
+				//console.log("Columns")
+				//console.log(e.columns)
+				for (xx in e.columns) {
+					var ee = e.columns[xx]
+					if (!ee.editor)
+						continue
+					//if (!ee.editor.renderer)
+					//	continue
+					//console.log("-- columns")
+					//console.log(ee)
+					
+					//console.log(ee.editor.renderer)
+					if (ee.renderer) {
+						//if ("rot.grid.cell_renderer" == ee.editor.renderer)
+						//	ee.editor.renderer = rot.grid.cell_renderer
+						ee.renderer = eval(ee.renderer)
+					} 
+				}
+				/*
+				*/
+			}
+			
+			
 		}
 	});
 }
@@ -249,6 +292,19 @@ rot.grid.ondblclick = function(tableview, td, cellIndex, record, tr, rowIndex, e
 	rot.get("#dbgy").setValue(cellIndex);
 }
 
+rot.grid.cell_renderer = function(value) {
+	//console.log("rot.grid.cell_renderer")
+	//return "uuu";
+	ret = value;
+	try {
+		ret = rot.personal[value]
+	} catch(err) {
+		ret = value;
+	}
+	
+	return ret
+}
+
 rot.grid.init = function() {
 	
 	// set store for combobox month
@@ -297,6 +353,25 @@ rot.prepare_load = function() {
 	*/
 }
 
+rot.personal = []
+rot.personal_load = function(store, records, successful, eOpts) {
+	rot.personal = []
+	//console.log(records)
+	for (e in records) {
+		rot.personal[records[e].data.pid] = records[e].data.kuerzel
+	}
+}
+
+rot.loadPersonal = function(vonix, bisix) {
+	// get a reference to the data store and proxy
+	var store = Ext.getStore('assiStore');
+	var proxy = store.getProxy();
+	
+	proxy.setExtraParam("von", vonix)
+	proxy.setExtraParam("bis", bisix)
+	store.load()
+}
+
 // double declaration to make architects event handling happy
 rot.loadData = function(button, e, eOpts) {
 	console.log("loadData")
@@ -304,7 +379,7 @@ rot.loadData = function(button, e, eOpts) {
 		von: {y: null, m: null},
 		bis: {y: null, m: null}
 	}
-
+	
 	// get a reference to the data store and proxy
 	var store = Ext.getStore('rotStore');
 	var proxy = store.getProxy();
@@ -328,6 +403,7 @@ rot.loadData = function(button, e, eOpts) {
 	vonix += (vonm < 10) ? "0" + vonm : vonm;
 	bisix += (bism < 10) ? "0" + bism : bism;
 	rot.log("ix: " + vonix + " - " + bisix)
+	rot.loadPersonal(vonix, bisix);
 	
 	if (bisix < vonix) {
 		// TODO: notify user about error

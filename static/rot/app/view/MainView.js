@@ -221,10 +221,6 @@ Ext.define('calendar.view.MainView', {
                             cellkeydown: {
                                 fn: 'onViewCellkeydown',
                                 scope: 'controller'
-                            },
-                            itemupdate: {
-                                fn: 'onViewItemUpdate',
-                                scope: 'controller'
                             }
                         }
                     },
@@ -274,7 +270,7 @@ Ext.define('calendar.view.MainView', {
                         {
                             ptype: 'cellediting',
                             listeners: {
-                                validateedit: 'onCellEditingValidateedit'
+                                edit: 'onCellEditingEdit'
                             }
                         }
                     ]
@@ -371,7 +367,7 @@ Ext.define('calendar.view.MainView', {
         rot.grid.add_row(button, e, eOpts);
     },
 
-    onCellEditingValidateedit: function(editor, context, eOpts) {
+    onCellEditingEdit: function(editor, context, eOpts) {
         rot.grid.celledit(editor, context, eOpts);
         return true;
 

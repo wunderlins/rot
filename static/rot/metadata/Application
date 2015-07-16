@@ -12,13 +12,15 @@
         "models": [
             "rotModel",
             "monthModel",
-            "monthempModel"
+            "monthempModel",
+            "assiModel"
         ],
         "name": "calendar",
         "stores": [
             "rotStore",
             "monthStore",
-            "monthempStore"
+            "monthempStore",
+            "assiStore"
         ],
         "views": [
             "MainView"

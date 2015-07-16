@@ -28,10 +28,6 @@ Ext.define('calendar.view.MainViewViewController', {
         if (e.parentEvent.keyCode == 9)
         e.stopEvent();
         */
-    },
-
-    onViewItemUpdate: function(record, index, node, eOpts) {
-
     }
 
 });
