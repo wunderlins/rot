@@ -30,7 +30,8 @@ urls = (
   '/get_plan', 'webctx.get_plan',
   '/get_meta', 'webctx.get_meta',
   '/get_month', 'webctx.get_month',
-  '/get_emp', 'webctx.get_emp'
+  '/get_emp', 'webctx.get_emp',
+  '/update_rot', 'webctx.update_rot'
 )
 
 from HTMLParser import HTMLParser
@@ -652,6 +653,31 @@ class data:
 				
 		return ret
 
+class update_rot(response):
+	def GET(self):
+		try:
+			id = int(web.input(von=None).id)
+			rid = int(web.input(von=None).rid)
+			ym = web.input(von=None).ym
+			v = int(web.input(von=None).v)
+			
+			rec = {
+				"id": id,
+				"rid": rid,
+				"ym": ym,
+				"v": v
+			}
+			
+		except:
+			return self.json({
+				"success": False,
+				"root": {},
+				"count": 0,
+				"error": "failed to parse input."
+			})
+			
+		return self.json(rec)
+		
 class get_plan(response):
 	def GET(self):
 		

@@ -118,7 +118,17 @@ rot.grid.celledit = function(editor, context, eOpts) {
 	//rot.grid.modified();
 	
 	// TODO: fire off an ajax update event
-	
+
+	Ext.Ajax.request({
+		url: '../../update_rot',
+		method: "get",
+		params: rec,
+		success: function(response){
+			var text = response.responseText;
+			result = Ext.decode(text)
+			console.log(result);
+		}
+	});	
 }
 
 rot.get = function(selector) {
