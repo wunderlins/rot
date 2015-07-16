@@ -21,6 +21,35 @@ rot.grid.meta = null
 rot.grid.cellwidth = 50
 rot.meta = null
 
+rot.grid.modified = function() {
+	
+	var updated = []
+	
+	var store = Ext.getStore('rotStore');
+	for (i in store.data.items) {
+		var it = store.data.items[i]; 
+		if (it.dirty) {
+			//console.log(it.data)
+			// console.log(it.data.rid)
+			//console.log(it.modified)
+			//console.log(it)
+			
+			for (e in it.modified) {
+				rec = {
+					id: it.data.id,
+					rid: it.data.rid,
+					ym: e,
+					v: it.data[e]
+				}
+				
+				updated[updated.length] = rec
+			}
+		}
+	}
+	
+	console.log(updated)
+}
+
 /*
 // hashtable for quick id to kuerzel lookup
 rot.kuerzel = []
@@ -35,18 +64,61 @@ rot.kuerzelupdate = function(store, records, successful, eOpts) {
 
 // FIXME: this event handler migh not be used anymore.
 rot.grid.celledit = function(editor, context, eOpts) {
-	console.log(editor)
-	console.log(context)
-	console.log(eOpts)
+	//console.log(editor)
+	//console.log(context)
+	//console.log(eOpts)
 	
 	// aknowledge change
+	//console.log(context.record)
+	//console.log(context.record.modified)
+	ym = ""
+	for (e in context.record.modified) {
+		ym = e;
+		break;
+	}
+	
+	rec = {
+		id: context.record.data.id,
+		rid: context.record.data.rid,
+		ym: ym,
+		v: context.record.data[ym]
+	}
+	//console.log(rec)
+	
+	// now remove the first element from modified
+	mod = {}
+	first = true;
+	for (e in context.record.modified) {
+		if (first) {
+			first = false;
+			continue;
+		}
+		
+		mod[e] = context.record.modified[e]
+	}
+	
+	//context.record.modified = mod
+	
+	
+	//context.record.modified.shift()
+	/*
+	delete context.record.modified[rec.ym]
+	
+	console.log(context.record)
+	*/
+	
 	//context.record.data[context.field] = context.value;
+	console.log(context.record)
 	//console.log(context.record.data)
 	//Ext.getStore('rotStore').sync()
 	
 	// BUG: using tab hangs the editor.
 	
 	rot.log("NewV " + context.colIdx + ":" + context.rowIdx + "> " + context.value)
+	//rot.grid.modified();
+	
+	// TODO: fire off an ajax update event
+	
 }
 
 rot.get = function(selector) {

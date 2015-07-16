@@ -28,6 +28,10 @@ Ext.define('calendar.model.rotModel', {
             name: 'id'
         },
         {
+            type: 'int',
+            name: 'rid'
+        },
+        {
             type: 'string',
             mapping: 1,
             name: 'name'

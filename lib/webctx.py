@@ -487,11 +487,12 @@ class data:
 			"error": None,
 			"fields" : [
 				{"type": 'int', "mapping": 0, "name": 'id'},
-				{"type": 'string', "mapping": 1, "name": "group_sort"},
-				{"type": 'string', "mapping": 2, "name": "rot_group"},
-				{"type": 'string', "mapping": 3, "name": 'name'},
-				{"type": 'string', "mapping": 4, "name": 'description'},
-				{"type": 'string', "mapping": 5, "name": 'srt'},
+				{"type": 'int', "mapping": 1, "name": 'rid'},
+				{"type": 'string', "mapping": 2, "name": "group_sort"},
+				{"type": 'string', "mapping": 3, "name": "rot_group"},
+				{"type": 'string', "mapping": 4, "name": 'name'},
+				{"type": 'string', "mapping": 5, "name": 'description'},
+				{"type": 'string', "mapping": 6, "name": 'srt'},
 			],
 			"columns": [
 				{
@@ -594,7 +595,7 @@ class data:
 			
 			ret["metaData"]["fields"].append({
 				"type": 'string', 
-				"mapping": months+6, 
+				"mapping": months+7, 
 				"name": n
 			})
 			
@@ -644,7 +645,7 @@ class data:
 		})
 		ret["metaData"]["fields"].append({
 			"type": 'string', 
-			"mapping": months+6, 
+			"mapping": months+7, 
 			"name": n
 		})
 		ret["metaData"]["months"] = months
@@ -810,9 +811,11 @@ class get_plan(response):
 		
 		ret["root"] = []
 		ret["metaData"]["maxid"] = 0;
+		rid = 1;
 		for r in res:
 			#web.debug(r)
-			row = []
+			row = [rid]
+			rid += 1
 			if r[0] > ret["metaData"]["maxid"]:
 				ret["metaData"]["maxid"] = r[0]
 			# add metadata
