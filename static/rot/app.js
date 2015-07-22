@@ -21,15 +21,15 @@ Ext.Loader.setConfig({
 
 Ext.application({
     models: [
+        'monthempModel',
         'rotModel',
         'monthModel',
-        'monthempModel',
         'assiModel'
     ],
     stores: [
+        'monthempStore',
         'rotStore',
         'monthStore',
-        'monthempStore',
         'assiStore'
     ],
     views: [
@@ -42,7 +42,6 @@ Ext.application({
 
     launch: function() {
         Ext.create('calendar.view.MainView');
-
         rot.init();
     }
 

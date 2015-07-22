@@ -584,6 +584,24 @@
                                     },
                                     "name": "onCellEditingEdit",
                                     "designerId": "b64d1870-e9d7-490e-8887-c953f66a775a"
+                                },
+                                {
+                                    "type": "basiceventbinding",
+                                    "reference": {
+                                        "name": "listeners",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "onCellEditingBeforeEdit",
+                                        "implHandler": [
+                                            "rot.grid.beforecelledit(editor, context, eOpts);"
+                                        ],
+                                        "name": "beforeedit",
+                                        "scope": "me"
+                                    },
+                                    "name": "onCellEditingBeforeEdit",
+                                    "designerId": "f47d6c70-d0bc-473a-b55f-7c9a3821a3e9"
                                 }
                             ]
                         }
@@ -636,6 +654,161 @@
             "designerId": "42591753-568e-44d8-9c7c-937e4e0cd8e7",
             "cn": [
                 {
+                    "type": "Ext.grid.Panel",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "autoLoad": true,
+                        "autoScroll": true,
+                        "designer|displayName": "gridVerfuegbar",
+                        "itemId": "gridVerfuegbar",
+                        "scroll": null,
+                        "store": "monthempStore",
+                        "title": "Verfügbar",
+                        "titleCollapse": false
+                    },
+                    "name": "MyGridPanel1",
+                    "designerId": "2322d1fc-0ca4-4b2b-a29f-d7847e76af4d",
+                    "cn": [
+                        {
+                            "type": "Ext.grid.View",
+                            "reference": {
+                                "name": "viewConfig",
+                                "type": "object"
+                            },
+                            "codeClass": null,
+                            "name": "MyGridView1",
+                            "configAlternates": {
+                                "flex": "number"
+                            },
+                            "designerId": "92896d2c-89da-4100-8036-44199add5826"
+                        },
+                        {
+                            "type": "Ext.grid.column.Column",
+                            "reference": {
+                                "name": "columns",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "dataIndex": "kuerzel",
+                                "minWidth": 250,
+                                "text": "Name",
+                                "width": null
+                            },
+                            "name": "MyColumn4",
+                            "designerId": "36e635e8-89af-478c-aed3-299c9619bc6c",
+                            "cn": [
+                                {
+                                    "type": "fixedfunction",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "designer|params": [
+                                            "value",
+                                            "metaData",
+                                            "record",
+                                            "rowIndex",
+                                            "colIndex",
+                                            "store",
+                                            "view"
+                                        ],
+                                        "fn": "renderer",
+                                        "implHandler": [
+                                            "// metaData.tdAttr = ' data-qtip=\"' + record.data.vorname + \" \" + record.data.name + '\"';",
+                                            "return \"<b>\" + value + \"</b> \" + record.data.vorname + \" \" + record.data.name;"
+                                        ]
+                                    },
+                                    "name": "renderer",
+                                    "designerId": "8cb2fb4e-cb65-4f93-9d9b-8a6cb803dd3c"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.grid.column.Column",
+                            "reference": {
+                                "name": "columns",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "align": "right",
+                                "dataIndex": "bgrad",
+                                "flex": null,
+                                "text": "%",
+                                "width": 80
+                            },
+                            "name": "MyColumn7",
+                            "designerId": "4e593d0e-a916-475b-9457-d8148a4bbdd8",
+                            "cn": [
+                                {
+                                    "type": "fixedfunction",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "designer|params": [
+                                            "value",
+                                            "metaData",
+                                            "record",
+                                            "rowIndex",
+                                            "colIndex",
+                                            "store",
+                                            "view"
+                                        ],
+                                        "fn": "renderer",
+                                        "implHandler": [
+                                            "if (record.data.bg != '#FFFFFF')",
+                                            "    metaData.tdStyle = \" background-color: \"+record.data.bg+\";\";",
+                                            "metaData.style = \" color: \"+record.data.fg+\";\";",
+                                            "metaData.tdAttr = ' data-qtip=\"' + record.data.vorname + \" \" + record.data.name + '\"';",
+                                            "",
+                                            "//console.log(metaData);",
+                                            "if (!value) return \"<i>\" + record.data.comment + \"</i>\";",
+                                            "return parseInt(value*100);"
+                                        ]
+                                    },
+                                    "name": "renderer",
+                                    "designerId": "b12697e3-a0c3-429e-9600-a47ef8f3b01a"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.grid.column.Column",
+                            "reference": {
+                                "name": "columns",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "dataIndex": "comment",
+                                "hidden": true,
+                                "text": "Comment"
+                            },
+                            "name": "MyColumn8",
+                            "designerId": "7d2df265-1635-4802-a2e8-b60d4d49ccaf"
+                        },
+                        {
+                            "type": "Ext.tab.Tab",
+                            "reference": {
+                                "name": "tabConfig",
+                                "type": "object"
+                            },
+                            "codeClass": null,
+                            "name": "TabConfig2",
+                            "designerId": "14506a48-4711-4df5-833b-828264914538"
+                        }
+                    ]
+                },
+                {
                     "type": "Ext.panel.Panel",
                     "reference": {
                         "name": "items",
@@ -643,8 +816,8 @@
                     },
                     "codeClass": null,
                     "userConfig": {
-                        "autoScroll": true,
-                        "title": "Verfügbar",
+                        "autoScroll": null,
+                        "title": "Misc",
                         "width": null
                     },
                     "name": "MyPanel",
@@ -659,146 +832,6 @@
                             "codeClass": null,
                             "name": "TabConfig",
                             "designerId": "dd610343-cc8d-4de9-bfef-dc985f095527"
-                        },
-                        {
-                            "type": "Ext.grid.Panel",
-                            "reference": {
-                                "name": "items",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "autoLoad": true,
-                                "designer|displayName": "gridVerfuegbar",
-                                "itemId": "gridVerfuegbar",
-                                "store": "monthempStore",
-                                "title": null,
-                                "titleCollapse": false
-                            },
-                            "name": "MyGridPanel1",
-                            "designerId": "2322d1fc-0ca4-4b2b-a29f-d7847e76af4d",
-                            "cn": [
-                                {
-                                    "type": "Ext.grid.View",
-                                    "reference": {
-                                        "name": "viewConfig",
-                                        "type": "object"
-                                    },
-                                    "codeClass": null,
-                                    "name": "MyGridView1",
-                                    "designerId": "92896d2c-89da-4100-8036-44199add5826"
-                                },
-                                {
-                                    "type": "Ext.grid.column.Column",
-                                    "reference": {
-                                        "name": "columns",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "dataIndex": "kuerzel",
-                                        "minWidth": 220,
-                                        "text": "Name",
-                                        "width": null
-                                    },
-                                    "name": "MyColumn4",
-                                    "designerId": "36e635e8-89af-478c-aed3-299c9619bc6c",
-                                    "cn": [
-                                        {
-                                            "type": "fixedfunction",
-                                            "reference": {
-                                                "name": "items",
-                                                "type": "array"
-                                            },
-                                            "codeClass": null,
-                                            "userConfig": {
-                                                "designer|params": [
-                                                    "value",
-                                                    "metaData",
-                                                    "record",
-                                                    "rowIndex",
-                                                    "colIndex",
-                                                    "store",
-                                                    "view"
-                                                ],
-                                                "fn": "renderer",
-                                                "implHandler": [
-                                                    "// metaData.tdAttr = ' data-qtip=\"' + record.data.vorname + \" \" + record.data.name + '\"';",
-                                                    "return \"<b>\" + value + \"</b> \" + record.data.vorname + \" \" + record.data.name;"
-                                                ]
-                                            },
-                                            "name": "renderer",
-                                            "designerId": "8cb2fb4e-cb65-4f93-9d9b-8a6cb803dd3c"
-                                        }
-                                    ]
-                                },
-                                {
-                                    "type": "Ext.grid.column.Column",
-                                    "reference": {
-                                        "name": "columns",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "align": "right",
-                                        "dataIndex": "bgrad",
-                                        "flex": null,
-                                        "text": "%",
-                                        "width": 80
-                                    },
-                                    "name": "MyColumn7",
-                                    "designerId": "4e593d0e-a916-475b-9457-d8148a4bbdd8",
-                                    "cn": [
-                                        {
-                                            "type": "fixedfunction",
-                                            "reference": {
-                                                "name": "items",
-                                                "type": "array"
-                                            },
-                                            "codeClass": null,
-                                            "userConfig": {
-                                                "designer|params": [
-                                                    "value",
-                                                    "metaData",
-                                                    "record",
-                                                    "rowIndex",
-                                                    "colIndex",
-                                                    "store",
-                                                    "view"
-                                                ],
-                                                "fn": "renderer",
-                                                "implHandler": [
-                                                    "if (record.data.bg != '#FFFFFF')",
-                                                    "    metaData.tdStyle = \" background-color: \"+record.data.bg+\";\";",
-                                                    "metaData.style = \" color: \"+record.data.fg+\";\";",
-                                                    "metaData.tdAttr = ' data-qtip=\"' + record.data.vorname + \" \" + record.data.name + '\"';",
-                                                    "",
-                                                    "//console.log(metaData);",
-                                                    "if (!value) return \"<i>\" + record.data.comment + \"</i>\";",
-                                                    "return parseInt(value*100);"
-                                                ]
-                                            },
-                                            "name": "renderer",
-                                            "designerId": "b12697e3-a0c3-429e-9600-a47ef8f3b01a"
-                                        }
-                                    ]
-                                },
-                                {
-                                    "type": "Ext.grid.column.Column",
-                                    "reference": {
-                                        "name": "columns",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "dataIndex": "comment",
-                                        "hidden": true,
-                                        "text": "Comment"
-                                    },
-                                    "name": "MyColumn8",
-                                    "designerId": "7d2df265-1635-4802-a2e8-b60d4d49ccaf"
-                                }
-                            ]
                         }
                     ]
                 },

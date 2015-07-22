@@ -279,7 +279,8 @@ Ext.define('calendar.view.MainView', {
                             ptype: 'cellediting',
                             triggerEvent: 'cellclick',
                             listeners: {
-                                edit: 'onCellEditingEdit'
+                                edit: 'onCellEditingEdit',
+                                beforeedit: 'onCellEditingBeforeEdit'
                             }
                         }
                     ]
@@ -306,53 +307,52 @@ Ext.define('calendar.view.MainView', {
             activeTab: 0,
             items: [
                 {
-                    xtype: 'panel',
+                    xtype: 'gridpanel',
                     autoScroll: true,
+                    itemId: 'gridVerfuegbar',
                     title: 'Verfügbar',
-                    items: [
+                    titleCollapse: false,
+                    autoLoad: true,
+                    store: 'monthempStore',
+                    columns: [
                         {
-                            xtype: 'gridpanel',
-                            itemId: 'gridVerfuegbar',
-                            titleCollapse: false,
-                            autoLoad: true,
-                            store: 'monthempStore',
-                            columns: [
-                                {
-                                    xtype: 'gridcolumn',
-                                    renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                        // metaData.tdAttr = ' data-qtip="' + record.data.vorname + " " + record.data.name + '"';
-                                        return "<b>" + value + "</b> " + record.data.vorname + " " + record.data.name;
-                                    },
-                                    minWidth: 220,
-                                    dataIndex: 'kuerzel',
-                                    text: 'Name'
-                                },
-                                {
-                                    xtype: 'gridcolumn',
-                                    renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                        if (record.data.bg != '#FFFFFF')
-                                        metaData.tdStyle = " background-color: "+record.data.bg+";";
-                                        metaData.style = " color: "+record.data.fg+";";
-                                        metaData.tdAttr = ' data-qtip="' + record.data.vorname + " " + record.data.name + '"';
+                            xtype: 'gridcolumn',
+                            renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                // metaData.tdAttr = ' data-qtip="' + record.data.vorname + " " + record.data.name + '"';
+                                return "<b>" + value + "</b> " + record.data.vorname + " " + record.data.name;
+                            },
+                            minWidth: 250,
+                            dataIndex: 'kuerzel',
+                            text: 'Name'
+                        },
+                        {
+                            xtype: 'gridcolumn',
+                            renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                if (record.data.bg != '#FFFFFF')
+                                metaData.tdStyle = " background-color: "+record.data.bg+";";
+                                metaData.style = " color: "+record.data.fg+";";
+                                metaData.tdAttr = ' data-qtip="' + record.data.vorname + " " + record.data.name + '"';
 
-                                        //console.log(metaData);
-                                        if (!value) return "<i>" + record.data.comment + "</i>";
-                                        return parseInt(value*100);
-                                    },
-                                    width: 80,
-                                    align: 'right',
-                                    dataIndex: 'bgrad',
-                                    text: '%'
-                                },
-                                {
-                                    xtype: 'gridcolumn',
-                                    hidden: true,
-                                    dataIndex: 'comment',
-                                    text: 'Comment'
-                                }
-                            ]
+                                //console.log(metaData);
+                                if (!value) return "<i>" + record.data.comment + "</i>";
+                                return parseInt(value*100);
+                            },
+                            width: 80,
+                            align: 'right',
+                            dataIndex: 'bgrad',
+                            text: '%'
+                        },
+                        {
+                            xtype: 'gridcolumn',
+                            hidden: true,
+                            dataIndex: 'comment',
+                            text: 'Comment'
                         }
                     ]
+                },
+                {
+                    xtype: 'panel',
+                    title: 'Misc'
                 },
                 {
                     xtype: 'panel',
@@ -385,6 +385,10 @@ Ext.define('calendar.view.MainView', {
         rot.grid.celledit(editor, context, eOpts);
         //return true;
 
+    },
+
+    onCellEditingBeforeEdit: function(editor, context, eOpts) {
+        rot.grid.beforecelledit(editor, context, eOpts);
     }
 
 });

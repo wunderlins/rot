@@ -74,6 +74,10 @@ rot.grid.beforeEdit = function(editor, context, eOpts) {
 	}
 }
 
+rot.grid.beforecelledit = function(editor, context, eOpts) {
+	return true;
+}
+
 // FIXME: this event handler migh not be used anymore.
 rot.grid.celledit = function(editor, context, eOpts) {
 	//console.log("rot.grid.celledit")

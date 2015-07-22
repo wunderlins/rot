@@ -851,7 +851,7 @@ class get_plan(response):
 			# add cel lvalues
 			c = 0
 			while c < ret["metaData"]["months"]:
-				row.append("---")
+				row.append("")
 				c += 1
 			
 			ret["root"].append(row)
