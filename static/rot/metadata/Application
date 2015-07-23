@@ -1,0 +1,49 @@
+{
+    "type": "Ext.app.Application",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "controllers": [
+            "rotController"
+        ],
+        "models": [
+            "monthempModel",
+            "rotModel",
+            "monthModel",
+            "assiModel"
+        ],
+        "name": "calendar",
+        "stores": [
+            "monthempStore",
+            "rotStore",
+            "monthStore",
+            "assiStore"
+        ],
+        "views": [
+            "MainView"
+        ]
+    },
+    "name": "Application",
+    "designerId": "application",
+    "cn": [
+        {
+            "type": "fixedfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "launch",
+                "implHandler": [
+                    "rot.init();"
+                ]
+            },
+            "name": "launch",
+            "designerId": "e6c414ea-c8a0-4933-9a4a-5491f7973c3b"
+        }
+    ]
+}

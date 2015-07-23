@@ -1,0 +1,24 @@
+./static/ext-rot.js:137:// FIXME: this event handler migh not be used anymore.
+./static/ext-rot.js:241:		// TODO: notify user about error
+./static/ext-rot.js:253:		// TODO: notify user about error
+./static/ext-rot.js:637:		// TODO: notify user about error
+./static/ext-rot.js:650:		// TODO: notify user about error
+./template/index.html:5:TODO:
+./bin/changelog.py:78:    # Collect the files for this commit. FIXME: Still need to add +/- to files
+./bin/status.sh:15:#	echo "TODO status.sh dev"
+./bin/status.sh:19:#	echo "TODO: status.sh uwsgi"
+./lib/webctx.py:52:# FIXME: add a separate uid, next to pid
+./lib/webctx.py:338:				pass # FIXME do we have to catch unknown pids on login or just ignore ?
+./lib/webctx.py:1053:	# TODO: should move this to the db module
+./lib/webctx.py:1208:				# FIXME: remove tags
+./lib/webctx.py:1455:		# FIXME: handle errors
+./lib/webctx.py:1512:			# FIXME: handle DB Error
+./lib/webctx.py:1550:			# FIXME: handle DB Error
+./lib/webctx.py:1577:			# FIXME: handle DB Error
+./lib/webctx.py:1587:			# FIXME: handle DB Error
+./lib/webctx.py:1596:			# FIXME: handle DB Error
+./lib/webctx.py:1604:			# FIXME: handle DB Error
+./lib/webctx.py:1751:			# FIXME: handle DB Error
+./lib/webctx.py:1763:			# FIXME: handle DB Error
+./TODO:45:- DONE FIXME: add try catch to all commits in webctx
+./TODO:47:- FIXME: image upload from phone failed after about 10% uploading
