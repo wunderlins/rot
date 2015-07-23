@@ -22,7 +22,7 @@ rot.emp = {}
 rot.emp.viewRowdblclick = function(tableview, record, tr, rowIndex, e, eOpts) {
 	
 	// selected employee
-	console.log(record.data);
+	//console.log(record.data);
 	
 	// selected grid cell
 	var selection = rot.grid.grid.getSelection()[0]
@@ -39,7 +39,7 @@ rot.emp.viewRowdblclick = function(tableview, record, tr, rowIndex, e, eOpts) {
 		kuerzel: record.data.kuerzel,
 		ym: rot.month_str(rot.grid.selected_date)
 	}
-	console.log(rec);
+	//console.log(rec);
 	
 	// submit data
 	Ext.Ajax.request({

@@ -951,15 +951,34 @@ class get_plan(response):
 		# loop over all assignements, merge them with grid data
 		for r in res:
 			# r.rid, p.kuerzel, r.jm, r.pid, r.bgrad, r.bemerkung2 as comment, r.rtyp
-			rot_ix = rot_lookup[r[6]][0] # the row index in the prefilled matrix
 			cell_ix = cell_lookup[r[2]]
-			# FIXME: make sure that multiple assignements to rid can exists for the same month and rid 
-				# add empty row if so
-				# make sure the sort value is correct
+			rot_ix = rot_lookup[r[6]] # the row index in the prefilled matrix
 			
-			ret["root"][rot_ix][cell_ix] = r[1]
-		
-		
+			# check if cell in rot is already fileld, if so, add a cloned empty cell
+			done = False
+			for i in rot_ix:
+				if ret["root"][i][cell_ix] == "":
+					ret["root"][i][cell_ix] = r[1]
+					done = True
+					break
+			
+			# if we could not fill an existing field, create a new row and add the 
+			# cell. CAVE: make sure the sort value is correct
+			if done != True:
+				new_row = list(ret["root"][rot_ix[len(rot_ix)-1]]) # copy, not reference
+				new_row[0] = len(ret["root"])
+				#new_row[1] = ret["metaData"]["maxid"]
+				web.debug(new_row)
+				new_sort = int(new_row[ret["metaData"]["padding"] - 1]) + 1
+				new_row[ret["metaData"]["padding"] - 1] = unicode(new_sort)
+				# now empty all data fields
+				for i in range(ret["metaData"]["padding"], \
+					             ret["metaData"]["padding"]+ret["metaData"]["months"]):
+					new_row[i] = ""
+			
+				new_row[cell_ix] = r[1]
+				ret["root"].append(new_row)
+				rot_lookup[r[6]].append(len(ret["root"])-1)
 		
 		return self.json(ret)
 		#return json.dumps(ret, encoding="utf8")
