@@ -34,6 +34,7 @@ rot.emp.viewRowdblclick = function(tableview, record, tr, rowIndex, e, eOpts) {
 		y: rot.grid.selected_date.y,
 		m: rot.grid.selected_date.m,
 		rid: selection.data.rid,
+		rbid: record.data.rbid,
 		id: selection.data.id,
 		kuerzel: record.data.kuerzel,
 		ym: rot.month_str(rot.grid.selected_date)

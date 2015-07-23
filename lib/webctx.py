@@ -361,7 +361,7 @@ class get_emp(response):
 		res = db.engine.execute(sql)
 		
 		ret = {"count": 0, "root" : []}
-		ret["root"].append([None, "", 0, 0, 0, "", 0, 0, "", ""]) # empty record
+		ret["root"].append([0, "", 0, 0, 0, "", 0, 0, "Leer", ""]) # empty record
 		
 		for r in res:
 			row = [
@@ -408,7 +408,7 @@ class get_month(response):
 		'''
 		sql = db.text("""SELECT r.rid, p.kuerzel, p.ptid,
 						 r.pid, r.bgrad, r.bemerkung2 as comment,
-						 c.fg, c.bg, p.name, p.vorname
+						 c.fg, c.bg, p.name, p.vorname, r.rbid
 
 			FROM rotation r LEFT JOIN personal p on (r.pid = p.pid)
 								      LEFT JOIN color c on (r.cid = c.cid)
@@ -424,7 +424,7 @@ class get_month(response):
 		res = db.engine.execute(sql)
 		
 		ret = {"count": 0, "root" : []}
-		ret["root"].append([None, "", 0, 0, 0, "", 0, 0, "", ""])
+		ret["root"].append([0, " ", 0, 0, 0, "", 0, 0, "Leer", " "])
 		
 		for r in res:
 			row = []
@@ -657,6 +657,7 @@ class data:
 			#},
 			"renderer": "rot.grid.cell_renderer"
 		})
+		
 		ret["metaData"]["fields"].append({
 			"type": 'string', 
 			"mapping": months+7, 
@@ -672,6 +673,7 @@ class update_rot(response):
 			id = int(web.input(von=None).id)
 			pid = int(web.input(von=None).pid)
 			rid = int(web.input(von=None).rid)
+			rbid = int(web.input(von=None).rbid)
 			y = int(web.input(von=None).y)
 			m = int(web.input(von=None).m)
 			kuerzel = web.input(von=None).kuerzel
@@ -681,12 +683,13 @@ class update_rot(response):
 				"id": id,
 				"pid": pid,
 				"rid": rid,
+				"rbid": rbid,
 				"m": m,
 				"y": y,
 				"kuerzel": kuerzel,
 				"ym": ym
 			}
-			
+		
 		except:
 			return self.json({
 				"success": False,
@@ -694,7 +697,25 @@ class update_rot(response):
 				"count": 0,
 				"error": "failed to parse input."
 			})
-			
+		
+		try:
+			# update rotation with rot id
+			rot = db.session.query(db.Rotation)\
+				              .filter(db.Rotation.jm == rec["ym"], \
+				                      db.Rotation.pid == rec["pid"], \
+				                      db.Rotation.rbid == rec["rbid"])
+		
+			rot[0].rtyp = rec["rid"]
+			db.session.flush()
+			web.debug(rot[0].rtyp)
+		except:
+			return self.json({
+				"success": False,
+				"root": {},
+				"count": 0,
+				"error": "failed to update database."
+			})
+		
 		return self.json({
 			"success": True,
 			"root": rec,

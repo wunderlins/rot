@@ -62,6 +62,10 @@ Ext.define('calendar.model.monthempModel', {
         {
             type: 'string',
             name: 'vorname'
+        },
+        {
+            type: 'int',
+            name: 'rbid'
         }
     ]
 });
