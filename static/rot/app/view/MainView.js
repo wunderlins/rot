@@ -31,7 +31,9 @@ Ext.define('calendar.view.MainView', {
         'Ext.XTemplate',
         'Ext.grid.plugin.CellEditing',
         'Ext.tab.Panel',
-        'Ext.tab.Tab'
+        'Ext.grid.filters.filter.String',
+        'Ext.tab.Tab',
+        'Ext.grid.filters.Filters'
     ],
 
     controller: 'mainview',
@@ -314,6 +316,12 @@ Ext.define('calendar.view.MainView', {
                     titleCollapse: false,
                     autoLoad: true,
                     store: 'monthempStore',
+                    viewConfig: {
+                        itemId: 'empView',
+                        listeners: {
+                            rowdblclick: 'onEmpViewRowDblClick'
+                        }
+                    },
                     columns: [
                         {
                             xtype: 'gridcolumn',
@@ -323,7 +331,10 @@ Ext.define('calendar.view.MainView', {
                             },
                             minWidth: 250,
                             dataIndex: 'kuerzel',
-                            text: 'Name'
+                            text: 'Name',
+                            filter: {
+                                type: 'string'
+                            }
                         },
                         {
                             xtype: 'gridcolumn',
@@ -347,6 +358,24 @@ Ext.define('calendar.view.MainView', {
                             hidden: true,
                             dataIndex: 'comment',
                             text: 'Comment'
+                        }
+                    ],
+                    plugins: [
+                        {
+                            ptype: 'gridfilters'
+                        }
+                    ],
+                    dockedItems: [
+                        {
+                            xtype: 'textfield',
+                            dock: 'top',
+                            itemId: 'monthEmpFilter',
+                            width: 100,
+                            allowOnlyWhitespace: false,
+                            blankText: 'Filter ...',
+                            listeners: {
+                                change: 'onMonthEmpFilterChange'
+                            }
                         }
                     ]
                 },
@@ -389,6 +418,14 @@ Ext.define('calendar.view.MainView', {
 
     onCellEditingBeforeEdit: function(editor, context, eOpts) {
         rot.grid.beforecelledit(editor, context, eOpts);
+    },
+
+    onEmpViewRowDblClick: function(tableview, record, tr, rowIndex, e, eOpts) {
+        rot.emp.viewRowdblclick(tableview, record, tr, rowIndex, e, eOpts);
+    },
+
+    onMonthEmpFilterChange: function(field, newValue, oldValue, eOpts) {
+        rot.monthfilterChange(field, newValue, oldValue, eOpts);
     }
 
 });

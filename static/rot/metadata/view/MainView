@@ -680,11 +680,34 @@
                                 "type": "object"
                             },
                             "codeClass": null,
+                            "userConfig": {
+                                "itemId": "empView"
+                            },
                             "name": "MyGridView1",
                             "configAlternates": {
                                 "flex": "number"
                             },
-                            "designerId": "92896d2c-89da-4100-8036-44199add5826"
+                            "designerId": "92896d2c-89da-4100-8036-44199add5826",
+                            "cn": [
+                                {
+                                    "type": "basiceventbinding",
+                                    "reference": {
+                                        "name": "listeners",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "onEmpViewRowDblClick",
+                                        "implHandler": [
+                                            "rot.emp.viewRowdblclick(tableview, record, tr, rowIndex, e, eOpts);"
+                                        ],
+                                        "name": "rowdblclick",
+                                        "scope": "me"
+                                    },
+                                    "name": "onEmpViewRowDblClick",
+                                    "designerId": "e93510c1-5239-44d8-979f-5664d03fe118"
+                                }
+                            ]
                         },
                         {
                             "type": "Ext.grid.column.Column",
@@ -727,6 +750,16 @@
                                     },
                                     "name": "renderer",
                                     "designerId": "8cb2fb4e-cb65-4f93-9d9b-8a6cb803dd3c"
+                                },
+                                {
+                                    "type": "Ext.grid.filters.filter.String",
+                                    "reference": {
+                                        "name": "filter",
+                                        "type": "object"
+                                    },
+                                    "codeClass": null,
+                                    "name": "MyStringFilter",
+                                    "designerId": "58aef26c-2fe2-4d4c-9278-6128a9a8cc08"
                                 }
                             ]
                         },
@@ -805,6 +838,54 @@
                             "codeClass": null,
                             "name": "TabConfig2",
                             "designerId": "14506a48-4711-4df5-833b-828264914538"
+                        },
+                        {
+                            "type": "Ext.grid.filters.Filters",
+                            "reference": {
+                                "name": "plugins",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "name": "MyGridFiltersPlugin",
+                            "designerId": "c2b5f7a9-fb3b-48f4-84a7-b8479bb29e5a"
+                        },
+                        {
+                            "type": "Ext.form.field.Text",
+                            "reference": {
+                                "name": "dockedItems",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "allowOnlyWhitespace": false,
+                                "blankText": "Filter ...",
+                                "dock": "top",
+                                "fieldLabel": null,
+                                "itemId": "monthEmpFilter",
+                                "width": 100
+                            },
+                            "name": "MyTextField2",
+                            "designerId": "4563008b-1efc-410a-97be-037d484af3b5",
+                            "cn": [
+                                {
+                                    "type": "basiceventbinding",
+                                    "reference": {
+                                        "name": "listeners",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "onMonthEmpFilterChange",
+                                        "implHandler": [
+                                            "rot.monthfilterChange(field, newValue, oldValue, eOpts);"
+                                        ],
+                                        "name": "change",
+                                        "scope": "me"
+                                    },
+                                    "name": "onMonthEmpFilterChange",
+                                    "designerId": "9ca1d11b-3db5-4862-becb-ed991fddb05e"
+                                }
+                            ]
                         }
                     ]
                 },

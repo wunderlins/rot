@@ -17,6 +17,58 @@ rot.dbgtpl = function(o) {
 }
 
 rot.grid = {}
+rot.emp = {}
+
+rot.emp.viewRowdblclick = function(tableview, record, tr, rowIndex, e, eOpts) {
+	
+	// selected employee
+	console.log(record.data);
+	
+	// selected grid cell
+	var selection = rot.grid.grid.getSelection()[0]
+	//rot.grid.cellIndex
+	
+	// generate result
+	var rec = {
+		pid: record.data.pid,
+		y: rot.grid.selected_date.y,
+		m: rot.grid.selected_date.m,
+		rid: selection.data.rid,
+		id: selection.data.id,
+		kuerzel: record.data.kuerzel,
+		ym: rot.month_str(rot.grid.selected_date)
+	}
+	console.log(rec);
+	
+	// submit data
+	Ext.Ajax.request({
+		url: '../../update_rot',
+		method: "get",
+		params: rec,
+		success: function(response){
+			var text = response.responseText;
+			rec = Ext.decode(text)
+			// console.log(result);
+			
+			if (!rec.success) {
+				alert(rec.error)
+				return true;
+			}
+			
+			rot.grid.updateView(rec);
+			
+		}
+	});	
+}
+
+rot.grid.updateView = function(rec) {
+	var store = rot.grid.grid.getStore();
+	var record = store.findRecord("id", rec.root.id)
+	record.set(rec.root.ym, rec.root.kuerzel, {commit: true})
+	//store.commitChanges()
+}
+
+
 rot.grid.meta = null
 rot.grid.cellwidth = 50
 rot.meta = null
@@ -74,8 +126,11 @@ rot.grid.beforeEdit = function(editor, context, eOpts) {
 	}
 }
 
+rot.grid.lastvalue = null;
 rot.grid.beforecelledit = function(editor, context, eOpts) {
-	return true;
+	rot.grid.lastvalue = context.value
+	context.column.getEditor().setValue("", true)
+	//return true;
 }
 
 // FIXME: this event handler migh not be used anymore.
@@ -85,14 +140,22 @@ rot.grid.celledit = function(editor, context, eOpts) {
 	//console.log(context)
 	//console.log(eOpts)
 	
+	/*
+	if (rot.grid.lastvalue && context.value == 0) {
+		editor.cancelEdit()
+		return true;
+	}
+	*/
+	
 	// aknowledge change
 	//console.log(context.record)
 	//console.log(context.record.modified)
 	ym = ""
 	for (e in context.record.modified) {
 		ym = e;
-		break;
+		// break;
 	}
+	
 	
 	rec = {
 		id: context.record.data.id,
@@ -117,7 +180,7 @@ rot.grid.celledit = function(editor, context, eOpts) {
 	
 	rot.log("NewV " + context.colIdx + ":" + context.rowIdx + "> " + context.value)
 	
-	// TODO: fire off an ajax update event
+	// fire off an ajax update event
 	Ext.Ajax.request({
 		url: '../../update_rot',
 		method: "get",
@@ -221,8 +284,12 @@ rot.get_meta = function(field, newValue, oldValue) {
 				//console.log(e.columns)
 				for (xx in e.columns) {
 					var ee = e.columns[xx]
+					
+					/*
 					if (!ee.editor)
 						continue
+					*/
+					
 					//if (!ee.editor.renderer)
 					//	continue
 					//console.log("-- columns")
@@ -252,6 +319,21 @@ rot.grid.selection = {
 	von: {y: null, m: null},
 	bis: {y: null, m: null}
 };
+
+rot.monthfilterChange = function(field, newValue, oldValue, eOpts) {
+	var store = Ext.getStore('monthempStore');
+	store.clearFilter(false);
+	
+	if (newValue != "") {
+		store.clearFilter(true);
+		store.addFilter({
+			anyMatch: true,
+			operator: 'like',
+			property: 'name',
+			value: newValue
+		})
+	}
+}
 
 rot.add_month = function(months, ym) {
 	ret = Object.clone(ym)
@@ -354,6 +436,7 @@ rot.grid.add_row = function(button, e, eOpts) {
 	store.sort("srt", "ASC")
 }
 
+rot.grid.selected_date = null;
 rot.grid.selection_change = function(model, selected, eOpts) {
 	if(selected.length) {
 		//console.log(model);
@@ -378,6 +461,7 @@ rot.grid.selection_change = function(model, selected, eOpts) {
 		*/
 		//rot.log(cellIndex + " " + rot.grid.selection.von.m)
 		selected_date = rot.add_month(cellIndex, rot.grid.selection.von);
+		rot.grid.selected_date = selected_date
 		//rot.log(selected_date.y + " " + selected_date.m)
 
 		if (rot.lastym && selected_date.y == rot.lastym.y && selected_date.m == rot.lastym.m)
@@ -441,6 +525,9 @@ rot.grid.ondblclick = function(tableview, td, cellIndex, record, tr, rowIndex, e
 }
 
 rot.grid.cell_renderer = function(value) {
+	
+	/*	
+	
 	//console.log("rot.grid.cell_renderer")
 	//return "uuu";
 	ret = value;
@@ -450,7 +537,12 @@ rot.grid.cell_renderer = function(value) {
 		ret = value;
 	}
 	
+	if (value == 0)
+		return "";
+	
 	return ret
+	*/
+	return value;
 }
 
 rot.grid.init = function() {

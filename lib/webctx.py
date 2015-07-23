@@ -15,8 +15,8 @@ import hashlib
 import sqlite3
 
 urls = (
-  '/', 'webctx.index',
-  '/personal(.*)', 'webctx.personal',
+	'/', 'webctx.index',
+	'/personal(.*)', 'webctx.personal',
 	'/personal_data', 'webctx.personal_data',
 	'/test', 'webctx.test', # test methods, remove these in production
 	'/wunsch(.*)', 'webctx.wunsch', # test methods, remove these in production
@@ -25,13 +25,13 @@ urls = (
 	'/image(.*)', 'webctx.image',
 	'/rotnote(.*)', 'webctx.rotnote',
 	'/erfahrung(.*)', 'webctx.erfahrung',
-  '/login', 'webctx.login',
-  '/plan', 'webctx.plan',
-  '/get_plan', 'webctx.get_plan',
-  '/get_meta', 'webctx.get_meta',
-  '/get_month', 'webctx.get_month',
-  '/get_emp', 'webctx.get_emp',
-  '/update_rot', 'webctx.update_rot'
+	'/login', 'webctx.login',
+	'/plan', 'webctx.plan',
+	'/get_plan', 'webctx.get_plan',
+	'/get_meta', 'webctx.get_meta',
+	'/get_month', 'webctx.get_month',
+	'/get_emp', 'webctx.get_emp',
+	'/update_rot', 'webctx.update_rot'
 )
 
 from HTMLParser import HTMLParser
@@ -361,9 +361,13 @@ class get_emp(response):
 		res = db.engine.execute(sql)
 		
 		ret = {"count": 0, "root" : []}
+		ret["root"].append([None, "", 0, 0, 0, "", 0, 0, "", ""]) # empty record
 		
 		for r in res:
-			row = []
+			row = [
+			#	[0, "", 0, 0, 0, "", 0, 0, "", ""] # empty record
+			]
+			
 			for e in r:
 				row.append(e)
 			ret["root"].append(row)
@@ -420,6 +424,7 @@ class get_month(response):
 		res = db.engine.execute(sql)
 		
 		ret = {"count": 0, "root" : []}
+		ret["root"].append([None, "", 0, 0, 0, "", 0, 0, "", ""])
 		
 		for r in res:
 			row = []
@@ -427,6 +432,7 @@ class get_month(response):
 				row.append(e)
 			ret["root"].append(row)
 			ret["count"] += 1
+		
 		
 		web.header('Content-Type', 'application/json; charset=utf-8', unique=True)
 		return self.json(ret)
@@ -579,19 +585,23 @@ class data:
 				"menuDisabled": True,
 				"sortable": False,
 				"renderer": "rot.grid.cell_renderer",
-				"editor": {
-					"xtype": "combobox",
-					"store": "monthempStore",
-					"displayField": "kuerzel",
-					"valueField": "pid",
-					"selectOnFocus": True,
-					"selectOnTab": True,
-					"autoSelect": True,
-					"caseSensitive": False,
-					"maxLength": 3,
-					"queryMode": "local",
-					"typeAhead": True
-				},
+				#"editor": {
+				#	"xtype": "combobox",
+				#	"store": "monthempStore",
+				#	"displayField": "kuerzel",
+				#	"valueField": "pid",
+				#	"selectOnFocus": True,
+				#	"selectOnTab": True,
+				#	"autoSelect": True,
+				#	"caseSensitive": False,
+				#	"maxLength": 3,
+				#	"queryMode": "local",
+				#	"typeAhead": True,
+				#	"allowBlank": True,
+				#	"validateBlank": True,
+				#	"autoLoadOnValue": True,
+				#	"forceSelection": True
+				#},
 			})
 			
 			ret["metaData"]["fields"].append({
@@ -629,19 +639,22 @@ class data:
 			"hideable": False,
 			"menuDisabled": True,
 			"sortable": False,
-			"editor": {
-				"xtype": "combobox",
-				"store": "monthempStore",
-				"displayField": "kuerzel",
-				"valueField": "pid",
-				"selectOnFocus": True,
-				"selectOnTab": False,
-				"autoSelect": True,
-				"caseSensitive": False,
-				"maxLength": 3,
-				"queryMode": "local",
-				"typeAhead": True
-			},
+			#"editor": {
+			#	"xtype": "combobox",
+			#	"store": "monthempStore",
+			#	"displayField": "kuerzel",
+			#	"valueField": "pid",
+			#	"selectOnFocus": True,
+			#	"selectOnTab": False,
+			#	"autoSelect": True,
+			#	"caseSensitive": False,
+			#	"maxLength": 3,
+			#	"queryMode": "local",
+			#	"typeAhead": True,
+			#	"allowBlank": True,
+			#	"validateBlank": True,
+			#	"autoLoadOnValue": True
+			#},
 			"renderer": "rot.grid.cell_renderer"
 		})
 		ret["metaData"]["fields"].append({
@@ -657,15 +670,21 @@ class update_rot(response):
 	def GET(self):
 		try:
 			id = int(web.input(von=None).id)
+			pid = int(web.input(von=None).pid)
 			rid = int(web.input(von=None).rid)
+			y = int(web.input(von=None).y)
+			m = int(web.input(von=None).m)
+			kuerzel = web.input(von=None).kuerzel
 			ym = web.input(von=None).ym
-			v = int(web.input(von=None).v)
 			
 			rec = {
 				"id": id,
+				"pid": pid,
 				"rid": rid,
-				"ym": ym,
-				"v": v
+				"m": m,
+				"y": y,
+				"kuerzel": kuerzel,
+				"ym": ym
 			}
 			
 		except:
@@ -676,7 +695,12 @@ class update_rot(response):
 				"error": "failed to parse input."
 			})
 			
-		return self.json(rec)
+		return self.json({
+			"success": True,
+			"root": rec,
+			"count": 1,
+			"error": ""
+		})
 		
 class get_plan(response):
 	def GET(self):
