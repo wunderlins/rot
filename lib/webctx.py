@@ -461,6 +461,7 @@ class data:
 	def plan_meta(von, bis): 
 		months = 0
 		cellwidth = 55
+		padding = 7
 		
 		# validate user input
 		try:
@@ -566,6 +567,7 @@ class data:
 		tmp["m"] = int(tmp["m"])
 		web.debug("counting months %d %d" % (tmp["m"], tmp["y"]))
 		n = ""
+		amonth = []
 		while tmp["m"] != int(date_sel["bis"]["m"]) or tmp["y"] != int(date_sel["bis"]["y"]):
 			#web.debug(str(months))
 			n = "" + str(tmp["y"]);
@@ -573,6 +575,8 @@ class data:
 				n = n + "0" + str(tmp["m"])
 			else: 
 				n = n + str(tmp["m"]);
+			
+			amonth.append(n)
 			
 			currenty["columns"].append({
 				"xtype": 'gridcolumn', 
@@ -606,7 +610,7 @@ class data:
 			
 			ret["metaData"]["fields"].append({
 				"type": 'string', 
-				"mapping": months+7, 
+				"mapping": months + padding, 
 				"name": n
 			})
 			
@@ -628,6 +632,8 @@ class data:
 			n = n + "0" + str(tmp["m"])
 		else: 
 			n = n + str(tmp["m"]);
+		
+		amonth.append(n)
 		
 		currenty["columns"].append({
 			"xtype": 'gridcolumn', 
@@ -660,10 +666,13 @@ class data:
 		
 		ret["metaData"]["fields"].append({
 			"type": 'string', 
-			"mapping": months+7, 
+			"mapping": months + padding, 
 			"name": n
 		})
+		
 		ret["metaData"]["months"] = months
+		ret["metaData"]["padding"] = padding
+		ret["metaData"]["amonth"] = amonth
 				
 		return ret
 
@@ -880,10 +889,18 @@ class get_plan(response):
 		
 		res = db.engine.execute(sql)
 		
+		rot_lookup = {}
+		
 		ret["root"] = []
 		ret["metaData"]["maxid"] = 0;
-		rid = 1;
+		rid = 0;
 		for r in res:
+			
+			try:
+				rot_lookup[r[0]].append(rid)
+			except:
+				rot_lookup[r[0]] = [rid]
+			
 			#web.debug(r)
 			row = [rid]
 			rid += 1
@@ -893,7 +910,7 @@ class get_plan(response):
 			for e in r:
 				row.append(e)
 				
-			# add cel lvalues
+			# add empty cell values
 			c = 0
 			while c < ret["metaData"]["months"]:
 				row.append("")
@@ -901,6 +918,48 @@ class get_plan(response):
 			
 			ret["root"].append(row)
 			ret["count"] += 1
+		
+		# build a lookup table for months
+		cell_lookup = {}
+		ix = 0
+		for e in ret["metaData"]["amonth"]:
+			cell_lookup[int(e)] = (ix + ret["metaData"]["padding"])
+			ix += 1
+		web.debug(cell_lookup)
+		# create the relevant cell data according to the rotation table
+		
+		# fetch data from rotation
+		sql = """SELECT r.rid, p.kuerzel, r.jm,
+				   r.pid, r.bgrad, r.bemerkung2 as comment,
+				   r.rtyp
+									 
+
+						FROM rotation r LEFT JOIN personal p on (r.pid = p.pid)
+												    LEFT JOIN color c on (r.cid = c.cid)
+
+						WHERE 1=1
+							AND (r.jm >= '201501' AND r.jm <= '201512')
+				                AND p.ptid = 4
+				                AND r.rtyp > 0
+
+						ORDER BY r.rtyp, r.jm"""		
+		
+		res = db.engine.execute(db.text(sql))
+		
+		web.debug(rot_lookup)
+		
+		# loop over all assignements, merge them with grid data
+		for r in res:
+			# r.rid, p.kuerzel, r.jm, r.pid, r.bgrad, r.bemerkung2 as comment, r.rtyp
+			rot_ix = rot_lookup[r[6]][0] # the row index in the prefilled matrix
+			cell_ix = cell_lookup[r[2]]
+			# FIXME: make sure that multiple assignements to rid can exists for the same month and rid 
+				# add empty row if so
+				# make sure the sort value is correct
+			
+			ret["root"][rot_ix][cell_ix] = r[1]
+		
+		
 		
 		return self.json(ret)
 		#return json.dumps(ret, encoding="utf8")
