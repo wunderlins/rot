@@ -26,7 +26,6 @@ Ext.define('calendar.store.assiStore', {
         var me = this;
         cfg = cfg || {};
         me.callParent([Ext.apply({
-            remoteSort: true,
             storeId: 'assiStore',
             model: 'calendar.model.assiModel',
             sortOnLoad: false,

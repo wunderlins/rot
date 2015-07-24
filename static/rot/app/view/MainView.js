@@ -31,9 +31,10 @@ Ext.define('calendar.view.MainView', {
         'Ext.XTemplate',
         'Ext.grid.plugin.CellEditing',
         'Ext.tab.Panel',
-        'Ext.grid.filters.filter.String',
         'Ext.tab.Tab',
-        'Ext.grid.filters.Filters'
+        'Ext.grid.filters.Filters',
+        'Ext.form.RadioGroup',
+        'Ext.form.field.Radio'
     ],
 
     controller: 'mainview',
@@ -312,7 +313,7 @@ Ext.define('calendar.view.MainView', {
                     xtype: 'gridpanel',
                     autoScroll: true,
                     itemId: 'gridVerfuegbar',
-                    title: 'Verfügbar',
+                    title: 'Monat',
                     titleCollapse: false,
                     autoLoad: true,
                     store: 'monthempStore',
@@ -326,15 +327,37 @@ Ext.define('calendar.view.MainView', {
                         {
                             xtype: 'gridcolumn',
                             renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                // metaData.tdAttr = ' data-qtip="' + record.data.vorname + " " + record.data.name + '"';
-                                return "<b>" + value + "</b> " + record.data.vorname + " " + record.data.name;
+                                if (record.data.rtyp == 0)
+                                return "<b>" + value + "</b>";
+                                return "<b><span style='color: #888'><i>" + value + "</i></span></b>";
                             },
-                            minWidth: 250,
-                            dataIndex: 'kuerzel',
-                            text: 'Name',
-                            filter: {
-                                type: 'string'
-                            }
+                            width: 50,
+                            dataIndex: 'kuerzel'
+                        },
+                        {
+                            xtype: 'gridcolumn',
+                            renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                if (record.data.rtyp == 0)
+                                return value;
+                                return "<span style='color: #888'><i>" + value + "</i></span>";
+                            },
+                            dataIndex: 'name',
+                            text: 'Name'
+                        },
+                        {
+                            xtype: 'gridcolumn',
+                            renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                if (record.data.rtyp == 0)
+                                return value;
+                                return "<span style='color: #888'><i>" + value + "</i></span>";
+
+
+                                //return rot.emp.renderName(value, metaData, record, rowIndex, colIndex, store, view);
+                                // metaData.tdAttr = ' data-qtip="' + record.data.vorname + " " + record.data.name + '"';
+                                //return "<b>" + value + "</b> " + record.data.vorname + " " + record.data.name;
+                            },
+                            dataIndex: 'vorname',
+                            text: 'Vorname'
                         },
                         {
                             xtype: 'gridcolumn',
@@ -352,12 +375,6 @@ Ext.define('calendar.view.MainView', {
                             align: 'right',
                             dataIndex: 'bgrad',
                             text: '%'
-                        },
-                        {
-                            xtype: 'gridcolumn',
-                            hidden: true,
-                            dataIndex: 'comment',
-                            text: 'Comment'
                         }
                     ],
                     plugins: [
@@ -371,17 +388,115 @@ Ext.define('calendar.view.MainView', {
                             dock: 'top',
                             itemId: 'monthEmpFilter',
                             width: 100,
-                            allowOnlyWhitespace: false,
-                            blankText: 'Filter ...',
+                            emptyText: 'Filter ...',
                             listeners: {
                                 change: 'onMonthEmpFilterChange'
                             }
+                        },
+                        {
+                            xtype: 'container',
+                            dock: 'top',
+                            width: 100,
+                            layout: {
+                                type: 'hbox',
+                                align: 'stretch'
+                            },
+                            items: [
+                                {
+                                    xtype: 'radiogroup',
+                                    width: 300,
+                                    items: [
+                                        {
+                                            xtype: 'radiofield',
+                                            name: 'available',
+                                            boxLabel: 'Alle verfügbaren',
+                                            checked: true,
+                                            inputValue: 'all'
+                                        },
+                                        {
+                                            xtype: 'radiofield',
+                                            name: 'available',
+                                            boxLabel: 'Nicht eingeteilt',
+                                            inputValue: 'available'
+                                        }
+                                    ],
+                                    listeners: {
+                                        change: 'onRadiogroupChange'
+                                    }
+                                }
+                            ]
                         }
                     ]
                 },
                 {
-                    xtype: 'panel',
-                    title: 'Misc'
+                    xtype: 'gridpanel',
+                    autoScroll: true,
+                    itemId: 'gridVerfuegbar1',
+                    title: 'Zeitspanne',
+                    titleCollapse: false,
+                    autoLoad: true,
+                    store: 'assiStore',
+                    viewConfig: {
+                        itemId: 'alleView'
+                    },
+                    columns: [
+                        {
+                            xtype: 'gridcolumn',
+                            renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                return "<b>" + value + "</b>";
+
+                            },
+                            width: 50,
+                            dataIndex: 'kuerzel'
+                        },
+                        {
+                            xtype: 'gridcolumn',
+                            dataIndex: 'name',
+                            width: 90,
+                            text: 'Name'
+                        },
+                        {
+                            xtype: 'gridcolumn',
+                            width: 70,
+                            dataIndex: 'vorname',
+                            text: 'Vorname'
+                        },
+                        {
+                            xtype: 'gridcolumn',
+                            renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                return value.substr(4, 2) + "." + value.substr(0, 4);
+                            },
+                            width: 70,
+                            dataIndex: 'rvon',
+                            text: 'Von'
+                        },
+                        {
+                            xtype: 'gridcolumn',
+                            renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                return value.substr(4, 2) + "." + value.substr(0, 4);
+                            },
+                            width: 70,
+                            dataIndex: 'rbis',
+                            text: 'Bis'
+                        }
+                    ],
+                    plugins: [
+                        {
+                            ptype: 'gridfilters'
+                        }
+                    ],
+                    dockedItems: [
+                        {
+                            xtype: 'textfield',
+                            dock: 'top',
+                            itemId: 'allEmpFilter',
+                            width: 100,
+                            emptyText: 'Filter ...',
+                            listeners: {
+                                change: 'onAllEmpFilterChange'
+                            }
+                        }
+                    ]
                 },
                 {
                     xtype: 'panel',
@@ -425,6 +540,14 @@ Ext.define('calendar.view.MainView', {
     },
 
     onMonthEmpFilterChange: function(field, newValue, oldValue, eOpts) {
+        rot.monthfilterChange(field, newValue, oldValue, eOpts);
+    },
+
+    onRadiogroupChange: function(field, newValue, oldValue, eOpts) {
+        return rot.emp.availfilterChange(field, newValue, oldValue, eOpts);
+    },
+
+    onAllEmpFilterChange: function(field, newValue, oldValue, eOpts) {
         rot.monthfilterChange(field, newValue, oldValue, eOpts);
     }
 

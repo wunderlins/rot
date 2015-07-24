@@ -356,12 +356,14 @@ class get_emp(response):
 						FROM rotblock rb LEFT JOIN personal p ON (rb.pid = p.pid)
 						WHERE (rvon <= '"""+str(von.von)+"""' and rbis >= '"""+str(von.von)+"""' OR 
 						       rvon <= '"""+str(bis.bis)+"""' and rbis >= '"""+str(bis.bis)+"""')
-						 AND p.ptid = 4""")
+						 AND p.ptid = 4
+						 
+						ORDER BY p.kuerzel """)
 
 		res = db.engine.execute(sql)
 		
 		ret = {"count": 0, "root" : []}
-		ret["root"].append([0, "", 0, 0, 0, "", 0, 0, "Leer", ""]) # empty record
+		#ret["root"].append([0, "", 0, 0, 0, "", 0, 0, "Leer", ""]) # empty record
 		
 		for r in res:
 			row = [
@@ -408,7 +410,7 @@ class get_month(response):
 		'''
 		sql = db.text("""SELECT r.rid, p.kuerzel, p.ptid,
 						 r.pid, r.bgrad, r.bemerkung2 as comment,
-						 c.fg, c.bg, p.name, p.vorname, r.rbid
+						 c.fg, c.bg, p.name, p.vorname, r.rbid, r.rtyp
 
 			FROM rotation r LEFT JOIN personal p on (r.pid = p.pid)
 								      LEFT JOIN color c on (r.cid = c.cid)
@@ -424,7 +426,7 @@ class get_month(response):
 		res = db.engine.execute(sql)
 		
 		ret = {"count": 0, "root" : []}
-		ret["root"].append([0, " ", 0, 0, 0, "", 0, 0, "Leer", " "])
+		ret["root"].append([0, " ", 0, 0, 0, "", 0, 0, "Leer", " ", 0, 0])
 		
 		for r in res:
 			row = []

@@ -19,6 +19,91 @@ rot.dbgtpl = function(o) {
 rot.grid = {}
 rot.emp = {}
 
+
+rot.emp.filter = {name: null, avail: 'all'}
+rot.monthfilterChange = function(field, newValue, oldValue, eOpts) {
+	console.log(newValue)
+	rot.emp.filter.name = null;
+	if (newValue != "")
+		rot.emp.filter.name = newValue
+	rot.emp.filterChange()
+	
+	
+	/*
+	var store = Ext.getStore('monthempStore');
+	store.clearFilter(false);
+	
+	if (newValue != "") {
+		store.clearFilter(true);
+		store.addFilter({
+			anyMatch: true,
+			operator: 'like',
+			property: 'name',
+			value: newValue
+		})
+	}
+	*/
+	return true;
+}
+
+rot.emp.availfilterChange = function(field, newValue, oldValue, eOpts) {
+	console.log(newValue.available)
+	
+	rot.emp.filter.avail = 	newValue.available // all or available
+	rot.emp.filterChange()
+	/*
+	
+	var store = Ext.getStore('monthempStore');
+	// store.clearFilter(false);
+	
+	if (newValue != "") {
+		store.clearFilter(true);
+		store.addFilter({
+			anyMatch: true,
+			operator: 'like',
+			property: 'name',
+			value: newValue
+		})
+	}
+
+	
+	return true;
+	*/
+	
+	return true;
+}
+
+rot.emp.filterChange = function() {
+	var store = Ext.getStore('monthempStore');
+	store.clearFilter(false);
+	
+	if (rot.emp.filter.name) {
+		store.addFilter({
+			anyMatch: true,
+			operator: 'like',
+			property: 'name',
+			value: rot.emp.filter.name
+		})
+	}
+	
+	if (rot.emp.filter.avail == 'available') {
+		store.addFilter({
+		    exactMatch: true,
+		    operator: '=',
+		    property: 'rtyp',
+		    value: 0
+		});
+	}
+	
+}
+
+rot.emp.renderName = function(value, metaData, record, rowIndex, colIndex, store, view) {
+	if (record.data.rtyp == 0)
+		return "<b>" + value + "</b> " + record.data.vorname + " " + record.data.name;
+	// already set
+	return "<span style='color: #888'><i><b>" + value + "</b> " + record.data.name + "</i> " + record.data.vorname + "</span>";
+}
+
 rot.emp.viewRowdblclick = function(tableview, record, tr, rowIndex, e, eOpts) {
 	
 	// selected employee
@@ -321,20 +406,6 @@ rot.grid.selection = {
 	bis: {y: null, m: null}
 };
 
-rot.monthfilterChange = function(field, newValue, oldValue, eOpts) {
-	var store = Ext.getStore('monthempStore');
-	store.clearFilter(false);
-	
-	if (newValue != "") {
-		store.clearFilter(true);
-		store.addFilter({
-			anyMatch: true,
-			operator: 'like',
-			property: 'name',
-			value: newValue
-		})
-	}
-}
 
 rot.add_month = function(months, ym) {
 	ret = Object.clone(ym)

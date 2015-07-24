@@ -8,7 +8,6 @@
     "userConfig": {
         "designer|userClassName": "assiStore",
         "model": "assiModel",
-        "remoteSort": true,
         "sortOnLoad": false,
         "storeId": "assiStore"
     },

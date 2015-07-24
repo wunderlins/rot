@@ -153,6 +153,19 @@
             },
             "name": "MyInteger9",
             "designerId": "a80a4cb7-57d0-45be-9fe7-eecf11cf4239"
+        },
+        {
+            "type": "Ext.data.field.Integer",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "rtyp"
+            },
+            "name": "MyInteger10",
+            "designerId": "53bcc8d7-1184-492b-85d1-9080b32dda16"
         }
     ]
 }
