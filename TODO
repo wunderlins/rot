@@ -4,6 +4,7 @@
  - DONE FIX logout, kill session propperly
  - when Person is reassigned in the same month, must clear old field!
  - FIXED: when adding a new row, the first row disapears.
+ - When adding a to an empty row and adding a person, it will show up in the wrong row (tested with 2 empty thorax)
 
 
 == Milestone 1: Profiles

@@ -712,7 +712,7 @@ class update_rot(response):
 			})
 		
 		#try:
-		web.debug(rec)
+		#web.debug(rec)
 		
 		if rec["pid"] == 0: # clear existing assignement
 			# find pid	
@@ -722,7 +722,7 @@ class update_rot(response):
 					AND r.rvon <= '""" + rec["ym"] + """' AND r.rbis >= '""" + rec["ym"] + """' """
 			res = db.engine.execute(db.text(sql))
 			
-			web.debug(res)
+			#web.debug(res)
 			pid = None
 			for r in res:
 				web.debug(r)
@@ -733,10 +733,10 @@ class update_rot(response):
 					            .filter(db.Rotation.jm == rec["ym"], \
 					                    db.Rotation.pid == pid)
 			
-			web.debug(rot[0])
+			#web.debug(rot[0])
 			rot[0].rtyp = 0
 			db.session.flush()
-			web.debug(rot[0].rtyp)
+			#web.debug(rot[0].rtyp)
 			
 		else: # set new assignement
 			# update rotation with rot id
@@ -958,7 +958,7 @@ class get_plan(response):
 		for e in ret["metaData"]["amonth"]:
 			cell_lookup[int(e)] = (ix + ret["metaData"]["padding"])
 			ix += 1
-		web.debug(cell_lookup)
+		#web.debug(cell_lookup)
 		# create the relevant cell data according to the rotation table
 		
 		# fetch data from rotation
@@ -979,7 +979,7 @@ class get_plan(response):
 		
 		res = db.engine.execute(db.text(sql))
 		
-		web.debug(rot_lookup)
+		#web.debug(rot_lookup)
 		
 		# loop over all assignements, merge them with grid data
 		for r in res:

@@ -721,7 +721,7 @@
                             "userConfig": {
                                 "dataIndex": "kuerzel",
                                 "text": null,
-                                "width": 50
+                                "width": 55
                             },
                             "name": "MyColumn1",
                             "designerId": "97579a04-28a5-4508-8e67-e55edc805335",
@@ -1093,7 +1093,7 @@
                             "userConfig": {
                                 "dataIndex": "kuerzel",
                                 "text": null,
-                                "width": 50
+                                "width": 55
                             },
                             "name": "MyColumn5",
                             "designerId": "1499b68a-a223-40eb-854b-43240aeaa2c9",

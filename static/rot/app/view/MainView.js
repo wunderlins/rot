@@ -333,7 +333,7 @@ Ext.define('calendar.view.MainView', {
                                 return "<b>" + value + "</b>";
                                 return "<b><span style='color: #888'><i>" + value + "</i></span></b>";
                             },
-                            width: 50,
+                            width: 55,
                             dataIndex: 'kuerzel'
                         },
                         {
@@ -448,7 +448,7 @@ Ext.define('calendar.view.MainView', {
                                 return "<b>" + value + "</b>";
 
                             },
-                            width: 50,
+                            width: 55,
                             dataIndex: 'kuerzel'
                         },
                         {
