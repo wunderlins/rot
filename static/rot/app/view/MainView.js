@@ -61,9 +61,9 @@ Ext.define('calendar.view.MainView', {
                 {
                     xtype: 'panel',
                     flex: 1,
-                    height: 150,
-                    maxHeight: 150,
-                    minHeight: 150,
+                    height: 45,
+                    maxHeight: 45,
+                    minHeight: 45,
                     bodyPadding: 10,
                     titleCollapse: true,
                     layout: {
@@ -153,6 +153,15 @@ Ext.define('calendar.view.MainView', {
                                             xtype: 'button',
                                             itemId: 'btnReload',
                                             text: 'Yeppers'
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            disabled: true,
+                                            itemId: 'btnadd',
+                                            text: 'Add',
+                                            listeners: {
+                                                click: 'onButtonClick'
+                                            }
                                         }
                                     ]
                                 },
@@ -180,13 +189,6 @@ Ext.define('calendar.view.MainView', {
                                             fieldLabel: 'y',
                                             labelWidth: 30,
                                             readOnly: true
-                                        },
-                                        {
-                                            xtype: 'button',
-                                            text: 'Add',
-                                            listeners: {
-                                                click: 'onButtonClick'
-                                            }
                                         }
                                     ]
                                 }
@@ -195,6 +197,7 @@ Ext.define('calendar.view.MainView', {
                         {
                             xtype: 'container',
                             flex: 0.4,
+                            hidden: true,
                             items: [
                                 {
                                     xtype: 'textareafield',

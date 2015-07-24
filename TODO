@@ -2,6 +2,8 @@
  - DONE logout doesn't work when web_debug = False
  - DONE session management persistent over different computers? FTW
  - DONE FIX logout, kill session propperly
+ - when Person is reassigned in the same month, must clear old field!
+ - when adding a new row, the first row disapears.
 
 
 == Milestone 1: Profiles

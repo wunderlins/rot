@@ -515,6 +515,7 @@ rot.grid.add_row = function(button, e, eOpts) {
 rot.grid.selected_date = null;
 rot.grid.selection_change = function(model, selected, eOpts) {
 	if(selected.length) {
+		rot.get("#btnadd").enable()
 		//console.log(model);
 		//console.log(selected);
 		//console.log(eOpts);

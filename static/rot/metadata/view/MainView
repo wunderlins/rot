@@ -46,11 +46,11 @@
                         "bodyPadding": 10,
                         "container|align": "stretch",
                         "designer|displayName": "headerPanel",
-                        "height": 150,
+                        "height": 45,
                         "layout": "hbox",
                         "layout|flex": 1,
-                        "maxHeight": 150,
-                        "minHeight": 150,
+                        "maxHeight": 45,
+                        "minHeight": 45,
                         "padding": null,
                         "title": null,
                         "titleCollapse": true
@@ -218,6 +218,42 @@
                                             },
                                             "name": "MyButton",
                                             "designerId": "34c982ef-370d-4011-b570-20d8d55ae23c"
+                                        },
+                                        {
+                                            "type": "Ext.button.Button",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "disabled": true,
+                                                "itemId": "btnadd",
+                                                "text": "Add"
+                                            },
+                                            "name": "MyButton1",
+                                            "designerId": "30f1404d-c7f9-4555-acc0-e65970067bc7",
+                                            "cn": [
+                                                {
+                                                    "type": "basiceventbinding",
+                                                    "reference": {
+                                                        "name": "listeners",
+                                                        "type": "array"
+                                                    },
+                                                    "codeClass": null,
+                                                    "userConfig": {
+                                                        "fn": "onButtonClick",
+                                                        "implHandler": [
+                                                            "",
+                                                            "rot.grid.add_row(button, e, eOpts);"
+                                                        ],
+                                                        "name": "click",
+                                                        "scope": "me"
+                                                    },
+                                                    "name": "onButtonClick",
+                                                    "designerId": "6fb37a57-e15e-453c-a6c5-1ceae517641e"
+                                                }
+                                            ]
                                         }
                                     ]
                                 },
@@ -271,40 +307,6 @@
                                             },
                                             "name": "MyTextField1",
                                             "designerId": "c66ce2cb-cd3c-49be-bc1e-9fec1840568d"
-                                        },
-                                        {
-                                            "type": "Ext.button.Button",
-                                            "reference": {
-                                                "name": "items",
-                                                "type": "array"
-                                            },
-                                            "codeClass": null,
-                                            "userConfig": {
-                                                "text": "Add"
-                                            },
-                                            "name": "MyButton1",
-                                            "designerId": "30f1404d-c7f9-4555-acc0-e65970067bc7",
-                                            "cn": [
-                                                {
-                                                    "type": "basiceventbinding",
-                                                    "reference": {
-                                                        "name": "listeners",
-                                                        "type": "array"
-                                                    },
-                                                    "codeClass": null,
-                                                    "userConfig": {
-                                                        "fn": "onButtonClick",
-                                                        "implHandler": [
-                                                            "",
-                                                            "rot.grid.add_row(button, e, eOpts);"
-                                                        ],
-                                                        "name": "click",
-                                                        "scope": "me"
-                                                    },
-                                                    "name": "onButtonClick",
-                                                    "designerId": "6fb37a57-e15e-453c-a6c5-1ceae517641e"
-                                                }
-                                            ]
                                         }
                                     ]
                                 }
@@ -318,6 +320,7 @@
                             },
                             "codeClass": null,
                             "userConfig": {
+                                "hidden": true,
                                 "layout|flex": 0.4
                             },
                             "name": "MyContainer3",
