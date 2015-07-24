@@ -450,6 +450,7 @@ rot.rotStore.metaChange = function(store, meta, eOpts) {
 
 rot.grid.cellIndex = null
 rot.grid.rowIndex = null
+rot.internalId = 10000
 
 rot.grid.add_row = function(button, e, eOpts) {
 	if (rot.grid.cellIndex === null) {
@@ -466,6 +467,8 @@ rot.grid.add_row = function(button, e, eOpts) {
 	
 	// copy record, give it a unique id
 	var rec = selection[0].copy(++rot.rotStore.metaData.maxid)
+	rec.internalId = rot.internalId++
+	rec.id = rot.internalId++
 	console.log(rec)
 	
 	// clear all vlaues, increment sort to place it under the cloned record
