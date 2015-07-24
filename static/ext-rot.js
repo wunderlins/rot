@@ -113,6 +113,9 @@ rot.emp.viewRowdblclick = function(tableview, record, tr, rowIndex, e, eOpts) {
 	var selection = rot.grid.grid.getSelection()[0]
 	//rot.grid.cellIndex
 	
+	var sel_date = rot.month_str(rot.grid.selected_date);
+	var data = selection.getData()
+	
 	// generate result
 	var rec = {
 		pid: record.data.pid,
@@ -122,7 +125,8 @@ rot.emp.viewRowdblclick = function(tableview, record, tr, rowIndex, e, eOpts) {
 		rbid: record.data.rbid,
 		id: selection.data.id,
 		kuerzel: record.data.kuerzel,
-		ym: rot.month_str(rot.grid.selected_date)
+		ym: sel_date,
+		old: selection.data[sel_date]
 	}
 	//console.log(rec);
 	

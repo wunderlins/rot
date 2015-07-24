@@ -262,7 +262,6 @@ Ext.define('calendar.view.MainView', {
                     features: [
                         {
                             ftype: 'grouping',
-                            showSummaryRow: true,
                             collapsible: false,
                             groupHeaderTpl: Ext.create('Ext.XTemplate', 
                                 '{children:this.dbgtpl}',

@@ -689,6 +689,7 @@ class update_rot(response):
 			m = int(web.input(von=None).m)
 			kuerzel = web.input(von=None).kuerzel
 			ym = web.input(von=None).ym
+			old = web.input(von=None).old
 			
 			rec = {
 				"id": id,
@@ -698,7 +699,8 @@ class update_rot(response):
 				"m": m,
 				"y": y,
 				"kuerzel": kuerzel,
-				"ym": ym
+				"ym": ym,
+				"old": old
 			}
 		
 		except:
@@ -709,16 +711,45 @@ class update_rot(response):
 				"error": "failed to parse input."
 			})
 		
-		try:
+		#try:
+		web.debug(rec)
+		
+		if rec["pid"] == 0: # clear existing assignement
+			# find pid	
+			sql = """SELECT p.pid
+				FROM personal p LEFT JOIN rotblock r ON (p.pid = r.pid)
+				WHERE p.kuerzel = '""" + rec["old"] + """'
+					AND r.rvon <= '""" + rec["ym"] + """' AND r.rbis >= '""" + rec["ym"] + """' """
+			res = db.engine.execute(db.text(sql))
+			
+			web.debug(res)
+			pid = None
+			for r in res:
+				web.debug(r)
+				pid = r[0]
+				break
+			
+			rot = db.session.query(db.Rotation)\
+					            .filter(db.Rotation.jm == rec["ym"], \
+					                    db.Rotation.pid == pid)
+			
+			web.debug(rot[0])
+			rot[0].rtyp = 0
+			db.session.flush()
+			web.debug(rot[0].rtyp)
+			
+		else: # set new assignement
 			# update rotation with rot id
 			rot = db.session.query(db.Rotation)\
-				              .filter(db.Rotation.jm == rec["ym"], \
-				                      db.Rotation.pid == rec["pid"], \
-				                      db.Rotation.rbid == rec["rbid"])
-		
+					            .filter(db.Rotation.jm == rec["ym"], \
+					                    db.Rotation.pid == rec["pid"], \
+					                    db.Rotation.rbid == rec["rbid"])
+	
 			rot[0].rtyp = rec["rid"]
 			db.session.flush()
 			web.debug(rot[0].rtyp)
+		
+		"""
 		except:
 			return self.json({
 				"success": False,
@@ -726,7 +757,7 @@ class update_rot(response):
 				"count": 0,
 				"error": "failed to update database."
 			})
-		
+		"""
 		return self.json({
 			"success": True,
 			"root": rec,

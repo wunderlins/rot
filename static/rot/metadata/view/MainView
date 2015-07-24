@@ -503,8 +503,7 @@
                             "userConfig": {
                                 "collapsible": false,
                                 "groupByText": null,
-                                "showGroupsText": null,
-                                "showSummaryRow": true
+                                "showGroupsText": null
                             },
                             "name": "MyGroupingFeature",
                             "designerId": "11c4cd0a-ca42-4b65-870c-3149d91ed562",
