@@ -9,6 +9,26 @@ Object.clone = function(obj) {
 
 rot = {};
 rot.init = function() {
+	Ext.state.Manager.setProvider(new Ext.state.CookieProvider());
+	var values = Ext.state.Manager.get('searchForm');
+	console.log(values)
+	
+	// if there are no values stored in a cookie yet, generate defaul values
+	if (!values) {
+		var currentTime = new Date();
+		var year = currentTime.getFullYear();
+		
+		values = {
+			von: {m: 1, y: year},
+			bis: {m: 12, y: year}
+		}
+	}
+	
+	rot.get("#vonm").setValue(values.von.m)
+	rot.get("#vony").setValue(values.von.y)
+	rot.get("#bism").setValue(values.bis.m)
+	rot.get("#bisy").setValue(values.bis.y)
+	
 	rot.grid.init();
 }
 
@@ -310,7 +330,7 @@ rot.error = function(title, message) {
 	Ext.MessageBox.alert(title, message);
 }
 
-
+rot.firstload = false;
 rot.get_meta = function(field, newValue, oldValue) {
 	rot.grid.selection = {
 		von: {y: null, m: null},
@@ -351,6 +371,9 @@ rot.get_meta = function(field, newValue, oldValue) {
 	rot.grid.selection.bis.y = bisy;
 	rot.grid.selection.bis.m = bism;
 
+	// store settings
+	Ext.state.Manager.set('searchForm', rot.grid.selection);
+	
 	Ext.Ajax.request({
 		url: '../../get_meta',
 		method: "get",
@@ -396,7 +419,10 @@ rot.get_meta = function(field, newValue, oldValue) {
 				*/
 			}
 			
-			
+			if (rot.firstload == false) {
+				rot.firstload = true;
+				rot.loadData();
+			}
 		}
 	});
 }
@@ -469,7 +495,7 @@ rot.grid.add_row = function(button, e, eOpts) {
 	var rec = selection[0].copy(++rot.rotStore.metaData.maxid)
 	rec.internalId = rot.internalId++
 	rec.id = rot.internalId++
-	console.log(rec)
+	//console.log(rec)
 	
 	// clear all vlaues, increment sort to place it under the cloned record
 	for (e in rec.data) {
@@ -604,8 +630,8 @@ rot.grid.ondblclick = function(tableview, td, cellIndex, record, tr, rowIndex, e
 	rot.get("#dbgy").setValue(cellIndex);
 }
 
-rot.grid.cell_renderer = function(value) {
-	
+rot.grid.cell_renderer = function(value, metaData, record, rowIndex, colIndex, store, view) {
+	//console.log(record)
 	/*	
 	
 	//console.log("rot.grid.cell_renderer")
@@ -634,7 +660,18 @@ rot.grid.init = function() {
 	rot.grid.grid = Ext.ComponentQuery.query('#contentGrid')[0];
 	rot.log("==> rot.grid.init()")
 	
+	/*
+	Ext.state.Manager.setProvider(new Ext.state.CookieProvider());
+	var values = Ext.state.Manager.get('searchForm');
+	console.log(values)
+
+	rot.get("#vonm").setValue(values.von.m)
+	rot.get("#vony").setValue(values.von.y)
+	rot.get("#bism").setValue(values.bis.m)
+	rot.get("#bisy").setValue(values.von.y)
+	
 	//rot.loadData()
+	*/
 	rot.get_meta();
 }
 

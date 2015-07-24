@@ -462,7 +462,7 @@ class data:
 	@staticmethod
 	def plan_meta(von, bis): 
 		months = 0
-		cellwidth = 55
+		cellwidth = 80
 		padding = 7
 		
 		# validate user input
@@ -1001,7 +1001,7 @@ class get_plan(response):
 				new_row = list(ret["root"][rot_ix[len(rot_ix)-1]]) # copy, not reference
 				new_row[0] = len(ret["root"])
 				#new_row[1] = ret["metaData"]["maxid"]
-				web.debug(new_row)
+				#web.debug(new_row)
 				new_sort = int(new_row[ret["metaData"]["padding"] - 1]) + 1
 				new_row[ret["metaData"]["padding"] - 1] = unicode(new_sort)
 				# now empty all data fields

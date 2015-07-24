@@ -55,6 +55,19 @@ Ext.define('calendar.controller.rotController', {
     load_mata_bisy: function(field, newValue, oldValue, eOpts) {
         if (newValue > 999)
             rot.get_meta(field, newValue, oldValue);
+    },
+
+    onLaunch: function() {
+
+        /*
+        var values = Ext.state.Manager.get('searchForm');
+        	alert(values.von.y);
+
+        	rot.get("#vonm").setValue(values.von.m);
+        	rot.get("#vony").setValue(values.von.y);
+        	rot.get("#bism").setValue(values.bis.m);
+        	rot.get("#bisy").setValue(values.von.y);
+        */
     }
 
 });

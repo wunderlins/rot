@@ -113,6 +113,31 @@
             },
             "name": "load_mata_bisy",
             "designerId": "599c6c0c-e9f3-43dd-82a8-913613ff3d2e"
+        },
+        {
+            "type": "fixedfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onLaunch",
+                "implHandler": [
+                    "",
+                    "/*",
+                    "var values = Ext.state.Manager.get('searchForm');",
+                    "\talert(values.von.y);",
+                    "",
+                    "\trot.get(\"#vonm\").setValue(values.von.m);",
+                    "\trot.get(\"#vony\").setValue(values.von.y);",
+                    "\trot.get(\"#bism\").setValue(values.bis.m);",
+                    "\trot.get(\"#bisy\").setValue(values.von.y);",
+                    "*/"
+                ]
+            },
+            "name": "onLaunch",
+            "designerId": "1886a38e-87d2-4dfd-8ddc-2b5747c2b291"
         }
     ]
 }
