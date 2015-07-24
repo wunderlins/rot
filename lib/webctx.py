@@ -971,7 +971,7 @@ class get_plan(response):
 												    LEFT JOIN color c on (r.cid = c.cid)
 
 						WHERE 1=1
-							AND (r.jm >= '201501' AND r.jm <= '201512')
+							AND (r.jm >= '""" + ret["metaData"]["von"] + """' AND r.jm <= '""" + ret["metaData"]["bis"] + """')
 				                AND p.ptid = 4
 				                AND r.rtyp > 0
 
@@ -984,7 +984,7 @@ class get_plan(response):
 		# loop over all assignements, merge them with grid data
 		for r in res:
 			# r.rid, p.kuerzel, r.jm, r.pid, r.bgrad, r.bemerkung2 as comment, r.rtyp
-			cell_ix = cell_lookup[r[2]]
+			cell_ix = cell_lookup[int(r[2])]
 			rot_ix = rot_lookup[r[6]] # the row index in the prefilled matrix
 			
 			# check if cell in rot is already fileld, if so, add a cloned empty cell
