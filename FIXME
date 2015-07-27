@@ -1,4 +1,4 @@
-./static/ext-rot.js:309:// FIXME: this event handler migh not be used anymore.
+./static/ext-rot.js:330:// FIXME: this event handler migh not be used anymore.
 ./template/index.html:5:TODO:
 ./bin/changelog.py:78:    # Collect the files for this commit. FIXME: Still need to add +/- to files
 ./bin/status.sh:15:#	echo "TODO status.sh dev"
@@ -17,5 +17,6 @@
 ./lib/webctx.py:1637:			# FIXME: handle DB Error
 ./lib/webctx.py:1784:			# FIXME: handle DB Error
 ./lib/webctx.py:1796:			# FIXME: handle DB Error
-./TODO:48:- DONE FIXME: add try catch to all commits in webctx
-./TODO:50:- FIXME: image upload from phone failed after about 10% uploading
+./TODO:8: - FIXME: add error handling to all ajax requests
+./TODO:49:- DONE FIXME: add try catch to all commits in webctx
+./TODO:51:- FIXME: image upload from phone failed after about 10% uploading

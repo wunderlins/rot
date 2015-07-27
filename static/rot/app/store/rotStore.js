@@ -36,6 +36,12 @@ Ext.define('calendar.store.rotStore', {
                 reader: {
                     type: 'json',
                     rootProperty: 'root'
+                },
+                listeners: {
+                    exception: {
+                        fn: me.onAjaxException,
+                        scope: me
+                    }
                 }
             },
             listeners: {
@@ -52,6 +58,10 @@ Ext.define('calendar.store.rotStore', {
                 property: 'srt'
             }
         }, cfg)]);
+    },
+
+    onAjaxException: function(proxy, request, operation, eOpts) {
+        rot.ajax_exception(proxy, request, operation, eOpts);
     },
 
     onJsonstoreMetaChange: function(store, meta, eOpts) {

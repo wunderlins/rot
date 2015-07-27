@@ -8,6 +8,23 @@ Object.clone = function(obj) {
 }
 
 rot = {};
+
+rot.ajax_exception = function(proxy, request, operation, eOpts) {
+	var location = proxy.url
+	var reason = request.status + " " + request.statusText
+	var store_name = proxy.model.$className
+	
+	rot.error("Error in " + store_name, location + ": " + reason)
+	
+	/*
+	console.log(proxy)
+	console.log(request)
+	console.log(operation)
+	console.log(eOpts)
+	*/
+}
+
+
 rot.init = function() {
 	Ext.state.Manager.setProvider(new Ext.state.CookieProvider());
 	var values = Ext.state.Manager.get('searchForm');
@@ -230,7 +247,11 @@ rot.emp.viewRowdblclick = function(tableview, record, tr, rowIndex, e, eOpts) {
 			
 			rot.grid.updateView(rec);
 			
+		},
+		failure: function(error) {
+			rot.error("Network Error", "Failed to set Rotation.")
 		}
+		
 	});	
 }
 
@@ -362,6 +383,9 @@ rot.grid.celledit = function(editor, context, eOpts) {
 			var text = response.responseText;
 			result = Ext.decode(text)
 			console.log(result);
+		},
+		failure: function(error) {
+			rot.error("Network Error", "Failed to set Rotation.")
 		}
 	});	
 
@@ -482,6 +506,10 @@ rot.get_meta = function(field, newValue, oldValue) {
 				rot.firstload = true;
 				rot.loadData();
 			}
+		},
+		
+		failure: function(error) {
+			rot.error("Network Error", "Failed to fetch Metadata.")
 		}
 	});
 }

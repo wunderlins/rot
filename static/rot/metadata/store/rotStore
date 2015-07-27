@@ -41,6 +41,24 @@
                     },
                     "name": "MyJsonReader",
                     "designerId": "8a47cb52-2ed3-4581-bb25-78c7f074aaf8"
+                },
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onAjaxException",
+                        "implHandler": [
+                            "rot.ajax_exception(proxy, request, operation, eOpts);"
+                        ],
+                        "name": "exception",
+                        "scope": "me"
+                    },
+                    "name": "onAjaxException",
+                    "designerId": "69664ec4-f1b9-4ac6-9a5b-84116faaf1a0"
                 }
             ]
         },

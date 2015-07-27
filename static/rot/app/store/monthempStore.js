@@ -36,6 +36,12 @@ Ext.define('calendar.store.monthempStore', {
                     type: 'json',
                     rootProperty: 'root',
                     totalProperty: 'count'
+                },
+                listeners: {
+                    exception: {
+                        fn: me.onAjaxException,
+                        scope: me
+                    }
                 }
             },
             listeners: {
@@ -45,6 +51,10 @@ Ext.define('calendar.store.monthempStore', {
                 }
             }
         }, cfg)]);
+    },
+
+    onAjaxException: function(proxy, request, operation, eOpts) {
+        rot.ajax_exception(proxy, request, operation, eOpts);
     },
 
     onJsonstoreMetaChange: function(store, meta, eOpts) {

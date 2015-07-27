@@ -36,6 +36,12 @@ Ext.define('calendar.store.assiStore', {
                     type: 'json',
                     rootProperty: 'root',
                     totalProperty: 'count'
+                },
+                listeners: {
+                    exception: {
+                        fn: me.onAjaxException,
+                        scope: me
+                    }
                 }
             },
             listeners: {
@@ -45,6 +51,10 @@ Ext.define('calendar.store.assiStore', {
                 }
             }
         }, cfg)]);
+    },
+
+    onAjaxException: function(proxy, request, operation, eOpts) {
+        rot.ajax_exception(proxy, request, operation, eOpts);
     },
 
     onJsonstoreLoad: function(store, records, successful, eOpts) {
