@@ -446,7 +446,7 @@ class Rotation(Base, SerializeJson):
 	rid = Column('rid', INTEGER(), primary_key=True, nullable=False)
 	rort = Column('rort', INTEGER())
 	rpos = Column('rpos', INTEGER(), nullable=False)
-	rtyp = Column('rtyp', VARCHAR(length=10))
+	rtyp = Column('rtyp', INTEGER())
 	show = Column('show', VARCHAR(length=1))
 	ukbb = Column('ukbb', Integer())
 
