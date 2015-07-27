@@ -221,6 +221,7 @@ Ext.define('calendar.view.MainView', {
                     height: 150,
                     itemId: 'contentGrid',
                     titleCollapse: false,
+                    columnLines: true,
                     sortableColumns: false,
                     store: 'rotStore',
                     viewConfig: {

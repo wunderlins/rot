@@ -360,6 +360,7 @@
                     },
                     "codeClass": null,
                     "userConfig": {
+                        "columnLines": true,
                         "designer|displayName": "contentGrid",
                         "designer|uiInterfaceName": "default",
                         "height": 150,
