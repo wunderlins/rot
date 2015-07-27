@@ -29,7 +29,70 @@ rot.init = function() {
 	rot.get("#bism").setValue(values.bis.m)
 	rot.get("#bisy").setValue(values.bis.y)
 	
+	/*
+	// Init the singleton.  Any tag-based quick tips will start working.
+	Ext.tip.QuickTipManager.init();
+	
+	// Apply a set of config properties to the singleton
+	Ext.apply(Ext.tip.QuickTipManager.getQuickTip(), {
+		maxWidth: 200,
+		minWidth: 100,
+		trackMouse: false,
+		showDelay: 50      // Show 50ms after entering target
+	});
+	
+	// Manually register a quick tip for a specific element
+	rot.err_qtip = Ext.tip.QuickTipManager.register({
+		target: 'toolbarContainer',
+		title: 'My Tooltip',
+		text: 'This tooltip was added in code',
+		width: 100,
+		dismissDelay: 10000, // Hide after 10 seconds hover
+		closable: true,
+		
+	});
+	*/
+	
+	rot.err_qtip = Ext.create('Ext.tip.ToolTip', {
+		// The overall target element.
+		target: calendar.view.MainView,
+		// Each grid row causes its own separate show and hide.
+		//delegate: view.itemSelector,
+		// Moving within the row should not hide the tip.
+		trackMouse: true,
+		
+		anchorToTarget: true,
+		fixed: true,
+		closeAction: 'hide',
+		autoHide: false,
+		closable: true,
+		width: 200,
+		//height: 200,
+		manageHeight: true,
+		items: [{
+			xtype: 'label',
+			text: 'asdf asdf asdf asdf adsf asdf asdf asdf asdfa sdf asdf asdf asdf '
+    }],
+		
+		
+		// Render immediately so that tip.body can be referenced prior to the first show.
+		renderTo: Ext.getBody(),
+		listeners: {}
+	});
+	
 	rot.grid.init();
+}
+
+rot.error = function(title, message) {
+	Ext.MessageBox.show({
+		title: title,
+		msg: message,
+		buttons: Ext.MessageBox.OK,
+		//animateTarget: btn,
+		scope: this,
+		fn: this.showResult,
+		icon:Ext.MessageBox["ERROR"] 
+	});
 }
 
 rot.dbgtpl = function(o) {
@@ -326,10 +389,6 @@ rot.get = function(selector) {
 	return Ext.ComponentQuery.query(selector)[0];
 }
 
-rot.error = function(title, message) {
-	Ext.MessageBox.alert(title, message);
-}
-
 rot.firstload = false;
 rot.get_meta = function(field, newValue, oldValue) {
 	rot.grid.selection = {
@@ -347,9 +406,9 @@ rot.get_meta = function(field, newValue, oldValue) {
 	console.log("field: ")
 	console.log(field)
 	if (isNaN(vonm) || isNaN(vony) || isNaN(bism) || isNaN(bisy)) {
-		// TODO: notify user about error
+		// notify user about error
 		field.setValue(oldValue);
-		rot.error("Error", "Invalid date value.");
+		rot.error("Input", "Invalid date value.");
 		return false;
 	}
 	
@@ -359,7 +418,7 @@ rot.get_meta = function(field, newValue, oldValue) {
 	bisix += (bism < 10) ? "0" + bism : bism;
 	
 	if (bisix < vonix) {
-		// TODO: notify user about error
+		// notify user about error
 		field.setValue(oldValue);
 		rot.error("Error", "End date must be large than start date.");
 		return false;
@@ -750,8 +809,9 @@ rot.loadData = function(button, e, eOpts) {
 	rot.log(vonm + "." + vony + " " + bism + "." + bisy)
 	
 	if (isNaN(vonm) || isNaN(vony) || isNaN(bism) || isNaN(bisy)) {
-		// TODO: notify user about error
-		rot.log("Input format error in date")
+		// notify user about error
+		rot.error("Error", "Inalid date input.")
+		//rot.log("Input format error in date")
 		return false;
 	}
 	
@@ -763,8 +823,9 @@ rot.loadData = function(button, e, eOpts) {
 	rot.loadPersonal(vonix, bisix);
 	
 	if (bisix < vonix) {
-		// TODO: notify user about error
-		rot.log("End date must be large than start date")
+		// notify user about error
+		rot.error("Error", "End date must be large than start date.")
+		//rot.log("End date must be large than start date")
 		return false;
 	}
 	

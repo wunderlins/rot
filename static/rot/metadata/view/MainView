@@ -67,6 +67,7 @@
                             "codeClass": null,
                             "userConfig": {
                                 "container|align": "stretch",
+                                "id": "toolbarContainer",
                                 "layout": "vbox",
                                 "layout|flex": 0.6
                             },

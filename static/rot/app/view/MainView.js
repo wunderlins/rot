@@ -74,6 +74,7 @@ Ext.define('calendar.view.MainView', {
                         {
                             xtype: 'container',
                             flex: 0.6,
+                            id: 'toolbarContainer',
                             layout: {
                                 type: 'vbox',
                                 align: 'stretch'
