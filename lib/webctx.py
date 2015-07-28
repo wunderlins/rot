@@ -679,29 +679,29 @@ class data:
 
 class update_rot(response):
 	def GET(self):
-		#try:
-		id = web.input(von=None).id
-		pid = int(web.input(von=None).pid)
-		rid = int(web.input(von=None).rid)
-		rbid = int(web.input(von=None).rbid)
-		y = int(web.input(von=None).y)
-		m = int(web.input(von=None).m)
-		kuerzel = web.input(von=None).kuerzel
-		ym = web.input(von=None).ym
-		old = web.input(von=None).old
+		try:
+			id = web.input(von=None).id
+			pid = int(web.input(von=None).pid)
+			rid = int(web.input(von=None).rid)
+			rbid = int(web.input(von=None).rbid)
+			y = int(web.input(von=None).y)
+			m = int(web.input(von=None).m)
+			kuerzel = web.input(von=None).kuerzel
+			ym = web.input(von=None).ym
+			old = web.input(von=None).old
 		
-		rec = {
-			"id": id,
-			"pid": pid,
-			"rid": rid,
-			"rbid": rbid,
-			"m": m,
-			"y": y,
-			"kuerzel": kuerzel,
-			"ym": ym,
-			"old": old
-		}
-		"""
+			rec = {
+				"id": id,
+				"pid": pid,
+				"rid": rid,
+				"rbid": rbid,
+				"m": m,
+				"y": y,
+				"kuerzel": kuerzel,
+				"ym": ym,
+				"old": old
+			}
+		
 		except:
 			return self.json({
 				"success": False,
@@ -709,7 +709,7 @@ class update_rot(response):
 				"count": 0,
 				"error": "failed to parse input."
 			})
-		"""
+		
 		#try:
 		#web.debug(rec)
 		
