@@ -578,6 +578,7 @@ rot.grid.add_row = function(button, e, eOpts) {
 	var selection = rot.get("#contentGrid").getSelection()
 	//console.log(selection)
 	
+	/*
 	// copy record, give it a unique id
 	var rec = selection[0].copy(++rot.rotStore.metaData.maxid)
 	rec.internalId = rot.internalId++
@@ -606,7 +607,7 @@ rot.grid.add_row = function(button, e, eOpts) {
 	}
 	//console.log(data)
 	var rec = Ext.create("calendar.store.rotStore", data);
-	*/
+	* /
 	
 	store.addSorted(rec)
 	store.sort("srt", "ASC")
@@ -614,18 +615,28 @@ rot.grid.add_row = function(button, e, eOpts) {
 	
 	var store = Ext.getStore('rotStore');
 	var proxy = store.getProxy();
+	*/
 	
+	
+	var oldRec = selection[0].data
 	var rec = Ext.create("calendar.store.rotStore", {
-		id: ++rot.rotStore.metaData.maxid, 
-		group_sort: "sort001",
-		rot_group: "Viszeral/Urologie/Lunge", 
-		name: "sdfsdfdf", 
-		description: null, 
-		srt: "100000"
+		id: store.totalcount, 
+		group_sort: oldRec.group_sort,
+		rot_group: oldRec.rot_group,
+		name: oldRec.name, 
+		description: oldRec.description, 
+		srt: oldRec.srt + 1,
+		rid: oldRec.rid 
 	})
 	
 	store.addSorted(rec)
 	store.sort("srt", "ASC")
+	
+	// move cursor one down
+	var sel = rot.grid.grid.getSelectionModel()
+	sel.setPosition({row: sel.selection.rowIdx+1, column: sel.selection.colIdx})
+	
+	return true;
 }
 
 rot.grid.selected_date = null;

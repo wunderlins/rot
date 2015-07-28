@@ -49,9 +49,6 @@ web.debug("==> Resetting session!")
 session = None
 
 """
-# FIXME: add a separate uid, next to pid
-#        pid: planoaa person id
-#        eid: ad employee id
 session_default = {
 	"selected_pid": 0,
 	"eid": None,
@@ -331,6 +328,8 @@ class login(response):
 			ret = db.session.query(db.Personal).\
 			         filter_by(personalid=emp["employeeNumber"]).all()
 			#web.debug("pid: " + str(ret[0].pid))
+			web.debug("pid: " + str(ret[0]))
+			web.debug(session)
 			
 			try:
 				session.pid = ret[0].pid
@@ -680,29 +679,29 @@ class data:
 
 class update_rot(response):
 	def GET(self):
-		try:
-			id = int(web.input(von=None).id)
-			pid = int(web.input(von=None).pid)
-			rid = int(web.input(von=None).rid)
-			rbid = int(web.input(von=None).rbid)
-			y = int(web.input(von=None).y)
-			m = int(web.input(von=None).m)
-			kuerzel = web.input(von=None).kuerzel
-			ym = web.input(von=None).ym
-			old = web.input(von=None).old
-			
-			rec = {
-				"id": id,
-				"pid": pid,
-				"rid": rid,
-				"rbid": rbid,
-				"m": m,
-				"y": y,
-				"kuerzel": kuerzel,
-				"ym": ym,
-				"old": old
-			}
+		#try:
+		id = web.input(von=None).id
+		pid = int(web.input(von=None).pid)
+		rid = int(web.input(von=None).rid)
+		rbid = int(web.input(von=None).rbid)
+		y = int(web.input(von=None).y)
+		m = int(web.input(von=None).m)
+		kuerzel = web.input(von=None).kuerzel
+		ym = web.input(von=None).ym
+		old = web.input(von=None).old
 		
+		rec = {
+			"id": id,
+			"pid": pid,
+			"rid": rid,
+			"rbid": rbid,
+			"m": m,
+			"y": y,
+			"kuerzel": kuerzel,
+			"ym": ym,
+			"old": old
+		}
+		"""
 		except:
 			return self.json({
 				"success": False,
@@ -710,7 +709,7 @@ class update_rot(response):
 				"count": 0,
 				"error": "failed to parse input."
 			})
-		
+		"""
 		#try:
 		#web.debug(rec)
 		
