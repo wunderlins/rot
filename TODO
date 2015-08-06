@@ -1,11 +1,24 @@
+== Wünsche thierry
+ - DONE in liste von verfügbaren ma "uu" ausblenden
+ - wenn MA bereits in monat eingeteilt und neu zugewiesen wird, 
+   prompt anzeigen
+ - doppelclick für monatserweiterung
+   (nur zulassen wenn ganze range leer ist, ausser bei löschen)
+ - print / PDF
+ - bg farben implementieren (auch leere felder!)
+   
+ 
+
+
 == BUGS
  - DONE logout doesn't work when web_debug = False
  - DONE session management persistent over different computers? FTW
  - DONE FIX logout, kill session propperly
  - when Person is reassigned in the same month, must clear old field!
- - FIXED: when adding a new row, the first row disapears.
- - When adding a to an empty row and adding a person, it will show up in the wrong row (tested with 2 empty thorax)
+ - DONE: when adding a new row, the first row disapears.
+ - DONE: When adding a to an empty row and adding a person, it will show up in the wrong row (tested with 2 empty thorax)
  - DONE: add error handling to all ajax requests
+ - FIXME: adding a second ro doesn,t work
 
 == Milestone 1: Profiles
  - Display all personal information on profile

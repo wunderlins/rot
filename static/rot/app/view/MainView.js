@@ -163,6 +163,17 @@ Ext.define('calendar.view.MainView', {
                                             listeners: {
                                                 click: 'onButtonClick'
                                             }
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            hidden: true,
+                                            text: 'dbg',
+                                            listeners: {
+                                                click: {
+                                                    fn: 'onButtonClick1',
+                                                    scope: 'controller'
+                                                }
+                                            }
                                         }
                                     ]
                                 },
@@ -455,8 +466,8 @@ Ext.define('calendar.view.MainView', {
                         },
                         {
                             xtype: 'gridcolumn',
-                            dataIndex: 'name',
                             width: 90,
+                            dataIndex: 'name',
                             text: 'Name'
                         },
                         {

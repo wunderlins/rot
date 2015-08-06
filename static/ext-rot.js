@@ -193,6 +193,12 @@ rot.emp.filterChange = function() {
 		    property: 'rtyp',
 		    value: 0
 		});
+		store.addFilter({
+		    exactMatch: true,
+		    operator: '!=',
+		    property: 'comment',
+		    value: 'uu'
+		});
 	}
 	
 }

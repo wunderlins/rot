@@ -17,6 +17,17 @@ Ext.define('calendar.view.MainViewViewController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.mainview',
 
+    onButtonClick1: function(button, e, eOpts) {
+        var p = Ext.widget('panel', {
+            floating: true,
+            html: 'This is the panel to be floating on the right!',
+            shadow: true
+        });
+
+
+        p.show().alignTo(Ext.getBody(), 'tr-tr');
+    },
+
     onViewCellClick: function(tableview, td, cellIndex, record, tr, rowIndex, e, eOpts) {
         return rot.grid.onclick(tableview, td, cellIndex, record, tr, rowIndex, e, eOpts);
     },

@@ -255,6 +255,47 @@
                                                     "designerId": "6fb37a57-e15e-453c-a6c5-1ceae517641e"
                                                 }
                                             ]
+                                        },
+                                        {
+                                            "type": "Ext.button.Button",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "hidden": true,
+                                                "text": "dbg"
+                                            },
+                                            "name": "MyButton2",
+                                            "designerId": "c4259e19-a4d8-408d-8583-0f4f184b4288",
+                                            "cn": [
+                                                {
+                                                    "type": "viewcontrollereventbinding",
+                                                    "reference": {
+                                                        "name": "listeners",
+                                                        "type": "array"
+                                                    },
+                                                    "codeClass": null,
+                                                    "userConfig": {
+                                                        "fn": "onButtonClick1",
+                                                        "implHandler": [
+                                                            "var p = Ext.widget('panel', {",
+                                                            "    floating: true,",
+                                                            "    html: 'This is the panel to be floating on the right!',",
+                                                            "    shadow: true",
+                                                            "});",
+                                                            "",
+                                                            "",
+                                                            "p.show().alignTo(Ext.getBody(), 'tr-tr');"
+                                                        ],
+                                                        "name": "click",
+                                                        "scope": "me"
+                                                    },
+                                                    "name": "onButtonClick1",
+                                                    "designerId": "787a0eea-a865-4308-88b3-80423d5c020c"
+                                                }
+                                            ]
                                         }
                                     ]
                                 },
