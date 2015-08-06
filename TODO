@@ -1,7 +1,7 @@
 == Wünsche thierry
  - DONE in liste von verfügbaren ma "uu" ausblenden
- - wenn MA bereits in monat eingeteilt und neu zugewiesen wird, 
-   prompt anzeigen
+ - DONE wenn MA bereits in monat eingeteilt und neu zugewiesen wird, 
+   DONE prompt anzeigen
  - doppelclick für monatserweiterung
    (nur zulassen wenn ganze range leer ist, ausser bei löschen)
  - print / PDF

@@ -689,6 +689,8 @@ class update_rot(response):
 			kuerzel = web.input(von=None).kuerzel
 			ym = web.input(von=None).ym
 			old = web.input(von=None).old
+			old_rec_id = web.input(von=None).old_rec_id
+			
 		
 			rec = {
 				"id": id,
@@ -699,7 +701,8 @@ class update_rot(response):
 				"y": y,
 				"kuerzel": kuerzel,
 				"ym": ym,
-				"old": old
+				"old": old,
+				"old_rec_id": old_rec_id
 			}
 		
 		except:
