@@ -987,7 +987,7 @@ class get_plan(response):
 		for r in res:
 			# r.rid, p.kuerzel, r.jm, r.pid, r.bgrad, r.bemerkung2 as comment, r.rtyp
 			cell_ix = cell_lookup[int(r[2])]
-			rot_ix = rot_lookup[r[6]] # the row index in the prefilled matrix
+			rot_ix = rot_lookup[int(r[6])] # the row index in the prefilled matrix
 			
 			# check if cell in rot is already fileld, if so, add a cloned empty cell
 			done = False

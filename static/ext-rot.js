@@ -245,10 +245,12 @@ rot.emp.viewRowdblclick = function(tableview, record, tr, rowIndex, e, eOpts) {
 
 	// search trough all rows and see if this emp is already assigned somewhere
 	//record.data.kuerzel
+	var found = false;
 	var rotStore = Ext.getStore('rotStore');
 	for (i in rotStore.data.items) {
 		var r = rotStore.data.items[i];
 		if (r.data[sel_date] == record.data.kuerzel) {
+			found = true;
 			// console.log(sel_date + " " + i + " " + r.data[sel_date])
 			rot.update_rec.old_rec_id = r.id
 			var msg = record.data.kuerzel + " ist bereits in «" + r.data.name + "» eingeteilt.\n\nAlte Einteilung aufheben?";
@@ -258,34 +260,44 @@ rot.emp.viewRowdblclick = function(tableview, record, tr, rowIndex, e, eOpts) {
 					return;
 					
 				// submit data
-				Ext.Ajax.request({
-					url: '../../update_rot',
-					method: "get",
-					params: rot.update_rec,
-					success: function(response){
-						var text = response.responseText;
-						rec = Ext.decode(text)
-						// console.log(result);
-			
-						if (!rec.success) {
-							alert(rec.error)
-							return true;
-						}
-			
-						rot.grid.updateView(rec);
-			
-					},
-					failure: function(error) {
-						rot.error("Network Error", "Failed to set Rotation.")
-					}
-		
-				});	// end ajax
+				rot.emp.update_record(rot.update_rec);
 				
-			})
+				
+			});
+			break;
 			//console.log(r.data.name)
 		}
 	}
 	
+	if (found == false)
+		rot.emp.update_record(rot.update_rec);
+	
+}
+
+rot.emp.update_record = function(record) {
+	Ext.Ajax.request({
+		url: '../../update_rot',
+		method: "get",
+		params: record,
+		success: function(response) {
+			var text = response.responseText;
+			rec = Ext.decode(text)
+			// console.log(result);
+			
+			if (!rec.success) {
+				alert(rec.error)
+				return true;
+			}
+									 
+			rot.grid.updateView(rec);
+									 
+		},
+		
+		failure: function(error) {
+			rot.error("Network Error", "Failed to set Rotation.")
+		}
+		
+	});	// end ajax
 }
 
 rot.grid.updateView = function(rec) {
