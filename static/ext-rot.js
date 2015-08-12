@@ -274,6 +274,7 @@ rot.emp.viewRowdblclick = function(tableview, record, tr, rowIndex, e, eOpts) {
 	
 }
 
+rot.emp.lastupdated = {}
 rot.emp.update_record = function(record) {
 	Ext.Ajax.request({
 		url: '../../update_rot',
@@ -288,9 +289,9 @@ rot.emp.update_record = function(record) {
 				alert(rec.error)
 				return true;
 			}
-									 
+			
 			rot.grid.updateView(rec);
-									 
+			rot.emp.lastupdated = rec.root;
 		},
 		
 		failure: function(error) {
@@ -300,8 +301,43 @@ rot.emp.update_record = function(record) {
 	});	// end ajax
 }
 
+rot.grid.dblclick = function(tableview, td, cellIndex, record, tr, rowIndex, e, eOpts) {
+	//console.log(record.data.id + ", last: " + rot.emp.lastupdated.id + ", cellIndex: " + cellIndex)
+	//console.log(record)
+	
+	if (rot.emp.lastupdated == {})
+		return;
+	
+	// WTF: cellIndex has an offset of 3
+	ci = cellIndex - 3
+	seldate = rot.add_month(ci, rot.str2ym(rot.grid.meta.von))
+	console.log(rot.month_str(seldate) + " " + ci)
+	
+	//console.log(record)
+	
+	if (rot.month_str(seldate) <= rot.emp.lastupdated.ym)
+		return
+	
+	// we have a valid range, check if all fields inbetween are empty
+	// console.log(rot.emp.lastupdated.ym)
+	tmp_date = rot.add_month(1, rot.str2ym(rot.emp.lastupdated.ym))
+	
+	while (rot.month_str(seldate) >= rot.month_str(tmp_date)) {
+		console.log(tmp_date + ": " + record.data[rot.month_str(tmp_date)])
+		
+		// we have an non-empty field,
+		if (record.data[rot.month_str(tmp_date)] != "") {
+			// FIXME, check all rotation slots of this rotation (vertical fields) for vailability
+			rot.error("Conflict", "Eines der felder ist bereits durch eine andere Persohn belegt.")
+			return;
+		}
+		
+		tmp_date = rot.add_month(1, tmp_date)
+	}
+}
+
 rot.grid.updateView = function(rec) {
-	console.log(rec)
+	//console.log(rec)
 	var store = rot.grid.grid.getStore();
 	var record = store.findRecord("id", rec.root.id)
 	record.set(rec.root.ym, rec.root.kuerzel, {commit: true})
@@ -596,6 +632,10 @@ rot.month_str = function(ym) {
 	buffer += ym.m
 	
 	return buffer
+}
+
+rot.str2ym = function(str) {
+	return {y: parseInt(str.substr(0, 4)), m: parseInt(str.substr(4, 2))}
 }
 
 rot.model = null;

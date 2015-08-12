@@ -245,6 +245,10 @@ Ext.define('calendar.view.MainView', {
                             cellkeydown: {
                                 fn: 'onViewCellkeydown',
                                 scope: 'controller'
+                            },
+                            celldblclick: {
+                                fn: 'onViewCellDblClick',
+                                scope: 'controller'
                             }
                         }
                     },

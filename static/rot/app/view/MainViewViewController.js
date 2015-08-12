@@ -39,6 +39,10 @@ Ext.define('calendar.view.MainViewViewController', {
         if (e.parentEvent.keyCode == 9)
         e.stopEvent();
         */
+    },
+
+    onViewCellDblClick: function(tableview, td, cellIndex, record, tr, rowIndex, e, eOpts) {
+        rot.grid.dblclick(tableview, td, cellIndex, record, tr, rowIndex, e, eOpts);
     }
 
 });

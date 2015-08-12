@@ -466,6 +466,24 @@
                                     },
                                     "name": "onViewCellkeydown",
                                     "designerId": "549e643a-fdc1-4c5a-93b1-7accea9cc184"
+                                },
+                                {
+                                    "type": "viewcontrollereventbinding",
+                                    "reference": {
+                                        "name": "listeners",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "onViewCellDblClick",
+                                        "implHandler": [
+                                            "rot.grid.dblclick(tableview, td, cellIndex, record, tr, rowIndex, e, eOpts);"
+                                        ],
+                                        "name": "celldblclick",
+                                        "scope": "me"
+                                    },
+                                    "name": "onViewCellDblClick",
+                                    "designerId": "27f3b7c3-5f42-4422-919a-d882e7474698"
                                 }
                             ]
                         },
