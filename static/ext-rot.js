@@ -305,13 +305,13 @@ rot.grid.dblclick = function(tableview, td, cellIndex, record, tr, rowIndex, e, 
 	//console.log(record.data.id + ", last: " + rot.emp.lastupdated.id + ", cellIndex: " + cellIndex)
 	//console.log(record)
 	
-	if (rot.emp.lastupdated == {})
+	if (!rot.emp.lastupdated.ym)
 		return;
 	
 	// WTF: cellIndex has an offset of 3
 	ci = cellIndex - 3
 	seldate = rot.add_month(ci, rot.str2ym(rot.grid.meta.von))
-	console.log(rot.month_str(seldate) + " " + ci)
+	//console.log(rot.month_str(seldate) + " " + ci)
 	
 	//console.log(record)
 	
@@ -322,7 +322,35 @@ rot.grid.dblclick = function(tableview, td, cellIndex, record, tr, rowIndex, e, 
 	// console.log(rot.emp.lastupdated.ym)
 	tmp_date = rot.add_month(1, rot.str2ym(rot.emp.lastupdated.ym))
 	
+	// find all rows with the same group sort
+	//console.log(record.data.group_sort)
+	var rotStore = Ext.getStore('rotStore');
+	recs = []
+	for (e in rotStore.data.items) {
+		if (rotStore.data.items[e].data.rid == record.data.rid)
+			recs[recs.length] = rotStore.data.items[e]
+	}
+	
+	//console.log(recs); return
+	var target = []
 	while (rot.month_str(seldate) >= rot.month_str(tmp_date)) {
+		
+		var has_slot = false;
+		for (e in recs) {
+			r = recs[e].data
+			if (r[rot.month_str(tmp_date)] == "") {
+				has_slot = true;
+				target[rot.month_str(tmp_date)] = r.id;
+				break;
+			}
+		}
+		
+		if (has_slot == false) {
+			rot.error("Conflict", "Ein Monat ist bereits voll ausgebucht.")
+			return;
+		}
+		
+		/*
 		console.log(tmp_date + ": " + record.data[rot.month_str(tmp_date)])
 		
 		// we have an non-empty field,
@@ -332,8 +360,43 @@ rot.grid.dblclick = function(tableview, td, cellIndex, record, tr, rowIndex, e, 
 			return;
 		}
 		
+		*/
 		tmp_date = rot.add_month(1, tmp_date)
 	}
+	
+	// show mask on grid
+	rot.grid.grid.mask("Updating ...")
+	
+	// create a server side request for updating
+	rec = {
+		pid: rot.emp.lastupdated.pid,
+		von: rot.emp.lastupdated.ym,
+		bis: rot.month_str(seldate),
+		rid: record.data.rid
+	}
+	/*
+	Ext.Ajax.request({
+		url: '../../update_rot_batch',
+		method: "get",
+		params: rec,
+		success: function(response){
+			var text = response.responseText;
+			result = Ext.decode(text)
+			console.log(result);
+		},
+		failure: function(error) {
+			rot.error("Network Error", "Failed to set Rotation.");
+			rot.grid.grid.unmask();
+		}
+	});	
+	*/
+	// wait on response.
+	
+	// update data view
+	rot.grid.grid.getStore().reload();
+	rot.grid.grid.unmask()
+	
+	console.log(target)
 }
 
 rot.grid.updateView = function(rec) {

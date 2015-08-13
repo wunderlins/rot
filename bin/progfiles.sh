@@ -20,7 +20,9 @@ if [[ "$1" == '-v' ]]; then
 				! -path "*data/dev_*.svg" \
 				! -path "*ChangeLog" \
 				! -path "*.xml" \
-				-type f -exec grep -Il . "{}" \; 
+				-type f -exec grep -Il . "{}" \;  ;\
+			find ./static/rot/app \
+				-type f -exec grep -Il . "{}" \;
 		)
 else
 	wc -l \
@@ -42,7 +44,10 @@ else
 				! -path "*data/dev_*.svg" \
 				! -path "*ChangeLog" \
 				! -path "*.xml" \
+				-type f -exec grep -Il . "{}" \; ;\
+			find ./static/rot/app \
 				-type f -exec grep -Il . "{}" \; 
+			
 		) | tail -n 1 | sed -e 's/ \+//; s/ .*//'
 fi
 

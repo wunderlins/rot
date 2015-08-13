@@ -31,7 +31,8 @@ urls = (
 	'/get_meta', 'webctx.get_meta',
 	'/get_month', 'webctx.get_month',
 	'/get_emp', 'webctx.get_emp',
-	'/update_rot', 'webctx.update_rot'
+	'/update_rot', 'webctx.update_rot',
+	'/update_rot_batch', 'update_rot_batch'
 )
 
 from HTMLParser import HTMLParser
@@ -677,6 +678,36 @@ class data:
 				
 		return ret
 
+class update_rot(response):
+	def GET(self):
+		try:
+			rid = web.input(von=None).rid
+			pid = int(web.input(von=None).pid)
+			von = int(web.input(von=None).von)
+			bis = int(web.input(von=None).bis)
+			
+			rec = {
+				"pid": pid,
+				"rid": rid,
+				"von": von,
+				"bis": bis
+			}
+		
+		except:
+			return self.json({
+				"success": False,
+				"root": {},
+				"count": 0,
+				"error": "failed to parse input."
+			})
+			
+		return self.json({
+			"success": True,
+			"root": rec,
+			"count": 1,
+			"error": ""
+		})
+	
 class update_rot(response):
 	def GET(self):
 		try:
