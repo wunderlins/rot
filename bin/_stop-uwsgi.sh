@@ -16,4 +16,8 @@
 basedir="`cd $(dirname $0)/..;pwd`"; cd "$basedir"
 . lib/setenv.sh
 
-kill -9 `lsof -ni TCP | grep $port | awk '{print $2}'`
+if [[ $system == "Darwin" ]]; then
+	kill -9 `ps aux | grep rot.pid | awk '{print $2}'`
+else
+	kill -9 `lsof -ni TCP | grep $port | awk '{print $2}'`
+fi
