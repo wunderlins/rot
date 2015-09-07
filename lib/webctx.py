@@ -32,7 +32,7 @@ urls = (
 	'/get_month', 'webctx.get_month',
 	'/get_emp', 'webctx.get_emp',
 	'/update_rot', 'webctx.update_rot',
-	'/update_rot_batch', 'update_rot_batch'
+	'/update_rot_batch', 'webctx.update_rot_batch'
 )
 
 from HTMLParser import HTMLParser
@@ -678,7 +678,7 @@ class data:
 				
 		return ret
 
-class update_rot(response):
+class update_rot_batch(response):
 	def GET(self):
 		try:
 			rid = web.input(von=None).rid
@@ -700,7 +700,18 @@ class update_rot(response):
 				"count": 0,
 				"error": "failed to parse input."
 			})
-			
+		
+		# this is a pretty simple job, just insert the rot for the person in 
+		# the range submitted range
+		
+		# fetch records
+		recs = db.session.query(db.Rotation).filter(and_(db.Rotation.pid==pid, db.Rotation.jm>=von, db.Rotation.jm<=bis))
+		for r in recs:
+			r.rtyp = rid
+			#web.debug(r)
+		#db.session.commit()		
+		db.session.flush()
+		
 		return self.json({
 			"success": True,
 			"root": rec,

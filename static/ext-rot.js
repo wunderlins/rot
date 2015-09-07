@@ -374,7 +374,7 @@ rot.grid.dblclick = function(tableview, td, cellIndex, record, tr, rowIndex, e, 
 		bis: rot.month_str(seldate),
 		rid: record.data.rid
 	}
-	/*
+	
 	Ext.Ajax.request({
 		url: '../../update_rot_batch',
 		method: "get",
@@ -382,6 +382,10 @@ rot.grid.dblclick = function(tableview, td, cellIndex, record, tr, rowIndex, e, 
 		success: function(response){
 			var text = response.responseText;
 			result = Ext.decode(text)
+			
+			// FIXME: check if we've got a success response
+			rot.grid.grid.getStore().reload();
+			rot.grid.grid.unmask()
 			console.log(result);
 		},
 		failure: function(error) {
@@ -389,12 +393,9 @@ rot.grid.dblclick = function(tableview, td, cellIndex, record, tr, rowIndex, e, 
 			rot.grid.grid.unmask();
 		}
 	});	
-	*/
 	// wait on response.
 	
 	// update data view
-	rot.grid.grid.getStore().reload();
-	rot.grid.grid.unmask()
 	
 	console.log(target)
 }

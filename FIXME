@@ -1,22 +1,23 @@
-./static/ext-rot.js:330:// FIXME: this event handler migh not be used anymore.
+./static/ext-rot.js:358:			// FIXME, check all rotation slots of this rotation (vertical fields) for vailability
+./static/ext-rot.js:386:			// FIXME: check if we've got a success response
+./static/ext-rot.js:482:// FIXME: this event handler migh not be used anymore.
 ./template/index.html:5:TODO:
 ./bin/changelog.py:78:    # Collect the files for this commit. FIXME: Still need to add +/- to files
 ./bin/status.sh:15:#	echo "TODO status.sh dev"
 ./bin/status.sh:19:#	echo "TODO: status.sh uwsgi"
 ./bin/fixme.sh:4:egrep -n "FIXME|TODO" $f > FIXME
-./lib/webctx.py:52:# FIXME: add a separate uid, next to pid
 ./lib/webctx.py:338:				pass # FIXME do we have to catch unknown pids on login or just ignore ?
-./lib/webctx.py:1086:	# TODO: should move this to the db module
-./lib/webctx.py:1241:				# FIXME: remove tags
-./lib/webctx.py:1488:		# FIXME: handle errors
-./lib/webctx.py:1545:			# FIXME: handle DB Error
-./lib/webctx.py:1583:			# FIXME: handle DB Error
-./lib/webctx.py:1610:			# FIXME: handle DB Error
-./lib/webctx.py:1620:			# FIXME: handle DB Error
-./lib/webctx.py:1629:			# FIXME: handle DB Error
-./lib/webctx.py:1637:			# FIXME: handle DB Error
-./lib/webctx.py:1784:			# FIXME: handle DB Error
-./lib/webctx.py:1796:			# FIXME: handle DB Error
-./TODO:8: - FIXME: add error handling to all ajax requests
-./TODO:49:- DONE FIXME: add try catch to all commits in webctx
-./TODO:51:- FIXME: image upload from phone failed after about 10% uploading
+./lib/webctx.py:1119:	# TODO: should move this to the db module
+./lib/webctx.py:1274:				# FIXME: remove tags
+./lib/webctx.py:1521:		# FIXME: handle errors
+./lib/webctx.py:1578:			# FIXME: handle DB Error
+./lib/webctx.py:1616:			# FIXME: handle DB Error
+./lib/webctx.py:1643:			# FIXME: handle DB Error
+./lib/webctx.py:1653:			# FIXME: handle DB Error
+./lib/webctx.py:1662:			# FIXME: handle DB Error
+./lib/webctx.py:1670:			# FIXME: handle DB Error
+./lib/webctx.py:1817:			# FIXME: handle DB Error
+./lib/webctx.py:1829:			# FIXME: handle DB Error
+./TODO:21: - FIXME: adding a second ro doesn,t work
+./TODO:61:- DONE FIXME: add try catch to all commits in webctx
+./TODO:63:- FIXME: image upload from phone failed after about 10% uploading
