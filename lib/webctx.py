@@ -308,8 +308,8 @@ class login(response):
 		
 		# if not found check against ldap
 		usbauth.init(
-			authdn = "CN=MUANA,OU=GenericMove,OU=Users,OU=USB,DC=ms,DC=uhbs,DC=ch",
-			authpw = "anaana",
+			authdn = "CN=MUANAESTHESIE\, Multiuser (U111613),OU=GenericMove,OU=Users,OU=USB,DC=ms,DC=uhbs,DC=ch",
+			authpw = "Oa-86300",
 			baseDN = "ou=USB,dc=ms,dc=uhbs,dc=ch",
 			host = "ms.uhbs.ch",
 		)
@@ -317,6 +317,7 @@ class login(response):
 		emp = usbauth.check(username, password)
 		#global session
 		web.debug(session)
+		web.debug(emp)
 		if (emp and emp["lockoutTime"] == None):
 			#web_session = session_default
 			session.pid = 0
@@ -328,6 +329,12 @@ class login(response):
 			# now that we have a user, find the pid for this uid
 			ret = db.session.query(db.Personal).\
 			         filter_by(personalid=emp["employeeNumber"]).all()
+			
+			web.debug("===> planoaa user:")
+			web.debug(ret)
+			if len(ret) == 0:
+				return '{"success": false, "message": "Unbekannter Benutzer oder falsches Passwort."}'
+			
 			#web.debug("pid: " + str(ret[0].pid))
 			web.debug("pid: " + str(ret[0]))
 			web.debug(session)
