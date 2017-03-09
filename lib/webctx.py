@@ -1130,7 +1130,7 @@ class index(response):
 		db.session.query(db.RotNote).filter(db.RotNote.tags.any(~db.NoteTag.id.in_([1,2,3]))).all()
 		"""
 		
-		return self.render().index(web.ctx, tags, db.RotNoteType, due)
+		return self.render().index(web.ctx, tags, db.RotNoteType, due, dueids)
 	
 class erfahrung(response):
 	

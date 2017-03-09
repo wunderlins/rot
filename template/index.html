@@ -1,4 +1,4 @@
-$def with (ctx, tags, RotNoteType, due)
+$def with (ctx, tags, RotNoteType, due, dueids)
 
 
 <!--
@@ -13,39 +13,42 @@ TODO:
 
 
 <div class="row">
-	<div class="col-sm-4 col-xs-12">
-		<div class="panel panel-danger">
-			<div class="panel-heading">Dringend</div>
-			$for d in due:
-				<div class="panel-body">
-					$ glyph = RotNoteType[d.type][1]
-					<span class="glyphicon $glyph"></span>
-					<span>
-						<a href="personal/$d.personal.pid">$d.personal.name $d.personal.vorname</a>
-					($d.personal.kuerzel)</span>
-					$if d.bis:
-						$d.bis.strftime("%d.%m.%Y")
-					<div style="float: left; height: 4em; margin-right: 0.5em;">
-						$:avatar(d.personal)
+	$if len(dueids) > 0:
+		<div class="col-sm-4 col-xs-12">
+			<div class="panel panel-danger">
+				<div class="panel-heading">Dringend</div>
+				$for d in due:
+					<div class="panel-body">
+						$ glyph = RotNoteType[d.type][1]
+						<span class="glyphicon $glyph"></span>
+						<span>
+							<a href="personal/$d.personal.pid">$d.personal.name $d.personal.vorname</a>
+						($d.personal.kuerzel)</span>
+						$if d.bis:
+							$d.bis.strftime("%d.%m.%Y")
+						<div style="float: left; height: 4em; margin-right: 0.5em;">
+							$:avatar(d.personal)
+				
+						</div>
+						<br/>	
 					
+						$strip_tags(d.comment[:100])
+				
+						<br />
+						$if len(d.tags):
+							<span class="glyphicon glyphicon-tags"></span>
+							$for t in d.tags:
+								$t.name
+						<div style="clear: both;"></div>
+						<br />
+				
 					</div>
-					<br/>	
-						
-					$strip_tags(d.comment[:100])
-					
-					<br />
-					$if len(d.tags):
-						<span class="glyphicon glyphicon-tags"></span>
-						$for t in d.tags:
-							$t.name
-					<div style="clear: both;"></div>
-					<br />
-					
-				</div>
-		</div>
-	</div><!-- end col -->
+			</div>
+		</div><!-- end col -->
 	
 	$for t in tags:
+		$if len(t.rotnotes) == 0:
+			$continue
 		<div class="col-sm-4 col-xs-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">$t.name</div>
