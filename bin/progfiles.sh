@@ -4,6 +4,9 @@ if [[ "$1" == '-v' ]]; then
 	wc -l \
 		$( \
 			find ./ \
+				! -path "./bin/progfiles.sh" \
+				! -path "./FIXME" \
+				! -path "./TODO" \
 				! -path "./lib/*/*" \
 				! -path "./static/*/*" \
 				! -path "./.git/*" \
@@ -28,6 +31,9 @@ else
 	wc -l \
 		$( \
 			find ./ \
+				! -path "./bin/progfiles.sh" \
+				! -path "./FIXME" \
+				! -path "./TODO" \
 				! -path "./lib/*/*" \
 				! -path "./static/*/*" \
 				! -path "./.git/*" \
