@@ -81,7 +81,7 @@ $person.name $person.vorname ($person.kuerzel)</h1>
 				<div id="notiz_controls">
 					<div class="form-group">
 						<label>Typ</label>
-						<div class="btn-group input-group" data-toggle="buttons">
+						<div class="btn-group input-group" data-toggle="buttons" id="note_type">
 						$for idx, (label, glyph, state) in enumerate(RotNoteType):
 							$if idx == 0:
 								$continue

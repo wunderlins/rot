@@ -13,6 +13,7 @@ TODO:
 
 
 <div class="row">
+	<!-- display overdue elements -->
 	$if len(dueids) > 0:
 		<div class="col-sm-4 col-xs-12">
 			<div class="panel panel-danger">
@@ -46,6 +47,7 @@ TODO:
 			</div>
 		</div><!-- end col -->
 	
+	<!-- display by tag -->
 	$for t in tags:
 		$if len(t.rotnotes) == 0:
 			$continue

@@ -187,9 +187,19 @@ var notes = {
 		if ($('#due_input', '#note').val())
 			dt = parseInt($('#due').data("DateTimePicker").getDate().format("X"))
 		app.log(dt)
-		t = parseInt($('input[name=type]:checked', '#note').val())
+		//t = parseInt($('input[name=type]:checked', '#note').val())
+		//var t = parseInt($('input[name=type]').eq(1).addClass('active').val())
+		
+		// get selected group button
+		var t = 0;
+		$('#note_type .active').each(function(){
+			t = $(this).children()[0].getAttribute("value")
+		}); 
+		
 		if (isNaN(t))
 			t = 0;
+		t = parseInt(t);
+		
 		tags = $("#notetag").tagit("assignedTags")
 		payload = {
 			pid: app.selected_pid,
