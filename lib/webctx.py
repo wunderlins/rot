@@ -315,11 +315,11 @@ class login(response):
 		)
 		
 		emp = usbauth.check(username, password)
-		#global session
-		web.debug(session)
+		global session
+		#web.debug(session)
 		web.debug(emp)
 		if (emp and emp["lockoutTime"] == None):
-			#web_session = session_default
+			#session = web.config._session
 			session.pid = 0
 			session.eid = emp["employeeNumber"]
 			session.user = username
@@ -332,23 +332,34 @@ class login(response):
 			
 			web.debug("===> planoaa user:")
 			web.debug(ret)
+			
+			"""
+			# do we need to check thiss for session.isadmin == 1 ?
 			if len(ret) == 0:
 				return '{"success": false, "message": "Unbekannter Benutzer oder falsches Passwort."}'
+			"""
 			
 			#web.debug("pid: " + str(ret[0].pid))
-			web.debug("pid: " + str(ret[0]))
+			try:
+				web.debug("pid: " + str(ret[0]))
+			except:
+				pass
 			web.debug(session)
 			
 			try:
 				session.pid = ret[0].pid
 			except:
-				pass # FIXME do we have to catch unknown pids on login or just ignore ?
+				#pass # FIXME do we have to catch unknown pids on login or just ignore ?
+				if session.isadmin == 0:
+					session = session_default
+					return '{"success": false, "message": "Sind sie sicher, dass Sie für das Departement für Anästhesiologie Arbeiten?"}'
 			
 			web.debug("==> succesfully logged in")
 			web.debug(session)
 			
 			return '{"success": true}'
 		
+		session = session_default
 		return '{"success": false}'
 
 class get_emp(response): 

@@ -70,7 +70,7 @@
 		};
 		
 		var r = new XMLHttpRequest();
-		r.open("POST", "/login", true);
+		r.open("POST", "${config.base_uri}login", true);
 		r.setRequestHeader("Content-Type","application/json; charset=utf-8");
 		r.onreadystatechange = function () {
 			/*

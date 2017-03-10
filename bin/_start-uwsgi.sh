@@ -22,6 +22,7 @@ $bin  --plugin python,http \
       --daemonize $web_logfile \
       --workers 10 \
       --plugins-dir "$basedir/lib" \
+      --master \
       --single-interpreter
 #      --logto $web_logfile \
 #      --daemonize2 var/uwsgi.log
