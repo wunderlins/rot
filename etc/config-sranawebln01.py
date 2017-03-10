@@ -7,7 +7,7 @@ port=1975
 
 db_user="planoaa"
 db_pass="planoaa"
-db_name="planoaa"
+db_name="planoaa-dev"
 db_host="srsqlln01.uhbs.ch"
 
 db_debug=False
